@@ -52,5 +52,11 @@ namespace Water
             SalesForm salesForm = new SalesForm();
             salesForm.ShowDialog();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            testTab tt = new testTab();
+            tt.ShowDialog();
+        }
     }
 }

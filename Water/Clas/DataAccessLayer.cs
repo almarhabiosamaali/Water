@@ -22,7 +22,7 @@ namespace Water.Clas
              //                              Properties.Settings.Default.Database + "; Integrated Security=false; User ID=" +
                //                            Properties.Settings.Default.ID + "; Password=" + Properties.Settings.Default.Password + "");
 
-            sqlconnection = new SqlConnection(@"Server=LAPTOP-UDOB2GCQ ; Database=Water; Integrated Security=false; User ID=sa; Password=osama@123");
+            sqlconnection = new SqlConnection(@"Server=SERVER ; Database=Water; Integrated Security=true; User ID=sa; Password=sa@123");
 
 
 
@@ -82,6 +82,11 @@ namespace Water.Clas
         //Method to Insert, Update, and Delete Data From Database
         public void ExecuteCommand(string stored_procedure, SqlParameter[] param)
         {
+            if (sqlconnection.State != ConnectionState.Open)
+            {
+                throw new InvalidOperationException("الاتصال بقاعدة البيانات غير مفتوح. يرجى استدعاء Open() أولاً.");
+            }
+
             SqlCommand sqlcmd = new SqlCommand();
             sqlcmd.CommandType = CommandType.StoredProcedure;
             sqlcmd.CommandText = stored_procedure;

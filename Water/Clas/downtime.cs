@@ -31,6 +31,64 @@ namespace Water.Clas
             DAL.ExecuteCommand("downtime_insert", param);
             DAL.Close();
         }
+
+        public DataTable VIEW_DOWNTIME(string id)
+        {
+            Clas.DataAccessLayer DAL = new Clas.DataAccessLayer();
+            DAL.Open();
+            SqlParameter[] param = new SqlParameter[1];
+            
+            param[0] = new SqlParameter("@id", SqlDbType.VarChar, 50);
+            param[0].Value = id;
+
+            DataTable dt = DAL.SelectData("downtime_view", param);
+            DAL.Close();
+            return dt;
+        }
+
+        public DataTable GET_ALL_DOWNTIMES()
+        {
+            Clas.DataAccessLayer DAL = new Clas.DataAccessLayer();
+            DAL.Open();
+            DataTable dt = DAL.SelectData("downtime_getAll", null);
+            DAL.Close();
+            return dt;
+        }
+
+        public void UPDATE_DOWNTIME(string id, string period_id, DateTime date, double hours)
+        {
+            Clas.DataAccessLayer DAL = new Clas.DataAccessLayer();
+            DAL.Open();
+            SqlParameter[] param = new SqlParameter[4];
+            
+            param[0] = new SqlParameter("@id", SqlDbType.VarChar, 50);
+            param[0].Value = id;
+
+            param[1] = new SqlParameter("@period_id", SqlDbType.VarChar, 50);
+            param[1].Value = period_id;
+
+            param[2] = new SqlParameter("@date", SqlDbType.Date);
+            param[2].Value = date;
+
+            param[3] = new SqlParameter("@hours", SqlDbType.Float);
+            param[3].Value = hours;
+
+            DAL.ExecuteCommand("downtime_update", param);
+            DAL.Close();
+        }
+
+        public void DELETE_DOWNTIME(string id)
+        {
+            Clas.DataAccessLayer DAL = new Clas.DataAccessLayer();
+            DAL.Open();
+            SqlParameter[] param = new SqlParameter[1];
+            
+            param[0] = new SqlParameter("@id", SqlDbType.VarChar, 50);
+            param[0].Value = id;
+
+            DAL.ExecuteCommand("downtime_delete", param);
+            DAL.Close();
+        }
     }
 }
 
