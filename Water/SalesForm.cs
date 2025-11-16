@@ -58,7 +58,7 @@ namespace Water
             this.Controls.Add(this.cmbBillType);
 
             // تعديل مواضع العناصر الأخرى
-            this.lblPeriodId.Location = new System.Drawing.Point(30, 110);
+           /* this.lblPeriodId.Location = new System.Drawing.Point(30, 110);
             this.txtPeriodId.Location = new System.Drawing.Point(150, 107);
             this.lblCustomerId.Location = new System.Drawing.Point(30, 150);
             this.txtCustomerId.Location = new System.Drawing.Point(150, 147);
@@ -92,7 +92,7 @@ namespace Water
             this.btnDelete.Location = new System.Drawing.Point(315, 680);
             this.btnSave.Location = new System.Drawing.Point(410, 680);
 
-            this.ClientSize = new System.Drawing.Size(520, 740);
+            this.ClientSize = new System.Drawing.Size(520, 740);*/
         }
 
 
@@ -418,6 +418,7 @@ namespace Water
             numRemainingAmount.Value = 0;
         }
 
+       
     }
 }
 
