@@ -227,6 +227,7 @@ namespace Water
             this.btnView.TabIndex = 14;
             this.btnView.Text = "عرض";
             this.btnView.UseVisualStyleBackColor = true;
+            this.btnView.Click += new System.EventHandler(this.btnView_Click_1);
             // 
             // btnAdd
             // 

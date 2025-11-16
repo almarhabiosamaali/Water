@@ -233,6 +233,11 @@ namespace Water
             txtPhone.Clear();
             txtNotes.Clear();
         }
+
+        private void btnView_Click_1(object sender, EventArgs e)
+        {
+
+        }
     }
 }
 

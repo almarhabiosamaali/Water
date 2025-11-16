@@ -68,6 +68,8 @@ namespace Water
             this.txtCustomerId = new System.Windows.Forms.TextBox();
             this.txtPeriodId = new System.Windows.Forms.TextBox();
             this.txtSalesCode = new System.Windows.Forms.TextBox();
+            this.cmbBillType = new System.Windows.Forms.ComboBox();
+            this.lblBillType = new System.Windows.Forms.Label();
             this.lblCustomerId = new System.Windows.Forms.Label();
             this.lblPeriodId = new System.Windows.Forms.Label();
             this.lblSalesCode = new System.Windows.Forms.Label();
@@ -129,7 +131,6 @@ namespace Water
             // 
             this.PartenerName.HeaderText = "اسم الشريك";
             this.PartenerName.Name = "PartenerName";
-            this.PartenerName.ReadOnly = true;
             // 
             // HoursUesed
             // 
@@ -140,7 +141,6 @@ namespace Water
             // 
             this.HoursAvalible.HeaderText = "الساعات المتاحة";
             this.HoursAvalible.Name = "HoursAvalible";
-            this.HoursAvalible.ReadOnly = true;
             // 
             // tabPage1
             // 
@@ -176,6 +176,8 @@ namespace Water
             this.tabPage1.Controls.Add(this.txtCustomerId);
             this.tabPage1.Controls.Add(this.txtPeriodId);
             this.tabPage1.Controls.Add(this.txtSalesCode);
+            this.tabPage1.Controls.Add(this.cmbBillType);
+            this.tabPage1.Controls.Add(this.lblBillType);
             this.tabPage1.Controls.Add(this.lblCustomerId);
             this.tabPage1.Controls.Add(this.lblPeriodId);
             this.tabPage1.Controls.Add(this.lblSalesCode);
@@ -197,7 +199,6 @@ namespace Water
             this.btnSave.TabIndex = 69;
             this.btnSave.Text = "حفظ";
             this.btnSave.UseVisualStyleBackColor = true;
-           
             // 
             // btnDelete
             // 
@@ -371,7 +372,7 @@ namespace Water
             // 
             this.numDieselTotal.DecimalPlaces = 2;
             this.numDieselTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numDieselTotal.Location = new System.Drawing.Point(1016, 412);
+            this.numDieselTotal.Location = new System.Drawing.Point(1016, 424);
             this.numDieselTotal.Maximum = new decimal(new int[] {
             10000000,
             0,
@@ -391,7 +392,7 @@ namespace Water
             // 
             this.lblDieselTotal.AutoSize = true;
             this.lblDieselTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDieselTotal.Location = new System.Drawing.Point(911, 415);
+            this.lblDieselTotal.Location = new System.Drawing.Point(911, 427);
             this.lblDieselTotal.Name = "lblDieselTotal";
             this.lblDieselTotal.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblDieselTotal.Size = new System.Drawing.Size(92, 20);
@@ -402,7 +403,7 @@ namespace Water
             // 
             this.numWaterTotal.DecimalPlaces = 2;
             this.numWaterTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numWaterTotal.Location = new System.Drawing.Point(1016, 372);
+            this.numWaterTotal.Location = new System.Drawing.Point(1016, 384);
             this.numWaterTotal.Maximum = new decimal(new int[] {
             10000000,
             0,
@@ -422,7 +423,7 @@ namespace Water
             // 
             this.lblWaterTotal.AutoSize = true;
             this.lblWaterTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblWaterTotal.Location = new System.Drawing.Point(911, 375);
+            this.lblWaterTotal.Location = new System.Drawing.Point(911, 387);
             this.lblWaterTotal.Name = "lblWaterTotal";
             this.lblWaterTotal.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblWaterTotal.Size = new System.Drawing.Size(83, 20);
@@ -433,7 +434,7 @@ namespace Water
             // 
             this.numDieselHourPrice.DecimalPlaces = 2;
             this.numDieselHourPrice.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numDieselHourPrice.Location = new System.Drawing.Point(1016, 332);
+            this.numDieselHourPrice.Location = new System.Drawing.Point(1016, 344);
             this.numDieselHourPrice.Maximum = new decimal(new int[] {
             1000000,
             0,
@@ -453,7 +454,7 @@ namespace Water
             // 
             this.lblDieselHourPrice.AutoSize = true;
             this.lblDieselHourPrice.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDieselHourPrice.Location = new System.Drawing.Point(911, 335);
+            this.lblDieselHourPrice.Location = new System.Drawing.Point(911, 347);
             this.lblDieselHourPrice.Name = "lblDieselHourPrice";
             this.lblDieselHourPrice.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblDieselHourPrice.Size = new System.Drawing.Size(111, 20);
@@ -464,7 +465,7 @@ namespace Water
             // 
             this.numWaterHourPrice.DecimalPlaces = 2;
             this.numWaterHourPrice.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numWaterHourPrice.Location = new System.Drawing.Point(1016, 292);
+            this.numWaterHourPrice.Location = new System.Drawing.Point(1016, 304);
             this.numWaterHourPrice.Maximum = new decimal(new int[] {
             1000000,
             0,
@@ -484,7 +485,7 @@ namespace Water
             // 
             this.lblWaterHourPrice.AutoSize = true;
             this.lblWaterHourPrice.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblWaterHourPrice.Location = new System.Drawing.Point(911, 295);
+            this.lblWaterHourPrice.Location = new System.Drawing.Point(911, 307);
             this.lblWaterHourPrice.Name = "lblWaterHourPrice";
             this.lblWaterHourPrice.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblWaterHourPrice.Size = new System.Drawing.Size(102, 20);
@@ -495,7 +496,7 @@ namespace Water
             // 
             this.numMinutes.DecimalPlaces = 2;
             this.numMinutes.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numMinutes.Location = new System.Drawing.Point(1016, 252);
+            this.numMinutes.Location = new System.Drawing.Point(1016, 264);
             this.numMinutes.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -515,7 +516,7 @@ namespace Water
             // 
             this.lblMinutes.AutoSize = true;
             this.lblMinutes.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMinutes.Location = new System.Drawing.Point(911, 255);
+            this.lblMinutes.Location = new System.Drawing.Point(911, 267);
             this.lblMinutes.Name = "lblMinutes";
             this.lblMinutes.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblMinutes.Size = new System.Drawing.Size(51, 20);
@@ -526,7 +527,7 @@ namespace Water
             // 
             this.numHours.DecimalPlaces = 2;
             this.numHours.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numHours.Location = new System.Drawing.Point(1016, 212);
+            this.numHours.Location = new System.Drawing.Point(1016, 224);
             this.numHours.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -546,7 +547,7 @@ namespace Water
             // 
             this.lblHours.AutoSize = true;
             this.lblHours.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHours.Location = new System.Drawing.Point(911, 215);
+            this.lblHours.Location = new System.Drawing.Point(911, 227);
             this.lblHours.Name = "lblHours";
             this.lblHours.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblHours.Size = new System.Drawing.Size(60, 20);
@@ -558,7 +559,7 @@ namespace Water
             this.dtpEndTime.CustomFormat = "yyyy-MM-dd HH:mm";
             this.dtpEndTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dtpEndTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpEndTime.Location = new System.Drawing.Point(1016, 172);
+            this.dtpEndTime.Location = new System.Drawing.Point(1016, 184);
             this.dtpEndTime.Name = "dtpEndTime";
             this.dtpEndTime.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.dtpEndTime.RightToLeftLayout = true;
@@ -570,7 +571,7 @@ namespace Water
             // 
             this.lblEndTime.AutoSize = true;
             this.lblEndTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblEndTime.Location = new System.Drawing.Point(911, 175);
+            this.lblEndTime.Location = new System.Drawing.Point(911, 187);
             this.lblEndTime.Name = "lblEndTime";
             this.lblEndTime.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblEndTime.Size = new System.Drawing.Size(76, 20);
@@ -582,7 +583,7 @@ namespace Water
             this.dtpStartTime.CustomFormat = "yyyy-MM-dd HH:mm";
             this.dtpStartTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dtpStartTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpStartTime.Location = new System.Drawing.Point(1016, 132);
+            this.dtpStartTime.Location = new System.Drawing.Point(1016, 144);
             this.dtpStartTime.Name = "dtpStartTime";
             this.dtpStartTime.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.dtpStartTime.RightToLeftLayout = true;
@@ -594,7 +595,7 @@ namespace Water
             // 
             this.lblStartTime.AutoSize = true;
             this.lblStartTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblStartTime.Location = new System.Drawing.Point(911, 135);
+            this.lblStartTime.Location = new System.Drawing.Point(911, 147);
             this.lblStartTime.Name = "lblStartTime";
             this.lblStartTime.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblStartTime.Size = new System.Drawing.Size(75, 20);
@@ -604,7 +605,7 @@ namespace Water
             // txtCustomerId
             // 
             this.txtCustomerId.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCustomerId.Location = new System.Drawing.Point(1016, 92);
+            this.txtCustomerId.Location = new System.Drawing.Point(1016, 62);
             this.txtCustomerId.Name = "txtCustomerId";
             this.txtCustomerId.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtCustomerId.Size = new System.Drawing.Size(263, 26);
@@ -613,7 +614,7 @@ namespace Water
             // txtPeriodId
             // 
             this.txtPeriodId.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPeriodId.Location = new System.Drawing.Point(1016, 59);
+            this.txtPeriodId.Location = new System.Drawing.Point(1015, 94);
             this.txtPeriodId.Name = "txtPeriodId";
             this.txtPeriodId.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtPeriodId.Size = new System.Drawing.Size(263, 26);
@@ -626,14 +627,39 @@ namespace Water
             this.txtSalesCode.Name = "txtSalesCode";
             this.txtSalesCode.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtSalesCode.Size = new System.Drawing.Size(263, 26);
-            this.txtSalesCode.TabIndex = 36;
+            this.txtSalesCode.TabIndex = 35;
             this.txtSalesCode.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // cmbBillType
+            // 
+            this.cmbBillType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbBillType.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbBillType.FormattingEnabled = true;
+            this.cmbBillType.Items.AddRange(new object[] {
+            "آجل",
+            "نقد"});
+            this.cmbBillType.Location = new System.Drawing.Point(577, 20);
+            this.cmbBillType.Name = "cmbBillType";
+            this.cmbBillType.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.cmbBillType.Size = new System.Drawing.Size(263, 28);
+            this.cmbBillType.TabIndex = 37;
+            // 
+            // lblBillType
+            // 
+            this.lblBillType.AutoSize = true;
+            this.lblBillType.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblBillType.Location = new System.Drawing.Point(472, 23);
+            this.lblBillType.Name = "lblBillType";
+            this.lblBillType.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.lblBillType.Size = new System.Drawing.Size(79, 20);
+            this.lblBillType.TabIndex = 36;
+            this.lblBillType.Text = "نوع الفاتورة:";
             // 
             // lblCustomerId
             // 
             this.lblCustomerId.AutoSize = true;
             this.lblCustomerId.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCustomerId.Location = new System.Drawing.Point(911, 95);
+            this.lblCustomerId.Location = new System.Drawing.Point(911, 107);
             this.lblCustomerId.Name = "lblCustomerId";
             this.lblCustomerId.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblCustomerId.Size = new System.Drawing.Size(74, 20);
@@ -745,6 +771,8 @@ namespace Water
         private System.Windows.Forms.Label lblCustomerId;
         private System.Windows.Forms.Label lblPeriodId;
         private System.Windows.Forms.Label lblSalesCode;
+        private System.Windows.Forms.ComboBox cmbBillType;
+        private System.Windows.Forms.Label lblBillType;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.DataGridViewTextBoxColumn bill_no;
         private System.Windows.Forms.DataGridViewTextBoxColumn PartenerId;

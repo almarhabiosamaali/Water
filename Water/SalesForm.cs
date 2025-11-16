@@ -15,13 +15,12 @@ namespace Water
     {
         private bool isEditMode = false;
         Clas.sales sal = new Clas.sales();
-        private System.Windows.Forms.Label lblBillType;
-        private System.Windows.Forms.ComboBox cmbBillType;
+        Clas.salePartnersHours partnersHours = new Clas.salePartnersHours();
 
         public SalesForm()
         {
             InitializeComponent();
-            InitializeBillTypeField();
+            InitializeDataGridViewEvents();
             btnView.Click += btnView_Click;
             btnAdd.Click += btnAdd_Click;
             btnEdit.Click += btnEdit_Click;
@@ -29,70 +28,76 @@ namespace Water
             btnSave.Click += btnSave_Click;
         }
 
-
-        private void InitializeBillTypeField()
+        private void InitializeDataGridViewEvents()
         {
-            this.lblBillType = new System.Windows.Forms.Label();
-            this.cmbBillType = new System.Windows.Forms.ComboBox();
+            // ربط حدث تغيير رقم الفاتورة لتحديث DataGridView
+            this.txtSalesCode.TextChanged += TxtSalesCode_TextChanged;
             
-            this.lblBillType.AutoSize = true;
-            this.lblBillType.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblBillType.Location = new System.Drawing.Point(30, 70);
-            this.lblBillType.Name = "lblBillType";
-            this.lblBillType.Size = new System.Drawing.Size(100, 20);
-            this.lblBillType.TabIndex = 100;
-            this.lblBillType.Text = "نوع الفاتورة:";
-            this.lblBillType.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            // ربط حدث إضافة صف جديد في DataGridView
+            if (this.dataGridView1 != null)
+            {
+                this.dataGridView1.DefaultValuesNeeded += DataGridView1_DefaultValuesNeeded;
+                this.dataGridView1.RowsAdded += DataGridView1_RowsAdded;
+                this.dataGridView1.CellBeginEdit += DataGridView1_CellBeginEdit;
+            }
+        }
 
-            this.cmbBillType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbBillType.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbBillType.FormattingEnabled = true;
-            this.cmbBillType.Items.AddRange(new object[] { "آجل", "نقد" });
-            this.cmbBillType.Location = new System.Drawing.Point(150, 67);
-            this.cmbBillType.Name = "cmbBillType";
-            this.cmbBillType.Size = new System.Drawing.Size(300, 28);
-            this.cmbBillType.TabIndex = 101;
-            this.cmbBillType.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+        private void TxtSalesCode_TextChanged(object sender, EventArgs e)
+        {
+            if (this.dataGridView1 == null)
+                return;
 
-            this.Controls.Add(this.lblBillType);
-            this.Controls.Add(this.cmbBillType);
+            string billNo = this.txtSalesCode.Text.Trim();
+            
+            // تحديث جميع الصفوف الموجودة في DataGridView
+            foreach (DataGridViewRow row in this.dataGridView1.Rows)
+            {
+                if (!row.IsNewRow && row.Cells["bill_no"] != null)
+                {
+                    row.Cells["bill_no"].Value = billNo;
+                }
+            }
+        }
 
-            // تعديل مواضع العناصر الأخرى
-           /* this.lblPeriodId.Location = new System.Drawing.Point(30, 110);
-            this.txtPeriodId.Location = new System.Drawing.Point(150, 107);
-            this.lblCustomerId.Location = new System.Drawing.Point(30, 150);
-            this.txtCustomerId.Location = new System.Drawing.Point(150, 147);
-            this.lblStartTime.Location = new System.Drawing.Point(30, 190);
-            this.dtpStartTime.Location = new System.Drawing.Point(150, 187);
-            this.lblEndTime.Location = new System.Drawing.Point(30, 230);
-            this.dtpEndTime.Location = new System.Drawing.Point(150, 227);
-            this.lblHours.Location = new System.Drawing.Point(30, 270);
-            this.numHours.Location = new System.Drawing.Point(150, 267);
-            this.lblMinutes.Location = new System.Drawing.Point(30, 310);
-            this.numMinutes.Location = new System.Drawing.Point(150, 307);
-            this.lblWaterHourPrice.Location = new System.Drawing.Point(30, 350);
-            this.numWaterHourPrice.Location = new System.Drawing.Point(150, 347);
-            this.lblDieselHourPrice.Location = new System.Drawing.Point(30, 390);
-            this.numDieselHourPrice.Location = new System.Drawing.Point(150, 387);
-            this.lblWaterTotal.Location = new System.Drawing.Point(30, 430);
-            this.numWaterTotal.Location = new System.Drawing.Point(150, 427);
-            this.lblDieselTotal.Location = new System.Drawing.Point(30, 470);
-            this.numDieselTotal.Location = new System.Drawing.Point(150, 467);
-            this.lblTotalAmount.Location = new System.Drawing.Point(30, 510);
-            this.numTotalAmount.Location = new System.Drawing.Point(150, 507);
-            this.lblDueAmount.Location = new System.Drawing.Point(30, 550);
-            this.numDueAmount.Location = new System.Drawing.Point(150, 547);
-            this.lblPaidAmount.Location = new System.Drawing.Point(30, 590);
-            this.numPaidAmount.Location = new System.Drawing.Point(150, 587);
-            this.lblRemainingAmount.Location = new System.Drawing.Point(30, 630);
-            this.numRemainingAmount.Location = new System.Drawing.Point(150, 627);
-            this.btnView.Location = new System.Drawing.Point(30, 680);
-            this.btnAdd.Location = new System.Drawing.Point(125, 680);
-            this.btnEdit.Location = new System.Drawing.Point(220, 680);
-            this.btnDelete.Location = new System.Drawing.Point(315, 680);
-            this.btnSave.Location = new System.Drawing.Point(410, 680);
+        private void DataGridView1_DefaultValuesNeeded(object sender, DataGridViewRowEventArgs e)
+        {
+            // عند إضافة صف جديد، يتم ملء حقل رقم الفاتورة تلقائياً
+            if (e.Row.Cells["bill_no"] != null)
+            {
+                e.Row.Cells["bill_no"].Value = this.txtSalesCode.Text.Trim();
+            }
+        }
 
-            this.ClientSize = new System.Drawing.Size(520, 740);*/
+        private void DataGridView1_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        {
+            // عند إضافة صف جديد، تحديث حقل رقم الفاتورة
+            string billNo = this.txtSalesCode.Text.Trim();
+            
+            for (int i = 0; i < e.RowCount; i++)
+            {
+                int rowIndex = e.RowIndex + i;
+                if (rowIndex < this.dataGridView1.Rows.Count)
+                {
+                    DataGridViewRow row = this.dataGridView1.Rows[rowIndex];
+                    if (row.Cells["bill_no"] != null)
+                    {
+                        row.Cells["bill_no"].Value = billNo;
+                    }
+                }
+            }
+        }
+
+        private void DataGridView1_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            // عند بدء التحرير في صف جديد، ملء حقل رقم الفاتورة تلقائياً
+            if (e.RowIndex >= 0 && e.RowIndex < this.dataGridView1.Rows.Count)
+            {
+                DataGridViewRow row = this.dataGridView1.Rows[e.RowIndex];
+                if (row.IsNewRow && e.ColumnIndex >= 0 && this.dataGridView1.Columns[e.ColumnIndex].Name == "bill_no")
+                {
+                    row.Cells["bill_no"].Value = this.txtSalesCode.Text.Trim();
+                }
+            }
         }
 
 
@@ -217,18 +222,19 @@ namespace Water
             {
                 // التحقق من أن جميع الحقول المطلوبة مملوءة
                 if (string.IsNullOrWhiteSpace(txtSalesCode.Text) ||
-                    cmbBillType.SelectedIndex == -1 ||
+                   // cmbBillType.SelectedIndex == -1 ||
                     string.IsNullOrWhiteSpace(txtCustomerId.Text) ||
                     numHours.Value <= 0 ||
-                    numMinutes.Value <= 0 ||
-                    numWaterHourPrice.Value <= 0 ||
+                    numMinutes.Value <= 0 
+                    /*numWaterHourPrice.Value <= 0 ||
                     numDieselHourPrice.Value <= 0 ||
                     numWaterTotal.Value <= 0 ||
                     numDieselTotal.Value <= 0 ||
                     numTotalAmount.Value <= 0 ||
                     numDueAmount.Value < 0 ||
                     numPaidAmount.Value < 0 ||
-                    numRemainingAmount.Value < 0)
+                    numRemainingAmount.Value < 0*/
+                    )
                 {
                     MessageBox.Show("الرجاء إكمال جميع البيانات المطلوبة", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
@@ -264,6 +270,11 @@ namespace Water
                     );
 
                     MessageBox.Show("تم تحديث بيانات الفاتورة بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    
+                    // تحديث بيانات الشركاء من DataGridView
+                    DeletePartnersHoursFromDatabase(txtSalesCode.Text.Trim());
+                    SavePartnersHoursFromGrid();
+                    //UpdatePartnersHoursFromGrid();
                 }
                 else
                 {
@@ -288,6 +299,9 @@ namespace Water
                     );
 
                     MessageBox.Show("تم حفظ بيانات الفاتورة بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    
+                    // حفظ بيانات الشركاء من DataGridView
+                    SavePartnersHoursFromGrid();
                 }
 
                 clear_SALES();
@@ -396,6 +410,8 @@ namespace Water
                 numRemainingAmount.Value = Convert.ToDecimal(row["remaining_amount"]);
             }
 
+            // تحميل بيانات الشركاء من قاعدة البيانات
+            LoadPartnersHoursFromDatabase(txtSalesCode.Text.Trim());
         }
 
         private void clear_SALES()
@@ -416,6 +432,341 @@ namespace Water
             numDueAmount.Value = 0;
             numPaidAmount.Value = 0;
             numRemainingAmount.Value = 0;
+            
+            // مسح DataGridView
+            if (this.dataGridView1 != null)
+            {
+                this.dataGridView1.DataSource = null;
+                this.dataGridView1.Rows.Clear();
+            }
+        }
+
+        private void LoadPartnersHoursFromDatabase(string billNo)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(billNo))
+                {
+                    if (this.dataGridView1 != null)
+                    {
+                        this.dataGridView1.DataSource = null;
+                        this.dataGridView1.Rows.Clear();
+                    }
+                    return;
+                }
+
+                // الحصول على بيانات الشركاء من قاعدة البيانات
+                DataTable dt = partnersHours.GET_ALL_SALE_PARTNER_HOURS(billNo);
+
+                if (this.dataGridView1 != null)
+                {
+                    // مسح البيانات الحالية
+                    this.dataGridView1.Rows.Clear();
+
+                    // إضافة البيانات إلى DataGridView
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        int rowIndex = this.dataGridView1.Rows.Add();
+                        DataGridViewRow dgvRow = this.dataGridView1.Rows[rowIndex];
+
+                        // حفظ Id في Tag للصف لاستخدامه لاحقاً في التحديث
+                        if (row["Id"] != DBNull.Value)
+                        {
+                            dgvRow.Tag = row["Id"];
+                        }
+
+                        // ملء البيانات في الصف
+                        if (dgvRow.Cells["bill_no"] != null)
+                        {
+                            dgvRow.Cells["bill_no"].Value = row["BillNo"] != DBNull.Value ? row["BillNo"].ToString() : "";
+                        }
+
+                        if (dgvRow.Cells["PartenerId"] != null)
+                        {
+                            dgvRow.Cells["PartenerId"].Value = row["PartnerNumber"] != DBNull.Value ? row["PartnerNumber"].ToString() : "";
+                        }
+
+                        if (dgvRow.Cells["PartenerName"] != null)
+                        {
+                            dgvRow.Cells["PartenerName"].Value = row["PartnerName"] != DBNull.Value ? row["PartnerName"].ToString() : "";
+                        }
+
+                        if (dgvRow.Cells["HoursUesed"] != null)
+                        {
+                            dgvRow.Cells["HoursUesed"].Value = row["HoursCount"] != DBNull.Value ? row["HoursCount"].ToString() : "";
+                        }
+
+                        if (dgvRow.Cells["HoursAvalible"] != null)
+                        {
+                            dgvRow.Cells["HoursAvalible"].Value = row["RemainingHours"] != DBNull.Value ? row["RemainingHours"].ToString() : "";
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("حدث خطأ أثناء تحميل بيانات الشركاء: " + ex.Message, "خطأ", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void SavePartnersHoursFromGrid()
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(txtSalesCode.Text))
+                {
+                    return; // لا يوجد رقم فاتورة
+                }
+
+                string billNo = txtSalesCode.Text.Trim();
+                DataGridView dgv = this.dataGridView1;
+
+                if (dgv == null || dgv.Rows.Count == 0)
+                {
+                    return; // لا توجد بيانات في الجدول
+                }
+
+                int idCounter = 1;
+
+                foreach (DataGridViewRow row in dgv.Rows)
+                {
+                    // تخطي الصف الجديد (NewRow)
+                    if (row.IsNewRow)
+                        continue;
+
+                    // قراءة البيانات من الصف
+                    string partnerNumber = "";
+                    string partnerName = "";
+                    string hoursCount = "";
+                    string remainingHours = "";
+                    string totalHours = "";
+                    
+
+                    // قراءة البيانات من الأعمدة
+                    if (row.Cells["PartenerId"] != null && row.Cells["PartenerId"].Value != null)
+                    {
+                        partnerNumber = row.Cells["PartenerId"].Value.ToString().Trim();
+                    }
+
+                    if (row.Cells["PartenerName"] != null && row.Cells["PartenerName"].Value != null)
+                    {
+                        partnerName = row.Cells["PartenerName"].Value.ToString().Trim();
+                    }
+
+                    if (row.Cells["HoursUesed"] != null && row.Cells["HoursUesed"].Value != null)
+                    {
+                        hoursCount = row.Cells["HoursUesed"].Value.ToString().Trim();
+                    }
+
+                    if (row.Cells["HoursAvalible"] != null && row.Cells["HoursAvalible"].Value != null)
+                    {
+                        remainingHours = row.Cells["HoursAvalible"].Value.ToString().Trim();
+                    }
+
+                    // حساب TotalHours: يمكن أن يكون مجموع HoursUesed و RemainingHours
+                    // أو استخدام HoursUesed كقيمة افتراضية
+                    if (!string.IsNullOrWhiteSpace(hoursCount) && !string.IsNullOrWhiteSpace(remainingHours))
+                    {
+                        try
+                        {
+                            double hours = 0, remaining = 0;
+                            if (double.TryParse(hoursCount, out hours) && double.TryParse(remainingHours, out remaining))
+                            {
+                                totalHours = (hours + remaining).ToString();
+                            }
+                            else
+                            {
+                                totalHours = hoursCount; // استخدام HoursUesed كقيمة افتراضية
+                            }
+                        }
+                        catch
+                        {
+                            totalHours = hoursCount; // استخدام HoursUesed كقيمة افتراضية
+                        }
+                    }
+                    else
+                    {
+                        totalHours = hoursCount ?? "";
+                    }
+
+                    // التحقق من أن البيانات الأساسية موجودة
+                    if (
+                        // !string.IsNullOrWhiteSpace(partnerNumber) || 
+                        // //!string.IsNullOrWhiteSpace(partnerName) || 
+                        // !string.IsNullOrWhiteSpace(hoursCount)
+                        true
+                        )
+                    {
+                        try
+                        {
+                            partnersHours.ADD_SALE_PARTNER_HOURS(
+                                billNo,
+                                idCounter,
+                                partnerNumber ?? "",
+                                partnerName ?? "",
+                                hoursCount ?? "",
+                                remainingHours ?? "",
+                                totalHours ?? ""
+                            );
+                            idCounter++;
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show($"حدث خطأ أثناء حفظ بيانات الشريك في الصف {row.Index + 1}: {ex.Message}", 
+                                "تحذير", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
+                    }
+                }
+
+                if (idCounter > 1)
+                {
+                    MessageBox.Show($"تم حفظ بيانات {idCounter - 1} شريك بنجاح", "نجاح", 
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("حدث خطأ أثناء حفظ بيانات الشركاء: " + ex.Message, "خطأ", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void UpdatePartnersHoursFromGrid()
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(txtSalesCode.Text))
+                {
+                    return; // لا يوجد رقم فاتورة
+                }
+
+                string billNo = txtSalesCode.Text.Trim();
+                DataGridView dgv = this.dataGridView1;
+
+                if (dgv == null || dgv.Rows.Count == 0)
+                {
+                    return; // لا توجد بيانات في الجدول
+                }
+
+                int updatedCount = 0;
+
+                foreach (DataGridViewRow row in dgv.Rows)
+                {
+                    // تخطي الصف الجديد (NewRow)
+                    if (row.IsNewRow)
+                        continue;
+
+                    // قراءة البيانات من الصف
+                    string partnerNumber = "";
+                    string partnerName = "";
+                    string hoursCount = "";
+                    string remainingHours = "";
+                    string totalHours = "";
+
+                    // قراءة Id من Tag (إذا كان محملاً من قاعدة البيانات) أو استخدام رقم الصف
+                    int partnerId = row.Index + 1;
+                    if (row.Tag != null && row.Tag is int)
+                    {
+                        partnerId = (int)row.Tag;
+                    }
+                    else if (row.Tag != null && int.TryParse(row.Tag.ToString(), out int parsedId))
+                    {
+                        partnerId = parsedId;
+                    }
+
+                    // قراءة البيانات من الأعمدة
+                    if (row.Cells["PartenerId"] != null && row.Cells["PartenerId"].Value != null)
+                    {
+                        partnerNumber = row.Cells["PartenerId"].Value.ToString().Trim();
+                    }
+
+                    if (row.Cells["PartenerName"] != null && row.Cells["PartenerName"].Value != null)
+                    {
+                        partnerName = row.Cells["PartenerName"].Value.ToString().Trim();
+                    }
+
+                    if (row.Cells["HoursUesed"] != null && row.Cells["HoursUesed"].Value != null)
+                    {
+                        hoursCount = row.Cells["HoursUesed"].Value.ToString().Trim();
+                    }
+
+                    if (row.Cells["HoursAvalible"] != null && row.Cells["HoursAvalible"].Value != null)
+                    {
+                        remainingHours = row.Cells["HoursAvalible"].Value.ToString().Trim();
+                    }
+
+                    // حساب TotalHours
+                    if (!string.IsNullOrWhiteSpace(hoursCount) && !string.IsNullOrWhiteSpace(remainingHours))
+                    {
+                        try
+                        {
+                            double hours = 0, remaining = 0;
+                            if (double.TryParse(hoursCount, out hours) && double.TryParse(remainingHours, out remaining))
+                            {
+                                totalHours = (hours + remaining).ToString();
+                            }
+                            else
+                            {
+                                totalHours = hoursCount;
+                            }
+                        }
+                        catch
+                        {
+                            totalHours = hoursCount;
+                        }
+                    }
+                    else
+                    {
+                        totalHours = hoursCount ?? "";
+                    }
+
+                    // تحديث بيانات الشريك
+                    try
+                    {
+                        partnersHours.UPDATE_SALE_PARTNER_HOURS_BY_BILLNO(
+                            billNo,
+                            partnerId,
+                            partnerNumber ?? "",
+                            partnerName ?? "",
+                            hoursCount ?? "",
+                            remainingHours ?? "",
+                            totalHours ?? ""
+                        );
+                        updatedCount++;
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"حدث خطأ أثناء تحديث بيانات الشريك في الصف {row.Index + 1}: {ex.Message}", 
+                            "تحذير", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
+
+                if (updatedCount > 0)
+                {
+                    MessageBox.Show($"تم تحديث بيانات {updatedCount} شريك بنجاح", "نجاح", 
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("حدث خطأ أثناء تحديث بيانات الشركاء: " + ex.Message, "خطأ", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+                              
+        private void DeletePartnersHoursFromDatabase(string billNo)
+        {
+            try
+            {
+                partnersHours.DELETE_SALE_PARTNER_HOURS(billNo);
+            }
+        
+        catch (Exception ex)
+            {
+                MessageBox.Show("حدث خطأ أثناء حذف بيانات الشركاء: " + ex.Message, "خطأ", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
        
