@@ -118,7 +118,7 @@
             this.button1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.button1.Size = new System.Drawing.Size(175, 50);
             this.button1.TabIndex = 6;
-            this.button1.Text = "Test";
+            this.button1.Text = "مستويات التسعيرة";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 

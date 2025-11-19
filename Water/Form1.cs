@@ -55,7 +55,7 @@ namespace Water
 
         private void button1_Click(object sender, EventArgs e)
         {
-            testTab tt = new testTab();
+            PricingForm tt = new PricingForm();
             tt.ShowDialog();
         }
 
