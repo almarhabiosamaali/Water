@@ -16,6 +16,7 @@ namespace Water
         private bool isEditMode = false;
         Clas.sales sal = new Clas.sales();
         Clas.salePartnersHours partnersHours = new Clas.salePartnersHours();
+        Clas.customer customer = new Clas.customer();
 
         public SalesForm()
         {
@@ -39,6 +40,8 @@ namespace Water
                 this.dataGridView1.DefaultValuesNeeded += DataGridView1_DefaultValuesNeeded;
                 this.dataGridView1.RowsAdded += DataGridView1_RowsAdded;
                 this.dataGridView1.CellBeginEdit += DataGridView1_CellBeginEdit;
+                this.dataGridView1.KeyDown += DataGridView1_KeyDown;
+                this.dataGridView1.CellEnter += DataGridView1_CellEnter;
             }
         }
 
@@ -98,6 +101,121 @@ namespace Water
                     row.Cells["bill_no"].Value = this.txtSalesCode.Text.Trim();
                 }
             }
+        }
+
+        private void DataGridView1_CellEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            // عند الدخول إلى خلية PartenerId، يمكن فتح قائمة العملاء
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            {
+                DataGridViewColumn column = this.dataGridView1.Columns[e.ColumnIndex];
+                if (column != null && column.Name == "PartenerId")
+                {
+                    // يمكن إضافة منطق إضافي هنا إذا لزم الأمر
+                }
+            }
+        }
+
+        private void DataGridView1_KeyDown(object sender, KeyEventArgs e)
+        {
+            // عند الضغط على Enter أو F2 في عمود PartenerId، فتح قائمة العملاء
+            if (this.dataGridView1.CurrentCell != null && 
+                this.dataGridView1.CurrentCell.ColumnIndex >= 0 &&
+                this.dataGridView1.CurrentCell.RowIndex >= 0)
+            {
+                DataGridViewColumn column = this.dataGridView1.Columns[this.dataGridView1.CurrentCell.ColumnIndex];
+                
+                if (column != null && column.Name == "PartenerId" && 
+                    (e.KeyCode == Keys.Enter || e.KeyCode == Keys.F2))
+                {
+                    e.Handled = true;
+                    ShowCustomersList();
+                }
+            }
+        }
+
+        private void ShowCustomersList()
+        {
+            try
+            {
+                DataTable dt = customer.GET_ALL_CUSTOMERS();
+                
+                if (dt.Rows.Count == 0)
+                {
+                    MessageBox.Show("لا توجد بيانات للعرض", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                Form viewForm = new Form();
+                viewForm.Text = "عرض العملاء";
+                viewForm.RightToLeft = RightToLeft.Yes;
+                viewForm.RightToLeftLayout = true;
+                viewForm.Size = new Size(900, 500);
+                viewForm.StartPosition = FormStartPosition.CenterScreen;
+
+                DataGridView dgv = new DataGridView();
+                dgv.Dock = DockStyle.Fill;
+                dgv.DataSource = dt;
+                dgv.ReadOnly = true;
+                dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+                dgv.MultiSelect = false;
+                dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                dgv.RightToLeft = RightToLeft.Yes;
+
+                dgv.CellDoubleClick += (s, args) =>
+                {
+                    if (args.RowIndex >= 0)
+                    {
+                        DataRow row = dt.Rows[args.RowIndex];
+                        LoadCustomerDataToGrid(row);
+                        viewForm.Close();
+                    }
+                };
+
+                viewForm.Controls.Add(dgv);
+                viewForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("حدث خطأ أثناء عرض البيانات: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void LoadCustomerDataToGrid(DataRow customerRow)
+        {
+            if (this.dataGridView1.CurrentCell == null || this.dataGridView1.CurrentCell.RowIndex < 0)
+                return;
+
+            int currentRowIndex = this.dataGridView1.CurrentCell.RowIndex;
+            DataGridViewRow dgvRow = this.dataGridView1.Rows[currentRowIndex];
+
+            // تعبئة رقم الشريك
+            if (dgvRow.Cells["PartenerId"] != null)
+            {
+                dgvRow.Cells["PartenerId"].Value = customerRow["id"] != DBNull.Value ? customerRow["id"].ToString() : "";
+            }
+
+            // تعبئة اسم الشريك
+            if (dgvRow.Cells["PartenerName"] != null)
+            {
+                dgvRow.Cells["PartenerName"].Value = customerRow["name"] != DBNull.Value ? customerRow["name"].ToString() : "";
+            }
+
+            // تعبئة عدد الساعات (allocated_hours)
+            if (dgvRow.Cells["HoursAvalible"] != null)
+            {
+                if (customerRow["allocated_hours"] != DBNull.Value)
+                {
+                    dgvRow.Cells["HoursAvalible"].Value = customerRow["allocated_hours"].ToString();
+                }
+                else
+                {
+                    dgvRow.Cells["HoursAvalible"].Value = "";
+                }
+            }
+
+            // يمكن أيضاً تعبئة الساعات المتاحة من minutes إذا لزم الأمر
+            // لكن حسب الجدول، HoursAvalible قد يكون مختلفاً
         }
 
 

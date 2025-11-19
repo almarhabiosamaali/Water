@@ -147,8 +147,8 @@ namespace Water
                 if (string.IsNullOrWhiteSpace(txtCustomerCode.Text) ||
                     string.IsNullOrWhiteSpace(txtCustomerName.Text) ||
                     cmbType.SelectedIndex == -1 ||
-                    numAllocatedHours.Value <= 0 ||
-                    numMinutes.Value <= 0 ||
+                    numAllocatedHours.Text !=null ||
+                    numMinutes.Text !=null ||
                     string.IsNullOrWhiteSpace(txtPhone.Text) ||
                     string.IsNullOrWhiteSpace(txtNotes.Text))
                 {
@@ -163,8 +163,8 @@ namespace Water
                         txtCustomerCode.Text.Trim(),
                         txtCustomerName.Text.Trim(),
                         cmbType.SelectedItem.ToString(),
-                        (int)numAllocatedHours.Value,
-                        (int)numMinutes.Value,
+                        numAllocatedHours.Text.Trim(),
+                        numMinutes.Text.Trim(),
                         txtPhone.Text.Trim(),
                         txtNotes.Text.Trim()
                     );
