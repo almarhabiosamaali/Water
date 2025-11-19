@@ -34,22 +34,19 @@ namespace Water
             this.txtCustomerName = new System.Windows.Forms.TextBox();
             this.lblType = new System.Windows.Forms.Label();
             this.cmbType = new System.Windows.Forms.ComboBox();
-            this.lblAllocatedHours = new System.Windows.Forms.Label();
-            this.lblMinutes = new System.Windows.Forms.Label();
             this.lblPhone = new System.Windows.Forms.Label();
             this.txtPhone = new System.Windows.Forms.TextBox();
+            this.lblAddress = new System.Windows.Forms.Label();
+            this.txtAddress = new System.Windows.Forms.TextBox();
             this.lblNotes = new System.Windows.Forms.Label();
             this.txtNotes = new System.Windows.Forms.TextBox();
+            this.lblCreatedDate = new System.Windows.Forms.Label();
+            this.dtpCreatedDate = new System.Windows.Forms.DateTimePicker();
             this.btnView = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
-            this.numMinutes = new System.Windows.Forms.TextBox();
-            this.numAllocatedHours = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.SuspendLayout();
             // 
             // lblCustomerCode
@@ -116,85 +113,104 @@ namespace Water
             this.cmbType.Size = new System.Drawing.Size(263, 28);
             this.cmbType.TabIndex = 5;
             // 
-            // lblAllocatedHours
-            // 
-            this.lblAllocatedHours.AutoSize = true;
-            this.lblAllocatedHours.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAllocatedHours.Location = new System.Drawing.Point(26, 138);
-            this.lblAllocatedHours.Name = "lblAllocatedHours";
-            this.lblAllocatedHours.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.lblAllocatedHours.Size = new System.Drawing.Size(123, 20);
-            this.lblAllocatedHours.TabIndex = 6;
-            this.lblAllocatedHours.Text = "الساعات المخصصة:";
-            // 
-            // lblMinutes
-            // 
-            this.lblMinutes.AutoSize = true;
-            this.lblMinutes.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMinutes.Location = new System.Drawing.Point(26, 190);
-            this.lblMinutes.Name = "lblMinutes";
-            this.lblMinutes.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.lblMinutes.Size = new System.Drawing.Size(51, 20);
-            this.lblMinutes.TabIndex = 8;
-            this.lblMinutes.Text = "الدقائق:";
-            // 
             // lblPhone
             // 
             this.lblPhone.AutoSize = true;
             this.lblPhone.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPhone.Location = new System.Drawing.Point(26, 230);
+            this.lblPhone.Location = new System.Drawing.Point(26, 138);
             this.lblPhone.Name = "lblPhone";
             this.lblPhone.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblPhone.Size = new System.Drawing.Size(50, 20);
-            this.lblPhone.TabIndex = 10;
+            this.lblPhone.TabIndex = 6;
             this.lblPhone.Text = "الهاتف:";
             // 
             // txtPhone
             // 
             this.txtPhone.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPhone.Location = new System.Drawing.Point(155, 227);
+            this.txtPhone.Location = new System.Drawing.Point(155, 135);
             this.txtPhone.Name = "txtPhone";
             this.txtPhone.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtPhone.Size = new System.Drawing.Size(263, 26);
-            this.txtPhone.TabIndex = 11;
+            this.txtPhone.TabIndex = 7;
+            // 
+            // lblAddress
+            // 
+            this.lblAddress.AutoSize = true;
+            this.lblAddress.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAddress.Location = new System.Drawing.Point(458, 138);
+            this.lblAddress.Name = "lblAddress";
+            this.lblAddress.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.lblAddress.Size = new System.Drawing.Size(53, 20);
+            this.lblAddress.TabIndex = 8;
+            this.lblAddress.Text = "العنوان:";
+            // 
+            // txtAddress
+            // 
+            this.txtAddress.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtAddress.Location = new System.Drawing.Point(583, 135);
+            this.txtAddress.Name = "txtAddress";
+            this.txtAddress.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.txtAddress.Size = new System.Drawing.Size(263, 26);
+            this.txtAddress.TabIndex = 9;
             // 
             // lblNotes
             // 
             this.lblNotes.AutoSize = true;
             this.lblNotes.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNotes.Location = new System.Drawing.Point(26, 270);
+            this.lblNotes.Location = new System.Drawing.Point(26, 190);
             this.lblNotes.Name = "lblNotes";
             this.lblNotes.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblNotes.Size = new System.Drawing.Size(66, 20);
-            this.lblNotes.TabIndex = 12;
+            this.lblNotes.TabIndex = 10;
             this.lblNotes.Text = "ملاحظات:";
             // 
             // txtNotes
             // 
             this.txtNotes.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtNotes.Location = new System.Drawing.Point(155, 267);
+            this.txtNotes.Location = new System.Drawing.Point(155, 187);
             this.txtNotes.Multiline = true;
             this.txtNotes.Name = "txtNotes";
             this.txtNotes.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtNotes.Size = new System.Drawing.Size(263, 80);
-            this.txtNotes.TabIndex = 13;
+            this.txtNotes.TabIndex = 11;
+            // 
+            // lblCreatedDate
+            // 
+            this.lblCreatedDate.AutoSize = true;
+            this.lblCreatedDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCreatedDate.Location = new System.Drawing.Point(458, 190);
+            this.lblCreatedDate.Name = "lblCreatedDate";
+            this.lblCreatedDate.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.lblCreatedDate.Size = new System.Drawing.Size(51, 20);
+            this.lblCreatedDate.TabIndex = 12;
+            this.lblCreatedDate.Text = "التاريخ:";
+            // 
+            // dtpCreatedDate
+            // 
+            this.dtpCreatedDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dtpCreatedDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpCreatedDate.Location = new System.Drawing.Point(583, 187);
+            this.dtpCreatedDate.Name = "dtpCreatedDate";
+            this.dtpCreatedDate.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.dtpCreatedDate.RightToLeftLayout = true;
+            this.dtpCreatedDate.Size = new System.Drawing.Size(263, 26);
+            this.dtpCreatedDate.TabIndex = 13;
             // 
             // btnView
             // 
             this.btnView.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnView.Location = new System.Drawing.Point(26, 370);
+            this.btnView.Location = new System.Drawing.Point(26, 290);
             this.btnView.Name = "btnView";
             this.btnView.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnView.Size = new System.Drawing.Size(74, 40);
             this.btnView.TabIndex = 14;
             this.btnView.Text = "عرض";
             this.btnView.UseVisualStyleBackColor = true;
-            this.btnView.Click += new System.EventHandler(this.btnView_Click_1);
             // 
             // btnAdd
             // 
             this.btnAdd.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAdd.Location = new System.Drawing.Point(109, 370);
+            this.btnAdd.Location = new System.Drawing.Point(109, 290);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnAdd.Size = new System.Drawing.Size(74, 40);
@@ -205,7 +221,7 @@ namespace Water
             // btnEdit
             // 
             this.btnEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEdit.Location = new System.Drawing.Point(192, 370);
+            this.btnEdit.Location = new System.Drawing.Point(192, 290);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnEdit.Size = new System.Drawing.Size(74, 40);
@@ -216,7 +232,7 @@ namespace Water
             // btnDelete
             // 
             this.btnDelete.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDelete.Location = new System.Drawing.Point(276, 370);
+            this.btnDelete.Location = new System.Drawing.Point(276, 290);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnDelete.Size = new System.Drawing.Size(74, 40);
@@ -227,70 +243,22 @@ namespace Water
             // btnSave
             // 
             this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSave.Location = new System.Drawing.Point(359, 370);
+            this.btnSave.Location = new System.Drawing.Point(359, 290);
             this.btnSave.Name = "btnSave";
             this.btnSave.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnSave.Size = new System.Drawing.Size(74, 40);
-            this.btnSave.TabIndex = 18;
+            this.btnSave.TabIndex = 14;
             this.btnSave.Text = "حفظ";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
-            // 
-            // numMinutes
-            // 
-            this.numMinutes.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numMinutes.Location = new System.Drawing.Point(155, 190);
-            this.numMinutes.Name = "numMinutes";
-            this.numMinutes.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.numMinutes.Size = new System.Drawing.Size(263, 26);
-            this.numMinutes.TabIndex = 19;
-            // 
-            // numAllocatedHours
-            // 
-            this.numAllocatedHours.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numAllocatedHours.Location = new System.Drawing.Point(155, 138);
-            this.numAllocatedHours.Name = "numAllocatedHours";
-            this.numAllocatedHours.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.numAllocatedHours.Size = new System.Drawing.Size(263, 26);
-            this.numAllocatedHours.TabIndex = 20;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.Location = new System.Drawing.Point(583, 26);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.textBox1.Size = new System.Drawing.Size(263, 26);
-            this.textBox1.TabIndex = 22;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(454, 26);
-            this.label1.Name = "label1";
-            this.label1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.label1.Size = new System.Drawing.Size(51, 20);
-            this.label1.TabIndex = 21;
-            this.label1.Text = "التاريخ:";
-            // 
-            // dateTimePicker1
-            // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(567, 133);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 24);
-            this.dateTimePicker1.TabIndex = 23;
             // 
             // CustomerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(934, 430);
-            this.Controls.Add(this.dateTimePicker1);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.numAllocatedHours);
-            this.Controls.Add(this.numMinutes);
+            this.ClientSize = new System.Drawing.Size(934, 350);
+            this.Controls.Add(this.dtpCreatedDate);
+            this.Controls.Add(this.lblCreatedDate);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnEdit);
@@ -298,10 +266,10 @@ namespace Water
             this.Controls.Add(this.btnView);
             this.Controls.Add(this.txtNotes);
             this.Controls.Add(this.lblNotes);
+            this.Controls.Add(this.txtAddress);
+            this.Controls.Add(this.lblAddress);
             this.Controls.Add(this.txtPhone);
             this.Controls.Add(this.lblPhone);
-            this.Controls.Add(this.lblMinutes);
-            this.Controls.Add(this.lblAllocatedHours);
             this.Controls.Add(this.cmbType);
             this.Controls.Add(this.lblType);
             this.Controls.Add(this.txtCustomerName);
@@ -329,21 +297,18 @@ namespace Water
         private System.Windows.Forms.TextBox txtCustomerName;
         private System.Windows.Forms.Label lblType;
         private System.Windows.Forms.ComboBox cmbType;
-        private System.Windows.Forms.Label lblAllocatedHours;
-        private System.Windows.Forms.Label lblMinutes;
         private System.Windows.Forms.Label lblPhone;
         private System.Windows.Forms.TextBox txtPhone;
+        private System.Windows.Forms.Label lblAddress;
+        private System.Windows.Forms.TextBox txtAddress;
         private System.Windows.Forms.Label lblNotes;
         private System.Windows.Forms.TextBox txtNotes;
+        private System.Windows.Forms.Label lblCreatedDate;
+        private System.Windows.Forms.DateTimePicker dtpCreatedDate;
         private System.Windows.Forms.Button btnView;
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Button btnEdit;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnSave;
-        private System.Windows.Forms.TextBox numMinutes;
-        private System.Windows.Forms.TextBox numAllocatedHours;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
     }
 }

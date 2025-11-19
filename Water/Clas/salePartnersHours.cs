@@ -11,11 +11,11 @@ namespace Water.Clas
     public class salePartnersHours
     {
         public void ADD_SALE_PARTNER_HOURS(string billNo, int id, string partnerNumber, string partnerName, 
-            string hoursCount, string remainingHours, string totalHours)
+            string hoursCount, string minutesCount, string hoursAvalible, string minutesAvalible, string totalHours)
         {
             Clas.DataAccessLayer DAL = new Clas.DataAccessLayer();
             DAL.Open();
-            SqlParameter[] param = new SqlParameter[7];
+            SqlParameter[] param = new SqlParameter[9];
             
             param[0] = new SqlParameter("@BillNo", SqlDbType.VarChar, 50);
             param[0].Value = billNo;
@@ -32,11 +32,17 @@ namespace Water.Clas
             param[4] = new SqlParameter("@HoursCount", SqlDbType.VarChar, 50);
             param[4].Value = hoursCount;
 
-            param[5] = new SqlParameter("@RemainingHours", SqlDbType.VarChar, 50);
-            param[5].Value = remainingHours;
+            param[5] = new SqlParameter("@MinutesCount", SqlDbType.VarChar, 50);
+            param[5].Value = minutesCount;
 
-            param[6] = new SqlParameter("@TotalHours", SqlDbType.VarChar, 50);
-            param[6].Value = totalHours;
+            param[6] = new SqlParameter("@HoursAvalible", SqlDbType.VarChar, 50);
+            param[6].Value = hoursAvalible;
+
+            param[7] = new SqlParameter("@MinutesAvalible", SqlDbType.VarChar, 50);
+            param[7].Value = minutesAvalible;
+
+            param[8] = new SqlParameter("@TotalHours", SqlDbType.VarChar, 50);
+            param[8].Value = totalHours;
 
             DAL.ExecuteCommand("salePartnersHours_insert", param);
             DAL.Close();
@@ -74,11 +80,11 @@ namespace Water.Clas
         }
 
         public void UPDATE_SALE_PARTNER_HOURS(string billNo, int id, string partnerNumber, string partnerName, 
-            string hoursCount, string remainingHours, string totalHours)
+            string hoursCount, string minutesCount, string hoursAvalible, string minutesAvalible, string totalHours)
         {
             Clas.DataAccessLayer DAL = new Clas.DataAccessLayer();
             DAL.Open();
-            SqlParameter[] param = new SqlParameter[7];
+            SqlParameter[] param = new SqlParameter[9];
             
             param[0] = new SqlParameter("@BillNo", SqlDbType.VarChar, 50);
             param[0].Value = billNo;
@@ -95,22 +101,28 @@ namespace Water.Clas
             param[4] = new SqlParameter("@HoursCount", SqlDbType.VarChar, 50);
             param[4].Value = hoursCount;
 
-            param[5] = new SqlParameter("@RemainingHours", SqlDbType.VarChar, 50);
-            param[5].Value = remainingHours;
+            param[5] = new SqlParameter("@MinutesCount", SqlDbType.VarChar, 50);
+            param[5].Value = minutesCount;
 
-            param[6] = new SqlParameter("@TotalHours", SqlDbType.VarChar, 50);
-            param[6].Value = totalHours;
+            param[6] = new SqlParameter("@HoursAvalible", SqlDbType.VarChar, 50);
+            param[6].Value = hoursAvalible;
+
+            param[7] = new SqlParameter("@MinutesAvalible", SqlDbType.VarChar, 50);
+            param[7].Value = minutesAvalible;
+
+            param[8] = new SqlParameter("@TotalHours", SqlDbType.VarChar, 50);
+            param[8].Value = totalHours;
 
             DAL.ExecuteCommand("salePartnersHours_update", param);
             DAL.Close();
         }
 
         public void UPDATE_SALE_PARTNER_HOURS_BY_BILLNO(string billNo, int id, string partnerNumber, string partnerName, 
-            string hoursCount, string remainingHours, string totalHours)
+            string hoursCount, string minutesCount, string hoursAvalible, string minutesAvalible, string totalHours)
         {
             Clas.DataAccessLayer DAL = new Clas.DataAccessLayer();
             DAL.Open();
-            SqlParameter[] param = new SqlParameter[7];
+            SqlParameter[] param = new SqlParameter[9];
             
             param[0] = new SqlParameter("@BillNo", SqlDbType.VarChar, 50);
             param[0].Value = billNo;
@@ -127,11 +139,17 @@ namespace Water.Clas
             param[4] = new SqlParameter("@HoursCount", SqlDbType.VarChar, 50);
             param[4].Value = hoursCount;
 
-            param[5] = new SqlParameter("@RemainingHours", SqlDbType.VarChar, 50);
-            param[5].Value = remainingHours;
+            param[5] = new SqlParameter("@MinutesCount", SqlDbType.VarChar, 50);
+            param[5].Value = minutesCount;
 
-            param[6] = new SqlParameter("@TotalHours", SqlDbType.VarChar, 50);
-            param[6].Value = totalHours;
+            param[6] = new SqlParameter("@HoursAvalible", SqlDbType.VarChar, 50);
+            param[6].Value = hoursAvalible;
+
+            param[7] = new SqlParameter("@MinutesAvalible", SqlDbType.VarChar, 50);
+            param[7].Value = minutesAvalible;
+
+            param[8] = new SqlParameter("@TotalHours", SqlDbType.VarChar, 50);
+            param[8].Value = totalHours;
 
             DAL.ExecuteCommand("salePartnersHours_Update", param);
             DAL.Close();

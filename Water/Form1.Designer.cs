@@ -35,12 +35,13 @@
             this.btnPeriods = new System.Windows.Forms.Button();
             this.btnSales = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnCustomers
             // 
             this.btnCustomers.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCustomers.Location = new System.Drawing.Point(26, 30);
+            this.btnCustomers.Location = new System.Drawing.Point(12, 70);
             this.btnCustomers.Name = "btnCustomers";
             this.btnCustomers.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnCustomers.Size = new System.Drawing.Size(175, 50);
@@ -52,7 +53,7 @@
             // btnAccounts
             // 
             this.btnAccounts.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAccounts.Location = new System.Drawing.Point(219, 30);
+            this.btnAccounts.Location = new System.Drawing.Point(397, 70);
             this.btnAccounts.Name = "btnAccounts";
             this.btnAccounts.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnAccounts.Size = new System.Drawing.Size(175, 50);
@@ -64,7 +65,7 @@
             // btnDowntime
             // 
             this.btnDowntime.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDowntime.Location = new System.Drawing.Point(411, 30);
+            this.btnDowntime.Location = new System.Drawing.Point(397, 138);
             this.btnDowntime.Name = "btnDowntime";
             this.btnDowntime.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnDowntime.Size = new System.Drawing.Size(175, 50);
@@ -76,7 +77,7 @@
             // btnExpenses
             // 
             this.btnExpenses.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnExpenses.Location = new System.Drawing.Point(26, 100);
+            this.btnExpenses.Location = new System.Drawing.Point(12, 138);
             this.btnExpenses.Name = "btnExpenses";
             this.btnExpenses.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnExpenses.Size = new System.Drawing.Size(175, 50);
@@ -88,7 +89,7 @@
             // btnPeriods
             // 
             this.btnPeriods.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPeriods.Location = new System.Drawing.Point(219, 100);
+            this.btnPeriods.Location = new System.Drawing.Point(205, 138);
             this.btnPeriods.Name = "btnPeriods";
             this.btnPeriods.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnPeriods.Size = new System.Drawing.Size(175, 50);
@@ -100,7 +101,7 @@
             // btnSales
             // 
             this.btnSales.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSales.Location = new System.Drawing.Point(411, 100);
+            this.btnSales.Location = new System.Drawing.Point(397, 211);
             this.btnSales.Name = "btnSales";
             this.btnSales.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnSales.Size = new System.Drawing.Size(175, 50);
@@ -112,20 +113,33 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(26, 170);
+            this.button1.Location = new System.Drawing.Point(12, 211);
             this.button1.Name = "button1";
             this.button1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.button1.Size = new System.Drawing.Size(175, 50);
             this.button1.TabIndex = 6;
-            this.button1.Text = "القيود اليومية";
+            this.button1.Text = "Test";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // button2
+            // 
+            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button2.Location = new System.Drawing.Point(205, 70);
+            this.button2.Name = "button2";
+            this.button2.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.button2.Size = new System.Drawing.Size(175, 50);
+            this.button2.TabIndex = 7;
+            this.button2.Text = "الشركاء";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(612, 261);
+            this.ClientSize = new System.Drawing.Size(690, 338);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btnSales);
             this.Controls.Add(this.btnPeriods);
@@ -153,6 +167,7 @@
         private System.Windows.Forms.Button btnPeriods;
         private System.Windows.Forms.Button btnSales;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
     }
 }
 

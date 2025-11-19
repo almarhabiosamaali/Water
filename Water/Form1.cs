@@ -58,5 +58,11 @@ namespace Water
             testTab tt = new testTab();
             tt.ShowDialog();
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            PartnersForm pp = new PartnersForm();
+            pp.ShowDialog();
+        }
     }
 }

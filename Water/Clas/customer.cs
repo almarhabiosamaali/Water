@@ -10,7 +10,7 @@ namespace Water.Clas
 {
     class customer
     {
-        public void ADD_CUSTOMER(string id, string name, string type, int? allocated_hours, int? minutes, string phone, string notes)
+        public void ADD_CUSTOMER(string id, string name, string type, string phone, string address, string notes, DateTime? created_date)
         {
             Clas.DataAccessLayer DAL = new Clas.DataAccessLayer();
             DAL.Open();
@@ -25,17 +25,17 @@ namespace Water.Clas
             param[2] = new SqlParameter("@type", SqlDbType.VarChar, 50);
             param[2].Value = type;
 
-            param[3] = new SqlParameter("@allocated_hours", SqlDbType.Int);
-            param[3].Value = allocated_hours.HasValue ? (object)allocated_hours.Value : DBNull.Value;
+            param[3] = new SqlParameter("@phone", SqlDbType.VarChar, 50);
+            param[3].Value = phone;
 
-            param[4] = new SqlParameter("@minutes", SqlDbType.Int);
-            param[4].Value = minutes.HasValue ? (object)minutes.Value : DBNull.Value;
+            param[4] = new SqlParameter("@address", SqlDbType.VarChar, 255);
+            param[4].Value = address;
 
-            param[5] = new SqlParameter("@phone", SqlDbType.VarChar, 50);
-            param[5].Value = phone;
+            param[5] = new SqlParameter("@notes", SqlDbType.VarChar, 255);
+            param[5].Value = notes;
 
-            param[6] = new SqlParameter("@notes", SqlDbType.VarChar, 255);
-            param[6].Value = notes;
+            param[6] = new SqlParameter("@created_date", SqlDbType.DateTime);
+            param[6].Value = created_date.HasValue ? (object)created_date.Value : DBNull.Value;
 
             DAL.ExecuteCommand("customer_insert", param);
             DAL.Close();
@@ -64,7 +64,7 @@ namespace Water.Clas
             return dt;
         }
 
-        public void UPDATE_CUSTOMER(string id, string name, string type, int? allocated_hours, int? minutes, string phone, string notes)
+        public void UPDATE_CUSTOMER(string id, string name, string type, string phone, string address, string notes, DateTime? created_date)
         {
             Clas.DataAccessLayer DAL = new Clas.DataAccessLayer();
             DAL.Open();
@@ -79,17 +79,17 @@ namespace Water.Clas
             param[2] = new SqlParameter("@type", SqlDbType.VarChar, 50);
             param[2].Value = type;
 
-            param[3] = new SqlParameter("@allocated_hours", SqlDbType.Int);
-            param[3].Value = allocated_hours.HasValue ? (object)allocated_hours.Value : DBNull.Value;
+            param[3] = new SqlParameter("@phone", SqlDbType.VarChar, 50);
+            param[3].Value = phone;
 
-            param[4] = new SqlParameter("@minutes", SqlDbType.Int);
-            param[4].Value = minutes.HasValue ? (object)minutes.Value : DBNull.Value;
+            param[4] = new SqlParameter("@address", SqlDbType.VarChar, 255);
+            param[4].Value = address;
 
-            param[5] = new SqlParameter("@phone", SqlDbType.VarChar, 50);
-            param[5].Value = phone;
+            param[5] = new SqlParameter("@notes", SqlDbType.VarChar, 255);
+            param[5].Value = notes;
 
-            param[6] = new SqlParameter("@notes", SqlDbType.VarChar, 255);
-            param[6].Value = notes;
+            param[6] = new SqlParameter("@created_date", SqlDbType.DateTime);
+            param[6].Value = created_date.HasValue ? (object)created_date.Value : DBNull.Value;
 
             DAL.ExecuteCommand("customer_update", param);
             DAL.Close();

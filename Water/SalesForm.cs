@@ -17,6 +17,7 @@ namespace Water
         Clas.sales sal = new Clas.sales();
         Clas.salePartnersHours partnersHours = new Clas.salePartnersHours();
         Clas.customer customer = new Clas.customer();
+        Clas.partners partners = new Clas.partners();
 
         public SalesForm()
         {
@@ -138,7 +139,7 @@ namespace Water
         {
             try
             {
-                DataTable dt = customer.GET_ALL_CUSTOMERS();
+                DataTable dt = partners.GET_ALL_PARTNERS();
                 
                 if (dt.Rows.Count == 0)
                 {
@@ -147,10 +148,10 @@ namespace Water
                 }
 
                 Form viewForm = new Form();
-                viewForm.Text = "عرض العملاء";
+                viewForm.Text = "عرض الشركاء";
                 viewForm.RightToLeft = RightToLeft.Yes;
                 viewForm.RightToLeftLayout = true;
-                viewForm.Size = new Size(900, 500);
+                viewForm.Size = new Size(1200, 600);
                 viewForm.StartPosition = FormStartPosition.CenterScreen;
 
                 DataGridView dgv = new DataGridView();
@@ -167,7 +168,7 @@ namespace Water
                     if (args.RowIndex >= 0)
                     {
                         DataRow row = dt.Rows[args.RowIndex];
-                        LoadCustomerDataToGrid(row);
+                        LoadPartnerDataToGrid(row);
                         viewForm.Close();
                     }
                 };
@@ -181,7 +182,7 @@ namespace Water
             }
         }
 
-        private void LoadCustomerDataToGrid(DataRow customerRow)
+        private void LoadPartnerDataToGrid(DataRow partnerRow)
         {
             if (this.dataGridView1.CurrentCell == null || this.dataGridView1.CurrentCell.RowIndex < 0)
                 return;
@@ -192,21 +193,21 @@ namespace Water
             // تعبئة رقم الشريك
             if (dgvRow.Cells["PartenerId"] != null)
             {
-                dgvRow.Cells["PartenerId"].Value = customerRow["id"] != DBNull.Value ? customerRow["id"].ToString() : "";
+                dgvRow.Cells["PartenerId"].Value = partnerRow["id"] != DBNull.Value ? partnerRow["id"].ToString() : "";
             }
 
             // تعبئة اسم الشريك
             if (dgvRow.Cells["PartenerName"] != null)
             {
-                dgvRow.Cells["PartenerName"].Value = customerRow["name"] != DBNull.Value ? customerRow["name"].ToString() : "";
+                dgvRow.Cells["PartenerName"].Value = partnerRow["name"] != DBNull.Value ? partnerRow["name"].ToString() : "";
             }
 
-            // تعبئة عدد الساعات (allocated_hours)
+            // تعبئة الساعات المتاحة من جدول partners
             if (dgvRow.Cells["HoursAvalible"] != null)
             {
-                if (customerRow["allocated_hours"] != DBNull.Value)
+                if (partnerRow["avalibleHours"] != DBNull.Value)
                 {
-                    dgvRow.Cells["HoursAvalible"].Value = customerRow["allocated_hours"].ToString();
+                    dgvRow.Cells["HoursAvalible"].Value = partnerRow["avalibleHours"].ToString();
                 }
                 else
                 {
@@ -214,8 +215,18 @@ namespace Water
                 }
             }
 
-            // يمكن أيضاً تعبئة الساعات المتاحة من minutes إذا لزم الأمر
-            // لكن حسب الجدول، HoursAvalible قد يكون مختلفاً
+            // تعبئة الدقائق المتاحة من جدول partners
+            if (dgvRow.Cells["MinutesAvalible"] != null)
+            {
+                if (partnerRow["avalibleMinutes"] != DBNull.Value)
+                {
+                    dgvRow.Cells["MinutesAvalible"].Value = partnerRow["avalibleMinutes"].ToString();
+                }
+                else
+                {
+                    dgvRow.Cells["MinutesAvalible"].Value = "";
+                }
+            }
         }
 
 
@@ -397,26 +408,26 @@ namespace Water
                 else
                 {
                     // إضافة فاتورة جديدة
-                    sal.ADD_SALES(
-                        txtSalesCode.Text.Trim(),
+                sal.ADD_SALES(
+                    txtSalesCode.Text.Trim(),
                         cmbBillType.SelectedItem.ToString(),
-                        txtPeriodId.Text.Trim(),
-                        txtCustomerId.Text.Trim(),
-                        dtpStartTime.Value,
-                        dtpEndTime.Value,
-                        (double)numHours.Value,
-                        (double)numMinutes.Value,
-                        (double)numWaterHourPrice.Value,
-                        (double)numDieselHourPrice.Value,
-                        (double)numWaterTotal.Value,
-                        (double)numDieselTotal.Value,
-                        (double)numTotalAmount.Value,
-                        (double)numDueAmount.Value,
-                        (double)numPaidAmount.Value,
-                        (double)numRemainingAmount.Value
-                    );
+                    txtPeriodId.Text.Trim(),
+                    txtCustomerId.Text.Trim(),
+                    dtpStartTime.Value,
+                    dtpEndTime.Value,
+                    (double)numHours.Value,
+                    (double)numMinutes.Value,
+                    (double)numWaterHourPrice.Value,
+                    (double)numDieselHourPrice.Value,
+                    (double)numWaterTotal.Value,
+                    (double)numDieselTotal.Value,
+                    (double)numTotalAmount.Value,
+                    (double)numDueAmount.Value,
+                    (double)numPaidAmount.Value,
+                    (double)numRemainingAmount.Value
+                );
 
-                    MessageBox.Show("تم حفظ بيانات الفاتورة بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("تم حفظ بيانات الفاتورة بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     
                     // حفظ بيانات الشركاء من DataGridView
                     SavePartnersHoursFromGrid();
@@ -614,9 +625,19 @@ namespace Water
                             dgvRow.Cells["HoursUesed"].Value = row["HoursCount"] != DBNull.Value ? row["HoursCount"].ToString() : "";
                         }
 
+                        if (dgvRow.Cells["MinutesCount"] != null)
+                        {
+                            dgvRow.Cells["MinutesCount"].Value = row["MinutesCount"] != DBNull.Value ? row["MinutesCount"].ToString() : "";
+                        }
+
                         if (dgvRow.Cells["HoursAvalible"] != null)
                         {
-                            dgvRow.Cells["HoursAvalible"].Value = row["RemainingHours"] != DBNull.Value ? row["RemainingHours"].ToString() : "";
+                            dgvRow.Cells["HoursAvalible"].Value = row["HoursAvalible"] != DBNull.Value ? row["HoursAvalible"].ToString() : "";
+                        }
+
+                        if (dgvRow.Cells["MinutesAvalible"] != null)
+                        {
+                            dgvRow.Cells["MinutesAvalible"].Value = row["MinutesAvalible"] != DBNull.Value ? row["MinutesAvalible"].ToString() : "";
                         }
                     }
                 }
@@ -657,7 +678,9 @@ namespace Water
                     string partnerNumber = "";
                     string partnerName = "";
                     string hoursCount = "";
-                    string remainingHours = "";
+                    string minutesCount = "";
+                    string hoursAvalible = "";
+                    string minutesAvalible = "";
                     string totalHours = "";
                     
 
@@ -677,30 +700,39 @@ namespace Water
                         hoursCount = row.Cells["HoursUesed"].Value.ToString().Trim();
                     }
 
-                    if (row.Cells["HoursAvalible"] != null && row.Cells["HoursAvalible"].Value != null)
+                    if (row.Cells["MinutesCount"] != null && row.Cells["MinutesCount"].Value != null)
                     {
-                        remainingHours = row.Cells["HoursAvalible"].Value.ToString().Trim();
+                        minutesCount = row.Cells["MinutesCount"].Value.ToString().Trim();
                     }
 
-                    // حساب TotalHours: يمكن أن يكون مجموع HoursUesed و RemainingHours
-                    // أو استخدام HoursUesed كقيمة افتراضية
-                    if (!string.IsNullOrWhiteSpace(hoursCount) && !string.IsNullOrWhiteSpace(remainingHours))
+                    if (row.Cells["HoursAvalible"] != null && row.Cells["HoursAvalible"].Value != null)
+                    {
+                        hoursAvalible = row.Cells["HoursAvalible"].Value.ToString().Trim();
+                    }
+
+                    if (row.Cells["MinutesAvalible"] != null && row.Cells["MinutesAvalible"].Value != null)
+                    {
+                        minutesAvalible = row.Cells["MinutesAvalible"].Value.ToString().Trim();
+                    }
+
+                    // حساب TotalHours: يمكن أن يكون مجموع HoursUesed و HoursAvalible
+                    if (!string.IsNullOrWhiteSpace(hoursCount) && !string.IsNullOrWhiteSpace(hoursAvalible))
                     {
                         try
                         {
-                            double hours = 0, remaining = 0;
-                            if (double.TryParse(hoursCount, out hours) && double.TryParse(remainingHours, out remaining))
+                            double hours = 0, avalible = 0;
+                            if (double.TryParse(hoursCount, out hours) && double.TryParse(hoursAvalible, out avalible))
                             {
-                                totalHours = (hours + remaining).ToString();
+                                totalHours = (hours + avalible).ToString();
                             }
                             else
                             {
-                                totalHours = hoursCount; // استخدام HoursUesed كقيمة افتراضية
+                                totalHours = hoursCount;
                             }
                         }
                         catch
                         {
-                            totalHours = hoursCount; // استخدام HoursUesed كقيمة افتراضية
+                            totalHours = hoursCount;
                         }
                     }
                     else
@@ -709,12 +741,7 @@ namespace Water
                     }
 
                     // التحقق من أن البيانات الأساسية موجودة
-                    if (
-                        // !string.IsNullOrWhiteSpace(partnerNumber) || 
-                        // //!string.IsNullOrWhiteSpace(partnerName) || 
-                        // !string.IsNullOrWhiteSpace(hoursCount)
-                        true
-                        )
+                    if (true)
                     {
                         try
                         {
@@ -724,7 +751,9 @@ namespace Water
                                 partnerNumber ?? "",
                                 partnerName ?? "",
                                 hoursCount ?? "",
-                                remainingHours ?? "",
+                                minutesCount ?? "",
+                                hoursAvalible ?? "",
+                                minutesAvalible ?? "",
                                 totalHours ?? ""
                             );
                             idCounter++;
@@ -779,7 +808,9 @@ namespace Water
                     string partnerNumber = "";
                     string partnerName = "";
                     string hoursCount = "";
-                    string remainingHours = "";
+                    string minutesCount = "";
+                    string hoursAvalible = "";
+                    string minutesAvalible = "";
                     string totalHours = "";
 
                     // قراءة Id من Tag (إذا كان محملاً من قاعدة البيانات) أو استخدام رقم الصف
@@ -809,20 +840,30 @@ namespace Water
                         hoursCount = row.Cells["HoursUesed"].Value.ToString().Trim();
                     }
 
+                    if (row.Cells["MinutesCount"] != null && row.Cells["MinutesCount"].Value != null)
+                    {
+                        minutesCount = row.Cells["MinutesCount"].Value.ToString().Trim();
+                    }
+
                     if (row.Cells["HoursAvalible"] != null && row.Cells["HoursAvalible"].Value != null)
                     {
-                        remainingHours = row.Cells["HoursAvalible"].Value.ToString().Trim();
+                        hoursAvalible = row.Cells["HoursAvalible"].Value.ToString().Trim();
+                    }
+
+                    if (row.Cells["MinutesAvalible"] != null && row.Cells["MinutesAvalible"].Value != null)
+                    {
+                        minutesAvalible = row.Cells["MinutesAvalible"].Value.ToString().Trim();
                     }
 
                     // حساب TotalHours
-                    if (!string.IsNullOrWhiteSpace(hoursCount) && !string.IsNullOrWhiteSpace(remainingHours))
+                    if (!string.IsNullOrWhiteSpace(hoursCount) && !string.IsNullOrWhiteSpace(hoursAvalible))
                     {
                         try
                         {
-                            double hours = 0, remaining = 0;
-                            if (double.TryParse(hoursCount, out hours) && double.TryParse(remainingHours, out remaining))
+                            double hours = 0, avalible = 0;
+                            if (double.TryParse(hoursCount, out hours) && double.TryParse(hoursAvalible, out avalible))
                             {
-                                totalHours = (hours + remaining).ToString();
+                                totalHours = (hours + avalible).ToString();
                             }
                             else
                             {
@@ -848,7 +889,9 @@ namespace Water
                             partnerNumber ?? "",
                             partnerName ?? "",
                             hoursCount ?? "",
-                            remainingHours ?? "",
+                            minutesCount ?? "",
+                            hoursAvalible ?? "",
+                            minutesAvalible ?? "",
                             totalHours ?? ""
                         );
                         updatedCount++;

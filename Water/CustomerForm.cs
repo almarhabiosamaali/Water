@@ -143,16 +143,12 @@ namespace Water
         {
             try
             {
-                // التحقق من أن جميع الحقول مملوءة
+                // التحقق من أن جميع الحقول المطلوبة مملوءة
                 if (string.IsNullOrWhiteSpace(txtCustomerCode.Text) ||
                     string.IsNullOrWhiteSpace(txtCustomerName.Text) ||
-                    cmbType.SelectedIndex == -1 ||
-                    numAllocatedHours.Text !=null ||
-                    numMinutes.Text !=null ||
-                    string.IsNullOrWhiteSpace(txtPhone.Text) ||
-                    string.IsNullOrWhiteSpace(txtNotes.Text))
+                    cmbType.SelectedIndex == -1)
                 {
-                    MessageBox.Show("الرجاء إكمال جميع البيانات المطلوبة", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("الرجاء إدخال كود العميل واسم العميل ونوع العميل على الأقل", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -163,10 +159,10 @@ namespace Water
                         txtCustomerCode.Text.Trim(),
                         txtCustomerName.Text.Trim(),
                         cmbType.SelectedItem.ToString(),
-                        numAllocatedHours.Text.Trim(),
-                        numMinutes.Text.Trim(),
                         txtPhone.Text.Trim(),
-                        txtNotes.Text.Trim()
+                        txtAddress.Text.Trim(),
+                        txtNotes.Text.Trim(),
+                        dtpCreatedDate.Value
                     );
 
                     MessageBox.Show("تم تحديث بيانات العميل بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -178,10 +174,10 @@ namespace Water
                         txtCustomerCode.Text.Trim(),
                         txtCustomerName.Text.Trim(),
                         cmbType.SelectedItem.ToString(),
-                        (int)numAllocatedHours.Value,
-                        (int)numMinutes.Value,
                         txtPhone.Text.Trim(),
-                        txtNotes.Text.Trim()
+                        txtAddress.Text.Trim(),
+                        txtNotes.Text.Trim(),
+                        dtpCreatedDate.Value
                     );
 
                     MessageBox.Show("تم حفظ بيانات العميل بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -209,18 +205,18 @@ namespace Water
                 cmbType.SelectedItem = type;
             }
 
-            if (row["allocated_hours"] != DBNull.Value)
+            txtPhone.Text = row["phone"] != DBNull.Value ? row["phone"].ToString() : "";
+            txtAddress.Text = row["address"] != DBNull.Value ? row["address"].ToString() : "";
+            txtNotes.Text = row["notes"] != DBNull.Value ? row["notes"].ToString() : "";
+            
+            if (row["created_date"] != DBNull.Value)
             {
-                numAllocatedHours.Value = Convert.ToInt32(row["allocated_hours"]);
+                dtpCreatedDate.Value = Convert.ToDateTime(row["created_date"]);
             }
-
-            if (row["minutes"] != DBNull.Value)
+            else
             {
-                numMinutes.Value = Convert.ToInt32(row["minutes"]);
+                dtpCreatedDate.Value = DateTime.Now;
             }
-
-            txtPhone.Text = row["phone"].ToString();
-            txtNotes.Text = row["notes"].ToString();
         }
 
         private void clear_CUSTOMER()
@@ -228,16 +224,28 @@ namespace Water
             txtCustomerCode.Clear();
             txtCustomerName.Clear();
             cmbType.SelectedIndex = -1;
-            numAllocatedHours.Value = 0;
-            numMinutes.Value = 0;
             txtPhone.Clear();
+            txtAddress.Clear();
             txtNotes.Clear();
+            dtpCreatedDate.Value = DateTime.Now;
         }
 
-        private void btnView_Click_1(object sender, EventArgs e)
+
+
+
+        /*private void numAllocatedHours_TextChanged(object sender, EventArgs e)
         {
 
-        }
+        }*/
+        /* private void numAllocatedHours_TextChanged(object sender, KeyPressEventArgs e)
+         {
+             // يسمح بالأرقام فقط + Backspace
+             if (!char.IsDigit(e.KeyChar) && e.KeyChar != (char)Keys.Back)
+             {
+                 e.Handled = true;
+             }
+         }*/
+
     }
 }
 
