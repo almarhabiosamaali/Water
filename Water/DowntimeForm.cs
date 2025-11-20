@@ -144,23 +144,37 @@ namespace Water
         {
             try
             {
-                // التحقق من أن جميع الحقول مملوءة
-                if (string.IsNullOrWhiteSpace(txtDowntimeCode.Text) ||
-                    string.IsNullOrWhiteSpace(txtPeriodId.Text) ||
-                    numHours.Value <= 0)
+                // التحقق من أن الحقول الأساسية مملوءة
+                if (string.IsNullOrWhiteSpace(txtDowntimeCode.Text))
                 {
-                    MessageBox.Show("الرجاء إكمال جميع البيانات المطلوبة", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("الرجاء إدخال كود التوقف", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
+
+                // تحضير القيم الاختيارية
+                int? dayesCount = numDayesCount.Value > 0 ? (int?)numDayesCount.Value : null;
+                int? hours = numHours.Value > 0 ? (int?)numHours.Value : null;
+                int? minutes = numMinutes.Value > 0 ? (int?)numMinutes.Value : null;
+                DateTime? startTime = dtpStartTime.Checked ? (DateTime?)dtpStartTime.Value : null;
+                DateTime? endTime = dtpEndTime.Checked ? (DateTime?)dtpEndTime.Value : null;
+                double? amount = numAmount.Value > 0 ? (double?)numAmount.Value : null;
+                string note = !string.IsNullOrWhiteSpace(txtNote.Text) ? txtNote.Text.Trim() : null;
+                string periodId = !string.IsNullOrWhiteSpace(txtPeriodId.Text) ? txtPeriodId.Text.Trim() : null;
 
                 if (isEditMode)
                 {
                     // تحديث بيانات التوقف
                     dwn.UPDATE_DOWNTIME(
                         txtDowntimeCode.Text.Trim(),
-                        txtPeriodId.Text.Trim(),
+                        periodId,
                         dtpDate.Value.Date,
-                        (double)numHours.Value
+                        dayesCount,
+                        hours,
+                        minutes,
+                        startTime,
+                        endTime,
+                        amount,
+                        note
                     );
 
                     MessageBox.Show("تم تحديث بيانات التوقف بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -170,9 +184,15 @@ namespace Water
                     // إضافة توقف جديد
                     dwn.ADD_DOWNTIME(
                         txtDowntimeCode.Text.Trim(),
-                        txtPeriodId.Text.Trim(),
+                        periodId,
                         dtpDate.Value.Date,
-                        (double)numHours.Value
+                        dayesCount,
+                        hours,
+                        minutes,
+                        startTime,
+                        endTime,
+                        amount,
+                        note
                     );
 
                     MessageBox.Show("تم حفظ بيانات التوقف بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -192,16 +212,84 @@ namespace Water
         private void LoadDowntimeData(DataRow row)
         {
             txtDowntimeCode.Text = row["id"].ToString();
-            txtPeriodId.Text = row["period_id"].ToString();
+            
+            if (row["period_id"] != DBNull.Value)
+            {
+                txtPeriodId.Text = row["period_id"].ToString();
+            }
+            else
+            {
+                txtPeriodId.Clear();
+            }
             
             if (row["date"] != DBNull.Value)
             {
                 dtpDate.Value = Convert.ToDateTime(row["date"]);
             }
 
+            if (row["dayesCount"] != DBNull.Value)
+            {
+                numDayesCount.Value = Convert.ToDecimal(row["dayesCount"]);
+            }
+            else
+            {
+                numDayesCount.Value = 0;
+            }
+
             if (row["hours"] != DBNull.Value)
             {
                 numHours.Value = Convert.ToDecimal(row["hours"]);
+            }
+            else
+            {
+                numHours.Value = 0;
+            }
+
+            if (row["minutes"] != DBNull.Value)
+            {
+                numMinutes.Value = Convert.ToDecimal(row["minutes"]);
+            }
+            else
+            {
+                numMinutes.Value = 0;
+            }
+
+            if (row["startTime"] != DBNull.Value)
+            {
+                dtpStartTime.Value = Convert.ToDateTime(row["startTime"]);
+                dtpStartTime.Checked = true;
+            }
+            else
+            {
+                dtpStartTime.Checked = false;
+            }
+
+            if (row["endTime"] != DBNull.Value)
+            {
+                dtpEndTime.Value = Convert.ToDateTime(row["endTime"]);
+                dtpEndTime.Checked = true;
+            }
+            else
+            {
+                dtpEndTime.Checked = false;
+            }
+
+            if (row["amount"] != DBNull.Value)
+            {
+                numAmount.Value = Convert.ToDecimal(row["amount"]);
+            }
+            else
+            {
+                numAmount.Value = 0;
+            }
+
+            if (row["note"] != DBNull.Value)
+            {
+                txtNote.Text = row["note"].ToString();
+            }
+            else
+            {
+                txtNote.Clear();
             }
         }
 
@@ -210,7 +298,13 @@ namespace Water
             txtDowntimeCode.Clear();
             txtPeriodId.Clear();
             dtpDate.Value = DateTime.Now;
+            numDayesCount.Value = 0;
             numHours.Value = 0;
+            numMinutes.Value = 0;
+            dtpStartTime.Checked = false;
+            dtpEndTime.Checked = false;
+            numAmount.Value = 0;
+            txtNote.Clear();
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Water.Clas
              //                              Properties.Settings.Default.Database + "; Integrated Security=false; User ID=" +
                //                            Properties.Settings.Default.ID + "; Password=" + Properties.Settings.Default.Password + "");
 
-            sqlconnection = new SqlConnection(@"Server=SERVER ; Database=Water; Integrated Security=true; User ID=sa; Password=sa@123");
+            sqlconnection = new SqlConnection(@"Server=LAPTOP-UDOB2GCQ ; Database=Water; Integrated Security=true; User ID=sa; Password=osama@123");
 
 
 
