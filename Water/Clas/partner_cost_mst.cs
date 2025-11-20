@@ -70,7 +70,7 @@ namespace Water.Clas
             param[0] = new SqlParameter("@cost_id", SqlDbType.Int);
             param[0].Value = cost_id;
 
-            DataTable dt = DAL.SelectData("partner_cost_mst_view", param);
+            DataTable dt = DAL.SelectData("partner_cost_mst_viewById", param);
             DAL.Close();
             return dt;
         }
@@ -79,7 +79,7 @@ namespace Water.Clas
         {
             Clas.DataAccessLayer DAL = new Clas.DataAccessLayer();
             DAL.Open();
-            DataTable dt = DAL.SelectData("partner_cost_mst_getAll", null);
+            DataTable dt = DAL.SelectData("partner_cost_mst_viewAll", null);
             DAL.Close();
             return dt;
         }

@@ -59,6 +59,9 @@ namespace Water
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
+            this.dgvPartners = new System.Windows.Forms.DataGridView();
+            this.btnDistributeAmount = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvPartners)).BeginInit();
             this.SuspendLayout();
             // 
             // lblCostId
@@ -400,11 +403,35 @@ namespace Water
             this.btnSave.Text = "حفظ";
             this.btnSave.UseVisualStyleBackColor = true;
             // 
+            // dgvPartners
+            // 
+            this.dgvPartners.AllowUserToAddRows = true;
+            this.dgvPartners.AllowUserToDeleteRows = true;
+            this.dgvPartners.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvPartners.Location = new System.Drawing.Point(26, 260);
+            this.dgvPartners.Name = "dgvPartners";
+            this.dgvPartners.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.dgvPartners.Size = new System.Drawing.Size(968, 300);
+            this.dgvPartners.TabIndex = 31;
+            // 
+            // btnDistributeAmount
+            // 
+            this.btnDistributeAmount.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDistributeAmount.Location = new System.Drawing.Point(26, 200);
+            this.btnDistributeAmount.Name = "btnDistributeAmount";
+            this.btnDistributeAmount.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.btnDistributeAmount.Size = new System.Drawing.Size(120, 40);
+            this.btnDistributeAmount.TabIndex = 33;
+            this.btnDistributeAmount.Text = "توزيع المبلغ";
+            this.btnDistributeAmount.UseVisualStyleBackColor = true;
+            // 
             // PartnerCostForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1006, 260);
+            this.ClientSize = new System.Drawing.Size(1006, 580);
+            this.Controls.Add(this.btnDistributeAmount);
+            this.Controls.Add(this.dgvPartners);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnEdit);
@@ -444,6 +471,7 @@ namespace Water
             this.RightToLeftLayout = true;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "توزيع التكاليف بين الشركاء";
+            ((System.ComponentModel.ISupportInitialize)(this.dgvPartners)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -482,6 +510,8 @@ namespace Water
         private System.Windows.Forms.Button btnEdit;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.DataGridView dgvPartners;
+        private System.Windows.Forms.Button btnDistributeAmount;
     }
 }
 

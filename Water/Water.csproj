@@ -56,6 +56,7 @@
     <Compile Include="Clas\partners.cs" />
     <Compile Include="Clas\pricing.cs" />
     <Compile Include="Clas\partner_cost_mst.cs" />
+    <Compile Include="Clas\partner_cost_dtl.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

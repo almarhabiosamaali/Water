@@ -14,6 +14,7 @@ namespace Water
     {
         private bool isEditMode = false;
         Clas.partner_cost_mst partnerCost = new Clas.partner_cost_mst();
+        Clas.partner_cost_dtl partnerCostDtl = new Clas.partner_cost_dtl();
         Clas.downtime downtime = new Clas.downtime();
         Clas.period period = new Clas.period();
 
@@ -34,8 +35,14 @@ namespace Water
             dtpStartTime.ValueChanged += DateTimePicker_ValueChanged;
             dtpEndTime.ValueChanged += DateTimePicker_ValueChanged;
 
+            // ربط أحداث DataGridView والزر
+            btnDistributeAmount.Click += btnDistributeAmount_Click;
+
             // تحميل بيانات downtime في ComboBox
             LoadDownTimeData();
+
+            // تهيئة DataGridView
+            InitializeDataGridView();
         }
 
         private void LoadDownTimeData()
@@ -386,6 +393,9 @@ namespace Water
                         note
                     );
 
+                    // حفظ تفاصيل الشركاء
+                    SavePartnerCostDetails(costId);
+
                     MessageBox.Show("تم تحديث بيانات التكلفة بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
@@ -406,6 +416,9 @@ namespace Water
                         amount,
                         note
                     );
+
+                    // حفظ تفاصيل الشركاء
+                    SavePartnerCostDetails(costId);
 
                     MessageBox.Show("تم حفظ بيانات التكلفة بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -539,6 +552,10 @@ namespace Water
             {
                 txtNote.Clear();
             }
+
+            // تحميل تفاصيل الشركاء
+            int costId = Convert.ToInt32(row["cost_id"]);
+            LoadPartnerCostDetails(costId);
         }
 
         private void clear_PARTNER_COST()
@@ -559,6 +576,7 @@ namespace Water
             dtpEndTime.Checked = false;
             txtAmount.Clear();
             txtNote.Clear();
+            dgvPartners.Rows.Clear();
         }
 
         private void txtNumeric_KeyPress(object sender, KeyPressEventArgs e)
@@ -583,6 +601,248 @@ namespace Water
             if (e.KeyChar == '.' && txt != null && txt.Text.Contains("."))
             {
                 e.Handled = true;
+            }
+        }
+
+        // تهيئة DataGridView
+        private void InitializeDataGridView()
+        {
+            dgvPartners.AutoGenerateColumns = false;
+            dgvPartners.AllowUserToAddRows = true;
+            dgvPartners.AllowUserToDeleteRows = true;
+            dgvPartners.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvPartners.MultiSelect = false;
+            dgvPartners.RightToLeft = RightToLeft.Yes;
+
+            // إضافة الأعمدة
+            dgvPartners.Columns.Clear();
+
+            DataGridViewTextBoxColumn colPartnerId = new DataGridViewTextBoxColumn();
+            colPartnerId.Name = "partner_id";
+            colPartnerId.HeaderText = "رقم الشريك";
+            colPartnerId.Width = 100;
+            dgvPartners.Columns.Add(colPartnerId);
+
+            DataGridViewTextBoxColumn colPartnerName = new DataGridViewTextBoxColumn();
+            colPartnerName.Name = "partner_name";
+            colPartnerName.HeaderText = "اسم الشريك";
+            colPartnerName.Width = 200;
+            dgvPartners.Columns.Add(colPartnerName);
+
+            DataGridViewTextBoxColumn colAllocatedHours = new DataGridViewTextBoxColumn();
+            colAllocatedHours.Name = "allocated_hours";
+            colAllocatedHours.HeaderText = "الساعات المخصصة";
+            colAllocatedHours.Width = 120;
+            dgvPartners.Columns.Add(colAllocatedHours);
+
+            DataGridViewTextBoxColumn colMinutes = new DataGridViewTextBoxColumn();
+            colMinutes.Name = "minutes";
+            colMinutes.HeaderText = "الدقائق";
+            colMinutes.Width = 100;
+            dgvPartners.Columns.Add(colMinutes);
+
+            DataGridViewTextBoxColumn colAllocatedAmount = new DataGridViewTextBoxColumn();
+            colAllocatedAmount.Name = "allocated_amount";
+            colAllocatedAmount.HeaderText = "المبلغ المخصص";
+            colAllocatedAmount.Width = 150;
+            dgvPartners.Columns.Add(colAllocatedAmount);
+
+            DataGridViewTextBoxColumn colNote = new DataGridViewTextBoxColumn();
+            colNote.Name = "note";
+            colNote.HeaderText = "ملاحظات";
+            colNote.Width = 200;
+            dgvPartners.Columns.Add(colNote);
+        }
+
+        private void btnDistributeAmount_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // التحقق من وجود رقم التوقف
+                if (cmbDownTimeId.SelectedValue == null && string.IsNullOrWhiteSpace(cmbDownTimeId.Text))
+                {
+                    MessageBox.Show("الرجاء اختيار رقم التوقف أولاً", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                string downTimeId = cmbDownTimeId.SelectedValue != null ? cmbDownTimeId.SelectedValue.ToString() : cmbDownTimeId.Text;
+
+                // استدعاء الـ Stored Procedure
+                DataTable dt = partnerCostDtl.AllocateDowntimeAmountToPartners(downTimeId);
+
+                if (dt == null || dt.Rows.Count == 0)
+                {
+                    MessageBox.Show("لا توجد بيانات للعرض", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                // عرض البيانات في DataGridView
+                dgvPartners.Rows.Clear();
+
+                foreach (DataRow row in dt.Rows)
+                {
+                    int rowIndex = dgvPartners.Rows.Add();
+                    DataGridViewRow dgvRow = dgvPartners.Rows[rowIndex];
+
+                    // تعبئة رقم الشريك
+                    if (row["partner_id"] != DBNull.Value)
+                    {
+                        dgvRow.Cells["partner_id"].Value = row["partner_id"].ToString();
+                    }
+
+                    // تعبئة اسم الشريك
+                    if (row["name"] != DBNull.Value)
+                    {
+                        dgvRow.Cells["partner_name"].Value = row["name"].ToString();
+                    }
+
+                    // تعبئة الساعات المخصصة
+                    if (row["allocated_hours"] != DBNull.Value)
+                    {
+                        dgvRow.Cells["allocated_hours"].Value = row["allocated_hours"].ToString();
+                    }
+
+                    // تعبئة الدقائق
+                    if (row["minutes"] != DBNull.Value)
+                    {
+                        dgvRow.Cells["minutes"].Value = row["minutes"].ToString();
+                    }
+
+                    // تعبئة المبلغ المخصص
+                    if (row["allocated_amount"] != DBNull.Value)
+                    {
+                        dgvRow.Cells["allocated_amount"].Value = row["allocated_amount"].ToString();
+                    }
+                }
+
+                MessageBox.Show("تم توزيع المبلغ بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("حدث خطأ أثناء توزيع المبلغ: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // تحميل تفاصيل الشركاء من قاعدة البيانات
+        private void LoadPartnerCostDetails(int costId)
+        {
+            try
+            {
+                DataTable dt = partnerCostDtl.VIEW_PARTNER_COST_DTL(costId);
+                dgvPartners.Rows.Clear();
+                
+                foreach (DataRow row in dt.Rows)
+                {
+                    int rowIndex = dgvPartners.Rows.Add();
+                    DataGridViewRow dgvRow = dgvPartners.Rows[rowIndex];
+
+                    if (row["partner_id"] != DBNull.Value)
+                    {
+                        dgvRow.Cells["partner_id"].Value = row["partner_id"].ToString();
+                    }
+
+                    if (row["partner_name"] != DBNull.Value)
+                    {
+                        dgvRow.Cells["partner_name"].Value = row["partner_name"].ToString();
+                    }
+
+                    if (row["allocated_hours"] != DBNull.Value)
+                    {
+                        dgvRow.Cells["allocated_hours"].Value = row["allocated_hours"].ToString();
+                    }
+
+                    if (row["minutes"] != DBNull.Value)
+                    {
+                        dgvRow.Cells["minutes"].Value = row["minutes"].ToString();
+                    }
+
+                    if (row["allocated_amount"] != DBNull.Value)
+                    {
+                        dgvRow.Cells["allocated_amount"].Value = row["allocated_amount"].ToString();
+                    }
+
+                    if (row["note"] != DBNull.Value)
+                    {
+                        dgvRow.Cells["note"].Value = row["note"].ToString();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("حدث خطأ أثناء تحميل تفاصيل الشركاء: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // حفظ تفاصيل الشركاء في قاعدة البيانات
+        private void SavePartnerCostDetails(int costId)
+        {
+            try
+            {
+                // حذف التفاصيل القديمة
+                partnerCostDtl.DELETE_ALL_PARTNER_COST_DTL_BY_COST_ID(costId);
+
+                // إضافة التفاصيل الجديدة
+                int? docType = string.IsNullOrWhiteSpace(txtDocType.Text) ? (int?)null : Convert.ToInt32(txtDocType.Text);
+
+                foreach (DataGridViewRow row in dgvPartners.Rows)
+                {
+                    if (row.IsNewRow) continue;
+
+                    int? partnerId = null;
+                    string partnerName = "";
+                    int? allocatedHours = null;
+                    int? minutes = null;
+                    double? allocatedAmount = null;
+                    string note = "";
+
+                    if (row.Cells["partner_id"].Value != null && !string.IsNullOrWhiteSpace(row.Cells["partner_id"].Value.ToString()))
+                    {
+                        partnerId = Convert.ToInt32(row.Cells["partner_id"].Value);
+                    }
+
+                    if (row.Cells["partner_name"].Value != null)
+                    {
+                        partnerName = row.Cells["partner_name"].Value.ToString();
+                    }
+
+                    if (row.Cells["allocated_hours"].Value != null && !string.IsNullOrWhiteSpace(row.Cells["allocated_hours"].Value.ToString()))
+                    {
+                        allocatedHours = Convert.ToInt32(row.Cells["allocated_hours"].Value);
+                    }
+
+                    if (row.Cells["minutes"].Value != null && !string.IsNullOrWhiteSpace(row.Cells["minutes"].Value.ToString()))
+                    {
+                        minutes = Convert.ToInt32(row.Cells["minutes"].Value);
+                    }
+
+                    if (row.Cells["allocated_amount"].Value != null && !string.IsNullOrWhiteSpace(row.Cells["allocated_amount"].Value.ToString()))
+                    {
+                        allocatedAmount = Convert.ToDouble(row.Cells["allocated_amount"].Value);
+                    }
+
+                    if (row.Cells["note"].Value != null)
+                    {
+                        note = row.Cells["note"].Value.ToString();
+                    }
+
+                    if (partnerId.HasValue || !string.IsNullOrWhiteSpace(partnerName))
+                    {
+                        partnerCostDtl.ADD_PARTNER_COST_DTL(
+                            costId,
+                            partnerId,
+                            docType,
+                            partnerName,
+                            allocatedHours,
+                            minutes,
+                            allocatedAmount,
+                            note
+                        );
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("حدث خطأ أثناء حفظ تفاصيل الشركاء: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

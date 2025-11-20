@@ -64,5 +64,11 @@ namespace Water
             PartnersForm pp = new PartnersForm();
             pp.ShowDialog();
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            PartnerCostForm ppt = new PartnerCostForm();
+            ppt.ShowDialog();
+        }
     }
 }
