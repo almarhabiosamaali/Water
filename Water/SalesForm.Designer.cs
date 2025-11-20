@@ -28,6 +28,7 @@ namespace Water
         /// </summary>
         private void InitializeComponent()
         {
+
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.bill_no = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -258,25 +259,23 @@ namespace Water
             this.dtpEndTime.Name = "dtpEndTime";
             this.dtpEndTime.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.dtpEndTime.RightToLeftLayout = true;
-            this.dtpEndTime.ShowUpDown = false;
             this.dtpEndTime.Size = new System.Drawing.Size(187, 24);
-            this.dtpEndTime.TabIndex = 79;
+            this.dtpEndTime.TabIndex = 40;
             // 
             // dtpStartTime
             // 
             this.dtpStartTime.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dtpStartTime.CustomFormat = "dd/MM/yyyy  hh:mm tt";
-            this.dtpStartTime.DropDownAlign = System.Windows.Forms.LeftRightAlignment.Right;
-            this.dtpStartTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpStartTime.Location = new System.Drawing.Point(1114, 182);
-            this.dtpStartTime.Name = "dtpStartTime";
-            this.dtpStartTime.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.dtpStartTime.RightToLeftLayout = true;
-            this.dtpStartTime.ShowUpDown = false;
-            this.dtpStartTime.Size = new System.Drawing.Size(187, 24);
-            this.dtpStartTime.TabIndex = 78;
+            dtpStartTime.CustomFormat = "dd/MM/yyyy  hh:mm tt";
+            dtpStartTime.DropDownAlign = System.Windows.Forms.LeftRightAlignment.Right;
+            dtpStartTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            dtpStartTime.Location = new System.Drawing.Point(1114, 182);
+            dtpStartTime.Name = "dtpStartTime";
+            dtpStartTime.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            dtpStartTime.RightToLeftLayout = true;
+            dtpStartTime.Size = new System.Drawing.Size(187, 24);
+            dtpStartTime.TabIndex = 39;
             // 
             // txtPriceLevel
             // 
@@ -285,7 +284,7 @@ namespace Water
             this.txtPriceLevel.Name = "txtPriceLevel";
             this.txtPriceLevel.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtPriceLevel.Size = new System.Drawing.Size(76, 26);
-            this.txtPriceLevel.TabIndex = 77;
+            this.txtPriceLevel.TabIndex = 41;
             this.txtPriceLevel.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPriceLevel_KeyDown);
             // 
             // lblPriceLevl
@@ -355,7 +354,7 @@ namespace Water
             this.txtPaidAmount.Name = "txtPaidAmount";
             this.txtPaidAmount.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtPaidAmount.Size = new System.Drawing.Size(262, 26);
-            this.txtPaidAmount.TabIndex = 62;
+            this.txtPaidAmount.TabIndex = 42;
             // 
             // lblPaidAmount
             // 
@@ -515,7 +514,7 @@ namespace Water
             this.txtHours.Name = "txtHours";
             this.txtHours.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtHours.Size = new System.Drawing.Size(76, 26);
-            this.txtHours.TabIndex = 46;
+            this.txtHours.TabIndex = 77;
             // 
             // lblHours
             // 
@@ -652,7 +651,7 @@ namespace Water
             this.btnSave.Name = "btnSave";
             this.btnSave.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnSave.Size = new System.Drawing.Size(74, 40);
-            this.btnSave.TabIndex = 69;
+            this.btnSave.TabIndex = 43;
             this.btnSave.Text = "حفظ";
             this.btnSave.UseVisualStyleBackColor = true;
             // 
@@ -663,7 +662,7 @@ namespace Water
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnDelete.Size = new System.Drawing.Size(74, 40);
-            this.btnDelete.TabIndex = 68;
+            this.btnDelete.TabIndex = 44;
             this.btnDelete.Text = "حذف";
             this.btnDelete.UseVisualStyleBackColor = true;
             // 

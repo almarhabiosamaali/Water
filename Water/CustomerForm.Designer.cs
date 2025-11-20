@@ -47,6 +47,7 @@ namespace Water
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
+            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.SuspendLayout();
             // 
             // lblCustomerCode
@@ -252,11 +253,24 @@ namespace Water
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
+            // dateTimePicker1
+            // 
+            this.dateTimePicker1.CustomFormat = "dd/MM/yyyy hh:mm tt";
+            this.dateTimePicker1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dateTimePicker1.Location = new System.Drawing.Point(583, 252);
+            this.dateTimePicker1.Name = "dateTimePicker1";
+            this.dateTimePicker1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.dateTimePicker1.RightToLeftLayout = true;
+            this.dateTimePicker1.Size = new System.Drawing.Size(263, 26);
+            this.dateTimePicker1.TabIndex = 18;
+            // 
             // CustomerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(934, 350);
+            this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.dtpCreatedDate);
             this.Controls.Add(this.lblCreatedDate);
             this.Controls.Add(this.btnSave);
@@ -310,5 +324,6 @@ namespace Water
         private System.Windows.Forms.Button btnEdit;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.DateTimePicker dateTimePicker1;
     }
 }
