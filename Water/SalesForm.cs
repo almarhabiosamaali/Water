@@ -33,6 +33,16 @@ namespace Water
             // ربط أحداث حساب الساعات والدقائق تلقائياً
             dtpStartTime.ValueChanged += DateTimePicker_ValueChanged;
             dtpEndTime.ValueChanged += DateTimePicker_ValueChanged;
+            
+            // ربط أحداث حساب الإجماليات تلقائياً
+            txtHours.TextChanged += CalculateTotals_TextChanged;
+            txtMinutes.TextChanged += CalculateTotals_TextChanged;
+            txtWaterHourPrice.TextChanged += CalculateTotals_TextChanged;
+            txtDieselHourPrice.TextChanged += CalculateTotals_TextChanged;
+            txtWaterMinutesPrice.TextChanged += CalculateTotals_TextChanged;
+            txtDieselMinutesPrice.TextChanged += CalculateTotals_TextChanged;
+            txtPaidAmount.TextChanged += CalculateRemainingAmount_TextChanged;
+            txtDueAmount.TextChanged += CalculateRemainingAmount_TextChanged;
         }
 
         private void InitializeDataGridViewEvents()
@@ -1196,7 +1206,17 @@ namespace Water
         private void DateTimePicker_ValueChanged(object sender, EventArgs e)
         {
             // حساب الفرق بين وقت البداية ووقت النهاية تلقائياً
-            CalculateTimeDifference();
+            //CalculateTimeDifference();
+            CalculateTime();
+            CalculateCustomWorkTime(dtpStartTime.Value, dtpEndTime.Value, out int hours, out int minutes);
+            txtHours.Text = hours.ToString();
+            txtMinutes.Text = minutes.ToString();
+            
+            // حساب الإجماليات بعد تحديث الساعات والدقائق
+            CalculateTotals_TextChanged(null, null);
+         /*   CalculateWorkTime(dtpStartTime.Value, dtpEndTime.Value, out int totalHours, out int totalMinutes);
+           txtHours.Text = totalHours.ToString();
+           txtMinutes.Text = totalMinutes.ToString(); */
         }
 
         private void CalculateTimeDifference()
@@ -1218,20 +1238,40 @@ namespace Water
                     txtMinutes.Clear();
                     return;
                 }
+                int totHursFrmMinutes=0;
 
-                // حساب إجمالي الساعات (بما في ذلك الكسور)
-                double totalHours = timeDifference.TotalHours;
+
+                // حساب الساعات الكاملة من الفرق الكلي
+                int totalHours = (int)Math.Floor(timeDifference.TotalHours);
                 
-                // حساب الساعات الكاملة
-                int hours = (int)totalHours;
+                // الحصول على الدقائق من وقت البداية ووقت النهاية
+                int startMinutes = dtpStartTime.Value.Minute;
+                int endMinutes = dtpEndTime.Value.Minute;
                 
-                // حساب الدقائق المتبقية (بعد طرح الساعات الكاملة)
-                double remainingMinutes = (totalHours - hours) * 60;
-                int minutes = (int)Math.Round(remainingMinutes);
+                // حساب الفرق في الدقائق
+                int minutesDifference = endMinutes + startMinutes;
+                
+                // إذا كانت الدقائق سالبة (مثل من 15 إلى 20 في اليوم التالي)
+                // نضيف 60 دقيقة لأننا تجاوزنا ساعة كاملة
+                if (minutesDifference < 0)
+                {
+                    minutesDifference += 60;
+                }
+                
+                // إذا تجاوزت الدقائق 60، نضيف ساعة ونأخذ الباقي
+                if (minutesDifference >= 60)
+                {
+                    totHursFrmMinutes = minutesDifference / 60;
+                    //totalHours += minutesDifference / 60;
+                    minutesDifference = minutesDifference % 60;
+                }
+
+                int toth = totalHours + totHursFrmMinutes;
 
                 // ملء الحقول
-                txtHours.Text = hours.ToString();
-                txtMinutes.Text = minutes.ToString();
+                txtHours.Text =toth.ToString();
+                //txtHours.Text = totalHours.ToString();
+                txtMinutes.Text = minutesDifference.ToString();
             }
             catch
             {
@@ -1239,6 +1279,122 @@ namespace Water
             }
         }
 
+        private void CalculateTime(){
+            /*try
+            {
+                // التحقق من أن كلا الوقتين موجودين
+                if (dtpStartTime == null || dtpEndTime == null)
+                    return;
+
+                // حساب الفرق بين الوقتين
+                TimeSpan timeDifference = dtpEndTime.Value - dtpStartTime.Value;
+
+                // التحقق من أن وقت النهاية بعد وقت البداية
+                if (timeDifference.TotalSeconds < 0)
+                {
+                    // إذا كان وقت النهاية قبل وقت البداية، نترك الحقول فارغة
+                    txtHours.Clear();
+                    txtMinutes.Clear();
+                    return;
+                }
+                int totHursFrmMinutes=0;
+
+
+                // حساب الساعات الكاملة من الفرق الكلي
+                int totalHours = (int)Math.Floor(timeDifference.TotalHours);
+                
+                // الحصول على الدقائق من وقت البداية ووقت النهاية
+                int startMinutes = dtpStartTime.Value.Minute;
+                int endMinutes = dtpEndTime.Value.Minute;
+                
+                // حساب الفرق في الدقائق
+                int minutesDifference = endMinutes + startMinutes;
+                
+                // إذا كانت الدقائق سالبة (مثل من 15 إلى 20 في اليوم التالي)
+                // نضيف 60 دقيقة لأننا تجاوزنا ساعة كاملة
+                if (minutesDifference < 0)
+                {
+                    minutesDifference += 60;
+                }
+                
+                // إذا تجاوزت الدقائق 60، نضيف ساعة ونأخذ الباقي
+                if (minutesDifference >= 60)
+                {
+                    totHursFrmMinutes = minutesDifference / 60;
+                    //totalHours += minutesDifference / 60;
+                    minutesDifference = minutesDifference % 60;
+                }
+
+                int toth = totalHours + totHursFrmMinutes;
+
+                // ملء الحقول
+                txtHours.Text =toth.ToString();
+                //txtHours.Text = totalHours.ToString();
+                txtMinutes.Text = minutesDifference.ToString();
+            }
+            catch
+            {
+                // في حالة الخطأ، لا نفعل شيئاً
+            }*/
+        
+            DateTime start = dtpStartTime.Value;
+            DateTime end = dtpEndTime.Value;
+
+            int hoursOnly = (int)(end - start).TotalHours;
+
+            // حساب الفرق
+            TimeSpan diff = end - start;
+
+            int startMin = dtpStartTime.Value.Minute;
+            int endMin = dtpStartTime.Value.Minute;
+            // نجمع كل الوقت بالدقائق
+            //int totalMinutes = (int)diff.TotalMinutes;
+            //int totalMinutes = (int)(end - start).TotalMinutes;
+            int totalMinutes =(int)(startMin + endMin);
+
+
+            // نقسم الوقت
+            int hours = totalMinutes / 60;
+            int minutes = totalMinutes % 60;
+
+            // النتيجة
+            txtHours.Text = hoursOnly.ToString();
+            txtMinutes.Text = totalMinutes.ToString();
+        }
+
+            
+
+        
+        
+        
+        
+      public void CalculateCustomWorkTime(DateTime start, DateTime end,
+                                    out int hours, out int minutes)
+        {
+           // if (end < start)
+               // throw new Exception("End time must be after start time");
+            if (end < start)
+            {
+                // إذا كان وقت النهاية قبل وقت البداية، نترك الحقول فارغة
+                txtHours.Clear();
+                txtMinutes.Clear();
+               // return;
+            }
+            // 1) الفرق الطبيعي
+            TimeSpan diff = end - start;
+
+            // 2) تحويل كل الوقت إلى دقائق
+            int totalMinutes = (int)diff.TotalMinutes;
+
+            // 3) منطقك الخاص: إضافة 30 دقيقة ثابتة
+            //totalMinutes += 30;
+
+            // 4) استخراج الساعات والدقائق
+            hours = totalMinutes / 60;
+            minutes = totalMinutes % 60;
+        }
+
+        
         private double GetDieselUsedInHour()
         {
             try
@@ -1285,6 +1441,96 @@ namespace Water
                 // في حالة الخطأ، نعيد 0
             }
             return 0;
+        }
+
+        // حساب إجمالي الماء والديزل والإجمالي الكلي
+        private void CalculateTotals_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                // حساب إجمالي الماء
+                double waterTotal = CalculateWaterTotal();
+                textWaterTotalPrice.Text = waterTotal.ToString("F2");
+
+                // حساب إجمالي الديزل
+                double dieselTotal = CalculateDieselTotal();
+                txtDieselTotalPrice.Text = dieselTotal.ToString("F2");
+
+                // حساب الإجمالي الكلي
+                double totalAmount = waterTotal + dieselTotal;
+                txtTotalAmount.Text = totalAmount.ToString("F2");
+
+                // حساب المتبقي
+                CalculateRemainingAmount();
+            }
+            catch
+            {
+                // في حالة الخطأ، نترك الحقول فارغة
+            }
+        }
+
+        // حساب إجمالي الماء
+        private double CalculateWaterTotal()
+        {
+            try
+            {
+                double hours = string.IsNullOrWhiteSpace(txtHours.Text) ? 0 : Convert.ToDouble(txtHours.Text);
+                double minutes = string.IsNullOrWhiteSpace(txtMinutes.Text) ? 0 : Convert.ToDouble(txtMinutes.Text);
+                double waterHourPrice = string.IsNullOrWhiteSpace(txtWaterHourPrice.Text) ? 0 : Convert.ToDouble(txtWaterHourPrice.Text);
+                double waterMinutePrice = string.IsNullOrWhiteSpace(txtWaterMinutesPrice.Text) ? 0 : Convert.ToDouble(txtWaterMinutesPrice.Text);
+
+                // إجمالي الماء = (سعر الساعة × عدد الساعات) + (سعر الدقيقة × عدد الدقائق)
+                double total = (waterHourPrice * hours) + (waterMinutePrice * minutes);
+                return total;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
+        // حساب إجمالي الديزل
+        private double CalculateDieselTotal()
+        {
+            try
+            {
+                double hours = string.IsNullOrWhiteSpace(txtHours.Text) ? 0 : Convert.ToDouble(txtHours.Text);
+                double minutes = string.IsNullOrWhiteSpace(txtMinutes.Text) ? 0 : Convert.ToDouble(txtMinutes.Text);
+                double dieselHourPrice = string.IsNullOrWhiteSpace(txtDieselHourPrice.Text) ? 0 : Convert.ToDouble(txtDieselHourPrice.Text);
+                double dieselMinutePrice = string.IsNullOrWhiteSpace(txtDieselMinutesPrice.Text) ? 0 : Convert.ToDouble(txtDieselMinutesPrice.Text);
+
+                // إجمالي الديزل = (سعر الساعة × عدد الساعات) + (سعر الدقيقة × عدد الدقائق)
+                double total = (dieselHourPrice * hours) + (dieselMinutePrice * minutes);
+                return total;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
+        // حساب المتبقي
+        private void CalculateRemainingAmount_TextChanged(object sender, EventArgs e)
+        {
+            CalculateRemainingAmount();
+        }
+
+        private void CalculateRemainingAmount()
+        {
+            try
+            {
+                double totalAmount = string.IsNullOrWhiteSpace(txtTotalAmount.Text) ? 0 : Convert.ToDouble(txtTotalAmount.Text);
+                double paidAmount = string.IsNullOrWhiteSpace(txtPaidAmount.Text) ? 0 : Convert.ToDouble(txtPaidAmount.Text);
+                double dueAmount = string.IsNullOrWhiteSpace(txtDueAmount.Text) ? 0 : Convert.ToDouble(txtDueAmount.Text);
+
+                // المتبقي = الإجمالي الكلي - المدفوع
+                double remainingAmount = totalAmount - paidAmount;
+                txtRemainingAmount.Text = remainingAmount.ToString("F2");
+            }
+            catch
+            {
+                // في حالة الخطأ، نترك الحقل فارغاً
+            }
         }
        
     }

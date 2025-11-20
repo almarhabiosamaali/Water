@@ -28,7 +28,7 @@ namespace Water
         /// </summary>
         private void InitializeComponent()
         {
-
+           // System.Windows.Forms.DateTimePicker dtpStartTime;
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.bill_no = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -253,7 +253,7 @@ namespace Water
             // 
             // dtpEndTime
             // 
-            this.dtpEndTime.CustomFormat = "dd/MM/yyyy  hh:mm tt";
+            this.dtpEndTime.CustomFormat = "dd/MM/yyyy  mm:hh tt";
             this.dtpEndTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtpEndTime.Location = new System.Drawing.Point(921, 182);
             this.dtpEndTime.Name = "dtpEndTime";
@@ -264,23 +264,23 @@ namespace Water
             // 
             // dtpStartTime
             // 
-            this.dtpStartTime.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            /* dtpStartTime.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            dtpStartTime.CustomFormat = "dd/MM/yyyy  hh:mm tt";
-            dtpStartTime.DropDownAlign = System.Windows.Forms.LeftRightAlignment.Right;
-            dtpStartTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            dtpStartTime.Location = new System.Drawing.Point(1114, 182);
-            dtpStartTime.Name = "dtpStartTime";
-            dtpStartTime.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            dtpStartTime.RightToLeftLayout = true;
-            dtpStartTime.Size = new System.Drawing.Size(187, 24);
-            dtpStartTime.TabIndex = 39;
+            | System.Windows.Forms.AnchorStyles.Right))); */                                  
+            this.dtpStartTime.CustomFormat = "dd/MM/yyyy  mm:hh tt";
+            this.dtpStartTime.DropDownAlign = System.Windows.Forms.LeftRightAlignment.Right;
+            this.dtpStartTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpStartTime.Location = new System.Drawing.Point(1114, 182);
+            this.dtpStartTime.Name = "dtpStartTime";
+            this.dtpStartTime.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.dtpStartTime.RightToLeftLayout = true;
+            this.dtpStartTime.Size = new System.Drawing.Size(187, 24);
+            this.dtpStartTime.TabIndex = 39;
             // 
             // txtPriceLevel
             // 
             this.txtPriceLevel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPriceLevel.Location = new System.Drawing.Point(841, 181);
+            this.txtPriceLevel.Location = new System.Drawing.Point(669, 180);
             this.txtPriceLevel.Name = "txtPriceLevel";
             this.txtPriceLevel.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtPriceLevel.Size = new System.Drawing.Size(76, 26);
@@ -291,7 +291,7 @@ namespace Water
             // 
             this.lblPriceLevl.AutoSize = true;
             this.lblPriceLevl.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPriceLevl.Location = new System.Drawing.Point(837, 150);
+            this.lblPriceLevl.Location = new System.Drawing.Point(671, 149);
             this.lblPriceLevl.Name = "lblPriceLevl";
             this.lblPriceLevl.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblPriceLevl.Size = new System.Drawing.Size(97, 20);
@@ -312,9 +312,11 @@ namespace Water
             // dateTimePicker1
             // 
             this.dateTimePicker1.CustomFormat = "dd/MM/yyyy  hh:mm tt";
-            this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dateTimePicker1.Location = new System.Drawing.Point(8, 20);
             this.dateTimePicker1.Name = "dateTimePicker1";
+            this.dateTimePicker1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.dateTimePicker1.RightToLeftLayout = true;
             this.dateTimePicker1.Size = new System.Drawing.Size(200, 24);
             this.dateTimePicker1.TabIndex = 67;
             // 
@@ -490,7 +492,7 @@ namespace Water
             // txtMinutes
             // 
             this.txtMinutes.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtMinutes.Location = new System.Drawing.Point(669, 181);
+            this.txtMinutes.Location = new System.Drawing.Point(750, 180);
             this.txtMinutes.Name = "txtMinutes";
             this.txtMinutes.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtMinutes.Size = new System.Drawing.Size(82, 26);
@@ -500,7 +502,7 @@ namespace Water
             // 
             this.lblMinutes.AutoSize = true;
             this.lblMinutes.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMinutes.Location = new System.Drawing.Point(694, 150);
+            this.lblMinutes.Location = new System.Drawing.Point(775, 149);
             this.lblMinutes.Name = "lblMinutes";
             this.lblMinutes.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblMinutes.Size = new System.Drawing.Size(46, 20);
@@ -510,7 +512,7 @@ namespace Water
             // txtHours
             // 
             this.txtHours.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtHours.Location = new System.Drawing.Point(760, 181);
+            this.txtHours.Location = new System.Drawing.Point(841, 180);
             this.txtHours.Name = "txtHours";
             this.txtHours.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtHours.Size = new System.Drawing.Size(76, 26);
@@ -520,7 +522,7 @@ namespace Water
             // 
             this.lblHours.AutoSize = true;
             this.lblHours.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHours.Location = new System.Drawing.Point(771, 150);
+            this.lblHours.Location = new System.Drawing.Point(852, 149);
             this.lblHours.Name = "lblHours";
             this.lblHours.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblHours.Size = new System.Drawing.Size(55, 20);
