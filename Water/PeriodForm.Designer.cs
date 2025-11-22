@@ -56,81 +56,81 @@ namespace Water
             // 
             this.lblPeriodCode.AutoSize = true;
             this.lblPeriodCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPeriodCode.Location = new System.Drawing.Point(30, 30);
+            this.lblPeriodCode.Location = new System.Drawing.Point(26, 30);
             this.lblPeriodCode.Name = "lblPeriodCode";
-            this.lblPeriodCode.Size = new System.Drawing.Size(100, 20);
-            this.lblPeriodCode.TabIndex = 0;
-            this.lblPeriodCode.Text = "كود الفترة:";
             this.lblPeriodCode.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.lblPeriodCode.Size = new System.Drawing.Size(67, 20);
+            this.lblPeriodCode.TabIndex = 0;
+            this.lblPeriodCode.Text = "رقم الفترة:";
             // 
             // txtPeriodCode
             // 
             this.txtPeriodCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPeriodCode.Location = new System.Drawing.Point(150, 27);
+            this.txtPeriodCode.Location = new System.Drawing.Point(131, 27);
             this.txtPeriodCode.Name = "txtPeriodCode";
-            this.txtPeriodCode.Size = new System.Drawing.Size(300, 26);
-            this.txtPeriodCode.TabIndex = 1;
             this.txtPeriodCode.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.txtPeriodCode.Size = new System.Drawing.Size(263, 26);
+            this.txtPeriodCode.TabIndex = 1;
             // 
             // lblStartDate
             // 
             this.lblStartDate.AutoSize = true;
             this.lblStartDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblStartDate.Location = new System.Drawing.Point(30, 70);
+            this.lblStartDate.Location = new System.Drawing.Point(26, 70);
             this.lblStartDate.Name = "lblStartDate";
-            this.lblStartDate.Size = new System.Drawing.Size(100, 20);
+            this.lblStartDate.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.lblStartDate.Size = new System.Drawing.Size(80, 20);
             this.lblStartDate.TabIndex = 2;
             this.lblStartDate.Text = "تاريخ البداية:";
-            this.lblStartDate.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             // 
             // dtpStartDate
             // 
             this.dtpStartDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dtpStartDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpStartDate.Location = new System.Drawing.Point(150, 67);
+            this.dtpStartDate.Location = new System.Drawing.Point(131, 67);
             this.dtpStartDate.Name = "dtpStartDate";
-            this.dtpStartDate.Size = new System.Drawing.Size(300, 26);
-            this.dtpStartDate.TabIndex = 3;
             this.dtpStartDate.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.dtpStartDate.RightToLeftLayout = true;
+            this.dtpStartDate.Size = new System.Drawing.Size(263, 26);
+            this.dtpStartDate.TabIndex = 3;
             // 
             // lblEndDate
             // 
             this.lblEndDate.AutoSize = true;
             this.lblEndDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblEndDate.Location = new System.Drawing.Point(30, 110);
+            this.lblEndDate.Location = new System.Drawing.Point(412, 69);
             this.lblEndDate.Name = "lblEndDate";
-            this.lblEndDate.Size = new System.Drawing.Size(100, 20);
+            this.lblEndDate.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.lblEndDate.Size = new System.Drawing.Size(81, 20);
             this.lblEndDate.TabIndex = 4;
             this.lblEndDate.Text = "تاريخ النهاية:";
-            this.lblEndDate.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             // 
             // dtpEndDate
             // 
             this.dtpEndDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dtpEndDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpEndDate.Location = new System.Drawing.Point(150, 107);
+            this.dtpEndDate.Location = new System.Drawing.Point(517, 66);
             this.dtpEndDate.Name = "dtpEndDate";
-            this.dtpEndDate.Size = new System.Drawing.Size(300, 26);
-            this.dtpEndDate.TabIndex = 5;
             this.dtpEndDate.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.dtpEndDate.RightToLeftLayout = true;
+            this.dtpEndDate.Size = new System.Drawing.Size(263, 26);
+            this.dtpEndDate.TabIndex = 5;
             // 
             // lblBaseDays
             // 
             this.lblBaseDays.AutoSize = true;
             this.lblBaseDays.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblBaseDays.Location = new System.Drawing.Point(30, 150);
+            this.lblBaseDays.Location = new System.Drawing.Point(22, 120);
             this.lblBaseDays.Name = "lblBaseDays";
-            this.lblBaseDays.Size = new System.Drawing.Size(100, 20);
+            this.lblBaseDays.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.lblBaseDays.Size = new System.Drawing.Size(91, 20);
             this.lblBaseDays.TabIndex = 6;
             this.lblBaseDays.Text = "الأيام الأساسية:";
-            this.lblBaseDays.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             // 
             // numBaseDays
             // 
             this.numBaseDays.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numBaseDays.Location = new System.Drawing.Point(150, 147);
+            this.numBaseDays.Location = new System.Drawing.Point(127, 114);
             this.numBaseDays.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -142,7 +142,7 @@ namespace Water
             0,
             -2147483648});
             this.numBaseDays.Name = "numBaseDays";
-            this.numBaseDays.Size = new System.Drawing.Size(300, 26);
+            this.numBaseDays.Size = new System.Drawing.Size(262, 26);
             this.numBaseDays.TabIndex = 7;
             this.numBaseDays.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -150,37 +150,37 @@ namespace Water
             // 
             this.lblDowntimeHours.AutoSize = true;
             this.lblDowntimeHours.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDowntimeHours.Location = new System.Drawing.Point(30, 190);
+            this.lblDowntimeHours.Location = new System.Drawing.Point(21, 164);
             this.lblDowntimeHours.Name = "lblDowntimeHours";
-            this.lblDowntimeHours.Size = new System.Drawing.Size(100, 20);
+            this.lblDowntimeHours.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.lblDowntimeHours.Size = new System.Drawing.Size(94, 20);
             this.lblDowntimeHours.TabIndex = 8;
             this.lblDowntimeHours.Text = "ساعات التوقف:";
-            this.lblDowntimeHours.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             // 
             // txtDowntimeHours
             // 
             this.txtDowntimeHours.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtDowntimeHours.Location = new System.Drawing.Point(150, 187);
+            this.txtDowntimeHours.Location = new System.Drawing.Point(126, 161);
             this.txtDowntimeHours.Name = "txtDowntimeHours";
-            this.txtDowntimeHours.Size = new System.Drawing.Size(300, 26);
-            this.txtDowntimeHours.TabIndex = 9;
             this.txtDowntimeHours.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.txtDowntimeHours.Size = new System.Drawing.Size(263, 26);
+            this.txtDowntimeHours.TabIndex = 9;
             // 
             // lblExtendedDays
             // 
             this.lblExtendedDays.AutoSize = true;
             this.lblExtendedDays.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblExtendedDays.Location = new System.Drawing.Point(30, 230);
+            this.lblExtendedDays.Location = new System.Drawing.Point(21, 205);
             this.lblExtendedDays.Name = "lblExtendedDays";
-            this.lblExtendedDays.Size = new System.Drawing.Size(100, 20);
-            this.lblExtendedDays.TabIndex = 10;
-            this.lblExtendedDays.Text = "الأيام الممتدة:";
             this.lblExtendedDays.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.lblExtendedDays.Size = new System.Drawing.Size(69, 20);
+            this.lblExtendedDays.TabIndex = 10;
+            this.lblExtendedDays.Text = "أيام التوقف";
             // 
             // numExtendedDays
             // 
             this.numExtendedDays.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numExtendedDays.Location = new System.Drawing.Point(150, 227);
+            this.numExtendedDays.Location = new System.Drawing.Point(126, 202);
             this.numExtendedDays.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -192,7 +192,7 @@ namespace Water
             0,
             -2147483648});
             this.numExtendedDays.Name = "numExtendedDays";
-            this.numExtendedDays.Size = new System.Drawing.Size(300, 26);
+            this.numExtendedDays.Size = new System.Drawing.Size(262, 26);
             this.numExtendedDays.TabIndex = 11;
             this.numExtendedDays.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -200,18 +200,18 @@ namespace Water
             // 
             this.lblTotalHours.AutoSize = true;
             this.lblTotalHours.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTotalHours.Location = new System.Drawing.Point(30, 270);
+            this.lblTotalHours.Location = new System.Drawing.Point(22, 250);
             this.lblTotalHours.Name = "lblTotalHours";
-            this.lblTotalHours.Size = new System.Drawing.Size(100, 20);
+            this.lblTotalHours.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.lblTotalHours.Size = new System.Drawing.Size(103, 20);
             this.lblTotalHours.TabIndex = 12;
             this.lblTotalHours.Text = "إجمالي الساعات:";
-            this.lblTotalHours.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             // 
             // numTotalHours
             // 
             this.numTotalHours.DecimalPlaces = 2;
             this.numTotalHours.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numTotalHours.Location = new System.Drawing.Point(150, 267);
+            this.numTotalHours.Location = new System.Drawing.Point(127, 247);
             this.numTotalHours.Maximum = new decimal(new int[] {
             100000,
             0,
@@ -223,70 +223,70 @@ namespace Water
             0,
             -2147483648});
             this.numTotalHours.Name = "numTotalHours";
-            this.numTotalHours.Size = new System.Drawing.Size(300, 26);
+            this.numTotalHours.Size = new System.Drawing.Size(262, 26);
             this.numTotalHours.TabIndex = 13;
             this.numTotalHours.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // btnView
             // 
             this.btnView.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnView.Location = new System.Drawing.Point(30, 320);
+            this.btnView.Location = new System.Drawing.Point(26, 320);
             this.btnView.Name = "btnView";
-            this.btnView.Size = new System.Drawing.Size(85, 40);
+            this.btnView.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.btnView.Size = new System.Drawing.Size(74, 40);
             this.btnView.TabIndex = 14;
             this.btnView.Text = "عرض";
             this.btnView.UseVisualStyleBackColor = true;
-            this.btnView.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             // 
             // btnAdd
             // 
             this.btnAdd.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAdd.Location = new System.Drawing.Point(125, 320);
+            this.btnAdd.Location = new System.Drawing.Point(109, 320);
             this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(85, 40);
+            this.btnAdd.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.btnAdd.Size = new System.Drawing.Size(74, 40);
             this.btnAdd.TabIndex = 15;
             this.btnAdd.Text = "إضافة";
             this.btnAdd.UseVisualStyleBackColor = true;
-            this.btnAdd.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             // 
             // btnEdit
             // 
             this.btnEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEdit.Location = new System.Drawing.Point(220, 320);
+            this.btnEdit.Location = new System.Drawing.Point(192, 320);
             this.btnEdit.Name = "btnEdit";
-            this.btnEdit.Size = new System.Drawing.Size(85, 40);
+            this.btnEdit.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.btnEdit.Size = new System.Drawing.Size(74, 40);
             this.btnEdit.TabIndex = 16;
             this.btnEdit.Text = "تعديل";
             this.btnEdit.UseVisualStyleBackColor = true;
-            this.btnEdit.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             // 
             // btnDelete
             // 
             this.btnDelete.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDelete.Location = new System.Drawing.Point(315, 320);
+            this.btnDelete.Location = new System.Drawing.Point(276, 320);
             this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(85, 40);
+            this.btnDelete.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.btnDelete.Size = new System.Drawing.Size(74, 40);
             this.btnDelete.TabIndex = 17;
             this.btnDelete.Text = "حذف";
             this.btnDelete.UseVisualStyleBackColor = true;
-            this.btnDelete.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             // 
             // btnSave
             // 
             this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSave.Location = new System.Drawing.Point(410, 320);
+            this.btnSave.Location = new System.Drawing.Point(359, 320);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(85, 40);
+            this.btnSave.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.btnSave.Size = new System.Drawing.Size(74, 40);
             this.btnSave.TabIndex = 18;
             this.btnSave.Text = "حفظ";
             this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             // 
             // PeriodForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(520, 380);
+            this.ClientSize = new System.Drawing.Size(792, 377);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnEdit);
