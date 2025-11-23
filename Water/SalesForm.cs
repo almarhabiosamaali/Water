@@ -655,7 +655,7 @@ namespace Water
     txtSalesId.Text.Trim(),                        // doc_no
     cmbBillType.SelectedItem != null ? cmbBillType.SelectedItem.ToString() : "",                                            // doc_no_type (لو عندك كومبو أو قيمة.. حطها هنا)
     txtPeriodId.Text.Trim(),                                            // period_id  (لو عندك فترة محاسبية.. حطها هنا)
-    "CUST",                                        // cus_part_type (نوع العميل/الشريك - غيّرها حسب تصميمك)
+    cusPartType,                                        // cus_part_type (نوع العميل/الشريك - غيّرها حسب تصميمك)
     txtCustomerId.Text.Trim(),                     // cus_part_no
     txtCustomerName.Text.Trim(),                   // cus_part_name (لو ما عندك كنترول للاسم خله "")
     string.IsNullOrWhiteSpace(txtTotalAmount.Text)
