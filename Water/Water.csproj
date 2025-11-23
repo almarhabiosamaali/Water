@@ -45,6 +45,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AmountTextBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="AmountTextBox.Designer.cs">
+      <DependentUpon>AmountTextBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="Clas\account.cs" />
     <Compile Include="Clas\customer.cs" />
     <Compile Include="Clas\DataAccessLayer.cs" />
@@ -125,6 +131,9 @@
     <Compile Include="testTab.Designer.cs">
       <DependentUpon>testTab.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="AmountTextBox.resx">
+      <DependentUpon>AmountTextBox.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

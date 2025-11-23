@@ -10,42 +10,45 @@ namespace Water.Clas
 {
     class expense
     {
-        public void ADD_EXPENSE(string id, DateTime date, string type, string Account_Type, string account_id,
+        public void ADD_EXPENSE(string id, string doc_type, DateTime date, string type, string Account_Type, string account_id,
             string Account_name, double amount, string period_id, string description, string notes)
         {
             Clas.DataAccessLayer DAL = new Clas.DataAccessLayer();
             DAL.Open();
-            SqlParameter[] param = new SqlParameter[10];
+            SqlParameter[] param = new SqlParameter[11];
 
             param[0] = new SqlParameter("@id", SqlDbType.VarChar, 50);
             param[0].Value = id;
 
-            param[1] = new SqlParameter("@date", SqlDbType.Date);
-            param[1].Value = date;
+            param[1] = new SqlParameter("@doc_type", SqlDbType.VarChar, 50);
+            param[1].Value = doc_type;
 
-            param[2] = new SqlParameter("@type", SqlDbType.VarChar, 50);
-            param[2].Value = type;
+            param[2] = new SqlParameter("@date", SqlDbType.Date);
+            param[2].Value = date;
 
-            param[3] = new SqlParameter("@Account_Type", SqlDbType.VarChar, 50);
-            param[3].Value = Account_Type;
+            param[3] = new SqlParameter("@type", SqlDbType.VarChar, 50);
+            param[3].Value = type;
 
-            param[4] = new SqlParameter("@account_id", SqlDbType.VarChar, 50);
-            param[4].Value = account_id;
+            param[4] = new SqlParameter("@Account_Type", SqlDbType.VarChar, 50);
+            param[4].Value = Account_Type;
 
-            param[5] = new SqlParameter("@Account_name", SqlDbType.VarChar, 255);
-            param[5].Value = Account_name;
+            param[5] = new SqlParameter("@account_id", SqlDbType.VarChar, 50);
+            param[5].Value = account_id;
 
-            param[6] = new SqlParameter("@amount", SqlDbType.Float);
-            param[6].Value = amount;
+            param[6] = new SqlParameter("@Account_name", SqlDbType.VarChar, 255);
+            param[6].Value = Account_name;
 
-            param[7] = new SqlParameter("@period_id", SqlDbType.VarChar, 50);
-            param[7].Value = period_id;
+            param[7] = new SqlParameter("@amount", SqlDbType.Float);
+            param[7].Value = amount;
 
-            param[8] = new SqlParameter("@description", SqlDbType.VarChar, 255);
-            param[8].Value = description;
+            param[8] = new SqlParameter("@period_id", SqlDbType.VarChar, 50);
+            param[8].Value = period_id;
 
-            param[9] = new SqlParameter("@notes", SqlDbType.VarChar, 255);
-            param[9].Value = notes;
+            param[9] = new SqlParameter("@description", SqlDbType.VarChar, 255);
+            param[9].Value = description;
+
+            param[10] = new SqlParameter("@notes", SqlDbType.VarChar, 255);
+            param[10].Value = notes;
 
             DAL.ExecuteCommand("expense_insert", param);
             DAL.Close();
@@ -74,42 +77,45 @@ namespace Water.Clas
             return dt;
         }
 
-        public void UPDATE_EXPENSE(string id, DateTime date, string type, string Account_Type, string account_id,
+        public void UPDATE_EXPENSE(string id, string doc_type, DateTime date, string type, string Account_Type, string account_id,
             string Account_name, double amount, string period_id, string description, string notes)
         {
             Clas.DataAccessLayer DAL = new Clas.DataAccessLayer();
             DAL.Open();
-            SqlParameter[] param = new SqlParameter[10];
+            SqlParameter[] param = new SqlParameter[11];
 
             param[0] = new SqlParameter("@id", SqlDbType.VarChar, 50);
             param[0].Value = id;
 
-            param[1] = new SqlParameter("@date", SqlDbType.Date);
-            param[1].Value = date;
+            param[1] = new SqlParameter("@doc_type", SqlDbType.VarChar, 50);
+            param[1].Value = doc_type;
 
-            param[2] = new SqlParameter("@type", SqlDbType.VarChar, 50);
-            param[2].Value = type;
+            param[2] = new SqlParameter("@date", SqlDbType.Date);
+            param[2].Value = date;
 
-            param[3] = new SqlParameter("@Account_Type", SqlDbType.VarChar, 50);
-            param[3].Value = Account_Type;
+            param[3] = new SqlParameter("@type", SqlDbType.VarChar, 50);
+            param[3].Value = type;
 
-            param[4] = new SqlParameter("@account_id", SqlDbType.VarChar, 50);
-            param[4].Value = account_id;
+            param[4] = new SqlParameter("@Account_Type", SqlDbType.VarChar, 50);
+            param[4].Value = Account_Type;
 
-            param[5] = new SqlParameter("@Account_name", SqlDbType.VarChar, 255);
-            param[5].Value = Account_name;
+            param[5] = new SqlParameter("@account_id", SqlDbType.VarChar, 50);
+            param[5].Value = account_id;
 
-            param[6] = new SqlParameter("@amount", SqlDbType.Float);
-            param[6].Value = amount;
+            param[6] = new SqlParameter("@Account_name", SqlDbType.VarChar, 255);
+            param[6].Value = Account_name;
 
-            param[7] = new SqlParameter("@period_id", SqlDbType.VarChar, 50);
-            param[7].Value = period_id;
+            param[7] = new SqlParameter("@amount", SqlDbType.Float);
+            param[7].Value = amount;
 
-            param[8] = new SqlParameter("@description", SqlDbType.VarChar, 255);
-            param[8].Value = description;
+            param[8] = new SqlParameter("@period_id", SqlDbType.VarChar, 50);
+            param[8].Value = period_id;
 
-            param[9] = new SqlParameter("@notes", SqlDbType.VarChar, 255);
-            param[9].Value = notes;
+            param[9] = new SqlParameter("@description", SqlDbType.VarChar, 255);
+            param[9].Value = description;
+
+            param[10] = new SqlParameter("@notes", SqlDbType.VarChar, 255);
+            param[10].Value = notes;
 
             DAL.ExecuteCommand("expense_update", param);
             DAL.Close();
@@ -126,6 +132,31 @@ namespace Water.Clas
 
             DAL.ExecuteCommand("expense_delete", param);
             DAL.Close();
+        }
+
+        public string GET_NEXT_EXPENSE_CODE()
+        {
+            try
+            {
+                Clas.DataAccessLayer DAL = new Clas.DataAccessLayer();
+                DAL.Open();
+                
+                // استخدام DataAccessLayer للحصول على آخر رقم قيد
+                string sqlQuery = "SELECT ISNULL(MAX(CAST(id AS INT)), 0) + 1 AS NextExpenseCode FROM Water.dbo.expenses WHERE ISNUMERIC(id) = 1";
+                object result = DAL.ExecuteScalar(sqlQuery);
+                
+                DAL.Close();
+                
+                if (result != null && result != DBNull.Value)
+                {
+                    return result.ToString();
+                }
+                return "1";
+            }
+            catch
+            {
+                return "1";
+            }
         }
 
         public void ADD_POST(string action, string doc_type, string doc_no, string doc_no_type,

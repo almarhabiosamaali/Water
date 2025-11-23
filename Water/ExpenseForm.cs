@@ -15,6 +15,10 @@ namespace Water
     {
         private bool isEditMode = false;
         Clas.expense exp = new Clas.expense();
+        Clas.period per = new Clas.period();
+        Clas.customer customer = new Clas.customer();
+        Clas.partners partners = new Clas.partners();
+        Clas.account account = new Clas.account();
 
         public ExpenseForm()
         {
@@ -24,6 +28,12 @@ namespace Water
             btnEdit.Click += btnEdit_Click;
             btnDelete.Click += btnDelete_Click;
             btnSave.Click += btnSave_Click;
+            
+            // ربط أحداث F2 و Enter على حقل رقم الفترة لعرض قائمة الفترات
+            txtPeriodId.KeyDown += txtPeriodId_KeyDown;
+            
+            // ربط أحداث F2 و Enter على حقل رقم الحساب لعرض قائمة الحسابات/العملاء/الشركاء
+            txtAccountId.KeyDown += txtAccountId_KeyDown;
         }
 
         private void btnView_Click(object sender, EventArgs e)
@@ -77,7 +87,18 @@ namespace Water
         {
             isEditMode = false;
             clear_EXPENSE();
-            txtExpenseCode.Enabled = true;
+            
+            // توليد رقم القيد التلقائي
+            try
+            {
+                txtExpenseCode.Text = exp.GET_NEXT_EXPENSE_CODE();
+            }
+            catch
+            {
+                txtExpenseCode.Text = "1";
+            }
+            
+            txtExpenseCode.Enabled = false;
             btnSave.Text = "حفظ";
             MessageBox.Show("يمكنك الآن إدخال بيانات قيد جديد", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
@@ -154,7 +175,6 @@ namespace Water
                     string.IsNullOrWhiteSpace(txtAmount.Text) ||
                     //Convert.ToDouble(txtAmount.Text) <= 0 ||
                     string.IsNullOrWhiteSpace(txtPeriodId.Text) ||
-                    string.IsNullOrWhiteSpace(txtDescription.Text) ||
                     string.IsNullOrWhiteSpace(txtNotes.Text))
                 {
                     MessageBox.Show("الرجاء إكمال جميع البيانات المطلوبة", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -166,6 +186,7 @@ namespace Water
                     // تحديث بيانات القيد
                     exp.UPDATE_EXPENSE(
                         txtExpenseCode.Text.Trim(),
+                        "2", // doc_type = 2 (قيمة ثابتة)
                         dtpDate.Value.Date,
                         cmbType.SelectedItem.ToString(),
                         cmbAccountType.SelectedItem.ToString(),
@@ -213,6 +234,7 @@ namespace Water
                     // إضافة قيد جديد
                     exp.ADD_EXPENSE(
                         txtExpenseCode.Text.Trim(),
+                        "2", // doc_type = 2 (قيمة ثابتة)
                         dtpDate.Value.Date,
                         cmbType.SelectedItem.ToString(),
                         cmbAccountType.SelectedItem.ToString(),
@@ -323,8 +345,10 @@ namespace Water
             cmbAccountType.SelectedIndex = -1;
             txtAccountId.Clear();
             txtAccountName.Clear();
-            txtAmount.Text = "0";
+            txtAmount.Clear();
             txtPeriodId.Clear();
+            txtPeriodStartDate.Clear();
+            txtPeriodEndDate.Clear();
             txtDescription.Clear();
             txtNotes.Clear();
         }
@@ -332,6 +356,216 @@ namespace Water
         private void GoFocus(object sender, EventArgs e)
         {
             txtAmount.Select(0, txtAmount.Text.Length);
+        }
+
+        private void txtAmount_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsDigit(e.KeyChar) && e.KeyChar != '.' && e.KeyChar != '\b')
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void txtAmount_Leave(object sender, EventArgs e)
+        {
+            if (double.TryParse(txtAmount.Text, out double value))
+            {
+                txtAmount.Text = value.ToString("N2");  // مثل 1,250.00
+            }
+        }
+
+        private void txtPeriodId_KeyDown(object sender, KeyEventArgs e)
+        {
+            // عرض قائمة الفترات عند الضغط على F2 أو Enter
+            if (e.KeyCode == Keys.F2 || e.KeyCode == Keys.Enter)
+            {
+                e.Handled = true; // منع التنقل الافتراضي لـ Enter
+                ShowPeriodsList();
+            }
+        }
+
+        private void ShowPeriodsList()
+        {
+            try
+            {
+                DataTable dt = per.GET_ALL_PERIODS();
+                
+                if (dt.Rows.Count == 0)
+                {
+                    MessageBox.Show("لا توجد فترات للعرض", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                Form viewForm = new Form();
+                viewForm.Text = "اختر الفترة";
+                viewForm.RightToLeft = RightToLeft.Yes;
+                viewForm.RightToLeftLayout = true;
+                viewForm.Size = new Size(800, 500);
+                viewForm.StartPosition = FormStartPosition.CenterScreen;
+
+                DataGridView dgv = new DataGridView();
+                dgv.Dock = DockStyle.Fill;
+                dgv.DataSource = dt;
+                dgv.ReadOnly = true;
+                dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+                dgv.MultiSelect = false;
+                dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                dgv.RightToLeft = RightToLeft.Yes;
+
+                dgv.CellDoubleClick += (s, args) =>
+                {
+                    if (args.RowIndex >= 0)
+                    {
+                        DataRow row = dt.Rows[args.RowIndex];
+                        LoadPeriodData(row);
+                        viewForm.Close();
+                    }
+                };
+
+                viewForm.Controls.Add(dgv);
+                viewForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("حدث خطأ أثناء عرض الفترات: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void LoadPeriodData(DataRow row)
+        {
+            // ملء رقم الفترة
+            txtPeriodId.Text = row["id"].ToString();
+            
+            // ملء بداية الفترة
+            if (row["start_date"] != DBNull.Value)
+            {
+                txtPeriodStartDate.Text = Convert.ToDateTime(row["start_date"]).ToString("dd/MM/yyyy");
+            }
+            else
+            {
+                txtPeriodStartDate.Clear();
+            }
+            
+            // ملء نهاية الفترة
+            if (row["end_date"] != DBNull.Value)
+            {
+                txtPeriodEndDate.Text = Convert.ToDateTime(row["end_date"]).ToString("dd/MM/yyyy");
+            }
+            else
+            {
+                txtPeriodEndDate.Clear();
+            }
+        }
+
+        private void txtAccountId_KeyDown(object sender, KeyEventArgs e)
+        {
+            // عرض قائمة الحسابات/العملاء/الشركاء عند الضغط على F2 أو Enter
+            if (e.KeyCode == Keys.F2 || e.KeyCode == Keys.Enter)
+            {
+                e.Handled = true; // منع التنقل الافتراضي لـ Enter
+                ShowAccountList();
+            }
+        }
+
+        private void ShowAccountList()
+        {
+            try
+            {
+                // التحقق من نوع الحساب المحدد
+                if (cmbAccountType.SelectedIndex == -1)
+                {
+                    MessageBox.Show("الرجاء اختيار نوع الحساب أولاً", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                string accountType = cmbAccountType.SelectedItem.ToString();
+                DataTable dt = null;
+                string formTitle = "";
+
+                // تحديد نوع البيانات بناءً على اختيار نوع الحساب
+                if (accountType == "عميل")
+                {
+                    dt = customer.GET_ALL_CUSTOMERS();
+                    formTitle = "عرض بيانات العملاء";
+                }
+                else if (accountType == "شريك")
+                {
+                    dt = partners.GET_ALL_PARTNERS();
+                    formTitle = "عرض بيانات الشركاء";
+                }
+                else if (accountType == "حساب")
+                {
+                    dt = account.GET_ALL_ACCOUNTS();
+                    formTitle = "عرض بيانات الحسابات";
+                }
+                else
+                {
+                    MessageBox.Show("نوع الحساب غير معروف", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                if (dt == null || dt.Rows.Count == 0)
+                {
+                    MessageBox.Show("لا توجد بيانات للعرض", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                Form viewForm = new Form();
+                viewForm.Text = formTitle;
+                viewForm.RightToLeft = RightToLeft.Yes;
+                viewForm.RightToLeftLayout = true;
+                viewForm.Size = new Size(1200, 600);
+                viewForm.StartPosition = FormStartPosition.CenterScreen;
+
+                DataGridView dgv = new DataGridView();
+                dgv.Dock = DockStyle.Fill;
+                dgv.DataSource = dt;
+                dgv.ReadOnly = true;
+                dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+                dgv.MultiSelect = false;
+                dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                dgv.RightToLeft = RightToLeft.Yes;
+
+                dgv.CellDoubleClick += (s, args) =>
+                {
+                    if (args.RowIndex >= 0)
+                    {
+                        DataRow row = dt.Rows[args.RowIndex];
+                        LoadAccountData(row);
+                        viewForm.Close();
+                    }
+                };
+
+                viewForm.Controls.Add(dgv);
+                viewForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("حدث خطأ أثناء عرض البيانات: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void LoadAccountData(DataRow row)
+        {
+            // ملء رقم الحساب/العميل/الشريك
+            if (row["id"] != DBNull.Value)
+            {
+                txtAccountId.Text = row["id"].ToString();
+            }
+            else
+            {
+                txtAccountId.Clear();
+            }
+
+            // ملء اسم الحساب/العميل/الشريك
+            if (row["name"] != DBNull.Value)
+            {
+                txtAccountName.Text = row["name"].ToString();
+            }
+            else
+            {
+                txtAccountName.Clear();
+            }
         }
     }
 }
