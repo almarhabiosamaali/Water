@@ -43,6 +43,12 @@ namespace Water
             txtDieselMinutesPrice.TextChanged += CalculateTotals_TextChanged;
             txtPaidAmount.TextChanged += CalculateRemainingAmount_TextChanged;
             txtDueAmount.TextChanged += CalculateRemainingAmount_TextChanged;
+
+            // تهيئة ComboBox نوع العميل
+            if (cmbCustomerType != null)
+            {
+                cmbCustomerType.SelectedIndex = 0; // افتراضياً "عميل"
+            }
         }
 
         private void InitializeDataGridViewEvents()
@@ -257,16 +263,29 @@ namespace Water
         {
             try
             {
-                DataTable dt = customer.GET_ALL_CUSTOMERS();
+                DataTable dt = null;
+                string formTitle = "";
 
-                if (dt.Rows.Count == 0)
+                // تحديد نوع البيانات بناءً على اختيار نوع العميل
+                if (cmbCustomerType != null && cmbCustomerType.SelectedIndex == 1) // شريك
+                {
+                    dt = partners.GET_ALL_PARTNERS();
+                    formTitle = "عرض بيانات الشركاء";
+                }
+                else // عميل (افتراضي)
+                {
+                    dt = customer.GET_ALL_CUSTOMERS();
+                    formTitle = "عرض بيانات العملاء";
+                }
+
+                if (dt == null || dt.Rows.Count == 0)
                 {
                     MessageBox.Show("لا توجد بيانات للعرض", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
 
                 Form viewForm = new Form();
-                viewForm.Text = "عرض بيانات العملاء";
+                viewForm.Text = formTitle;
                 viewForm.RightToLeft = RightToLeft.Yes;
                 viewForm.RightToLeftLayout = true;
                 viewForm.Size = new Size(1200, 600);
@@ -301,16 +320,29 @@ namespace Water
         }
         private void LoadCustomerDataToBill(DataRow customerRow)
         {
-            // تعبئة رقم العميل في حقل txtCustomerId
+            // تعبئة رقم العميل/الشريك في حقل txtCustomerId
             if (txtCustomerId != null)
             {
                 txtCustomerId.Text = customerRow["id"] != DBNull.Value ? customerRow["id"].ToString() : "";
             }
 
-            // تعبئة اسم العميل في TextBox
+            // تعبئة اسم العميل/الشريك في TextBox
             if (txtCustomerName != null)
             {
                 txtCustomerName.Text = customerRow["name"] != DBNull.Value ? customerRow["name"].ToString() : "";
+            }
+        }
+
+        private void cmbCustomerType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // عند تغيير نوع العميل، مسح الحقول
+            if (txtCustomerId != null)
+            {
+                txtCustomerId.Clear();
+            }
+            if (txtCustomerName != null)
+            {
+                txtCustomerName.Clear();
             }
         }
 
@@ -535,13 +567,27 @@ namespace Water
                     return;
                 }
 
+                // تحديد نوع العميل/الشريك
+                string cusPartType = "";
+                if (cmbCustomerType != null && cmbCustomerType.SelectedIndex == 1) // شريك
+                {
+                    cusPartType = "2";
+                }
+                else // عميل
+                {
+                    cusPartType = "1";
+                }
+
                 if (isEditMode)
                 {
                     // تحديث بيانات الفاتورة
                     sal.UPDATE_SALES(
                         txtSalesId.Text.Trim(),
+                        "1", // doc_type = 1
                         txtPeriodId.Text.Trim(),
                         txtCustomerId.Text.Trim(),
+                        txtCustomerName != null ? txtCustomerName.Text.Trim() : "", // cus_part_name
+                        cusPartType, // cus_part_type
                         dtpStartTime.Value,
                         dtpEndTime.Value,
                         string.IsNullOrWhiteSpace(txtHours.Text) ? 0 : Convert.ToDouble(txtHours.Text),
@@ -560,7 +606,8 @@ namespace Water
                         string.IsNullOrWhiteSpace(txtRemainingAmount.Text) ? 0 : Convert.ToDouble(txtRemainingAmount.Text),
                         cmbBillType.SelectedItem != null ? cmbBillType.SelectedItem.ToString() : "",
                         string.IsNullOrWhiteSpace(txtPriceLevel.Text) ? "" : txtPriceLevel.Text.Trim(),
-                        DateTime.Now
+                        DateTime.Now,
+                        txtNote != null ? txtNote.Text.Trim() : "" // note
                     );
 
                     MessageBox.Show("تم تحديث بيانات الفاتورة بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -575,8 +622,11 @@ namespace Water
                     // إضافة فاتورة جديدة
                     sal.ADD_SALES(
                         txtSalesId.Text.Trim(),
+                        "1", // doc_type = 1
                         txtPeriodId.Text.Trim(),
                         txtCustomerId.Text.Trim(),
+                        txtCustomerName != null ? txtCustomerName.Text.Trim() : "", // cus_part_name
+                        cusPartType, // cus_part_type
                         dtpStartTime.Value,
                         dtpEndTime.Value,
                         string.IsNullOrWhiteSpace(txtHours.Text) ? 0 : Convert.ToDouble(txtHours.Text),
@@ -595,7 +645,8 @@ namespace Water
                         string.IsNullOrWhiteSpace(txtRemainingAmount.Text) ? 0 : Convert.ToDouble(txtRemainingAmount.Text),
                         cmbBillType.SelectedItem != null ? cmbBillType.SelectedItem.ToString() : "",
                         string.IsNullOrWhiteSpace(txtPriceLevel.Text) ? "" : txtPriceLevel.Text.Trim(),
-                        DateTime.Now
+                        DateTime.Now,
+                        txtNote != null ? txtNote.Text.Trim() : "" // note
                     );
 
                     MessageBox.Show("تم حفظ بيانات الفاتورة بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -631,7 +682,7 @@ namespace Water
 
         private void LoadSalesData(DataRow row)
         {
-            txtSalesId.Text = row["id"].ToString();
+            txtSalesId.Text = row["bill_no"].ToString();
 
             string billType = row["bill_type"].ToString();
             if (cmbBillType.Items.Contains(billType))
@@ -639,31 +690,44 @@ namespace Water
                 cmbBillType.SelectedItem = billType;
             }
 
-            if (row["customer_id"] != DBNull.Value)
+            // تحميل نوع العميل/الشريك
+            if (cmbCustomerType != null)
             {
-                txtCustomerId.Text = row["customer_id"].ToString();
-                
-                // تحميل اسم العميل من قاعدة البيانات
-                try
+                if (row["cus_part_type"] != DBNull.Value)
                 {
-                    DataTable customerData = customer.VIEW_CUSTOMER(txtCustomerId.Text.Trim());
-                    if (customerData.Rows.Count > 0)
+                    string cusPartType = row["cus_part_type"].ToString();
+                    if (cusPartType == "2") // شريك
                     {
-                        if (txtCustomerName != null)
-                        {
-                            txtCustomerName.Text = customerData.Rows[0]["name"] != DBNull.Value ? customerData.Rows[0]["name"].ToString() : "";
-                        }
+                        cmbCustomerType.SelectedIndex = 1;
+                    }
+                    else // عميل
+                    {
+                        cmbCustomerType.SelectedIndex = 0;
                     }
                 }
-                catch
+                else
                 {
-                    // في حالة الخطأ، لا نفعل شيئاً
+                    cmbCustomerType.SelectedIndex = 0; // افتراضي: عميل
                 }
+            }
+
+            if (row["cus_part_no"] != DBNull.Value)
+            {
+                txtCustomerId.Text = row["cus_part_no"].ToString();
             }
             else
             {
                 txtCustomerId.Clear();
-                if (txtCustomerName != null)
+            }
+
+            // تحميل اسم العميل/الشريك من الصف مباشرة
+            if (txtCustomerName != null)
+            {
+                if (row["cus_part_name"] != DBNull.Value)
+                {
+                    txtCustomerName.Text = row["cus_part_name"].ToString();
+                }
+                else
                 {
                     txtCustomerName.Clear();
                 }
@@ -805,6 +869,19 @@ namespace Water
                 txtRemainingAmount.Clear();
             }
 
+            // تحميل البيان
+            if (txtNote != null)
+            {
+                if (row["note"] != DBNull.Value)
+                {
+                    txtNote.Text = row["note"].ToString();
+                }
+                else
+                {
+                    txtNote.Clear();
+                }
+            }
+
             // تحميل بيانات الشركاء من قاعدة البيانات
             LoadPartnersHoursFromDatabase(txtSalesId.Text.Trim());
         }
@@ -813,6 +890,10 @@ namespace Water
         {
             txtSalesId.Clear();
             cmbBillType.SelectedIndex = -1;
+            if (cmbCustomerType != null)
+            {
+                cmbCustomerType.SelectedIndex = 0; // افتراضي: عميل
+            }
             txtCustomerId.Clear();
             if (txtCustomerName != null)
             {
@@ -834,6 +915,10 @@ namespace Water
             txtDueAmount.Clear();
             txtPaidAmount.Clear();
             txtRemainingAmount.Clear();
+            if (txtNote != null)
+            {
+                txtNote.Clear();
+            }
 
             // مسح DataGridView
             if (this.dataGridView1 != null)

@@ -28,7 +28,7 @@ namespace Water
         /// </summary>
         private void InitializeComponent()
         {
-           // System.Windows.Forms.DateTimePicker dtpStartTime;
+            System.Windows.Forms.DateTimePicker dtpStartTime;
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.bill_no = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -49,6 +49,8 @@ namespace Water
             this.label1 = new System.Windows.Forms.Label();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.lblCustName = new System.Windows.Forms.Label();
+            this.txtNote = new System.Windows.Forms.TextBox();
+            this.lblNote = new System.Windows.Forms.Label();
             this.txtRemainingAmount = new System.Windows.Forms.TextBox();
             this.lblRemainingAmount = new System.Windows.Forms.Label();
             this.txtPaidAmount = new System.Windows.Forms.TextBox();
@@ -77,6 +79,8 @@ namespace Water
             this.txtSalesId = new System.Windows.Forms.TextBox();
             this.cmbBillType = new System.Windows.Forms.ComboBox();
             this.lblBillType = new System.Windows.Forms.Label();
+            this.cmbCustomerType = new System.Windows.Forms.ComboBox();
+            this.lblCustomerType = new System.Windows.Forms.Label();
             this.lblCustomerId = new System.Windows.Forms.Label();
             this.lblPeriodId = new System.Windows.Forms.Label();
             this.lblSalesCode = new System.Windows.Forms.Label();
@@ -86,7 +90,7 @@ namespace Water
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnView = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.dtpStartTime = new System.Windows.Forms.DateTimePicker();
+            dtpStartTime = new System.Windows.Forms.DateTimePicker();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tabPage1.SuspendLayout();
@@ -166,12 +170,14 @@ namespace Water
             this.tabPage1.Controls.Add(this.txtDieselMinutesPrice);
             this.tabPage1.Controls.Add(this.txtWaterMinutesPrice);
             this.tabPage1.Controls.Add(this.dtpEndTime);
-            this.tabPage1.Controls.Add(this.dtpStartTime);
+            this.tabPage1.Controls.Add(dtpStartTime);
             this.tabPage1.Controls.Add(this.txtPriceLevel);
             this.tabPage1.Controls.Add(this.lblPriceLevl);
             this.tabPage1.Controls.Add(this.label1);
             this.tabPage1.Controls.Add(this.dateTimePicker1);
             this.tabPage1.Controls.Add(this.lblCustName);
+            this.tabPage1.Controls.Add(this.txtNote);
+            this.tabPage1.Controls.Add(this.lblNote);
             this.tabPage1.Controls.Add(this.txtRemainingAmount);
             this.tabPage1.Controls.Add(this.lblRemainingAmount);
             this.tabPage1.Controls.Add(this.txtPaidAmount);
@@ -200,6 +206,8 @@ namespace Water
             this.tabPage1.Controls.Add(this.txtSalesId);
             this.tabPage1.Controls.Add(this.cmbBillType);
             this.tabPage1.Controls.Add(this.lblBillType);
+            this.tabPage1.Controls.Add(this.cmbCustomerType);
+            this.tabPage1.Controls.Add(this.lblCustomerType);
             this.tabPage1.Controls.Add(this.lblCustomerId);
             this.tabPage1.Controls.Add(this.lblPeriodId);
             this.tabPage1.Controls.Add(this.lblSalesCode);
@@ -264,18 +272,15 @@ namespace Water
             // 
             // dtpStartTime
             // 
-            /* dtpStartTime.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right))); */                                  
-            this.dtpStartTime.CustomFormat = "dd/MM/yyyy  mm:hh tt";
-            this.dtpStartTime.DropDownAlign = System.Windows.Forms.LeftRightAlignment.Right;
-            this.dtpStartTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpStartTime.Location = new System.Drawing.Point(1114, 182);
-            this.dtpStartTime.Name = "dtpStartTime";
-            this.dtpStartTime.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.dtpStartTime.RightToLeftLayout = true;
-            this.dtpStartTime.Size = new System.Drawing.Size(187, 24);
-            this.dtpStartTime.TabIndex = 39;
+            dtpStartTime.CustomFormat = "dd/MM/yyyy  mm:hh tt";
+            dtpStartTime.DropDownAlign = System.Windows.Forms.LeftRightAlignment.Right;
+            dtpStartTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            dtpStartTime.Location = new System.Drawing.Point(1114, 182);
+            dtpStartTime.Name = "dtpStartTime";
+            dtpStartTime.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            dtpStartTime.RightToLeftLayout = true;
+            dtpStartTime.Size = new System.Drawing.Size(187, 24);
+            dtpStartTime.TabIndex = 39;
             // 
             // txtPriceLevel
             // 
@@ -323,11 +328,31 @@ namespace Water
             // lblCustName
             // 
             this.lblCustName.AutoSize = true;
-            this.lblCustName.Location = new System.Drawing.Point(772, 84);
+            this.lblCustName.Location = new System.Drawing.Point(862, 87);
             this.lblCustName.Name = "lblCustName";
             this.lblCustName.Size = new System.Drawing.Size(81, 17);
             this.lblCustName.TabIndex = 65;
             this.lblCustName.Text = "اسم العميل ";
+            // 
+            // txtNote
+            // 
+            this.txtNote.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtNote.Location = new System.Drawing.Point(527, 365);
+            this.txtNote.Name = "txtNote";
+            this.txtNote.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.txtNote.Size = new System.Drawing.Size(711, 26);
+            this.txtNote.TabIndex = 69;
+            // 
+            // lblNote
+            // 
+            this.lblNote.AutoSize = true;
+            this.lblNote.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNote.Location = new System.Drawing.Point(1244, 367);
+            this.lblNote.Name = "lblNote";
+            this.lblNote.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.lblNote.Size = new System.Drawing.Size(43, 20);
+            this.lblNote.TabIndex = 70;
+            this.lblNote.Text = "البيان:";
             // 
             // txtRemainingAmount
             // 
@@ -562,7 +587,7 @@ namespace Water
             // 
             // txtCustomerName
             // 
-            this.txtCustomerName.Location = new System.Drawing.Point(401, 77);
+            this.txtCustomerName.Location = new System.Drawing.Point(491, 80);
             this.txtCustomerName.Name = "txtCustomerName";
             this.txtCustomerName.ReadOnly = true;
             this.txtCustomerName.Size = new System.Drawing.Size(350, 24);
@@ -571,10 +596,10 @@ namespace Water
             // txtCustomerId
             // 
             this.txtCustomerId.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCustomerId.Location = new System.Drawing.Point(940, 75);
+            this.txtCustomerId.Location = new System.Drawing.Point(1041, 85);
             this.txtCustomerId.Name = "txtCustomerId";
             this.txtCustomerId.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.txtCustomerId.Size = new System.Drawing.Size(263, 26);
+            this.txtCustomerId.Size = new System.Drawing.Size(162, 26);
             this.txtCustomerId.TabIndex = 38;
             this.txtCustomerId.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtCustomerId_KeyDown);
             // 
@@ -613,11 +638,37 @@ namespace Water
             this.lblBillType.TabIndex = 36;
             this.lblBillType.Text = "نوع الفاتورة:";
             // 
+            // cmbCustomerType
+            // 
+            this.cmbCustomerType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbCustomerType.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbCustomerType.FormattingEnabled = true;
+            this.cmbCustomerType.Items.AddRange(new object[] {
+            "عميل",
+            "شريك"});
+            this.cmbCustomerType.Location = new System.Drawing.Point(1068, 50);
+            this.cmbCustomerType.Name = "cmbCustomerType";
+            this.cmbCustomerType.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.cmbCustomerType.Size = new System.Drawing.Size(133, 28);
+            this.cmbCustomerType.TabIndex = 67;
+            this.cmbCustomerType.SelectedIndexChanged += new System.EventHandler(this.cmbCustomerType_SelectedIndexChanged);
+            // 
+            // lblCustomerType
+            // 
+            this.lblCustomerType.AutoSize = true;
+            this.lblCustomerType.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCustomerType.Location = new System.Drawing.Point(1217, 53);
+            this.lblCustomerType.Name = "lblCustomerType";
+            this.lblCustomerType.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.lblCustomerType.Size = new System.Drawing.Size(74, 20);
+            this.lblCustomerType.TabIndex = 68;
+            this.lblCustomerType.Text = "نوع العميل:";
+            // 
             // lblCustomerId
             // 
             this.lblCustomerId.AutoSize = true;
             this.lblCustomerId.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCustomerId.Location = new System.Drawing.Point(1214, 74);
+            this.lblCustomerId.Location = new System.Drawing.Point(1214, 84);
             this.lblCustomerId.Name = "lblCustomerId";
             this.lblCustomerId.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblCustomerId.Size = new System.Drawing.Size(73, 20);
@@ -764,12 +815,16 @@ namespace Water
         private System.Windows.Forms.Label lblStartTime;
         private System.Windows.Forms.TextBox txtPeriodId;
         private System.Windows.Forms.TextBox txtCustomerId;
+        private System.Windows.Forms.TextBox txtNote;
+        private System.Windows.Forms.Label lblNote;
         private System.Windows.Forms.TextBox txtSalesId;
         private System.Windows.Forms.Label lblCustomerId;
         private System.Windows.Forms.Label lblPeriodId;
         private System.Windows.Forms.Label lblSalesCode;
         private System.Windows.Forms.ComboBox cmbBillType;
         private System.Windows.Forms.Label lblBillType;
+        private System.Windows.Forms.ComboBox cmbCustomerType;
+        private System.Windows.Forms.Label lblCustomerType;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.DataGridViewTextBoxColumn bill_no;
         private System.Windows.Forms.DataGridViewTextBoxColumn PartenerId;
@@ -799,7 +854,6 @@ namespace Water
         private System.Windows.Forms.TextBox txtDieselMinutesPrice;
         private System.Windows.Forms.TextBox txtWaterMinutesPrice;
         private System.Windows.Forms.DateTimePicker dtpEndTime;
-        private System.Windows.Forms.DateTimePicker dtpStartTime;
     }
 }
 
