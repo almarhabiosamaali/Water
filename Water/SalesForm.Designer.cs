@@ -28,7 +28,7 @@ namespace Water
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DateTimePicker dtpStartTime;
+            //System.Windows.Forms.DateTimePicker dtpStartTime;
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.bill_no = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -90,7 +90,7 @@ namespace Water
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnView = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            dtpStartTime = new System.Windows.Forms.DateTimePicker();
+            this.dtpStartTime = new System.Windows.Forms.DateTimePicker();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tabPage1.SuspendLayout();
@@ -170,7 +170,7 @@ namespace Water
             this.tabPage1.Controls.Add(this.txtDieselMinutesPrice);
             this.tabPage1.Controls.Add(this.txtWaterMinutesPrice);
             this.tabPage1.Controls.Add(this.dtpEndTime);
-            this.tabPage1.Controls.Add(dtpStartTime);
+            this.tabPage1.Controls.Add(this.dtpStartTime);
             this.tabPage1.Controls.Add(this.txtPriceLevel);
             this.tabPage1.Controls.Add(this.lblPriceLevl);
             this.tabPage1.Controls.Add(this.label1);
@@ -261,7 +261,7 @@ namespace Water
             // 
             // dtpEndTime
             // 
-            this.dtpEndTime.CustomFormat = "dd/MM/yyyy  mm:hh tt";
+            this.dtpEndTime.CustomFormat = "dd/MM/yyyy  hh:mm tt";
             this.dtpEndTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtpEndTime.Location = new System.Drawing.Point(921, 182);
             this.dtpEndTime.Name = "dtpEndTime";
@@ -272,15 +272,15 @@ namespace Water
             // 
             // dtpStartTime
             // 
-            dtpStartTime.CustomFormat = "dd/MM/yyyy  mm:hh tt";
-            dtpStartTime.DropDownAlign = System.Windows.Forms.LeftRightAlignment.Right;
-            dtpStartTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            dtpStartTime.Location = new System.Drawing.Point(1114, 182);
-            dtpStartTime.Name = "dtpStartTime";
-            dtpStartTime.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            dtpStartTime.RightToLeftLayout = true;
-            dtpStartTime.Size = new System.Drawing.Size(187, 24);
-            dtpStartTime.TabIndex = 39;
+            this.dtpStartTime.CustomFormat = "dd/MM/yyyy  hh:mm tt";
+            this.dtpStartTime.DropDownAlign = System.Windows.Forms.LeftRightAlignment.Right;
+            this.dtpStartTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpStartTime.Location = new System.Drawing.Point(1114, 182);
+            this.dtpStartTime.Name = "dtpStartTime";
+            this.dtpStartTime.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.dtpStartTime.RightToLeftLayout = true;
+            this.dtpStartTime.Size = new System.Drawing.Size(187, 24);
+            this.dtpStartTime.TabIndex = 39;
             // 
             // txtPriceLevel
             // 
@@ -854,6 +854,7 @@ namespace Water
         private System.Windows.Forms.TextBox txtDieselMinutesPrice;
         private System.Windows.Forms.TextBox txtWaterMinutesPrice;
         private System.Windows.Forms.DateTimePicker dtpEndTime;
+        private System.Windows.Forms.DateTimePicker dtpStartTime;
     }
 }
 
