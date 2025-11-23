@@ -610,7 +610,9 @@ namespace Water
     string.IsNullOrWhiteSpace(txtTotalAmount.Text)
         ? 0
         : Convert.ToDouble(txtTotalAmount.Text),   // dr_amt
-    0,                                             // cr_amt (أو بدّل بينهم حسب طبيعة القيد)
+   string.IsNullOrWhiteSpace(txtPaidAmount.Text)
+        ? 0
+        : Convert.ToDouble(txtPaidAmount.Text),                                             // cr_amt (أو بدّل بينهم حسب طبيعة القيد)
     dtpStartTime.Value.Date,                       // date
     dtpStartTime.Value,                            // start_time (DateTime)
     dtpEndTime.Value,                              // end_time   (DateTime)
@@ -1077,6 +1079,40 @@ namespace Water
                                 minutesAvalible ?? "",
                                 totalHours ?? ""
                             );
+
+                            // إضافة POST للشريك
+                            double hoursValue = 0;
+                            double minutesValue = 0;
+                            double.TryParse(hoursCount, out hoursValue);
+                            double.TryParse(minutesCount, out minutesValue);
+
+                            partnersHours.ADD_POST(
+                                "insert",                                      // action
+                                "4",                                           // doc_type
+                                billNo,                                        // doc_no
+                                idCounter.ToString(),                           // doc_no_type
+                                txtPeriodId.Text.Trim(),                       // period_id
+                                "PARTNER",                                     // cus_part_type
+                                partnerNumber ?? "",                           // cus_part_no
+                                partnerName ?? "",                              // cus_part_name
+                                0,                                             // dr_amt
+                                0,                                             // cr_amt
+                                dtpStartTime.Value.Date,                      // date
+                                dtpStartTime.Value,                            // start_time
+                                dtpEndTime.Value,                              // end_time
+                                (int)hoursValue,                               // hours
+                                (int)minutesValue,                             // minutes
+                                0,                                             // water_hour_price
+                                0,                                             // diesel_hour_price
+                                0,                                             // water_Minutes_price
+                                0,                                             // diesel_Minutes_price
+                                0,                                             // water_total
+                                0,                                             // diesel_total
+                                0,                                             // total_amount
+                                $"شريك: {partnerName}",                        // note
+                                ""                                             // user_id
+                            );
+
                             idCounter++;
                         }
                         catch (Exception ex)

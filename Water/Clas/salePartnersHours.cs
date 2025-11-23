@@ -167,6 +167,90 @@ namespace Water.Clas
             DAL.ExecuteCommand("salePartnersHours_delete", param);
             DAL.Close();
         }
+
+        public void ADD_POST(string action, string doc_type, string doc_no, string doc_no_type, string period_id,
+           string cus_part_type, string cus_part_no, string cus_part_name, double dr_amt, double cr_amt,
+           DateTime date, DateTime start_time, DateTime end_time, double hours,
+           double minutes, double water_hour_price, double diesel_hour_price, double water_Minutes_price,
+           double diesel_Minutes_price, double water_total, double diesel_total, double total_amount, string note, string user_id)
+        {
+            Clas.DataAccessLayer DAL = new Clas.DataAccessLayer();
+            DAL.Open();
+
+            SqlParameter[] param = new SqlParameter[23];
+
+            param[0] = new SqlParameter("@action", SqlDbType.NVarChar, 20);
+            param[0].Value = action;
+
+            param[1] = new SqlParameter("@doc_type", SqlDbType.VarChar, 50);
+            param[1].Value = doc_type;
+
+            param[2] = new SqlParameter("@doc_no", SqlDbType.VarChar, 50);
+            param[2].Value = doc_no;
+
+            param[3] = new SqlParameter("@doc_no_type", SqlDbType.VarChar, 50);
+            param[3].Value = doc_no_type;
+
+            param[4] = new SqlParameter("@period_id", SqlDbType.VarChar, 50);
+            param[4].Value = period_id;
+
+            param[5] = new SqlParameter("@cus_part_type", SqlDbType.VarChar, 50);
+            param[5].Value = cus_part_type;
+
+            param[6] = new SqlParameter("@cus_part_no", SqlDbType.VarChar, 50);
+            param[6].Value = cus_part_no;
+
+            param[7] = new SqlParameter("@cus_part_name", SqlDbType.VarChar, 200);
+            param[7].Value = cus_part_name;
+
+            param[8] = new SqlParameter("@dr_amt", SqlDbType.Decimal);
+            param[8].Value = dr_amt;
+
+            param[9] = new SqlParameter("@cr_amt", SqlDbType.Decimal);
+            param[9].Value = cr_amt;
+
+            param[10] = new SqlParameter("@date", SqlDbType.Date);
+            param[10].Value = date;
+
+            param[11] = new SqlParameter("@start_time", SqlDbType.Time);
+            param[11].Value = start_time.TimeOfDay;
+
+            param[12] = new SqlParameter("@end_time", SqlDbType.Time);
+            param[12].Value = end_time.TimeOfDay;
+
+            param[13] = new SqlParameter("@hours", SqlDbType.Int);
+            param[13].Value = hours;
+
+            param[14] = new SqlParameter("@minutes", SqlDbType.Int);
+            param[14].Value = minutes;
+
+            param[15] = new SqlParameter("@water_hour_price", SqlDbType.Decimal);
+            param[15].Value = water_hour_price;
+
+            param[16] = new SqlParameter("@diesel_hour_price", SqlDbType.Decimal);
+            param[16].Value = diesel_hour_price;
+
+            param[17] = new SqlParameter("@water_Minutes_price", SqlDbType.Decimal);
+            param[17].Value = water_Minutes_price;
+
+            param[18] = new SqlParameter("@diesel_Minutes_price", SqlDbType.Decimal);
+            param[18].Value = diesel_Minutes_price;
+
+            param[19] = new SqlParameter("@water_total", SqlDbType.Decimal);
+            param[19].Value = water_total;
+
+            param[20] = new SqlParameter("@diesel_total", SqlDbType.Decimal);
+            param[20].Value = diesel_total;
+
+            param[21] = new SqlParameter("@total_amount", SqlDbType.Decimal);
+            param[21].Value = total_amount;
+
+            param[22] = new SqlParameter("@note", SqlDbType.VarChar, 500);
+            param[22].Value = (object)note ?? DBNull.Value;
+
+            DAL.ExecuteCommand("sp_post_crud", param);
+            DAL.Close();
+        }
     }
 }
 
