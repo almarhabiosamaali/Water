@@ -1086,6 +1086,16 @@ namespace Water
                             double.TryParse(hoursCount, out hoursValue);
                             double.TryParse(minutesCount, out minutesValue);
 
+                            // حساب cr_amt = (ساعات * سعر ساعة الماء) + (دقائق * سعر دقيقة الماء)
+                            double waterHourPrice = string.IsNullOrWhiteSpace(txtWaterHourPrice.Text)
+                                ? 0
+                                : Convert.ToDouble(txtWaterHourPrice.Text);
+                            double waterMinutesPrice = string.IsNullOrWhiteSpace(txtWaterMinutesPrice.Text)
+                                ? 0
+                                : Convert.ToDouble(txtWaterMinutesPrice.Text);
+                            
+                            double cr_amt = (hoursValue * waterHourPrice) + (minutesValue * waterMinutesPrice);
+
                             partnersHours.ADD_POST(
                                 "insert",                                      // action
                                 "4",                                           // doc_type
@@ -1096,19 +1106,19 @@ namespace Water
                                 partnerNumber ?? "",                           // cus_part_no
                                 partnerName ?? "",                              // cus_part_name
                                 0,                                             // dr_amt
-                                0,                                             // cr_amt
+                                cr_amt,                                        // cr_amt (ساعات ودقائق * سعر الماء)
                                 dtpStartTime.Value.Date,                      // date
-                                dtpStartTime.Value,                            // start_time
-                                dtpEndTime.Value,                              // end_time
+                                DateTime.MinValue,                            // start_time (فارغ)
+                                DateTime.MinValue,                              // end_time (فارغ)
                                 (int)hoursValue,                               // hours
                                 (int)minutesValue,                             // minutes
-                                0,                                             // water_hour_price
+                                waterHourPrice,                                // water_hour_price
                                 0,                                             // diesel_hour_price
-                                0,                                             // water_Minutes_price
+                                waterMinutesPrice,                             // water_Minutes_price
                                 0,                                             // diesel_Minutes_price
-                                0,                                             // water_total
+                                cr_amt,                                        // water_total
                                 0,                                             // diesel_total
-                                0,                                             // total_amount
+                                cr_amt,                                        // total_amount
                                 $"شريك: {partnerName}",                        // note
                                 ""                                             // user_id
                             );
