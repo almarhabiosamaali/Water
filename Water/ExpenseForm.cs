@@ -151,7 +151,8 @@ namespace Water
                     cmbAccountType.SelectedIndex == -1 ||
                     string.IsNullOrWhiteSpace(txtAccountId.Text) ||
                     string.IsNullOrWhiteSpace(txtAccountName.Text) ||
-                    numAmount.Value <= 0 ||
+                    string.IsNullOrWhiteSpace(txtAmount.Text) ||
+                    //Convert.ToDouble(txtAmount.Text) <= 0 ||
                     string.IsNullOrWhiteSpace(txtPeriodId.Text) ||
                     string.IsNullOrWhiteSpace(txtDescription.Text) ||
                     string.IsNullOrWhiteSpace(txtNotes.Text))
@@ -170,11 +171,40 @@ namespace Water
                         cmbAccountType.SelectedItem.ToString(),
                         txtAccountId.Text.Trim(),
                         txtAccountName.Text.Trim(),
-                        (double)numAmount.Value,
+                        Convert.ToDouble(txtAmount.Text),
+                      //  (double)txtAmount.Text,
                         txtPeriodId.Text.Trim(),
                         txtDescription.Text.Trim(),
                         txtNotes.Text.Trim()
                     );
+                    double dr = 0;
+                        double cr = 0;
+                        
+                        if (cmbType.Text == "صرف")
+                        {
+                            dr = Convert.ToDouble(txtAmount.Text);  // مدين
+                            cr = 0;
+                        }
+                        else if (cmbType.Text == "قبض")
+                        {
+                            cr = Convert.ToDouble(txtAmount.Text);  // دائن
+                            dr = 0;
+                        }
+                    exp.ADD_POST(
+                            "update",                                      // action
+                            "2",                                           // doc_type (فاتورة مثلاً)
+                            txtExpenseCode.Text.Trim(),                       // doc_no
+                            cmbType.SelectedItem != null ? cmbType.SelectedItem.ToString() : "",                                            // doc_no_type (لو عندك كومبو أو قيمة.. حطها هنا)
+                            txtPeriodId.Text.Trim(),                                            // period_id  (لو عندك فترة محاسبية.. حطها هنا)
+                            cmbAccountType.SelectedItem.ToString(),                                        // cus_part_type (نوع العميل/الشريك - غيّرها حسب تصميمك)
+                            txtAccountId.Text.Trim(),                     // cus_part_no
+                            txtAccountName.Text.Trim(),
+                            dr,
+                            cr,
+                            dtpDate.Value.Date,
+                            txtNotes.Text.Trim(),                                         // note
+                            "1"                       // user_id (المستخدم المسجل الدخول)
+                        );
 
                     MessageBox.Show("تم تحديث بيانات القيد بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -188,11 +218,39 @@ namespace Water
                         cmbAccountType.SelectedItem.ToString(),
                         txtAccountId.Text.Trim(),
                         txtAccountName.Text.Trim(),
-                        (double)numAmount.Value,
+                        Convert.ToDouble(txtAmount.Text),
                         txtPeriodId.Text.Trim(),
                         txtDescription.Text.Trim(),
                         txtNotes.Text.Trim()
                     );
+                        double dr = 0;
+                        double cr = 0;
+
+                        if (cmbType.Text == "صرف")
+                        {
+                            dr = Convert.ToDouble(txtAmount.Text);  // مدين
+                        cr = 0;
+                        }
+                        else if (cmbType.Text == "قبض")
+                        {
+                            cr = Convert.ToDouble(txtAmount.Text);  // دائن
+                        dr = 0;
+                        }
+                    exp.ADD_POST(
+                            "insert",                                      // action
+                            "2",                                           // doc_type (فاتورة مثلاً)
+                            txtExpenseCode.Text.Trim(),                       // doc_no
+                            cmbType.SelectedItem != null ? cmbType.SelectedItem.ToString() : "",                                            // doc_no_type (لو عندك كومبو أو قيمة.. حطها هنا)
+                            txtPeriodId.Text.Trim(),                                            // period_id  (لو عندك فترة محاسبية.. حطها هنا)
+                            cmbAccountType.SelectedItem.ToString(),                                        // cus_part_type (نوع العميل/الشريك - غيّرها حسب تصميمك)
+                            txtAccountId.Text.Trim(),                     // cus_part_no
+                            txtAccountName.Text.Trim(),
+                            dr,
+                            cr,
+                            dtpDate.Value.Date,
+                            txtNotes.Text.Trim(),                                         // note
+                            "1"                       // user_id (المستخدم المسجل الدخول)
+                        );
 
                     MessageBox.Show("تم حفظ بيانات القيد بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -202,7 +260,8 @@ namespace Water
                 txtExpenseCode.Enabled = true;
                 btnSave.Text = "حفظ";
             }
-            catch (System.Data.SqlClient.SqlException sqlEx)
+            
+                catch (System.Data.SqlClient.SqlException sqlEx)
             {
                 string errorMessage = "حدث خطأ في قاعدة البيانات:\n\n";
                 errorMessage += "الرسالة: " + sqlEx.Message + "\n\n";
@@ -248,7 +307,7 @@ namespace Water
 
             if (row["amount"] != DBNull.Value)
             {
-                numAmount.Value = Convert.ToDecimal(row["amount"]);
+                txtAmount.Text = row["amount"].ToString();
             }
 
             txtPeriodId.Text = row["period_id"].ToString();
@@ -264,10 +323,15 @@ namespace Water
             cmbAccountType.SelectedIndex = -1;
             txtAccountId.Clear();
             txtAccountName.Clear();
-            numAmount.Value = 0;
+            txtAmount.Text = "0";
             txtPeriodId.Clear();
             txtDescription.Clear();
             txtNotes.Clear();
+        }
+
+        private void GoFocus(object sender, EventArgs e)
+        {
+            txtAmount.Select(0, txtAmount.Text.Length);
         }
     }
 }
