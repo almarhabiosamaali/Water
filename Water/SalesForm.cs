@@ -649,6 +649,56 @@ namespace Water
                         txtNote != null ? txtNote.Text.Trim() : "" // note
                     );
 
+                    sal.ADD_POST(
+    "insert",                                      // action
+    "1",                                           // doc_type (فاتورة مثلاً)
+    txtSalesId.Text.Trim(),                        // doc_no
+    cmbBillType.SelectedItem != null ? cmbBillType.SelectedItem.ToString() : "",                                            // doc_no_type (لو عندك كومبو أو قيمة.. حطها هنا)
+    txtPeriodId.Text.Trim(),                                            // period_id  (لو عندك فترة محاسبية.. حطها هنا)
+    "CUST",                                        // cus_part_type (نوع العميل/الشريك - غيّرها حسب تصميمك)
+    txtCustomerId.Text.Trim(),                     // cus_part_no
+    txtCustomerName.Text.Trim(),                   // cus_part_name (لو ما عندك كنترول للاسم خله "")
+    string.IsNullOrWhiteSpace(txtTotalAmount.Text)
+        ? 0
+        : Convert.ToDouble(txtTotalAmount.Text),   // dr_amt
+   string.IsNullOrWhiteSpace(txtPaidAmount.Text)
+        ? 0
+        : Convert.ToDouble(txtPaidAmount.Text),                                             // cr_amt (أو بدّل بينهم حسب طبيعة القيد)
+    dtpStartTime.Value.Date,                       // date
+    dtpStartTime.Value,                            // start_time (DateTime)
+    dtpEndTime.Value,                              // end_time   (DateTime)
+    string.IsNullOrWhiteSpace(txtHours.Text)
+        ? 0
+        : (int)Convert.ToDouble(txtHours.Text),    // hours
+    string.IsNullOrWhiteSpace(txtMinutes.Text)
+        ? 0
+        : (int)Convert.ToDouble(txtMinutes.Text),  // minutes
+    string.IsNullOrWhiteSpace(txtWaterHourPrice.Text)
+        ? 0
+        : Convert.ToDouble(txtWaterHourPrice.Text),       // water_hour_price
+    string.IsNullOrWhiteSpace(txtDieselHourPrice.Text)
+        ? 0
+        : Convert.ToDouble(txtDieselHourPrice.Text),      // diesel_hour_price
+    string.IsNullOrWhiteSpace(txtWaterMinutesPrice.Text)
+        ? 0
+        : Convert.ToDouble(txtWaterMinutesPrice.Text),    // water_Minutes_price
+    string.IsNullOrWhiteSpace(txtDieselMinutesPrice.Text)
+        ? 0
+        : Convert.ToDouble(txtDieselMinutesPrice.Text),   // diesel_Minutes_price
+    string.IsNullOrWhiteSpace(textWaterTotalPrice.Text)
+        ? 0
+        : Convert.ToDouble(textWaterTotalPrice.Text),     // water_total
+    string.IsNullOrWhiteSpace(txtDieselTotalPrice.Text)
+        ? 0
+        : Convert.ToDouble(txtDieselTotalPrice.Text),     // diesel_total
+    string.IsNullOrWhiteSpace(txtTotalAmount.Text)
+        ? 0
+        : Convert.ToDouble(txtTotalAmount.Text),          // total_amount
+    "",                                            // note
+    ""                          // user_id
+);
+
+
                     MessageBox.Show("تم حفظ بيانات الفاتورة بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     // حفظ بيانات الشركاء من DataGridView
@@ -1114,6 +1164,50 @@ namespace Water
                                 minutesAvalible ?? "",
                                 totalHours ?? ""
                             );
+
+                            // إضافة POST للشريك
+                            double hoursValue = 0;
+                            double minutesValue = 0;
+                            double.TryParse(hoursCount, out hoursValue);
+                            double.TryParse(minutesCount, out minutesValue);
+
+                            // حساب cr_amt = (ساعات * سعر ساعة الماء) + (دقائق * سعر دقيقة الماء)
+                            double waterHourPrice = string.IsNullOrWhiteSpace(txtWaterHourPrice.Text)
+                                ? 0
+                                : Convert.ToDouble(txtWaterHourPrice.Text);
+                            double waterMinutesPrice = string.IsNullOrWhiteSpace(txtWaterMinutesPrice.Text)
+                                ? 0
+                                : Convert.ToDouble(txtWaterMinutesPrice.Text);
+                            
+                            double cr_amt = (hoursValue * waterHourPrice) + (minutesValue * waterMinutesPrice);
+
+                            partnersHours.ADD_POST(
+                                "insert",                                      // action
+                                "4",                                           // doc_type
+                                billNo,                                        // doc_no
+                                idCounter.ToString(),                           // doc_no_type
+                                txtPeriodId.Text.Trim(),                       // period_id
+                                "PARTNER",                                     // cus_part_type
+                                partnerNumber ?? "",                           // cus_part_no
+                                partnerName ?? "",                              // cus_part_name
+                                0,                                             // dr_amt
+                                cr_amt,                                        // cr_amt (ساعات ودقائق * سعر الماء)
+                                dtpStartTime.Value.Date,                      // date
+                                DateTime.MinValue,                            // start_time (فارغ)
+                                DateTime.MinValue,                              // end_time (فارغ)
+                                (int)hoursValue,                               // hours
+                                (int)minutesValue,                             // minutes
+                                waterHourPrice,                                // water_hour_price
+                                0,                                             // diesel_hour_price
+                                waterMinutesPrice,                             // water_Minutes_price
+                                0,                                             // diesel_Minutes_price
+                                cr_amt,                                        // water_total
+                                0,                                             // diesel_total
+                                cr_amt,                                        // total_amount
+                                $"شريك: {partnerName}",                        // note
+                                ""                                             // user_id
+                            );
+
                             idCounter++;
                         }
                         catch (Exception ex)
