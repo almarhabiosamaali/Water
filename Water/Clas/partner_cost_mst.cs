@@ -10,19 +10,19 @@ namespace Water.Clas
 {
     class partner_cost_mst
     {
-        public void ADD_PARTNER_COST_MST(int cost_id, int? doc_type, DateTime? date, string down_timeId, 
-            string down_timeNote, int? period_id, int? dayesCount, int? hours, int? minutes, 
+        public void ADD_PARTNER_COST_MST(string cost_id, string doc_type, DateTime? date, string down_timeId, 
+            string down_timeNote, string period_id, int? dayesCount, int? hours, int? minutes, 
             DateTime? startTime, DateTime? endTime, double? amount, string note)
         {
             Clas.DataAccessLayer DAL = new Clas.DataAccessLayer();
             DAL.Open();
             SqlParameter[] param = new SqlParameter[13];
             
-            param[0] = new SqlParameter("@cost_id", SqlDbType.Int);
-            param[0].Value = cost_id;
+            param[0] = new SqlParameter("@cost_id", SqlDbType.VarChar, 50);
+            param[0].Value = string.IsNullOrWhiteSpace(cost_id) ? DBNull.Value : (object)cost_id;
 
-            param[1] = new SqlParameter("@doc_type", SqlDbType.Int);
-            param[1].Value = (object)doc_type ?? DBNull.Value;
+            param[1] = new SqlParameter("@doc_type", SqlDbType.VarChar, 50);
+            param[1].Value = string.IsNullOrWhiteSpace(doc_type) ? DBNull.Value : (object)doc_type;
 
             param[2] = new SqlParameter("@date", SqlDbType.Date);
             param[2].Value = (object)date ?? DBNull.Value;
@@ -33,8 +33,8 @@ namespace Water.Clas
             param[4] = new SqlParameter("@down_timeNote", SqlDbType.VarChar, 255);
             param[4].Value = string.IsNullOrWhiteSpace(down_timeNote) ? DBNull.Value : (object)down_timeNote;
 
-            param[5] = new SqlParameter("@period_id", SqlDbType.Int);
-            param[5].Value = (object)period_id ?? DBNull.Value;
+            param[5] = new SqlParameter("@period_id", SqlDbType.VarChar, 50);
+            param[5].Value = string.IsNullOrWhiteSpace(period_id) ? DBNull.Value : (object)period_id;
 
             param[6] = new SqlParameter("@dayesCount", SqlDbType.Int);
             param[6].Value = (object)dayesCount ?? DBNull.Value;
@@ -61,14 +61,14 @@ namespace Water.Clas
             DAL.Close();
         }
 
-        public DataTable VIEW_PARTNER_COST_MST(int cost_id)
+        public DataTable VIEW_PARTNER_COST_MST(string cost_id)
         {
             Clas.DataAccessLayer DAL = new Clas.DataAccessLayer();
             DAL.Open();
             SqlParameter[] param = new SqlParameter[1];
             
-            param[0] = new SqlParameter("@cost_id", SqlDbType.Int);
-            param[0].Value = cost_id;
+            param[0] = new SqlParameter("@cost_id", SqlDbType.VarChar, 50);
+            param[0].Value = string.IsNullOrWhiteSpace(cost_id) ? DBNull.Value : (object)cost_id;
 
             DataTable dt = DAL.SelectData("partner_cost_mst_viewById", param);
             DAL.Close();
@@ -84,19 +84,19 @@ namespace Water.Clas
             return dt;
         }
 
-        public void UPDATE_PARTNER_COST_MST(int cost_id, int? doc_type, DateTime? date, string down_timeId, 
-            string down_timeNote, int? period_id, int? dayesCount, int? hours, int? minutes, 
+        public void UPDATE_PARTNER_COST_MST(string cost_id, string doc_type, DateTime? date, string down_timeId, 
+            string down_timeNote, string period_id, int? dayesCount, int? hours, int? minutes, 
             DateTime? startTime, DateTime? endTime, double? amount, string note)
         {
             Clas.DataAccessLayer DAL = new Clas.DataAccessLayer();
             DAL.Open();
             SqlParameter[] param = new SqlParameter[13];
             
-            param[0] = new SqlParameter("@cost_id", SqlDbType.Int);
-            param[0].Value = cost_id;
+            param[0] = new SqlParameter("@cost_id", SqlDbType.VarChar, 50);
+            param[0].Value = string.IsNullOrWhiteSpace(cost_id) ? DBNull.Value : (object)cost_id;
 
-            param[1] = new SqlParameter("@doc_type", SqlDbType.Int);
-            param[1].Value = (object)doc_type ?? DBNull.Value;
+            param[1] = new SqlParameter("@doc_type", SqlDbType.VarChar, 50);
+            param[1].Value = string.IsNullOrWhiteSpace(doc_type) ? DBNull.Value : (object)doc_type;
 
             param[2] = new SqlParameter("@date", SqlDbType.Date);
             param[2].Value = (object)date ?? DBNull.Value;
@@ -107,8 +107,8 @@ namespace Water.Clas
             param[4] = new SqlParameter("@down_timeNote", SqlDbType.VarChar, 255);
             param[4].Value = string.IsNullOrWhiteSpace(down_timeNote) ? DBNull.Value : (object)down_timeNote;
 
-            param[5] = new SqlParameter("@period_id", SqlDbType.Int);
-            param[5].Value = (object)period_id ?? DBNull.Value;
+            param[5] = new SqlParameter("@period_id", SqlDbType.VarChar, 50);
+            param[5].Value = string.IsNullOrWhiteSpace(period_id) ? DBNull.Value : (object)period_id;
 
             param[6] = new SqlParameter("@dayesCount", SqlDbType.Int);
             param[6].Value = (object)dayesCount ?? DBNull.Value;
@@ -135,14 +135,14 @@ namespace Water.Clas
             DAL.Close();
         }
 
-        public void DELETE_PARTNER_COST_MST(int cost_id)
+        public void DELETE_PARTNER_COST_MST(string cost_id)
         {
             Clas.DataAccessLayer DAL = new Clas.DataAccessLayer();
             DAL.Open();
             SqlParameter[] param = new SqlParameter[1];
             
-            param[0] = new SqlParameter("@cost_id", SqlDbType.Int);
-            param[0].Value = cost_id;
+            param[0] = new SqlParameter("@cost_id", SqlDbType.VarChar, 50);
+            param[0].Value = string.IsNullOrWhiteSpace(cost_id) ? DBNull.Value : (object)cost_id;
 
             DAL.ExecuteCommand("partner_cost_mst_delete", param);
             DAL.Close();
@@ -211,6 +211,26 @@ namespace Water.Clas
             param[15].Value = (object)note ?? DBNull.Value;
             param[16] = new SqlParameter("@user_id", SqlDbType.VarChar, 20);
             param[16].Value = user_id;
+            DAL.ExecuteCommand("sp_post_crud", param);
+            DAL.Close();
+        }
+
+        
+        public void DELETE_POST(string action, string doc_type, string doc_no)
+        {
+            Clas.DataAccessLayer DAL = new Clas.DataAccessLayer();
+            DAL.Open();
+
+            SqlParameter[] param = new SqlParameter[3];
+
+            param[0] = new SqlParameter("@action", SqlDbType.NVarChar, 20);
+            param[0].Value = action;
+
+            param[1] = new SqlParameter("@doc_type", SqlDbType.VarChar, 50);
+            param[1].Value = doc_type;
+
+            param[2] = new SqlParameter("@doc_no", SqlDbType.VarChar, 50);
+            param[2].Value = doc_no;
             DAL.ExecuteCommand("sp_post_crud", param);
             DAL.Close();
         }

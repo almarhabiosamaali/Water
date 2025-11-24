@@ -150,6 +150,11 @@ namespace Water
                 if (row["date"] != DBNull.Value)
                 {
                     dtpDate.Value = Convert.ToDateTime(row["date"]);
+                    dtpDate.Checked = true;
+                }
+                else
+                {
+                    dtpDate.Checked = false;
                 }
 
                 if (row["dayesCount"] != DBNull.Value)
@@ -170,11 +175,21 @@ namespace Water
                 if (row["startTime"] != DBNull.Value)
                 {
                     dtpStartTime.Value = Convert.ToDateTime(row["startTime"]);
+                    dtpStartTime.Checked = true;
+                }
+                else
+                {
+                    dtpStartTime.Checked = false;
                 }
 
                 if (row["endTime"] != DBNull.Value)
                 {
                     dtpEndTime.Value = Convert.ToDateTime(row["endTime"]);
+                    dtpEndTime.Checked = true;
+                }
+                else
+                {
+                    dtpEndTime.Checked = false;
                 }
 
                 if (row["amount"] != DBNull.Value)
@@ -303,7 +318,7 @@ namespace Water
 
             try
             {
-                int costId = Convert.ToInt32(txtCostId.Text.Trim());
+                string costId = txtCostId.Text.Trim();
                 DataTable dt = partner_Cost_mst.VIEW_PARTNER_COST_MST(costId);
 
                 if (dt.Rows.Count == 0)
@@ -316,10 +331,6 @@ namespace Water
                 isEditMode = true;
                 txtCostId.Enabled = false;
                 btnSave.Text = "تحديث";
-            }
-            catch (FormatException)
-            {
-                MessageBox.Show("الرجاء إدخال رقم تكلفة صحيح", "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (Exception ex)
             {
@@ -341,14 +352,12 @@ namespace Water
             {
                 try
                 {
-                    int costId = Convert.ToInt32(txtCostId.Text.Trim());
+                    string costId = txtCostId.Text.Trim();
                     partner_Cost_mst.DELETE_PARTNER_COST_MST(costId);
+                    partner_Cost_mst.DELETE_POST("delete","3",costId);
+                    partner_Cost_dtl.DELETE_POST("delete","5",costId);
                     MessageBox.Show("تم حذف التكلفة بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     clear_PARTNER_COST();
-                }
-                catch (FormatException)
-                {
-                    MessageBox.Show("الرجاء إدخال رقم تكلفة صحيح", "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 catch (Exception ex)
                 {
@@ -368,14 +377,12 @@ namespace Water
                     return;
                 } */
 
-                int costId = Convert.ToInt32(txtCostId.Text.Trim());
-               // string docType = cmbDocType.SelectedValue != null ? cmbDocType.SelectedValue.ToString() : null;
-                int? docType = string.IsNullOrWhiteSpace(cmpDocType.Text) ? (int?)null : Convert.ToInt32(cmpDocType.Text);
-                //int? docType = string.IsNullOrWhiteSpace(txtDocType.Text) ? (int?)null : Convert.ToInt32(txtDocType.Text);
+                string costId = txtCostId.Text.Trim();
+                string docType = string.IsNullOrWhiteSpace(cmpDocType.Text) ? null : cmpDocType.Text.Trim();
                 DateTime? date = dtpDate.Checked ? (DateTime?)dtpDate.Value.Date : null;
                 string downTimeId = cmbDownTimeId.SelectedValue != null ? cmbDownTimeId.SelectedValue.ToString() : null;
                 string downTimeNote = txtDownTimeNote.Text.Trim();
-                int? periodId = string.IsNullOrWhiteSpace(txtPeriodId.Text) ? (int?)null : Convert.ToInt32(txtPeriodId.Text);
+                string periodId = string.IsNullOrWhiteSpace(txtPeriodId.Text) ? null : txtPeriodId.Text.Trim();
                 int? dayesCount = string.IsNullOrWhiteSpace(txtDayesCount.Text) ? (int?)null : Convert.ToInt32(txtDayesCount.Text);
                 int? hours = string.IsNullOrWhiteSpace(txtHours.Text) ? (int?)null : Convert.ToInt32(txtHours.Text);
                 int? minutes = string.IsNullOrWhiteSpace(txtMinutes.Text) ? (int?)null : Convert.ToInt32(txtMinutes.Text);
@@ -386,6 +393,7 @@ namespace Water
 
                 if (isEditMode)
                 {
+                    partner_Cost_mst.DELETE_POST("delete","3",costId);
                     // تحديث بيانات التكلفة
                     partner_Cost_mst.UPDATE_PARTNER_COST_MST(
                         costId,
@@ -402,6 +410,28 @@ namespace Water
                         amount,
                         note
                     );
+                     partner_Cost_mst.ADD_POST(
+                    "insert", 
+                    "3", 
+                    txtCostId.Text.Trim(),
+                     "توقف", 
+                     txtPeriodId.Text.Trim(),
+                      "3",
+                       "100011",
+                        "حساب التوقف",
+                         0,
+                           string.IsNullOrWhiteSpace(txtAmount.Text)
+                                ? 0: (int)Convert.ToDouble(txtAmount.Text), 
+                          dtpDate.Value.Date,
+                           dtpStartTime.Value.Date,
+                             dtpEndTime.Value,
+                              string.IsNullOrWhiteSpace(txtHours.Text)
+                                ? 0: (int)Convert.ToDouble(txtHours.Text),
+                               string.IsNullOrWhiteSpace(txtMinutes.Text)
+                                ? 0: (int)Convert.ToDouble(txtMinutes.Text), 
+                             note, 
+                             "1"
+                             );
 
                     // حفظ تفاصيل الشركاء
                     SavePartnerCostDetails(costId);
@@ -585,7 +615,7 @@ namespace Water
             }
 
             // تحميل تفاصيل الشركاء
-            int costId = Convert.ToInt32(row["cost_id"]);
+            string costId = row["cost_id"].ToString();
             LoadPartnerCostDetails(costId);
         }
 
@@ -756,7 +786,7 @@ namespace Water
         }
 
         // تحميل تفاصيل الشركاء من قاعدة البيانات
-        private void LoadPartnerCostDetails(int costId)
+        private void LoadPartnerCostDetails(string costId)
         {
             try
             {
@@ -806,16 +836,15 @@ namespace Water
         }
 
         // حفظ تفاصيل الشركاء في قاعدة البيانات
-        private void SavePartnerCostDetails(int costId)
+        private void SavePartnerCostDetails(string costId)
         {
             try
             {
                 // حذف التفاصيل القديمة
                 partner_Cost_dtl.DELETE_ALL_PARTNER_COST_DTL_BY_COST_ID(costId);
-
+                partner_Cost_dtl.DELETE_POST("delete","5",costId);
                 // إضافة التفاصيل الجديدة
-                int? docType = string.IsNullOrWhiteSpace(cmpDocType.Text) ? (int?)null : Convert.ToInt32(cmpDocType.Text);
-                //string docType = cmbDocType.SelectedValue != null ? cmbDocType.SelectedValue.ToString() : null;
+                string docType = string.IsNullOrWhiteSpace(cmpDocType.Text) ? null : cmpDocType.Text.Trim();
 
                 foreach (DataGridViewRow row in dgvPartners.Rows)
                 {
@@ -858,14 +887,11 @@ namespace Water
                         note = row.Cells["note"].Value.ToString();
                     }
 
-                    //if (partnerId.HasValue || !string.IsNullOrWhiteSpace(partnerName))
                     if (!string.IsNullOrWhiteSpace(partnerId) || !string.IsNullOrWhiteSpace(partnerName))
                     {
                         partner_Cost_dtl.ADD_PARTNER_COST_DTL(
                             costId,
-                            string.IsNullOrWhiteSpace(partnerId)
-                                ? 0
-                                : Convert.ToInt32(partnerId),
+                            partnerId,
                             docType,
                             partnerName,
                             allocatedHours,
