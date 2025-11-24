@@ -81,9 +81,17 @@ namespace Water
         {
             isEditMode = false;
             clear_PRICING();
-            txtPriceLevelId.Enabled = true;
+            try
+            {
+                txtPriceLevelId.Text = pricing.GET_NEXT_PRICING_CODE();
+            }
+            catch
+            {
+                txtPriceLevelId.Text = "1";
+            }
+            txtPriceLevelId.Enabled = false;
             btnSave.Text = "حفظ";
-            MessageBox.Show("يمكنك الآن إدخال بيانات مستوى سعر جديد", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
+          //  MessageBox.Show("يمكنك الآن إدخال بيانات مستوى سعر جديد", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
@@ -336,6 +344,7 @@ namespace Water
                 // في حالة الخطأ، لا نفعل شيئاً
             }
         }
+     
     }
 }
 

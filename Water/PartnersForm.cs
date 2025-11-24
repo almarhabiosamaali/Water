@@ -76,9 +76,17 @@ namespace Water
         {
             isEditMode = false;
             clear_PARTNER();
-            txtPartnerCode.Enabled = true;
+            try
+            {
+                txtPartnerCode.Text = partner.GET_NEXT_PARTNER_CODE();
+            }
+            catch
+            {
+                txtPartnerCode.Text = "1";
+            }
+            txtPartnerCode.Enabled = false;
             btnSave.Text = "حفظ";
-            MessageBox.Show("يمكنك الآن إدخال بيانات شريك جديد", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
+           // MessageBox.Show("يمكنك الآن إدخال بيانات شريك جديد", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
@@ -304,6 +312,7 @@ namespace Water
                 e.Handled = true;
             }
         }
+
     }
 }
 

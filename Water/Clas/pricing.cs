@@ -129,6 +129,11 @@ namespace Water.Clas
             DAL.ExecuteCommand("pricing_delete", param);
             DAL.Close();
         }
+
+        public string GET_NEXT_PRICING_CODE()
+        {
+            return AutoNumberHelper.GetNextNumber("pricing", "PriceLevleId");
+        }
     }
 }
 

@@ -107,5 +107,10 @@ namespace Water.Clas
             DAL.ExecuteCommand("customer_delete", param);
             DAL.Close();
         }
+
+        public string GET_NEXT_CUSTOMER_CODE()
+        {
+            return AutoNumberHelper.GetNextNumber("customer", "id");
+        }
     }
 }

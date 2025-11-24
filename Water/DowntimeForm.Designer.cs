@@ -35,17 +35,11 @@ namespace Water
             this.lblDate = new System.Windows.Forms.Label();
             this.dtpDate = new System.Windows.Forms.DateTimePicker();
             this.lblHours = new System.Windows.Forms.Label();
-            this.numHours = new System.Windows.Forms.NumericUpDown();
             this.lblDayesCount = new System.Windows.Forms.Label();
-            this.numDayesCount = new System.Windows.Forms.NumericUpDown();
             this.lblMinutes = new System.Windows.Forms.Label();
-            this.numMinutes = new System.Windows.Forms.NumericUpDown();
             this.lblStartTime = new System.Windows.Forms.Label();
-            this.dtpStartTime = new System.Windows.Forms.DateTimePicker();
             this.lblEndTime = new System.Windows.Forms.Label();
-            this.dtpEndTime = new System.Windows.Forms.DateTimePicker();
             this.lblAmount = new System.Windows.Forms.Label();
-            this.numAmount = new System.Windows.Forms.NumericUpDown();
             this.lblNote = new System.Windows.Forms.Label();
             this.txtNote = new System.Windows.Forms.TextBox();
             this.btnView = new System.Windows.Forms.Button();
@@ -53,10 +47,16 @@ namespace Water
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.numHours)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numDayesCount)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numMinutes)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numAmount)).BeginInit();
+            this.dtpStartTime = new System.Windows.Forms.DateTimePicker();
+            this.dtpEndTime = new System.Windows.Forms.DateTimePicker();
+            this.txtHours = new System.Windows.Forms.TextBox();
+            this.txtMinutes = new System.Windows.Forms.TextBox();
+            this.txtDayesCount = new System.Windows.Forms.TextBox();
+            this.txtAmount = new System.Windows.Forms.TextBox();
+            this.txtPeriodEndDate = new System.Windows.Forms.TextBox();
+            this.lblPeriodEndDate = new System.Windows.Forms.Label();
+            this.txtPeriodStartDate = new System.Windows.Forms.TextBox();
+            this.lblPeriodStartDate = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblDowntimeCode
@@ -66,44 +66,46 @@ namespace Water
             this.lblDowntimeCode.Location = new System.Drawing.Point(26, 30);
             this.lblDowntimeCode.Name = "lblDowntimeCode";
             this.lblDowntimeCode.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.lblDowntimeCode.Size = new System.Drawing.Size(76, 20);
+            this.lblDowntimeCode.Size = new System.Drawing.Size(43, 20);
             this.lblDowntimeCode.TabIndex = 0;
-            this.lblDowntimeCode.Text = "كود التوقف:";
+            this.lblDowntimeCode.Text = "رقم  :";
             // 
             // txtDowntimeCode
             // 
             this.txtDowntimeCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtDowntimeCode.Location = new System.Drawing.Point(131, 27);
             this.txtDowntimeCode.Name = "txtDowntimeCode";
+            this.txtDowntimeCode.ReadOnly = true;
             this.txtDowntimeCode.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtDowntimeCode.Size = new System.Drawing.Size(263, 26);
             this.txtDowntimeCode.TabIndex = 1;
+            this.txtDowntimeCode.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // lblPeriodId
             // 
             this.lblPeriodId.AutoSize = true;
             this.lblPeriodId.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPeriodId.Location = new System.Drawing.Point(26, 70);
+            this.lblPeriodId.Location = new System.Drawing.Point(402, 30);
             this.lblPeriodId.Name = "lblPeriodId";
             this.lblPeriodId.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.lblPeriodId.Size = new System.Drawing.Size(68, 20);
+            this.lblPeriodId.Size = new System.Drawing.Size(67, 20);
             this.lblPeriodId.TabIndex = 2;
-            this.lblPeriodId.Text = "كود الفترة:";
+            this.lblPeriodId.Text = "رقم الفترة:";
             // 
             // txtPeriodId
             // 
             this.txtPeriodId.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPeriodId.Location = new System.Drawing.Point(131, 67);
+            this.txtPeriodId.Location = new System.Drawing.Point(474, 27);
             this.txtPeriodId.Name = "txtPeriodId";
             this.txtPeriodId.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.txtPeriodId.Size = new System.Drawing.Size(263, 26);
+            this.txtPeriodId.Size = new System.Drawing.Size(72, 26);
             this.txtPeriodId.TabIndex = 3;
             // 
             // lblDate
             // 
             this.lblDate.AutoSize = true;
             this.lblDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDate.Location = new System.Drawing.Point(26, 110);
+            this.lblDate.Location = new System.Drawing.Point(672, 97);
             this.lblDate.Name = "lblDate";
             this.lblDate.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblDate.Size = new System.Drawing.Size(51, 20);
@@ -114,161 +116,78 @@ namespace Water
             // 
             this.dtpDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dtpDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpDate.Location = new System.Drawing.Point(131, 107);
+            this.dtpDate.Location = new System.Drawing.Point(740, 92);
             this.dtpDate.Name = "dtpDate";
             this.dtpDate.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.dtpDate.RightToLeftLayout = true;
-            this.dtpDate.Size = new System.Drawing.Size(263, 26);
+            this.dtpDate.Size = new System.Drawing.Size(193, 26);
             this.dtpDate.TabIndex = 5;
             // 
             // lblHours
             // 
             this.lblHours.AutoSize = true;
             this.lblHours.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHours.Location = new System.Drawing.Point(26, 150);
+            this.lblHours.Location = new System.Drawing.Point(23, 201);
             this.lblHours.Name = "lblHours";
             this.lblHours.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblHours.Size = new System.Drawing.Size(60, 20);
             this.lblHours.TabIndex = 6;
             this.lblHours.Text = "الساعات:";
             // 
-            // numHours
-            // 
-            this.numHours.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numHours.Location = new System.Drawing.Point(131, 147);
-            this.numHours.Maximum = new decimal(new int[] {
-            10000,
-            0,
-            0,
-            0});
-            this.numHours.Name = "numHours";
-            this.numHours.Size = new System.Drawing.Size(262, 26);
-            this.numHours.TabIndex = 7;
-            this.numHours.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
             // lblDayesCount
             // 
             this.lblDayesCount.AutoSize = true;
             this.lblDayesCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDayesCount.Location = new System.Drawing.Point(26, 190);
+            this.lblDayesCount.Location = new System.Drawing.Point(22, 290);
             this.lblDayesCount.Name = "lblDayesCount";
             this.lblDayesCount.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblDayesCount.Size = new System.Drawing.Size(67, 20);
             this.lblDayesCount.TabIndex = 8;
             this.lblDayesCount.Text = "عدد الأيام:";
             // 
-            // numDayesCount
-            // 
-            this.numDayesCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numDayesCount.Location = new System.Drawing.Point(131, 187);
-            this.numDayesCount.Maximum = new decimal(new int[] {
-            10000,
-            0,
-            0,
-            0});
-            this.numDayesCount.Name = "numDayesCount";
-            this.numDayesCount.Size = new System.Drawing.Size(262, 26);
-            this.numDayesCount.TabIndex = 9;
-            this.numDayesCount.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
             // lblMinutes
             // 
             this.lblMinutes.AutoSize = true;
             this.lblMinutes.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMinutes.Location = new System.Drawing.Point(26, 230);
+            this.lblMinutes.Location = new System.Drawing.Point(22, 246);
             this.lblMinutes.Name = "lblMinutes";
             this.lblMinutes.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblMinutes.Size = new System.Drawing.Size(51, 20);
             this.lblMinutes.TabIndex = 10;
             this.lblMinutes.Text = "الدقائق:";
             // 
-            // numMinutes
-            // 
-            this.numMinutes.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numMinutes.Location = new System.Drawing.Point(131, 227);
-            this.numMinutes.Maximum = new decimal(new int[] {
-            59,
-            0,
-            0,
-            0});
-            this.numMinutes.Name = "numMinutes";
-            this.numMinutes.Size = new System.Drawing.Size(262, 26);
-            this.numMinutes.TabIndex = 11;
-            this.numMinutes.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
             // lblStartTime
             // 
             this.lblStartTime.AutoSize = true;
             this.lblStartTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblStartTime.Location = new System.Drawing.Point(26, 270);
+            this.lblStartTime.Location = new System.Drawing.Point(24, 131);
             this.lblStartTime.Name = "lblStartTime";
             this.lblStartTime.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblStartTime.Size = new System.Drawing.Size(75, 20);
             this.lblStartTime.TabIndex = 12;
             this.lblStartTime.Text = "وقت البداية:";
             // 
-            // dtpStartTime
-            // 
-            this.dtpStartTime.CustomFormat = "dd/MM/yyyy HH:mm tt";
-            this.dtpStartTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dtpStartTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpStartTime.Location = new System.Drawing.Point(131, 267);
-            this.dtpStartTime.Name = "dtpStartTime";
-            this.dtpStartTime.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.dtpStartTime.RightToLeftLayout = true;
-            this.dtpStartTime.ShowUpDown = true;
-            this.dtpStartTime.Size = new System.Drawing.Size(263, 26);
-            this.dtpStartTime.TabIndex = 13;
-            // 
             // lblEndTime
             // 
             this.lblEndTime.AutoSize = true;
             this.lblEndTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblEndTime.Location = new System.Drawing.Point(26, 310);
+            this.lblEndTime.Location = new System.Drawing.Point(403, 134);
             this.lblEndTime.Name = "lblEndTime";
             this.lblEndTime.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblEndTime.Size = new System.Drawing.Size(76, 20);
             this.lblEndTime.TabIndex = 14;
             this.lblEndTime.Text = "وقت النهاية:";
             // 
-            // dtpEndTime
-            // 
-            this.dtpEndTime.CustomFormat = "dd/MM/yyyy HH:mm tt";
-            this.dtpEndTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dtpEndTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpEndTime.Location = new System.Drawing.Point(131, 307);
-            this.dtpEndTime.Name = "dtpEndTime";
-            this.dtpEndTime.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.dtpEndTime.RightToLeftLayout = true;
-            this.dtpEndTime.ShowUpDown = true;
-            this.dtpEndTime.Size = new System.Drawing.Size(263, 26);
-            this.dtpEndTime.TabIndex = 15;
-            // 
             // lblAmount
             // 
             this.lblAmount.AutoSize = true;
             this.lblAmount.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAmount.Location = new System.Drawing.Point(26, 350);
+            this.lblAmount.Location = new System.Drawing.Point(26, 331);
             this.lblAmount.Name = "lblAmount";
             this.lblAmount.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblAmount.Size = new System.Drawing.Size(45, 20);
             this.lblAmount.TabIndex = 16;
             this.lblAmount.Text = "المبلغ:";
-            // 
-            // numAmount
-            // 
-            this.numAmount.DecimalPlaces = 2;
-            this.numAmount.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numAmount.Location = new System.Drawing.Point(131, 347);
-            this.numAmount.Maximum = new decimal(new int[] {
-            999999999,
-            0,
-            0,
-            0});
-            this.numAmount.Name = "numAmount";
-            this.numAmount.Size = new System.Drawing.Size(262, 26);
-            this.numAmount.TabIndex = 17;
-            this.numAmount.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblNote
             // 
@@ -277,9 +196,9 @@ namespace Water
             this.lblNote.Location = new System.Drawing.Point(26, 390);
             this.lblNote.Name = "lblNote";
             this.lblNote.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.lblNote.Size = new System.Drawing.Size(66, 20);
+            this.lblNote.Size = new System.Drawing.Size(48, 20);
             this.lblNote.TabIndex = 18;
-            this.lblNote.Text = "ملاحظات:";
+            this.lblNote.Text = "البيان :";
             // 
             // txtNote
             // 
@@ -289,7 +208,7 @@ namespace Water
             this.txtNote.Multiline = true;
             this.txtNote.Name = "txtNote";
             this.txtNote.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.txtNote.Size = new System.Drawing.Size(263, 60);
+            this.txtNote.Size = new System.Drawing.Size(455, 60);
             this.txtNote.TabIndex = 19;
             // 
             // btnView
@@ -313,6 +232,7 @@ namespace Water
             this.btnAdd.TabIndex = 21;
             this.btnAdd.Text = "إضافة";
             this.btnAdd.UseVisualStyleBackColor = true;
+
             // 
             // btnEdit
             // 
@@ -347,11 +267,111 @@ namespace Water
             this.btnSave.Text = "حفظ";
             this.btnSave.UseVisualStyleBackColor = true;
             // 
+            // dtpStartTime
+            // 
+            this.dtpStartTime.CustomFormat = "dd/MM/yyyy hh:mm tt";
+            this.dtpStartTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpStartTime.Location = new System.Drawing.Point(128, 134);
+            this.dtpStartTime.Name = "dtpStartTime";
+            this.dtpStartTime.Size = new System.Drawing.Size(261, 24);
+            this.dtpStartTime.TabIndex = 25;
+            // 
+            // dtpEndTime
+            // 
+            this.dtpEndTime.CustomFormat = "dd/MM/yyyy hh:mm tt";
+            this.dtpEndTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpEndTime.Location = new System.Drawing.Point(503, 134);
+            this.dtpEndTime.Name = "dtpEndTime";
+            this.dtpEndTime.Size = new System.Drawing.Size(263, 24);
+            this.dtpEndTime.TabIndex = 26;
+            // 
+            // txtHours
+            // 
+            this.txtHours.Location = new System.Drawing.Point(128, 205);
+            this.txtHours.Name = "txtHours";
+            this.txtHours.Size = new System.Drawing.Size(100, 24);
+            this.txtHours.TabIndex = 27;
+            // 
+            // txtMinutes
+            // 
+            this.txtMinutes.Location = new System.Drawing.Point(128, 245);
+            this.txtMinutes.Name = "txtMinutes";
+            this.txtMinutes.Size = new System.Drawing.Size(100, 24);
+            this.txtMinutes.TabIndex = 28;
+            // 
+            // txtDayesCount
+            // 
+            this.txtDayesCount.Location = new System.Drawing.Point(128, 286);
+            this.txtDayesCount.Name = "txtDayesCount";
+            this.txtDayesCount.Size = new System.Drawing.Size(100, 24);
+            this.txtDayesCount.TabIndex = 29;
+            // 
+            // txtAmount
+            // 
+            this.txtAmount.Location = new System.Drawing.Point(128, 331);
+            this.txtAmount.Name = "txtAmount";
+            this.txtAmount.Size = new System.Drawing.Size(184, 24);
+            this.txtAmount.TabIndex = 30;
+            // 
+            // txtPeriodEndDate
+            // 
+            this.txtPeriodEndDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPeriodEndDate.Location = new System.Drawing.Point(790, 27);
+            this.txtPeriodEndDate.Name = "txtPeriodEndDate";
+            this.txtPeriodEndDate.ReadOnly = true;
+            this.txtPeriodEndDate.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.txtPeriodEndDate.Size = new System.Drawing.Size(156, 26);
+            this.txtPeriodEndDate.TabIndex = 34;
+            this.txtPeriodEndDate.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // lblPeriodEndDate
+            // 
+            this.lblPeriodEndDate.AutoSize = true;
+            this.lblPeriodEndDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPeriodEndDate.Location = new System.Drawing.Point(747, 27);
+            this.lblPeriodEndDate.Name = "lblPeriodEndDate";
+            this.lblPeriodEndDate.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.lblPeriodEndDate.Size = new System.Drawing.Size(37, 20);
+            this.lblPeriodEndDate.TabIndex = 33;
+            this.lblPeriodEndDate.Text = "الى :";
+            // 
+            // txtPeriodStartDate
+            // 
+            this.txtPeriodStartDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPeriodStartDate.Location = new System.Drawing.Point(621, 27);
+            this.txtPeriodStartDate.Name = "txtPeriodStartDate";
+            this.txtPeriodStartDate.ReadOnly = true;
+            this.txtPeriodStartDate.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.txtPeriodStartDate.Size = new System.Drawing.Size(120, 26);
+            this.txtPeriodStartDate.TabIndex = 32;
+            this.txtPeriodStartDate.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // lblPeriodStartDate
+            // 
+            this.lblPeriodStartDate.AutoSize = true;
+            this.lblPeriodStartDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPeriodStartDate.Location = new System.Drawing.Point(568, 27);
+            this.lblPeriodStartDate.Name = "lblPeriodStartDate";
+            this.lblPeriodStartDate.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.lblPeriodStartDate.Size = new System.Drawing.Size(35, 20);
+            this.lblPeriodStartDate.TabIndex = 31;
+            this.lblPeriodStartDate.Text = "من :";
+            // 
             // DowntimeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(455, 530);
+            this.ClientSize = new System.Drawing.Size(945, 511);
+            this.Controls.Add(this.txtPeriodEndDate);
+            this.Controls.Add(this.lblPeriodEndDate);
+            this.Controls.Add(this.txtPeriodStartDate);
+            this.Controls.Add(this.lblPeriodStartDate);
+            this.Controls.Add(this.txtAmount);
+            this.Controls.Add(this.txtDayesCount);
+            this.Controls.Add(this.txtMinutes);
+            this.Controls.Add(this.txtHours);
+            this.Controls.Add(this.dtpEndTime);
+            this.Controls.Add(this.dtpStartTime);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnEdit);
@@ -359,17 +379,11 @@ namespace Water
             this.Controls.Add(this.btnView);
             this.Controls.Add(this.txtNote);
             this.Controls.Add(this.lblNote);
-            this.Controls.Add(this.numAmount);
             this.Controls.Add(this.lblAmount);
-            this.Controls.Add(this.dtpEndTime);
             this.Controls.Add(this.lblEndTime);
-            this.Controls.Add(this.dtpStartTime);
             this.Controls.Add(this.lblStartTime);
-            this.Controls.Add(this.numMinutes);
             this.Controls.Add(this.lblMinutes);
-            this.Controls.Add(this.numDayesCount);
             this.Controls.Add(this.lblDayesCount);
-            this.Controls.Add(this.numHours);
             this.Controls.Add(this.lblHours);
             this.Controls.Add(this.dtpDate);
             this.Controls.Add(this.lblDate);
@@ -385,10 +399,6 @@ namespace Water
             this.RightToLeftLayout = true;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "إدخال بيانات التوقف";
-            ((System.ComponentModel.ISupportInitialize)(this.numHours)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numDayesCount)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numMinutes)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numAmount)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -403,17 +413,11 @@ namespace Water
         private System.Windows.Forms.Label lblDate;
         private System.Windows.Forms.DateTimePicker dtpDate;
         private System.Windows.Forms.Label lblHours;
-        private System.Windows.Forms.NumericUpDown numHours;
         private System.Windows.Forms.Label lblDayesCount;
-        private System.Windows.Forms.NumericUpDown numDayesCount;
         private System.Windows.Forms.Label lblMinutes;
-        private System.Windows.Forms.NumericUpDown numMinutes;
         private System.Windows.Forms.Label lblStartTime;
-        private System.Windows.Forms.DateTimePicker dtpStartTime;
         private System.Windows.Forms.Label lblEndTime;
-        private System.Windows.Forms.DateTimePicker dtpEndTime;
         private System.Windows.Forms.Label lblAmount;
-        private System.Windows.Forms.NumericUpDown numAmount;
         private System.Windows.Forms.Label lblNote;
         private System.Windows.Forms.TextBox txtNote;
         private System.Windows.Forms.Button btnView;
@@ -421,6 +425,16 @@ namespace Water
         private System.Windows.Forms.Button btnEdit;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.DateTimePicker dtpStartTime;
+        private System.Windows.Forms.DateTimePicker dtpEndTime;
+        private System.Windows.Forms.TextBox txtHours;
+        private System.Windows.Forms.TextBox txtMinutes;
+        private System.Windows.Forms.TextBox txtDayesCount;
+        private System.Windows.Forms.TextBox txtAmount;
+        private System.Windows.Forms.TextBox txtPeriodEndDate;
+        private System.Windows.Forms.Label lblPeriodEndDate;
+        private System.Windows.Forms.TextBox txtPeriodStartDate;
+        private System.Windows.Forms.Label lblPeriodStartDate;
     }
 }
 

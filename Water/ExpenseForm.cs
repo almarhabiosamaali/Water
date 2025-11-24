@@ -15,7 +15,6 @@ namespace Water
     {
         private bool isEditMode = false;
         Clas.expense exp = new Clas.expense();
-        Clas.period per = new Clas.period();
         Clas.customer customer = new Clas.customer();
         Clas.partners partners = new Clas.partners();
         Clas.account account = new Clas.account();
@@ -87,8 +86,6 @@ namespace Water
         {
             isEditMode = false;
             clear_EXPENSE();
-            
-            // توليد رقم القيد التلقائي
             try
             {
                 txtExpenseCode.Text = exp.GET_NEXT_EXPENSE_CODE();
@@ -100,7 +97,7 @@ namespace Water
             
             txtExpenseCode.Enabled = false;
             btnSave.Text = "حفظ";
-            MessageBox.Show("يمكنك الآن إدخال بيانات قيد جديد", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
+         //   MessageBox.Show("يمكنك الآن إدخال بيانات قيد جديد", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
@@ -173,7 +170,6 @@ namespace Water
                     string.IsNullOrWhiteSpace(txtAccountId.Text) ||
                     string.IsNullOrWhiteSpace(txtAccountName.Text) ||
                     string.IsNullOrWhiteSpace(txtAmount.Text) ||
-                    //Convert.ToDouble(txtAmount.Text) <= 0 ||
                     string.IsNullOrWhiteSpace(txtPeriodId.Text) ||
                     string.IsNullOrWhiteSpace(txtNotes.Text))
                 {
@@ -380,80 +376,8 @@ namespace Water
             if (e.KeyCode == Keys.F2 || e.KeyCode == Keys.Enter)
             {
                 e.Handled = true; // منع التنقل الافتراضي لـ Enter
-                ShowPeriodsList();
-            }
-        }
-
-        private void ShowPeriodsList()
-        {
-            try
-            {
-                DataTable dt = per.GET_ALL_PERIODS();
-                
-                if (dt.Rows.Count == 0)
-                {
-                    MessageBox.Show("لا توجد فترات للعرض", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
-                }
-
-                Form viewForm = new Form();
-                viewForm.Text = "اختر الفترة";
-                viewForm.RightToLeft = RightToLeft.Yes;
-                viewForm.RightToLeftLayout = true;
-                viewForm.Size = new Size(800, 500);
-                viewForm.StartPosition = FormStartPosition.CenterScreen;
-
-                DataGridView dgv = new DataGridView();
-                dgv.Dock = DockStyle.Fill;
-                dgv.DataSource = dt;
-                dgv.ReadOnly = true;
-                dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-                dgv.MultiSelect = false;
-                dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-                dgv.RightToLeft = RightToLeft.Yes;
-
-                dgv.CellDoubleClick += (s, args) =>
-                {
-                    if (args.RowIndex >= 0)
-                    {
-                        DataRow row = dt.Rows[args.RowIndex];
-                        LoadPeriodData(row);
-                        viewForm.Close();
-                    }
-                };
-
-                viewForm.Controls.Add(dgv);
-                viewForm.ShowDialog();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("حدث خطأ أثناء عرض الفترات: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void LoadPeriodData(DataRow row)
-        {
-            // ملء رقم الفترة
-            txtPeriodId.Text = row["id"].ToString();
-            
-            // ملء بداية الفترة
-            if (row["start_date"] != DBNull.Value)
-            {
-                txtPeriodStartDate.Text = Convert.ToDateTime(row["start_date"]).ToString("dd/MM/yyyy");
-            }
-            else
-            {
-                txtPeriodStartDate.Clear();
-            }
-            
-            // ملء نهاية الفترة
-            if (row["end_date"] != DBNull.Value)
-            {
-                txtPeriodEndDate.Text = Convert.ToDateTime(row["end_date"]).ToString("dd/MM/yyyy");
-            }
-            else
-            {
-                txtPeriodEndDate.Clear();
+                // استخدام الكلاس المساعد الموحد
+                Clas.PeriodHelper.ShowPeriodsList(txtPeriodId, txtPeriodStartDate, txtPeriodEndDate);
             }
         }
 
@@ -567,6 +491,7 @@ namespace Water
                 txtAccountName.Clear();
             }
         }
+
     }
 }
 

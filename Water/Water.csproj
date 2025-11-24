@@ -52,11 +52,13 @@
       <DependentUpon>AmountTextBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Clas\account.cs" />
+    <Compile Include="Clas\AutoNumberHelper.cs" />
     <Compile Include="Clas\customer.cs" />
     <Compile Include="Clas\DataAccessLayer.cs" />
     <Compile Include="Clas\downtime.cs" />
     <Compile Include="Clas\expense.cs" />
     <Compile Include="Clas\period.cs" />
+    <Compile Include="Clas\PeriodHelper.cs" />
     <Compile Include="Clas\sales.cs" />
     <Compile Include="Clas\salePartnersHours.cs" />
     <Compile Include="Clas\partners.cs" />

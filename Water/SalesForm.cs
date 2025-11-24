@@ -29,9 +29,11 @@ namespace Water
             btnEdit.Click += btnEdit_Click;
             btnDelete.Click += btnDelete_Click;
             btnSave.Click += btnSave_Click;
+
             
+
             // ربط أحداث حساب الساعات والدقائق تلقائياً
-            dtpStartTime.ValueChanged += DateTimePicker_ValueChanged;
+            //dtpStartTime.ValueChanged += DateTimePicker_ValueChanged;
             dtpEndTime.ValueChanged += DateTimePicker_ValueChanged;
             
             // ربط أحداث حساب الإجماليات تلقائياً
@@ -43,6 +45,8 @@ namespace Water
             txtDieselMinutesPrice.TextChanged += CalculateTotals_TextChanged;
             txtPaidAmount.TextChanged += CalculateRemainingAmount_TextChanged;
             txtDueAmount.TextChanged += CalculateRemainingAmount_TextChanged;
+            
+            txtPeriodId.KeyDown += txtPeriodId_KeyDown;
 
             // تهيئة ComboBox نوع العميل
             if (cmbCustomerType != null)
@@ -480,9 +484,14 @@ namespace Water
         {
             isEditMode = false;
             clear_SALES();
-            txtSalesId.Enabled = true;
+            try{
+            txtSalesId.Text=sal.GET_NEXT_SALES_CODE();
+            }catch{
+            txtSalesId.Text="1";
+            }
+            txtSalesId.Enabled = false;
             btnSave.Text = "حفظ";
-            MessageBox.Show("يمكنك الآن إدخال بيانات فاتورة جديدة", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
+           // MessageBox.Show("يمكنك الآن إدخال بيانات فاتورة جديدة", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
@@ -1711,7 +1720,18 @@ namespace Water
                 // في حالة الخطأ، نترك الحقل فارغاً
             }
         }
-       
+
+        private void txtPeriodId_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F2 || e.KeyCode == Keys.Enter)
+            {
+                e.Handled = true; // منع التنقل الافتراضي لـ Enter
+                e.SuppressKeyPress = true; // منع معالجة المفتاح بشكل كامل
+                // استخدام الكلاس المساعد الموحد لعرض قائمة الفترات وملء الحقول
+                Clas.PeriodHelper.ShowPeriodsList(txtPeriodId, txtPeriodStartDate, txtPeriodEndDate);
+            }
+        }
+        
     }
 }
 

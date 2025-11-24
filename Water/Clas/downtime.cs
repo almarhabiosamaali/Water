@@ -10,7 +10,7 @@ namespace Water.Clas
 {
     class downtime
     {
-        public void ADD_DOWNTIME(string id, string period_id, DateTime date, int? dayesCount, int? hours, int? minutes, DateTime? startTime, DateTime? endTime, double? amount, string note)
+        public void ADD_DOWNTIME(string id, string period_id, DateTime date, string dayesCount, string hours, string minutes, DateTime? startTime, DateTime? endTime, double? amount, string note)
         {
             Clas.DataAccessLayer DAL = new Clas.DataAccessLayer();
             DAL.Open();
@@ -73,7 +73,7 @@ namespace Water.Clas
             return dt;
         }
 
-        public void UPDATE_DOWNTIME(string id, string period_id, DateTime date, int? dayesCount, int? hours, int? minutes, DateTime? startTime, DateTime? endTime, double? amount, string note)
+        public void UPDATE_DOWNTIME(string id, string period_id, DateTime date,string dayesCount, string hours, string minutes, DateTime? startTime, DateTime? endTime, double? amount, string note)
         {
             Clas.DataAccessLayer DAL = new Clas.DataAccessLayer();
             DAL.Open();
@@ -124,6 +124,11 @@ namespace Water.Clas
 
             DAL.ExecuteCommand("downtime_delete", param);
             DAL.Close();
+        }
+
+        public string GET_NEXT_DOWNTIME_CODE()
+        {
+            return AutoNumberHelper.GetNextNumber("downtime", "id");
         }
     }
 }

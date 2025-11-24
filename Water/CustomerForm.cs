@@ -75,9 +75,17 @@ namespace Water
         {
             isEditMode = false;
             clear_CUSTOMER();
-            txtCustomerCode.Enabled = true;
+            try
+            {
+                txtCustomerCode.Text = cus.GET_NEXT_CUSTOMER_CODE();
+            }
+            catch
+            {
+                txtCustomerCode.Text = "1";
+            }
+            txtCustomerCode.Enabled = false;
             btnSave.Text = "حفظ";
-            MessageBox.Show("يمكنك الآن إدخال بيانات عميل جديد", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
+           // MessageBox.Show("يمكنك الآن إدخال بيانات عميل جديد", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
@@ -230,21 +238,7 @@ namespace Water
             dtpCreatedDate.Value = DateTime.Now;
         }
 
-
-
-
-        /*private void numAllocatedHours_TextChanged(object sender, EventArgs e)
-        {
-
-        }*/
-        /* private void numAllocatedHours_TextChanged(object sender, KeyPressEventArgs e)
-         {
-             // يسمح بالأرقام فقط + Backspace
-             if (!char.IsDigit(e.KeyChar) && e.KeyChar != (char)Keys.Back)
-             {
-                 e.Handled = true;
-             }
-         }*/
+   
 
     }
 }

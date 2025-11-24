@@ -109,6 +109,11 @@ namespace Water.Clas
             DAL.ExecuteCommand("period_delete", param);
             DAL.Close();
         }
+
+        public string GET_NEXT_PERIOD_CODE()
+        {
+            return AutoNumberHelper.GetNextNumber("period", "id");
+        }
     }
 }
 

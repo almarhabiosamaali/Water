@@ -68,9 +68,11 @@ namespace Water
             this.txtPeriodCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtPeriodCode.Location = new System.Drawing.Point(131, 27);
             this.txtPeriodCode.Name = "txtPeriodCode";
+            this.txtPeriodCode.ReadOnly = true;
             this.txtPeriodCode.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtPeriodCode.Size = new System.Drawing.Size(263, 26);
             this.txtPeriodCode.TabIndex = 1;
+            this.txtPeriodCode.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // lblStartDate
             // 

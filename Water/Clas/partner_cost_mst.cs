@@ -147,6 +147,11 @@ namespace Water.Clas
             DAL.ExecuteCommand("partner_cost_mst_delete", param);
             DAL.Close();
         }
+
+        public string GET_NEXT_PARTNERCOST_CODE()
+        {
+            return AutoNumberHelper.GetNextNumber("partner_cost_mst", "cost_id");
+        }
     }
 }
 

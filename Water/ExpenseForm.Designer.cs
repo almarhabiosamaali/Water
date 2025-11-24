@@ -223,7 +223,7 @@ namespace Water
             this.txtPeriodId.Location = new System.Drawing.Point(544, 82);
             this.txtPeriodId.Name = "txtPeriodId";
             this.txtPeriodId.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.txtPeriodId.Size = new System.Drawing.Size(48, 26);
+            this.txtPeriodId.Size = new System.Drawing.Size(74, 26);
             this.txtPeriodId.TabIndex = 2;
             // 
             // lblPeriodStartDate
@@ -333,6 +333,7 @@ namespace Water
             this.btnAdd.TabIndex = 1;
             this.btnAdd.Text = "إضافة";
             this.btnAdd.UseVisualStyleBackColor = true;
+            
             // 
             // btnEdit
             // 

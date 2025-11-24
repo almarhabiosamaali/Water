@@ -136,27 +136,8 @@ namespace Water.Clas
 
         public string GET_NEXT_EXPENSE_CODE()
         {
-            try
-            {
-                Clas.DataAccessLayer DAL = new Clas.DataAccessLayer();
-                DAL.Open();
-                
-                // استخدام DataAccessLayer للحصول على آخر رقم قيد
-                string sqlQuery = "SELECT ISNULL(MAX(CAST(id AS INT)), 0) + 1 AS NextExpenseCode FROM Water.dbo.expenses WHERE ISNUMERIC(id) = 1";
-                object result = DAL.ExecuteScalar(sqlQuery);
-                
-                DAL.Close();
-                
-                if (result != null && result != DBNull.Value)
-                {
-                    return result.ToString();
-                }
-                return "1";
-            }
-            catch
-            {
-                return "1";
-            }
+            // استخدام الكلاس المساعد الموحد
+            return AutoNumberHelper.GetNextNumber("expenses", "id");
         }
 
         public void ADD_POST(string action, string doc_type, string doc_no, string doc_no_type,

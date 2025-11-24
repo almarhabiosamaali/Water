@@ -76,9 +76,17 @@ namespace Water
         {
             isEditMode = false;
             clear_ACCOUNT();
-            txtAccountCode.Enabled = true;
+            try
+            {
+                txtAccountCode.Text = acc.GET_NEXT_ACCOUNT_CODE();
+            }
+            catch
+            {
+                txtAccountCode.Text = "1";
+            }
+            txtAccountCode.Enabled = false;
             btnSave.Text = "حفظ";
-            MessageBox.Show("يمكنك الآن إدخال بيانات حساب جديد", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
+           // MessageBox.Show("يمكنك الآن إدخال بيانات حساب جديد", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
@@ -200,6 +208,7 @@ namespace Water
             txtAccountName.Clear();
             txtNotes.Clear();
         }
+
     }
 }
 

@@ -125,6 +125,11 @@ namespace Water.Clas
             DAL.ExecuteCommand("partner_delete", param);
             DAL.Close();
         }
+
+        public string GET_NEXT_PARTNER_CODE()
+        {
+            return AutoNumberHelper.GetNextNumber("partners", "id");
+        }
     }
 }
 

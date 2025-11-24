@@ -233,6 +233,11 @@ namespace Water.Clas
             DAL.ExecuteCommand("sales_delete", param);
             DAL.Close();
         }
+        public string GET_NEXT_SALES_CODE()
+        {
+            return AutoNumberHelper.GetNextNumber("sales", "bill_no");
+        }
+
 
 
 
@@ -321,4 +326,5 @@ namespace Water.Clas
             DAL.Close();
         }
     }
+
 }

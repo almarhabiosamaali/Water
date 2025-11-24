@@ -71,18 +71,20 @@ namespace Water
             this.lblCostId.Location = new System.Drawing.Point(26, 24);
             this.lblCostId.Name = "lblCostId";
             this.lblCostId.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.lblCostId.Size = new System.Drawing.Size(90, 20);
+            this.lblCostId.Size = new System.Drawing.Size(43, 20);
             this.lblCostId.TabIndex = 0;
-            this.lblCostId.Text = "رقم التكلفة:";
+            this.lblCostId.Text = "رقم  :";
             // 
             // txtCostId
             // 
             this.txtCostId.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtCostId.Location = new System.Drawing.Point(122, 21);
             this.txtCostId.Name = "txtCostId";
+            this.txtCostId.ReadOnly = true;
             this.txtCostId.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtCostId.Size = new System.Drawing.Size(100, 26);
             this.txtCostId.TabIndex = 1;
+            this.txtCostId.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtCostId.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNumeric_KeyPress);
             // 
             // lblDocType
@@ -92,7 +94,7 @@ namespace Water
             this.lblDocType.Location = new System.Drawing.Point(228, 24);
             this.lblDocType.Name = "lblDocType";
             this.lblDocType.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.lblDocType.Size = new System.Drawing.Size(90, 20);
+            this.lblDocType.Size = new System.Drawing.Size(77, 20);
             this.lblDocType.TabIndex = 2;
             this.lblDocType.Text = "نوع المستند:";
             // 
@@ -127,7 +129,6 @@ namespace Water
             this.dtpDate.RightToLeftLayout = true;
             this.dtpDate.Size = new System.Drawing.Size(200, 26);
             this.dtpDate.TabIndex = 5;
-            this.dtpDate.ShowCheckBox = true;
             // 
             // lblDownTimeId
             // 
@@ -136,7 +137,7 @@ namespace Water
             this.lblDownTimeId.Location = new System.Drawing.Point(693, 24);
             this.lblDownTimeId.Name = "lblDownTimeId";
             this.lblDownTimeId.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.lblDownTimeId.Size = new System.Drawing.Size(95, 20);
+            this.lblDownTimeId.Size = new System.Drawing.Size(75, 20);
             this.lblDownTimeId.TabIndex = 6;
             this.lblDownTimeId.Text = "رقم التوقف:";
             // 
@@ -157,7 +158,7 @@ namespace Water
             this.lblDownTimeNote.Location = new System.Drawing.Point(26, 56);
             this.lblDownTimeNote.Name = "lblDownTimeNote";
             this.lblDownTimeNote.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.lblDownTimeNote.Size = new System.Drawing.Size(120, 20);
+            this.lblDownTimeNote.Size = new System.Drawing.Size(98, 20);
             this.lblDownTimeNote.TabIndex = 8;
             this.lblDownTimeNote.Text = "ملاحظة التوقف:";
             // 
@@ -177,7 +178,7 @@ namespace Water
             this.lblPeriodId.Location = new System.Drawing.Point(26, 88);
             this.lblPeriodId.Name = "lblPeriodId";
             this.lblPeriodId.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.lblPeriodId.Size = new System.Drawing.Size(75, 20);
+            this.lblPeriodId.Size = new System.Drawing.Size(67, 20);
             this.lblPeriodId.TabIndex = 10;
             this.lblPeriodId.Text = "رقم الفترة:";
             // 
@@ -198,7 +199,7 @@ namespace Water
             this.lblDayesCount.Location = new System.Drawing.Point(213, 88);
             this.lblDayesCount.Name = "lblDayesCount";
             this.lblDayesCount.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.lblDayesCount.Size = new System.Drawing.Size(80, 20);
+            this.lblDayesCount.Size = new System.Drawing.Size(67, 20);
             this.lblDayesCount.TabIndex = 12;
             this.lblDayesCount.Text = "عدد الأيام:";
             // 
@@ -208,7 +209,7 @@ namespace Water
             this.txtDayesCount.Location = new System.Drawing.Point(299, 85);
             this.txtDayesCount.Name = "txtDayesCount";
             this.txtDayesCount.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.txtDayesCount.Size = new System.Drawing.Size(100, 26);
+            this.txtDayesCount.Size = new System.Drawing.Size(97, 26);
             this.txtDayesCount.TabIndex = 13;
             this.txtDayesCount.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNumeric_KeyPress);
             // 
@@ -219,7 +220,7 @@ namespace Water
             this.lblHours.Location = new System.Drawing.Point(405, 88);
             this.lblHours.Name = "lblHours";
             this.lblHours.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.lblHours.Size = new System.Drawing.Size(78, 20);
+            this.lblHours.Size = new System.Drawing.Size(86, 20);
             this.lblHours.TabIndex = 14;
             this.lblHours.Text = "عدد الساعات:";
             // 
@@ -228,10 +229,10 @@ namespace Water
             this.txtHours.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtHours.Location = new System.Drawing.Point(489, 85);
             this.txtHours.Name = "txtHours";
-            this.txtHours.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.txtHours.Size = new System.Drawing.Size(100, 26);
-            this.txtHours.TabIndex = 15;
             this.txtHours.ReadOnly = true;
+            this.txtHours.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.txtHours.Size = new System.Drawing.Size(74, 26);
+            this.txtHours.TabIndex = 15;
             this.txtHours.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNumeric_KeyPress);
             // 
             // lblMinutes
@@ -241,7 +242,7 @@ namespace Water
             this.lblMinutes.Location = new System.Drawing.Point(595, 88);
             this.lblMinutes.Name = "lblMinutes";
             this.lblMinutes.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.lblMinutes.Size = new System.Drawing.Size(88, 20);
+            this.lblMinutes.Size = new System.Drawing.Size(77, 20);
             this.lblMinutes.TabIndex = 16;
             this.lblMinutes.Text = "عدد الدقائق:";
             // 
@@ -250,10 +251,10 @@ namespace Water
             this.txtMinutes.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtMinutes.Location = new System.Drawing.Point(689, 85);
             this.txtMinutes.Name = "txtMinutes";
-            this.txtMinutes.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.txtMinutes.Size = new System.Drawing.Size(100, 26);
-            this.txtMinutes.TabIndex = 17;
             this.txtMinutes.ReadOnly = true;
+            this.txtMinutes.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.txtMinutes.Size = new System.Drawing.Size(79, 26);
+            this.txtMinutes.TabIndex = 17;
             this.txtMinutes.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNumeric_KeyPress);
             // 
             // lblStartTime
@@ -263,23 +264,21 @@ namespace Water
             this.lblStartTime.Location = new System.Drawing.Point(795, 88);
             this.lblStartTime.Name = "lblStartTime";
             this.lblStartTime.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.lblStartTime.Size = new System.Drawing.Size(95, 20);
+            this.lblStartTime.Size = new System.Drawing.Size(75, 20);
             this.lblStartTime.TabIndex = 18;
             this.lblStartTime.Text = "وقت البداية:";
             // 
             // dtpStartTime
             // 
+            this.dtpStartTime.CustomFormat = "dd/MM/yyyy hh:mm tt";
             this.dtpStartTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dtpStartTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpStartTime.CustomFormat = "dd/MM/yyyy hh:mm tt";
             this.dtpStartTime.Location = new System.Drawing.Point(896, 85);
             this.dtpStartTime.Name = "dtpStartTime";
             this.dtpStartTime.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.dtpStartTime.RightToLeftLayout = true;
             this.dtpStartTime.Size = new System.Drawing.Size(200, 26);
             this.dtpStartTime.TabIndex = 19;
-            this.dtpStartTime.ShowCheckBox = true;
-            this.dtpStartTime.ShowUpDown = false;
             // 
             // lblEndTime
             // 
@@ -288,23 +287,21 @@ namespace Water
             this.lblEndTime.Location = new System.Drawing.Point(26, 120);
             this.lblEndTime.Name = "lblEndTime";
             this.lblEndTime.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.lblEndTime.Size = new System.Drawing.Size(90, 20);
+            this.lblEndTime.Size = new System.Drawing.Size(76, 20);
             this.lblEndTime.TabIndex = 20;
             this.lblEndTime.Text = "وقت النهاية:";
             // 
             // dtpEndTime
             // 
+            this.dtpEndTime.CustomFormat = "dd/MM/yyyy hh:mm tt";
             this.dtpEndTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dtpEndTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpEndTime.CustomFormat = "dd/MM/yyyy hh:mm tt";
             this.dtpEndTime.Location = new System.Drawing.Point(122, 117);
             this.dtpEndTime.Name = "dtpEndTime";
             this.dtpEndTime.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.dtpEndTime.RightToLeftLayout = true;
             this.dtpEndTime.Size = new System.Drawing.Size(200, 26);
             this.dtpEndTime.TabIndex = 21;
-            this.dtpEndTime.ShowCheckBox = true;
-            this.dtpEndTime.ShowUpDown = false;
             // 
             // lblAmount
             // 
@@ -313,7 +310,7 @@ namespace Water
             this.lblAmount.Location = new System.Drawing.Point(328, 120);
             this.lblAmount.Name = "lblAmount";
             this.lblAmount.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.lblAmount.Size = new System.Drawing.Size(60, 20);
+            this.lblAmount.Size = new System.Drawing.Size(45, 20);
             this.lblAmount.TabIndex = 22;
             this.lblAmount.Text = "المبلغ:";
             // 
@@ -405,8 +402,6 @@ namespace Water
             // 
             // dgvPartners
             // 
-            this.dgvPartners.AllowUserToAddRows = true;
-            this.dgvPartners.AllowUserToDeleteRows = true;
             this.dgvPartners.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvPartners.Location = new System.Drawing.Point(26, 260);
             this.dgvPartners.Name = "dgvPartners";
@@ -429,7 +424,7 @@ namespace Water
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1006, 580);
+            this.ClientSize = new System.Drawing.Size(1126, 601);
             this.Controls.Add(this.btnDistributeAmount);
             this.Controls.Add(this.dgvPartners);
             this.Controls.Add(this.btnSave);

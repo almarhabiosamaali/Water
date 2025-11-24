@@ -280,9 +280,17 @@ namespace Water
         {
             isEditMode = false;
             clear_PARTNER_COST();
-            txtCostId.Enabled = true;
+            try
+            {
+                txtCostId.Text = partnerCost.GET_NEXT_PARTNERCOST_CODE();
+            }
+            catch
+            {
+                txtCostId.Text = "1";
+            }
+            txtCostId.Enabled = false;
             btnSave.Text = "حفظ";
-            MessageBox.Show("يمكنك الآن إدخال بيانات توزيع تكاليف جديد", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
+           // MessageBox.Show("يمكنك الآن إدخال بيانات توزيع تكاليف جديد", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
@@ -845,6 +853,8 @@ namespace Water
                 MessageBox.Show("حدث خطأ أثناء حفظ تفاصيل الشركاء: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+ 
     }
 }
 

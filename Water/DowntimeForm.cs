@@ -23,6 +23,9 @@ namespace Water
             btnEdit.Click += btnEdit_Click;
             btnDelete.Click += btnDelete_Click;
             btnSave.Click += btnSave_Click;
+            
+            // ربط أحداث F2 و Enter على حقل رقم الفترة لعرض قائمة الفترات
+            txtPeriodId.KeyDown += txtPeriodId_KeyDown;
         }
 
         private void btnView_Click(object sender, EventArgs e)
@@ -76,9 +79,17 @@ namespace Water
         {
             isEditMode = false;
             clear_DOWNTIME();
-            txtDowntimeCode.Enabled = true;
+            try
+            {
+                txtDowntimeCode.Text = dwn.GET_NEXT_DOWNTIME_CODE();
+            }
+            catch
+            {
+                txtDowntimeCode.Text = "1";
+            }
+            txtDowntimeCode.Enabled = false;
             btnSave.Text = "حفظ";
-            MessageBox.Show("يمكنك الآن إدخال بيانات توقف جديد", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //MessageBox.Show("يمكنك الآن إدخال بيانات توقف جديد", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
@@ -152,12 +163,14 @@ namespace Water
                 }
 
                 // تحضير القيم الاختيارية
-                int? dayesCount = numDayesCount.Value > 0 ? (int?)numDayesCount.Value : null;
-                int? hours = numHours.Value > 0 ? (int?)numHours.Value : null;
-                int? minutes = numMinutes.Value > 0 ? (int?)numMinutes.Value : null;
+                // int? dayesCount = txtDayesCount.Value > 0 ? (int?)txtDayesCount.Value : null;
+               string dayesCount=!string.IsNullOrWhiteSpace (txtDayesCount.Text)?txtDayesCount.Text : null;
+                string hours = !string.IsNullOrWhiteSpace( txtHours.Text)? txtHours.Text : null;
+                string minutes = !string.IsNullOrWhiteSpace(txtMinutes.Text)?txtMinutes.Text : null;
                 DateTime? startTime = dtpStartTime.Checked ? (DateTime?)dtpStartTime.Value : null;
                 DateTime? endTime = dtpEndTime.Checked ? (DateTime?)dtpEndTime.Value : null;
-                double? amount = numAmount.Value > 0 ? (double?)numAmount.Value : null;
+                double? amount = double.TryParse(txtAmount.Text, out double val) ? val : (double?)null;
+
                 string note = !string.IsNullOrWhiteSpace(txtNote.Text) ? txtNote.Text.Trim() : null;
                 string periodId = !string.IsNullOrWhiteSpace(txtPeriodId.Text) ? txtPeriodId.Text.Trim() : null;
 
@@ -229,29 +242,29 @@ namespace Water
 
             if (row["dayesCount"] != DBNull.Value)
             {
-                numDayesCount.Value = Convert.ToDecimal(row["dayesCount"]);
+                txtDayesCount.Text = row["dayesCount"].ToString();
             }
             else
             {
-                numDayesCount.Value = 0;
+                txtDayesCount.Text = "0";
             }
 
             if (row["hours"] != DBNull.Value)
             {
-                numHours.Value = Convert.ToDecimal(row["hours"]);
+                txtHours.Text = row["hours"].ToString();
             }
             else
             {
-                numHours.Value = 0;
+                txtHours.Text = "0";
             }
 
             if (row["minutes"] != DBNull.Value)
             {
-                numMinutes.Value = Convert.ToDecimal(row["minutes"]);
+                txtMinutes.Text =row["minutes"].ToString();
             }
             else
             {
-                numMinutes.Value = 0;
+                txtMinutes.Text = "0";
             }
 
             if (row["startTime"] != DBNull.Value)
@@ -276,11 +289,11 @@ namespace Water
 
             if (row["amount"] != DBNull.Value)
             {
-                numAmount.Value = Convert.ToDecimal(row["amount"]);
+                txtAmount.Text = row["amount"].ToString();
             }
             else
             {
-                numAmount.Value = 0;
+                txtAmount.Text = "0";
             }
 
             if (row["note"] != DBNull.Value)
@@ -298,13 +311,25 @@ namespace Water
             txtDowntimeCode.Clear();
             txtPeriodId.Clear();
             dtpDate.Value = DateTime.Now;
-            numDayesCount.Value = 0;
-            numHours.Value = 0;
-            numMinutes.Value = 0;
+            txtDayesCount.Clear();
+            txtHours.Clear();
+            txtMinutes.Clear();
             dtpStartTime.Checked = false;
             dtpEndTime.Checked = false;
-            numAmount.Value = 0;
+            txtAmount.Clear();
             txtNote.Clear();
+        }
+
+        private void txtPeriodId_KeyDown(object sender, KeyEventArgs e)
+        {
+            // عرض قائمة الفترات عند الضغط على F2 أو Enter
+            if (e.KeyCode == Keys.F2 || e.KeyCode == Keys.Enter)
+            {
+                e.Handled = true; // منع التنقل الافتراضي لـ Enter
+                // استخدام الكلاس المساعد الموحد (لا توجد حقول بداية ونهاية الفترة في هذه الشاشة)
+              //  Clas.PeriodHelper.ShowPeriodsList(txtPeriodId, null, null);
+                Clas.PeriodHelper.ShowPeriodsList(txtPeriodId, txtPeriodStartDate, txtPeriodEndDate);
+            }
         }
     }
 }

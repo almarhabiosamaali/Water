@@ -77,9 +77,16 @@ namespace Water
         {
             isEditMode = false;
             clear_PERIOD();
-            txtPeriodCode.Enabled = true;
+            try
+            {
+                txtPeriodCode.Text = per.GET_NEXT_PERIOD_CODE();
+            }
+            catch
+            {
+                txtPeriodCode.Text = "1";
+            }
+            txtPeriodCode.Enabled = false;
             btnSave.Text = "حفظ";
-            MessageBox.Show("يمكنك الآن إدخال بيانات فترة جديدة", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
@@ -196,7 +203,6 @@ namespace Water
 
                 clear_PERIOD();
                 isEditMode = false;
-                txtPeriodCode.Enabled = true;
                 btnSave.Text = "حفظ";
             }
             catch (SqlException sqlEx)

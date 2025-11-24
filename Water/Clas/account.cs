@@ -83,6 +83,11 @@ namespace Water.Clas
             DAL.ExecuteCommand("account_delete", param);
             DAL.Close();
         }
+
+        public string GET_NEXT_ACCOUNT_CODE()
+        {
+            return AutoNumberHelper.GetNextNumber("accounts", "id");
+        }
     }
 }
 

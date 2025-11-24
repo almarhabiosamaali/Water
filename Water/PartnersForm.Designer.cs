@@ -70,8 +70,10 @@ namespace Water
             this.txtPartnerCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtPartnerCode.Location = new System.Drawing.Point(155, 21);
             this.txtPartnerCode.Name = "txtPartnerCode";
+            this.txtPartnerCode.ReadOnly = true;
             this.txtPartnerCode.Size = new System.Drawing.Size(263, 26);
             this.txtPartnerCode.TabIndex = 1;
+            this.txtPartnerCode.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // lblPartnerName
             // 
