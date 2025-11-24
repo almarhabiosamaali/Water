@@ -135,6 +135,56 @@ namespace Water.Clas
             DAL.Close();
             return dt;
         }
+
+         public void ADD_POST(string action, string doc_type, string doc_no,  string doc_no_type, string period_id,
+           string cus_part_type, string cus_part_no, string cus_part_name, double dr_amt, double cr_amt,
+           DateTime date,string note ,string user_id)
+        {
+            Clas.DataAccessLayer DAL = new Clas.DataAccessLayer();
+            DAL.Open();
+
+            SqlParameter[] param = new SqlParameter[13];
+
+            param[0] = new SqlParameter("@action", SqlDbType.NVarChar, 20);
+            param[0].Value = action;
+
+            param[1] = new SqlParameter("@doc_type", SqlDbType.VarChar, 50);
+            param[1].Value = doc_type;
+
+            param[2] = new SqlParameter("@doc_no", SqlDbType.VarChar, 50);
+            param[2].Value = doc_no;
+
+            param[3] = new SqlParameter("@doc_no_type", SqlDbType.VarChar, 50);
+            param[3].Value = doc_no_type;
+
+            param[4] = new SqlParameter("@period_id", SqlDbType.VarChar, 50);
+            param[4].Value = period_id;
+
+            param[5] = new SqlParameter("@cus_part_type", SqlDbType.VarChar, 50);
+            param[5].Value = cus_part_type;
+
+            param[6] = new SqlParameter("@cus_part_no", SqlDbType.VarChar, 50);
+            param[6].Value = cus_part_no;
+
+            param[7] = new SqlParameter("@cus_part_name", SqlDbType.VarChar, 200);
+            param[7].Value = cus_part_name;
+
+            param[8] = new SqlParameter("@dr_amt", SqlDbType.Decimal);
+            param[8].Value = dr_amt;
+
+            param[9] = new SqlParameter("@cr_amt", SqlDbType.Decimal);
+            param[9].Value = cr_amt;
+
+            param[10] = new SqlParameter("@date", SqlDbType.Date);
+            param[10].Value = date;
+
+            param[11] = new SqlParameter("@note", SqlDbType.VarChar, 500);
+            param[11].Value = (object)note ?? DBNull.Value;
+            param[12] = new SqlParameter("@user_id", SqlDbType.VarChar, 20);
+            param[12].Value = user_id;
+            DAL.ExecuteCommand("sp_post_crud", param);
+            DAL.Close();
+        }
     }
 }
 

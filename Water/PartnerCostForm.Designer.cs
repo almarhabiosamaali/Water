@@ -61,6 +61,7 @@ namespace Water
             this.btnSave = new System.Windows.Forms.Button();
             this.dgvPartners = new System.Windows.Forms.DataGridView();
             this.btnDistributeAmount = new System.Windows.Forms.Button();
+            this.cmpDocType = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPartners)).BeginInit();
             this.SuspendLayout();
             // 
@@ -105,7 +106,7 @@ namespace Water
             this.txtDocType.Name = "txtDocType";
             this.txtDocType.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtDocType.Size = new System.Drawing.Size(100, 26);
-            this.txtDocType.TabIndex = 3;
+            this.txtDocType.TabIndex = 34;
             this.txtDocType.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNumeric_KeyPress);
             // 
             // lblDate
@@ -420,11 +421,23 @@ namespace Water
             this.btnDistributeAmount.Text = "توزيع المبلغ";
             this.btnDistributeAmount.UseVisualStyleBackColor = true;
             // 
+            // cmpDocType
+            // 
+            this.cmpDocType.FormattingEnabled = true;
+            this.cmpDocType.Items.AddRange(new object[] {
+            "توقف",
+            "قيد يومية"});
+            this.cmpDocType.Location = new System.Drawing.Point(782, 202);
+            this.cmpDocType.Name = "cmpDocType";
+            this.cmpDocType.Size = new System.Drawing.Size(121, 24);
+            this.cmpDocType.TabIndex = 3;
+            // 
             // PartnerCostForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1126, 601);
+            this.Controls.Add(this.cmpDocType);
             this.Controls.Add(this.btnDistributeAmount);
             this.Controls.Add(this.dgvPartners);
             this.Controls.Add(this.btnSave);
@@ -507,6 +520,7 @@ namespace Water
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.DataGridView dgvPartners;
         private System.Windows.Forms.Button btnDistributeAmount;
+        private System.Windows.Forms.ComboBox cmpDocType;
     }
 }
 

@@ -673,7 +673,7 @@ namespace Water
                         string.IsNullOrWhiteSpace(txtPaidAmount.Text)
                                 ? 0
                                 : Convert.ToDouble(txtPaidAmount.Text),                                             // cr_amt (أو بدّل بينهم حسب طبيعة القيد)
-                            dtpStartTime.Value.Date,                       // date
+                            dateTimePicker1.Value.Date,                       // date
                             dtpStartTime.Value,                            // start_time (DateTime)
                             dtpEndTime.Value,                              // end_time   (DateTime)
                             string.IsNullOrWhiteSpace(txtHours.Text)
@@ -951,7 +951,7 @@ namespace Water
             cmbBillType.SelectedIndex = -1;
             if (cmbCustomerType != null)
             {
-                cmbCustomerType.SelectedIndex = 0; // افتراضي: عميل
+                cmbCustomerType.SelectedIndex = 0; 
             }
             txtCustomerId.Clear();
             if (txtCustomerName != null)
@@ -1550,12 +1550,6 @@ namespace Water
             txtMinutes.Text = totalMinutes.ToString();
         }
 
-            
-
-        
-        
-        
-        
       public void CalculateCustomWorkTime(DateTime start, DateTime end,
                                     out int hours, out int minutes)
         {

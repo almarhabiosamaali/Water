@@ -333,7 +333,6 @@ namespace Water
             this.btnAdd.TabIndex = 1;
             this.btnAdd.Text = "إضافة";
             this.btnAdd.UseVisualStyleBackColor = true;
-            
             // 
             // btnEdit
             // 
