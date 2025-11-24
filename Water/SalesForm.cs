@@ -68,6 +68,7 @@ namespace Water
                 this.dataGridView1.CellBeginEdit += DataGridView1_CellBeginEdit;
                 this.dataGridView1.KeyDown += DataGridView1_KeyDown;
                 this.dataGridView1.CellEnter += DataGridView1_CellEnter;
+                this.dataGridView1.CellValueChanged += DataGridView1_CellValueChanged;
             }
         }
 
@@ -667,9 +668,9 @@ namespace Water
                             cusPartType,                                        // cus_part_type (نوع العميل/الشريك - غيّرها حسب تصميمك)
                             txtCustomerId.Text.Trim(),                     // cus_part_no
                             txtCustomerName.Text.Trim(),                   // cus_part_name (لو ما عندك كنترول للاسم خله "")
-                            string.IsNullOrWhiteSpace(txtTotalAmount.Text)
+                            string.IsNullOrWhiteSpace(txtDueAmount.Text)
                                 ? 0
-                                : Convert.ToDouble(txtTotalAmount.Text),   // dr_amt
+                                : Convert.ToDouble(txtDueAmount.Text),   // dr_amt
                         string.IsNullOrWhiteSpace(txtPaidAmount.Text)
                                 ? 0
                                 : Convert.ToDouble(txtPaidAmount.Text),                                             // cr_amt (أو بدّل بينهم حسب طبيعة القيد)
@@ -1644,11 +1645,11 @@ namespace Water
                 double dieselTotal = CalculateDieselTotal();
                 txtDieselTotalPrice.Text = dieselTotal.ToString("F2");
 
-                // حساب الإجمالي الكلي
+                // حساب الإجمالي الكلي الأساسي (بدون خصم)
                 double totalAmount = waterTotal + dieselTotal;
                 txtTotalAmount.Text = totalAmount.ToString("F2");
 
-                // حساب المتبقي
+                // حساب المبلغ المستحق والمتبقي (مع تطبيق الخصم)
                 CalculateRemainingAmount();
             }
             catch
@@ -1709,16 +1710,184 @@ namespace Water
             {
                 double totalAmount = string.IsNullOrWhiteSpace(txtTotalAmount.Text) ? 0 : Convert.ToDouble(txtTotalAmount.Text);
                 double paidAmount = string.IsNullOrWhiteSpace(txtPaidAmount.Text) ? 0 : Convert.ToDouble(txtPaidAmount.Text);
-                double dueAmount = string.IsNullOrWhiteSpace(txtDueAmount.Text) ? 0 : Convert.ToDouble(txtDueAmount.Text);
 
-                // المتبقي = الإجمالي الكلي - المدفوع
-                double remainingAmount = totalAmount - paidAmount;
+                // حساب خصومات الشركاء (إذا كان نوع العميل = شريك)
+                double totalDiscounts = CalculateTotalPartnerDiscounts();
+
+                // المبلغ المستحق = الإجمالي الكلي - الخصم
+                double dueAmount = totalAmount - totalDiscounts;
+                txtDueAmount.Text = dueAmount.ToString("F2");
+
+                // المتبقي = المبلغ المستحق - المدفوع
+                double remainingAmount = dueAmount - paidAmount;
                 txtRemainingAmount.Text = remainingAmount.ToString("F2");
             }
             catch
             {
                 // في حالة الخطأ، نترك الحقل فارغاً
             }
+        }
+
+        private void DataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                // التحقق من أن التغيير في عمود HoursUesed أو MinutesCount
+                if (e.RowIndex < 0 || e.ColumnIndex < 0)
+                    return;
+
+                DataGridViewColumn column = this.dataGridView1.Columns[e.ColumnIndex];
+                if (column == null)
+                    return;
+
+                // التحقق من أن التغيير في عمود الساعات أو الدقائق المستخدمة
+                if (column.Name != "HoursUesed" && column.Name != "MinutesCount")
+                    return;
+
+                DataGridViewRow row = this.dataGridView1.Rows[e.RowIndex];
+                if (row.IsNewRow)
+                    return;
+
+                // التحقق من الشروط: نوع العميل = "شريك" وأن PartenerId = txtCustomerId
+                if (cmbCustomerType == null || cmbCustomerType.SelectedIndex != 1) // 1 = شريك
+                    return;
+
+                if (string.IsNullOrWhiteSpace(txtCustomerId.Text))
+                    return;
+
+                // قراءة PartenerId من الصف الحالي
+                string partnerId = "";
+                if (row.Cells["PartenerId"] != null && row.Cells["PartenerId"].Value != null)
+                {
+                    partnerId = row.Cells["PartenerId"].Value.ToString().Trim();
+                }
+
+                // التحقق من أن PartenerId = txtCustomerId (نفس الشريك)
+                if (partnerId != txtCustomerId.Text.Trim())
+                    return;
+
+                // قراءة الساعات والدقائق المستخدمة من الصف الحالي
+                double hoursUsed = 0;
+                double minutesUsed = 0;
+
+                if (row.Cells["HoursUesed"] != null && row.Cells["HoursUesed"].Value != null)
+                {
+                    if (!double.TryParse(row.Cells["HoursUesed"].Value.ToString(), out hoursUsed))
+                        hoursUsed = 0;
+                }
+
+                if (row.Cells["MinutesCount"] != null && row.Cells["MinutesCount"].Value != null)
+                {
+                    if (!double.TryParse(row.Cells["MinutesCount"].Value.ToString(), out minutesUsed))
+                        minutesUsed = 0;
+                }
+
+                // قراءة أسعار الماء من الفاتورة
+                double waterHourPrice = 0;
+                double waterMinutesPrice = 0;
+
+                if (!string.IsNullOrWhiteSpace(txtWaterHourPrice.Text))
+                {
+                    if (!double.TryParse(txtWaterHourPrice.Text, out waterHourPrice))
+                        waterHourPrice = 0;
+                }
+
+                if (!string.IsNullOrWhiteSpace(txtWaterMinutesPrice.Text))
+                {
+                    if (!double.TryParse(txtWaterMinutesPrice.Text, out waterMinutesPrice))
+                        waterMinutesPrice = 0;
+                }
+
+                // حساب المبلغ المخصوم لهذا الصف: (الساعات × سعر ساعة الماء) + (الدقائق × سعر دقيقة الماء)
+                double discountAmount = (hoursUsed * waterHourPrice) + (minutesUsed * waterMinutesPrice);
+
+                // إعادة حساب الإجماليات مع تطبيق الخصومات من جميع الصفوف
+                // (لأنه قد يكون هناك عدة صفوف للشريك نفسه)
+                CalculateTotals_TextChanged(null, null);
+            }
+            catch (Exception ex)
+            {
+                // في حالة الخطأ، لا نفعل شيئاً لتجنب تعطيل العملية
+            }
+        }
+
+        // حساب إجمالي الخصومات من جميع صفوف الشركاء المطابقة للشروط
+        private double CalculateTotalPartnerDiscounts()
+        {
+            double totalDiscounts = 0;
+
+            try
+            {
+                // التحقق من الشروط الأساسية
+                if (cmbCustomerType == null || cmbCustomerType.SelectedIndex != 1) // 1 = شريك
+                    return 0;
+
+                if (string.IsNullOrWhiteSpace(txtCustomerId.Text))
+                    return 0;
+
+                // قراءة أسعار الماء من الفاتورة
+                double waterHourPrice = 0;
+                double waterMinutesPrice = 0;
+
+                if (!string.IsNullOrWhiteSpace(txtWaterHourPrice.Text))
+                {
+                    if (!double.TryParse(txtWaterHourPrice.Text, out waterHourPrice))
+                        waterHourPrice = 0;
+                }
+
+                if (!string.IsNullOrWhiteSpace(txtWaterMinutesPrice.Text))
+                {
+                    if (!double.TryParse(txtWaterMinutesPrice.Text, out waterMinutesPrice))
+                        waterMinutesPrice = 0;
+                }
+
+                // حساب الخصومات من جميع الصفوف
+                if (this.dataGridView1 != null)
+                {
+                    foreach (DataGridViewRow row in this.dataGridView1.Rows)
+                    {
+                        if (row.IsNewRow)
+                            continue;
+
+                        // قراءة PartenerId من الصف
+                        string partnerId = "";
+                        if (row.Cells["PartenerId"] != null && row.Cells["PartenerId"].Value != null)
+                        {
+                            partnerId = row.Cells["PartenerId"].Value.ToString().Trim();
+                        }
+
+                        // التحقق من أن PartenerId = txtCustomerId
+                        if (partnerId != txtCustomerId.Text.Trim())
+                            continue;
+
+                        // قراءة الساعات والدقائق المستخدمة
+                        double hoursUsed = 0;
+                        double minutesUsed = 0;
+
+                        if (row.Cells["HoursUesed"] != null && row.Cells["HoursUesed"].Value != null)
+                        {
+                            if (!double.TryParse(row.Cells["HoursUesed"].Value.ToString(), out hoursUsed))
+                                hoursUsed = 0;
+                        }
+
+                        if (row.Cells["MinutesCount"] != null && row.Cells["MinutesCount"].Value != null)
+                        {
+                            if (!double.TryParse(row.Cells["MinutesCount"].Value.ToString(), out minutesUsed))
+                                minutesUsed = 0;
+                        }
+
+                        // حساب المبلغ المخصوم لهذا الصف
+                        double discountAmount = (hoursUsed * waterHourPrice) + (minutesUsed * waterMinutesPrice);
+                        totalDiscounts += discountAmount;
+                    }
+                }
+            }
+            catch
+            {
+                // في حالة الخطأ، نعيد 0
+            }
+
+            return totalDiscounts;
         }
 
         private void txtPeriodId_KeyDown(object sender, KeyEventArgs e)
