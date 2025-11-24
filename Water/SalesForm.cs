@@ -30,12 +30,12 @@ namespace Water
             btnDelete.Click += btnDelete_Click;
             btnSave.Click += btnSave_Click;
 
-            
+
 
             // ربط أحداث حساب الساعات والدقائق تلقائياً
             //dtpStartTime.ValueChanged += DateTimePicker_ValueChanged;
             dtpEndTime.ValueChanged += DateTimePicker_ValueChanged;
-            
+
             // ربط أحداث حساب الإجماليات تلقائياً
             txtHours.TextChanged += CalculateTotals_TextChanged;
             txtMinutes.TextChanged += CalculateTotals_TextChanged;
@@ -45,7 +45,7 @@ namespace Water
             txtDieselMinutesPrice.TextChanged += CalculateTotals_TextChanged;
             txtPaidAmount.TextChanged += CalculateRemainingAmount_TextChanged;
             txtDueAmount.TextChanged += CalculateRemainingAmount_TextChanged;
-            
+
             txtPeriodId.KeyDown += txtPeriodId_KeyDown;
 
             // تهيئة ComboBox نوع العميل
@@ -485,14 +485,17 @@ namespace Water
         {
             isEditMode = false;
             clear_SALES();
-            try{
-            txtSalesId.Text=sal.GET_NEXT_SALES_CODE();
-            }catch{
-            txtSalesId.Text="1";
+            try
+            {
+                txtSalesId.Text = sal.GET_NEXT_SALES_CODE();
+            }
+            catch
+            {
+                txtSalesId.Text = "1";
             }
             txtSalesId.Enabled = false;
             btnSave.Text = "حفظ";
-           // MessageBox.Show("يمكنك الآن إدخال بيانات فاتورة جديدة", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            // MessageBox.Show("يمكنك الآن إدخال بيانات فاتورة جديدة", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
@@ -544,6 +547,8 @@ namespace Water
                 try
                 {
                     sal.DELETE_SALES(txtSalesId.Text.Trim());
+                    sal.DELETE_POST("delete", "1", txtSalesId.Text.Trim());
+                    sal.DELETE_POST("delete", "4", txtSalesId.Text.Trim());
                     MessageBox.Show("تم حذف الفاتورة بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     clear_SALES();
                 }
@@ -590,6 +595,8 @@ namespace Water
 
                 if (isEditMode)
                 {
+                    sal.DELETE_POST("delete", "1", txtSalesId.Text.Trim());
+                    sal.DELETE_POST("delete", "4", txtSalesId.Text.Trim());
                     // تحديث بيانات الفاتورة
                     sal.UPDATE_SALES(
                         txtSalesId.Text.Trim(),
@@ -619,6 +626,7 @@ namespace Water
                         DateTime.Now,
                         txtNote != null ? txtNote.Text.Trim() : "" // note
                     );
+                    AddPostFormSales();
 
                     MessageBox.Show("تم تحديث بيانات الفاتورة بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -658,57 +666,7 @@ namespace Water
                         DateTime.Now,
                         txtNote != null ? txtNote.Text.Trim() : "" // note
                     );
-
-                    sal.ADD_POST(
-                            "insert",                                      // action
-                            "1",                                           // doc_type (فاتورة مثلاً)
-                            txtSalesId.Text.Trim(),                        // doc_no
-                            cmbBillType.SelectedItem != null ? cmbBillType.SelectedItem.ToString() : "",                                            // doc_no_type (لو عندك كومبو أو قيمة.. حطها هنا)
-                            txtPeriodId.Text.Trim(),                                            // period_id  (لو عندك فترة محاسبية.. حطها هنا)
-                            cusPartType,                                        // cus_part_type (نوع العميل/الشريك - غيّرها حسب تصميمك)
-                            txtCustomerId.Text.Trim(),                     // cus_part_no
-                            txtCustomerName.Text.Trim(),                   // cus_part_name (لو ما عندك كنترول للاسم خله "")
-                            string.IsNullOrWhiteSpace(txtDueAmount.Text)
-                                ? 0
-                                : Convert.ToDouble(txtDueAmount.Text),   // dr_amt
-                        string.IsNullOrWhiteSpace(txtPaidAmount.Text)
-                                ? 0
-                                : Convert.ToDouble(txtPaidAmount.Text),                                             // cr_amt (أو بدّل بينهم حسب طبيعة القيد)
-                            dtpStartTime.Value.Date,                       // date
-                            dtpStartTime.Value,                            // start_time (DateTime)
-                            dtpEndTime.Value,                              // end_time   (DateTime)
-                            string.IsNullOrWhiteSpace(txtHours.Text)
-                                ? 0
-                                : (int)Convert.ToDouble(txtHours.Text),    // hours
-                            string.IsNullOrWhiteSpace(txtMinutes.Text)
-                                ? 0
-                                : (int)Convert.ToDouble(txtMinutes.Text),  // minutes
-                            string.IsNullOrWhiteSpace(txtWaterHourPrice.Text)
-                                ? 0
-                                : Convert.ToDouble(txtWaterHourPrice.Text),       // water_hour_price
-                            string.IsNullOrWhiteSpace(txtDieselHourPrice.Text)
-                                ? 0
-                                : Convert.ToDouble(txtDieselHourPrice.Text),      // diesel_hour_price
-                            string.IsNullOrWhiteSpace(txtWaterMinutesPrice.Text)
-                                ? 0
-                                : Convert.ToDouble(txtWaterMinutesPrice.Text),    // water_Minutes_price
-                            string.IsNullOrWhiteSpace(txtDieselMinutesPrice.Text)
-                                ? 0
-                                : Convert.ToDouble(txtDieselMinutesPrice.Text),   // diesel_Minutes_price
-                            string.IsNullOrWhiteSpace(textWaterTotalPrice.Text)
-                                ? 0
-                                : Convert.ToDouble(textWaterTotalPrice.Text),     // water_total
-                            string.IsNullOrWhiteSpace(txtDieselTotalPrice.Text)
-                                ? 0
-                                : Convert.ToDouble(txtDieselTotalPrice.Text),     // diesel_total
-                            string.IsNullOrWhiteSpace(txtTotalAmount.Text)
-                                ? 0
-                                : Convert.ToDouble(txtTotalAmount.Text),          // total_amount
-                            "",                                            // note
-                            ""                          // user_id
-                        );
-
-
+                    AddPostFormSales();
                     MessageBox.Show("تم حفظ بيانات الفاتورة بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     // حفظ بيانات الشركاء من DataGridView
@@ -952,7 +910,7 @@ namespace Water
             cmbBillType.SelectedIndex = -1;
             if (cmbCustomerType != null)
             {
-                cmbCustomerType.SelectedIndex = 0; // افتراضي: عميل
+                cmbCustomerType.SelectedIndex = 0;
             }
             txtCustomerId.Clear();
             if (txtCustomerName != null)
@@ -1188,7 +1146,7 @@ namespace Water
                             double waterMinutesPrice = string.IsNullOrWhiteSpace(txtWaterMinutesPrice.Text)
                                 ? 0
                                 : Convert.ToDouble(txtWaterMinutesPrice.Text);
-                            
+
                             double cr_amt = (hoursValue * waterHourPrice) + (minutesValue * waterMinutesPrice);
 
                             partnersHours.ADD_POST(
@@ -1400,12 +1358,12 @@ namespace Water
             CalculateCustomWorkTime(dtpStartTime.Value, dtpEndTime.Value, out int hours, out int minutes);
             txtHours.Text = hours.ToString();
             txtMinutes.Text = minutes.ToString();
-            
+
             // حساب الإجماليات بعد تحديث الساعات والدقائق
             CalculateTotals_TextChanged(null, null);
-         /*   CalculateWorkTime(dtpStartTime.Value, dtpEndTime.Value, out int totalHours, out int totalMinutes);
-           txtHours.Text = totalHours.ToString();
-           txtMinutes.Text = totalMinutes.ToString(); */
+            /*   CalculateWorkTime(dtpStartTime.Value, dtpEndTime.Value, out int totalHours, out int totalMinutes);
+              txtHours.Text = totalHours.ToString();
+              txtMinutes.Text = totalMinutes.ToString(); */
         }
 
         private void CalculateTimeDifference()
@@ -1427,26 +1385,26 @@ namespace Water
                     txtMinutes.Clear();
                     return;
                 }
-                int totHursFrmMinutes=0;
+                int totHursFrmMinutes = 0;
 
 
                 // حساب الساعات الكاملة من الفرق الكلي
                 int totalHours = (int)Math.Floor(timeDifference.TotalHours);
-                
+
                 // الحصول على الدقائق من وقت البداية ووقت النهاية
                 int startMinutes = dtpStartTime.Value.Minute;
                 int endMinutes = dtpEndTime.Value.Minute;
-                
+
                 // حساب الفرق في الدقائق
                 int minutesDifference = endMinutes + startMinutes;
-                
+
                 // إذا كانت الدقائق سالبة (مثل من 15 إلى 20 في اليوم التالي)
                 // نضيف 60 دقيقة لأننا تجاوزنا ساعة كاملة
                 if (minutesDifference < 0)
                 {
                     minutesDifference += 60;
                 }
-                
+
                 // إذا تجاوزت الدقائق 60، نضيف ساعة ونأخذ الباقي
                 if (minutesDifference >= 60)
                 {
@@ -1458,7 +1416,7 @@ namespace Water
                 int toth = totalHours + totHursFrmMinutes;
 
                 // ملء الحقول
-                txtHours.Text =toth.ToString();
+                txtHours.Text = toth.ToString();
                 //txtHours.Text = totalHours.ToString();
                 txtMinutes.Text = minutesDifference.ToString();
             }
@@ -1468,7 +1426,8 @@ namespace Water
             }
         }
 
-        private void CalculateTime(){
+        private void CalculateTime()
+        {
             /*try
             {
                 // التحقق من أن كلا الوقتين موجودين
@@ -1525,7 +1484,7 @@ namespace Water
             {
                 // في حالة الخطأ، لا نفعل شيئاً
             }*/
-        
+
             DateTime start = dtpStartTime.Value;
             DateTime end = dtpEndTime.Value;
 
@@ -1539,7 +1498,7 @@ namespace Water
             // نجمع كل الوقت بالدقائق
             //int totalMinutes = (int)diff.TotalMinutes;
             //int totalMinutes = (int)(end - start).TotalMinutes;
-            int totalMinutes =(int)(startMin + endMin);
+            int totalMinutes = (int)(startMin + endMin);
 
 
             // نقسم الوقت
@@ -1551,23 +1510,17 @@ namespace Water
             txtMinutes.Text = totalMinutes.ToString();
         }
 
-            
-
-        
-        
-        
-        
-      public void CalculateCustomWorkTime(DateTime start, DateTime end,
-                                    out int hours, out int minutes)
+        public void CalculateCustomWorkTime(DateTime start, DateTime end,
+                                      out int hours, out int minutes)
         {
-           // if (end < start)
-               // throw new Exception("End time must be after start time");
+            // if (end < start)
+            // throw new Exception("End time must be after start time");
             if (end < start)
             {
                 // إذا كان وقت النهاية قبل وقت البداية، نترك الحقول فارغة
                 txtHours.Clear();
                 txtMinutes.Clear();
-               // return;
+                // return;
             }
             // 1) الفرق الطبيعي
             TimeSpan diff = end - start;
@@ -1583,7 +1536,7 @@ namespace Water
             minutes = totalMinutes % 60;
         }
 
-        
+
         private double GetDieselUsedInHour()
         {
             try
@@ -1900,7 +1853,69 @@ namespace Water
                 Clas.PeriodHelper.ShowPeriodsList(txtPeriodId, txtPeriodStartDate, txtPeriodEndDate);
             }
         }
-        
+
+
+
+        public void AddPostFormSales()
+        {
+            string cusPartType = "";
+            if (cmbCustomerType != null && cmbCustomerType.SelectedIndex == 1) // شريك
+            {
+                cusPartType = "2";
+            }
+            else // عميل
+            {
+                cusPartType = "1";
+            }
+            sal.ADD_POST(
+                    "insert",                                      // action
+                    "1",                                           // doc_type (فاتورة مثلاً)
+                    txtSalesId.Text.Trim(),                        // doc_no
+                    cmbBillType.SelectedItem != null ? cmbBillType.SelectedItem.ToString() : "",                                            // doc_no_type (لو عندك كومبو أو قيمة.. حطها هنا)
+                    txtPeriodId.Text.Trim(),                                            // period_id  (لو عندك فترة محاسبية.. حطها هنا)
+                    cusPartType,                                        // cus_part_type (نوع العميل/الشريك - غيّرها حسب تصميمك)
+                    txtCustomerId.Text.Trim(),                     // cus_part_no
+                    txtCustomerName.Text.Trim(),                   // cus_part_name (لو ما عندك كنترول للاسم خله "")
+                    string.IsNullOrWhiteSpace(txtTotalAmount.Text)
+                        ? 0
+                        : Convert.ToDouble(txtTotalAmount.Text),   // dr_amt
+                string.IsNullOrWhiteSpace(txtPaidAmount.Text)
+                        ? 0
+                        : Convert.ToDouble(txtPaidAmount.Text),                                             // cr_amt (أو بدّل بينهم حسب طبيعة القيد)
+                    dateTimePicker1.Value.Date,                       // date
+                    dtpStartTime.Value,                            // start_time (DateTime)
+                    dtpEndTime.Value,                              // end_time   (DateTime)
+                    string.IsNullOrWhiteSpace(txtHours.Text)
+                        ? 0
+                        : (int)Convert.ToDouble(txtHours.Text),    // hours
+                    string.IsNullOrWhiteSpace(txtMinutes.Text)
+                        ? 0
+                        : (int)Convert.ToDouble(txtMinutes.Text),  // minutes
+                    string.IsNullOrWhiteSpace(txtWaterHourPrice.Text)
+                        ? 0
+                        : Convert.ToDouble(txtWaterHourPrice.Text),       // water_hour_price
+                    string.IsNullOrWhiteSpace(txtDieselHourPrice.Text)
+                        ? 0
+                        : Convert.ToDouble(txtDieselHourPrice.Text),      // diesel_hour_price
+                    string.IsNullOrWhiteSpace(txtWaterMinutesPrice.Text)
+                        ? 0
+                        : Convert.ToDouble(txtWaterMinutesPrice.Text),    // water_Minutes_price
+                    string.IsNullOrWhiteSpace(txtDieselMinutesPrice.Text)
+                        ? 0
+                        : Convert.ToDouble(txtDieselMinutesPrice.Text),   // diesel_Minutes_price
+                    string.IsNullOrWhiteSpace(textWaterTotalPrice.Text)
+                        ? 0
+                        : Convert.ToDouble(textWaterTotalPrice.Text),     // water_total
+                    string.IsNullOrWhiteSpace(txtDieselTotalPrice.Text)
+                        ? 0
+                        : Convert.ToDouble(txtDieselTotalPrice.Text),     // diesel_total
+                    string.IsNullOrWhiteSpace(txtTotalAmount.Text)
+                        ? 0
+                        : Convert.ToDouble(txtTotalAmount.Text),          // total_amount
+                    txtNote.Text.Trim(),                                            // note
+                    ""                          // user_id
+                );
+        }
     }
 }
 
