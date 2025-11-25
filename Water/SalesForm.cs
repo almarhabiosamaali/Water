@@ -1876,9 +1876,9 @@ namespace Water
                     cusPartType,                                        // cus_part_type (نوع العميل/الشريك - غيّرها حسب تصميمك)
                     txtCustomerId.Text.Trim(),                     // cus_part_no
                     txtCustomerName.Text.Trim(),                   // cus_part_name (لو ما عندك كنترول للاسم خله "")
-                    string.IsNullOrWhiteSpace(txtTotalAmount.Text)
+                    string.IsNullOrWhiteSpace(txtDueAmount.Text)
                         ? 0
-                        : Convert.ToDouble(txtTotalAmount.Text),   // dr_amt
+                        : Convert.ToDouble(txtDueAmount.Text),   // dr_amt
                 string.IsNullOrWhiteSpace(txtPaidAmount.Text)
                         ? 0
                         : Convert.ToDouble(txtPaidAmount.Text),                                             // cr_amt (أو بدّل بينهم حسب طبيعة القيد)
