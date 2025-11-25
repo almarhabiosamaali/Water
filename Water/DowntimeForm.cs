@@ -87,9 +87,7 @@ namespace Water
             {
                 txtDowntimeCode.Text = "1";
             }
-            txtDowntimeCode.Enabled = false;
             btnSave.Text = "حفظ";
-            //MessageBox.Show("يمكنك الآن إدخال بيانات توقف جديد", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
@@ -331,6 +329,8 @@ namespace Water
                 Clas.PeriodHelper.ShowPeriodsList(txtPeriodId, txtPeriodStartDate, txtPeriodEndDate);
             }
         }
+
+      
     }
 }
 

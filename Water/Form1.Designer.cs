@@ -42,7 +42,7 @@
             // btnCustomers
             // 
             this.btnCustomers.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCustomers.Location = new System.Drawing.Point(12, 70);
+            this.btnCustomers.Location = new System.Drawing.Point(53, 124);
             this.btnCustomers.Name = "btnCustomers";
             this.btnCustomers.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnCustomers.Size = new System.Drawing.Size(175, 50);
@@ -54,7 +54,7 @@
             // btnAccounts
             // 
             this.btnAccounts.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAccounts.Location = new System.Drawing.Point(397, 70);
+            this.btnAccounts.Location = new System.Drawing.Point(438, 124);
             this.btnAccounts.Name = "btnAccounts";
             this.btnAccounts.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnAccounts.Size = new System.Drawing.Size(175, 50);
@@ -66,7 +66,7 @@
             // btnDowntime
             // 
             this.btnDowntime.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDowntime.Location = new System.Drawing.Point(397, 138);
+            this.btnDowntime.Location = new System.Drawing.Point(438, 68);
             this.btnDowntime.Name = "btnDowntime";
             this.btnDowntime.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnDowntime.Size = new System.Drawing.Size(175, 50);
@@ -78,7 +78,7 @@
             // btnExpenses
             // 
             this.btnExpenses.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnExpenses.Location = new System.Drawing.Point(12, 138);
+            this.btnExpenses.Location = new System.Drawing.Point(53, 192);
             this.btnExpenses.Name = "btnExpenses";
             this.btnExpenses.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnExpenses.Size = new System.Drawing.Size(175, 50);
@@ -90,7 +90,7 @@
             // btnPeriods
             // 
             this.btnPeriods.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPeriods.Location = new System.Drawing.Point(205, 138);
+            this.btnPeriods.Location = new System.Drawing.Point(53, 66);
             this.btnPeriods.Name = "btnPeriods";
             this.btnPeriods.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnPeriods.Size = new System.Drawing.Size(175, 50);
@@ -102,7 +102,7 @@
             // btnSales
             // 
             this.btnSales.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSales.Location = new System.Drawing.Point(397, 211);
+            this.btnSales.Location = new System.Drawing.Point(246, 192);
             this.btnSales.Name = "btnSales";
             this.btnSales.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnSales.Size = new System.Drawing.Size(175, 50);
@@ -114,7 +114,7 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(12, 211);
+            this.button1.Location = new System.Drawing.Point(246, 66);
             this.button1.Name = "button1";
             this.button1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.button1.Size = new System.Drawing.Size(175, 50);
@@ -126,7 +126,7 @@
             // button2
             // 
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(205, 70);
+            this.button2.Location = new System.Drawing.Point(246, 124);
             this.button2.Name = "button2";
             this.button2.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.button2.Size = new System.Drawing.Size(175, 50);
@@ -138,7 +138,7 @@
             // button3
             // 
             this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button3.Location = new System.Drawing.Point(216, 211);
+            this.button3.Location = new System.Drawing.Point(438, 192);
             this.button3.Name = "button3";
             this.button3.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.button3.Size = new System.Drawing.Size(175, 50);
@@ -151,7 +151,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(690, 338);
+            this.ClientSize = new System.Drawing.Size(697, 302);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);

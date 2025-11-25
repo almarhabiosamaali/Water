@@ -303,7 +303,7 @@ namespace Water
             {
                 txtCostId.Text = "1";
             }
-            txtCostId.Enabled = false;
+            //txtCostId.Enabled = false;
             btnSave.Text = "حفظ";
            // MessageBox.Show("يمكنك الآن إدخال بيانات توزيع تكاليف جديد", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
@@ -926,7 +926,7 @@ namespace Water
             }
         }
 
- 
+      
     }
 }
 
