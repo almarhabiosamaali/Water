@@ -33,7 +33,7 @@ namespace Water
 
 
             // ربط أحداث حساب الساعات والدقائق تلقائياً
-            //dtpStartTime.ValueChanged += DateTimePicker_ValueChanged;
+            dtpStartTime.ValueChanged += DateTimePicker_ValueChanged;
             dtpEndTime.ValueChanged += DateTimePicker_ValueChanged;
 
             // ربط أحداث حساب الإجماليات تلقائياً
@@ -564,7 +564,6 @@ namespace Water
             {
                 // التحقق من أن جميع الحقول المطلوبة مملوءة
                 if (string.IsNullOrWhiteSpace(txtSalesId.Text) ||
-                    // cmbBillType.SelectedIndex == -1 ||
                     string.IsNullOrWhiteSpace(txtPeriodId.Text) ||
                     string.IsNullOrWhiteSpace(txtHours.Text) ||
                     string.IsNullOrWhiteSpace(txtMinutes.Text)
@@ -627,7 +626,7 @@ namespace Water
                     );
                     AddPostFormSales();
 
-                    MessageBox.Show("تم تحديث بيانات الفاتورة بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                   // MessageBox.Show("تم تحديث بيانات الفاتورة بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     // تحديث بيانات الشركاء من DataGridView
                     DeletePartnersHoursFromDatabase(txtSalesId.Text.Trim());
@@ -666,7 +665,7 @@ namespace Water
                         txtNote != null ? txtNote.Text.Trim() : "" // note
                     );
                     AddPostFormSales();
-                    MessageBox.Show("تم حفظ بيانات الفاتورة بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                  //  MessageBox.Show("تم حفظ بيانات الفاتورة بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     // حفظ بيانات الشركاء من DataGridView
                     SavePartnersHoursFromGrid();
@@ -1187,7 +1186,8 @@ namespace Water
 
                 if (idCounter > 1)
                 {
-                    MessageBox.Show($"تم حفظ بيانات {idCounter - 1} شريك بنجاح", "نجاح",
+                  //  MessageBox.Show($"تم حفظ بيانات {idCounter - 1} شريك بنجاح", "نجاح",
+                  MessageBox.Show("تم حفظ بيانات الفاتورة بنجاح", "نجاح",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
@@ -1351,165 +1351,75 @@ namespace Water
 
         private void DateTimePicker_ValueChanged(object sender, EventArgs e)
         {
-            // حساب الفرق بين وقت البداية ووقت النهاية تلقائياً
-            //CalculateTimeDifference();
-            CalculateTime();
-            CalculateCustomWorkTime(dtpStartTime.Value, dtpEndTime.Value, out int hours, out int minutes);
-            txtHours.Text = hours.ToString();
-            txtMinutes.Text = minutes.ToString();
+            // حساب الفرق بين وقت البداية ووقت النهاية 
+               
+                  if (dtpStartTime == null || dtpEndTime == null)
+                        return;
 
-            // حساب الإجماليات بعد تحديث الساعات والدقائق
-            CalculateTotals_TextChanged(null, null);
-            /*   CalculateWorkTime(dtpStartTime.Value, dtpEndTime.Value, out int totalHours, out int totalMinutes);
-              txtHours.Text = totalHours.ToString();
-              txtMinutes.Text = totalMinutes.ToString(); */
+                    // نحسب الفرق
+                    bool ok = CalculateCustomWorkTime(dtpStartTime.Value,
+                                                    dtpEndTime.Value,
+                                                    out int hours,
+                                                    out int minutes);
+
+                    if (!ok)
+                    {
+                        // عرض رسالة خطأ
+                        MessageBox.Show(
+                            "وقت النهاية يجب أن يكون بعد وقت البداية.",
+                            "تنبيه",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error
+                        );
+
+                        // تفريغ الحقول
+                        txtHours.Clear();
+                        txtMinutes.Clear();
+
+                        // إعادة المؤشر إلى الحقل
+                        dtpEndTime.Focus();
+                        dtpEndTime.Select();
+
+                        return; // لا تكمل الحساب
+                    }
+
+                    // إذا لا يوجد خطأ → اعرض القيم
+                    txtHours.Text = hours.ToString();
+                    txtMinutes.Text = minutes.ToString("00");
+
+                    // إعادة حساب الإجماليات (إذا عندك منطق آخر)
+                    CalculateTotals_TextChanged(null, null);
         }
 
-        private void CalculateTimeDifference()
-        {
-            try
+
+        public bool CalculateCustomWorkTime(DateTime start, DateTime end,
+                                            out int hours, out int minutes)
             {
-                // التحقق من أن كلا الوقتين موجودين
-                if (dtpStartTime == null || dtpEndTime == null)
-                    return;
+                hours = 0;
+                minutes = 0;
 
-                // حساب الفرق بين الوقتين
-                TimeSpan timeDifference = dtpEndTime.Value - dtpStartTime.Value;
-
-                // التحقق من أن وقت النهاية بعد وقت البداية
-                if (timeDifference.TotalSeconds < 0)
+                // لو وقت النهاية قبل البداية نرجع false
+                if (end < start)
                 {
-                    // إذا كان وقت النهاية قبل وقت البداية، نترك الحقول فارغة
-                    txtHours.Clear();
-                    txtMinutes.Clear();
-                    return;
-                }
-                int totHursFrmMinutes = 0;
-
-
-                // حساب الساعات الكاملة من الفرق الكلي
-                int totalHours = (int)Math.Floor(timeDifference.TotalHours);
-
-                // الحصول على الدقائق من وقت البداية ووقت النهاية
-                int startMinutes = dtpStartTime.Value.Minute;
-                int endMinutes = dtpEndTime.Value.Minute;
-
-                // حساب الفرق في الدقائق
-                int minutesDifference = endMinutes + startMinutes;
-
-                // إذا كانت الدقائق سالبة (مثل من 15 إلى 20 في اليوم التالي)
-                // نضيف 60 دقيقة لأننا تجاوزنا ساعة كاملة
-                if (minutesDifference < 0)
-                {
-                    minutesDifference += 60;
+                    return false;
                 }
 
-                // إذا تجاوزت الدقائق 60، نضيف ساعة ونأخذ الباقي
-                if (minutesDifference >= 60)
-                {
-                    totHursFrmMinutes = minutesDifference / 60;
-                    //totalHours += minutesDifference / 60;
-                    minutesDifference = minutesDifference % 60;
-                }
+                // 1) الفرق الطبيعي
+                TimeSpan diff = end - start;
 
-                int toth = totalHours + totHursFrmMinutes;
+                // 2) تحويل كل الوقت إلى دقائق
+                int totalMinutes = (int)diff.TotalMinutes;
 
-                // ملء الحقول
-                txtHours.Text = toth.ToString();
-                //txtHours.Text = totalHours.ToString();
-                txtMinutes.Text = minutesDifference.ToString();
+                // 3) استخراج الساعات والدقائق
+                hours = totalMinutes / 60;
+                minutes = totalMinutes % 60;
+
+                return true;
             }
-            catch
-            {
-                // في حالة الخطأ، لا نفعل شيئاً
-            }
-        }
-
-        private void CalculateTime()
-        {
-            /*try
-            {
-                // التحقق من أن كلا الوقتين موجودين
-                if (dtpStartTime == null || dtpEndTime == null)
-                    return;
-
-                // حساب الفرق بين الوقتين
-                TimeSpan timeDifference = dtpEndTime.Value - dtpStartTime.Value;
-
-                // التحقق من أن وقت النهاية بعد وقت البداية
-                if (timeDifference.TotalSeconds < 0)
-                {
-                    // إذا كان وقت النهاية قبل وقت البداية، نترك الحقول فارغة
-                    txtHours.Clear();
-                    txtMinutes.Clear();
-                    return;
-                }
-                int totHursFrmMinutes=0;
 
 
-                // حساب الساعات الكاملة من الفرق الكلي
-                int totalHours = (int)Math.Floor(timeDifference.TotalHours);
-                
-                // الحصول على الدقائق من وقت البداية ووقت النهاية
-                int startMinutes = dtpStartTime.Value.Minute;
-                int endMinutes = dtpEndTime.Value.Minute;
-                
-                // حساب الفرق في الدقائق
-                int minutesDifference = endMinutes + startMinutes;
-                
-                // إذا كانت الدقائق سالبة (مثل من 15 إلى 20 في اليوم التالي)
-                // نضيف 60 دقيقة لأننا تجاوزنا ساعة كاملة
-                if (minutesDifference < 0)
-                {
-                    minutesDifference += 60;
-                }
-                
-                // إذا تجاوزت الدقائق 60، نضيف ساعة ونأخذ الباقي
-                if (minutesDifference >= 60)
-                {
-                    totHursFrmMinutes = minutesDifference / 60;
-                    //totalHours += minutesDifference / 60;
-                    minutesDifference = minutesDifference % 60;
-                }
 
-                int toth = totalHours + totHursFrmMinutes;
-
-                // ملء الحقول
-                txtHours.Text =toth.ToString();
-                //txtHours.Text = totalHours.ToString();
-                txtMinutes.Text = minutesDifference.ToString();
-            }
-            catch
-            {
-                // في حالة الخطأ، لا نفعل شيئاً
-            }*/
-
-            DateTime start = dtpStartTime.Value;
-            DateTime end = dtpEndTime.Value;
-
-            int hoursOnly = (int)(end - start).TotalHours;
-
-            // حساب الفرق
-            TimeSpan diff = end - start;
-
-            int startMin = dtpStartTime.Value.Minute;
-            int endMin = dtpStartTime.Value.Minute;
-            // نجمع كل الوقت بالدقائق
-            //int totalMinutes = (int)diff.TotalMinutes;
-            //int totalMinutes = (int)(end - start).TotalMinutes;
-            int totalMinutes = (int)(startMin + endMin);
-
-
-            // نقسم الوقت
-            int hours = totalMinutes / 60;
-            int minutes = totalMinutes % 60;
-
-            // النتيجة
-            txtHours.Text = hoursOnly.ToString();
-            txtMinutes.Text = totalMinutes.ToString();
-        }
-
-        public void CalculateCustomWorkTime(DateTime start, DateTime end,
+        public void CalculateCustomWorkTime1(DateTime start, DateTime end,
                                       out int hours, out int minutes)
         {
             // if (end < start)
@@ -1676,17 +1586,22 @@ namespace Water
 
         private void txtPeriodId_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.F2 || e.KeyCode == Keys.Enter)
+           /*  if (e.KeyCode == Keys.F2 || e.KeyCode == Keys.Enter)
             {
                 e.Handled = true; // منع التنقل الافتراضي لـ Enter
                 e.SuppressKeyPress = true; // منع معالجة المفتاح بشكل كامل
                 // استخدام الكلاس المساعد الموحد لعرض قائمة الفترات وملء الحقول
                 Clas.PeriodHelper.ShowPeriodsList(txtPeriodId, txtPeriodStartDate, txtPeriodEndDate);
+            } */
+               if (e.KeyCode == Keys.F2 || e.KeyCode == Keys.Enter)
+            {
+                e.Handled = true; // منع التنقل الافتراضي لـ Enter
+                // استخدام الكلاس المساعد الموحد
+                Clas.PeriodHelper.ShowPeriodsList(txtPeriodId, txtPeriodStartDate, txtPeriodEndDate);
             }
         }
 
-
-
+       
         public void AddPostFormSales()
         {
             string cusPartType = "";
