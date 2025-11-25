@@ -453,26 +453,118 @@ namespace Water
                 viewForm.Size = new Size(1400, 700);
                 viewForm.StartPosition = FormStartPosition.CenterScreen;
 
+                // إنشاء Panel للحاوية العلوية (البحث)
+                Panel searchPanel = new Panel();
+                searchPanel.Dock = DockStyle.Top;
+                searchPanel.Height = 50;
+                searchPanel.Padding = new Padding(10);
+
+                // Label للبحث
+                Label lblSearch = new Label();
+                lblSearch.Text = "بحث:";
+                lblSearch.AutoSize = true;
+                lblSearch.Location = new Point(10, 15);
+                lblSearch.RightToLeft = RightToLeft.Yes;
+
+                // TextBox للبحث
+                TextBox txtSearch = new TextBox();
+                txtSearch.Location = new Point(60, 12);
+                txtSearch.Width = 40;
+                txtSearch.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+                txtSearch.RightToLeft = RightToLeft.Yes;
+
+                // إضافة Label و TextBox إلى Panel
+                searchPanel.Controls.Add(lblSearch);
+                searchPanel.Controls.Add(txtSearch);
+
+                // إنشاء DataView للبحث
+                DataView dv = new DataView(dt);
+
+                // DataGridView
                 DataGridView dgv = new DataGridView();
                 dgv.Dock = DockStyle.Fill;
-                dgv.DataSource = dt;
+                dgv.DataSource = dv;
                 dgv.ReadOnly = true;
                 dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
                 dgv.MultiSelect = false;
                 dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
                 dgv.RightToLeft = RightToLeft.Yes;
 
+                // حدث البحث عند الكتابة
+                txtSearch.TextChanged += (s, args) =>
+                {
+                    try
+                    {
+                        string searchText = txtSearch.Text.Trim();
+                        if (string.IsNullOrWhiteSpace(searchText))
+                        {
+                            dv.RowFilter = "";
+                            return;
+                        }
+
+                        // بناء فلتر البحث في جميع الأعمدة
+                        List<string> filters = new List<string>();
+                        string escapedSearchText = searchText.Replace("'", "''").Replace("[", "[[]").Replace("%", "[%]").Replace("*", "[*]");
+
+                        foreach (DataColumn column in dt.Columns)
+                        {
+                            try
+                            {
+                                if (column.DataType == typeof(string))
+                                {
+                                    filters.Add($"[{column.ColumnName}] LIKE '%{escapedSearchText}%'");
+                                }
+                                else if (column.DataType == typeof(DateTime))
+                                {
+                                    // البحث في التواريخ كنص
+                                    filters.Add($"CONVERT([{column.ColumnName}], System.String) LIKE '%{escapedSearchText}%'");
+                                }
+                                else if (column.DataType == typeof(int) || column.DataType == typeof(double) || 
+                                         column.DataType == typeof(float) || column.DataType == typeof(decimal))
+                                {
+                                    // البحث في الأرقام
+                                    if (double.TryParse(searchText, out double numValue))
+                                    {
+                                        filters.Add($"[{column.ColumnName}] = {numValue}");
+                                    }
+                                }
+                            }
+                            catch
+                            {
+                                // تجاهل الأعمدة التي تسبب مشاكل
+                                continue;
+                            }
+                        }
+                        
+                        if (filters.Count > 0)
+                        {
+                            dv.RowFilter = string.Join(" OR ", filters);
+                        }
+                        else
+                        {
+                            dv.RowFilter = "";
+                        }
+                    }
+                    catch
+                    {
+                        // في حالة خطأ في الفلتر، نعرض جميع البيانات
+                        dv.RowFilter = "";
+                    }
+                };
+
                 dgv.CellDoubleClick += (s, args) =>
                 {
-                    if (args.RowIndex >= 0)
+                    if (args.RowIndex >= 0 && args.RowIndex < dv.Count)
                     {
-                        DataRow row = dt.Rows[args.RowIndex];
-                        LoadSalesData(row);
+                        DataRowView rowView = dv[args.RowIndex];
+                        LoadSalesData(rowView.Row);
                         viewForm.Close();
                     }
                 };
 
+                // إضافة Panel و DataGridView إلى النموذج
                 viewForm.Controls.Add(dgv);
+                viewForm.Controls.Add(searchPanel);
                 viewForm.ShowDialog();
             }
             catch (Exception ex)
