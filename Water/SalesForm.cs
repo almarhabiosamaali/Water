@@ -438,7 +438,7 @@ namespace Water
         {
             try
             {
-            btnSave.Enabled = false;
+            
                 DataTable dt = sal.GET_ALL_SALES();
 
                 if (dt.Rows.Count == 0)
@@ -1180,6 +1180,117 @@ namespace Water
             if (!hasValidPartnerData)
             {
                 throw new Exception("يجب إدخال تفاصيل الساعات للشركاء");
+            }
+            
+            // التحقق من أن الساعات والدقائق المدخلة لا تتجاوز المتاحة
+            foreach (DataGridViewRow row in dgv.Rows)
+            {
+                if (row.IsNewRow)
+                    continue;
+                
+                // قراءة الساعات المدخلة والمتاحة
+                double hoursUsed = 0;
+                double hoursAvailable = 0;
+                
+                if (row.Cells["HoursUesed"] != null && row.Cells["HoursUesed"].Value != null)
+                {
+                    string hoursUsedStr = row.Cells["HoursUesed"].Value.ToString().Trim();
+                    if (!string.IsNullOrWhiteSpace(hoursUsedStr))
+                    {
+                        double.TryParse(hoursUsedStr, out hoursUsed);
+                    }
+                }
+                
+                // قراءة الساعات المتاحة (إذا كانت فارغة تعتبر 0)
+                if (row.Cells["HoursAvalible"] != null && row.Cells["HoursAvalible"].Value != null)
+                {
+                    string hoursAvailableStr = row.Cells["HoursAvalible"].Value.ToString().Trim();
+                    if (!string.IsNullOrWhiteSpace(hoursAvailableStr))
+                    {
+                        double.TryParse(hoursAvailableStr, out hoursAvailable);
+                    }
+                    // إذا كانت فارغة، hoursAvailable = 0 (القيمة الافتراضية)
+                }
+                // إذا كانت الخلية فارغة أو null، hoursAvailable = 0 (القيمة الافتراضية)
+                
+                // قراءة الدقائق المدخلة والمتاحة
+                double minutesUsed = 0;
+                double minutesAvailable = 0;
+                
+                if (row.Cells["MinutesCount"] != null && row.Cells["MinutesCount"].Value != null)
+                {
+                    string minutesUsedStr = row.Cells["MinutesCount"].Value.ToString().Trim();
+                    if (!string.IsNullOrWhiteSpace(minutesUsedStr))
+                    {
+                        double.TryParse(minutesUsedStr, out minutesUsed);
+                    }
+                }
+                
+                // قراءة الدقائق المتاحة (إذا كانت فارغة تعتبر 0)
+                if (row.Cells["MinutesAvalible"] != null && row.Cells["MinutesAvalible"].Value != null)
+                {
+                    string minutesAvailableStr = row.Cells["MinutesAvalible"].Value.ToString().Trim();
+                    if (!string.IsNullOrWhiteSpace(minutesAvailableStr))
+                    {
+                        double.TryParse(minutesAvailableStr, out minutesAvailable);
+                    }
+                    // إذا كانت فارغة، minutesAvailable = 0 (القيمة الافتراضية)
+                }
+                // إذا كانت الخلية فارغة أو null، minutesAvailable = 0 (القيمة الافتراضية)
+                
+                // التحقق من أن الساعات المدخلة لا تتجاوز المتاحة (حتى لو كانت المتاحة = 0)
+                if (hoursUsed > hoursAvailable)
+                {
+                    string partnerName = "";
+                    if (row.Cells["PartenerName"] != null && row.Cells["PartenerName"].Value != null)
+                    {
+                        partnerName = row.Cells["PartenerName"].Value.ToString().Trim();
+                    }
+                    
+                    string partnerId = "";
+                    if (row.Cells["PartenerId"] != null && row.Cells["PartenerId"].Value != null)
+                    {
+                        partnerId = row.Cells["PartenerId"].Value.ToString().Trim();
+                    }
+                    
+                    string errorMsg = $"عدد الساعات المدخلة ({hoursUsed}) أكبر من الساعات المتاحة ({hoursAvailable})";
+                    if (!string.IsNullOrWhiteSpace(partnerName))
+                    {
+                        errorMsg += $" للشريك: {partnerName}";
+                    }
+                    else if (!string.IsNullOrWhiteSpace(partnerId))
+                    {
+                        errorMsg += $" للشريك رقم: {partnerId}";
+                    }
+                    throw new Exception(errorMsg);
+                }
+                
+                // التحقق من أن الدقائق المدخلة لا تتجاوز المتاحة (حتى لو كانت المتاحة = 0)
+                if (minutesUsed > minutesAvailable)
+                {
+                    string partnerName = "";
+                    if (row.Cells["PartenerName"] != null && row.Cells["PartenerName"].Value != null)
+                    {
+                        partnerName = row.Cells["PartenerName"].Value.ToString().Trim();
+                    }
+                    
+                    string partnerId = "";
+                    if (row.Cells["PartenerId"] != null && row.Cells["PartenerId"].Value != null)
+                    {
+                        partnerId = row.Cells["PartenerId"].Value.ToString().Trim();
+                    }
+                    
+                    string errorMsg = $"عدد الدقائق المدخلة ({minutesUsed}) أكبر من الدقائق المتاحة ({minutesAvailable})";
+                    if (!string.IsNullOrWhiteSpace(partnerName))
+                    {
+                        errorMsg += $" للشريك: {partnerName}";
+                    }
+                    else if (!string.IsNullOrWhiteSpace(partnerId))
+                    {
+                        errorMsg += $" للشريك رقم: {partnerId}";
+                    }
+                    throw new Exception(errorMsg);
+                }
             }
             
             // حساب إجمالي الساعات والدقائق من DataGridView
