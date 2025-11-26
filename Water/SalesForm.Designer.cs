@@ -121,7 +121,7 @@ namespace Water
             // 
             // txtTotalMinutesFromGrid
             // 
-            this.txtTotalMinutesFromGrid.Location = new System.Drawing.Point(8, 77);
+            this.txtTotalMinutesFromGrid.Location = new System.Drawing.Point(8, 110);
             this.txtTotalMinutesFromGrid.Name = "txtTotalMinutesFromGrid";
             this.txtTotalMinutesFromGrid.ReadOnly = true;
             this.txtTotalMinutesFromGrid.Size = new System.Drawing.Size(100, 24);
@@ -131,15 +131,16 @@ namespace Water
             // 
             // lblTotalMinutesFromGrid
             // 
-            this.lblTotalMinutesFromGrid.Location = new System.Drawing.Point(113, 79);
+            this.lblTotalMinutesFromGrid.Location = new System.Drawing.Point(9, 82);
             this.lblTotalMinutesFromGrid.Name = "lblTotalMinutesFromGrid";
             this.lblTotalMinutesFromGrid.Size = new System.Drawing.Size(120, 23);
             this.lblTotalMinutesFromGrid.TabIndex = 1;
             this.lblTotalMinutesFromGrid.Text = "اجمالي الدقائق :";
+            this.lblTotalMinutesFromGrid.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // txtTotalHoursFromGrid
             // 
-            this.txtTotalHoursFromGrid.Location = new System.Drawing.Point(7, 36);
+            this.txtTotalHoursFromGrid.Location = new System.Drawing.Point(7, 31);
             this.txtTotalHoursFromGrid.Name = "txtTotalHoursFromGrid";
             this.txtTotalHoursFromGrid.ReadOnly = true;
             this.txtTotalHoursFromGrid.Size = new System.Drawing.Size(100, 24);
@@ -148,11 +149,12 @@ namespace Water
             // 
             // lblTotalHoursFromGrid
             // 
-            this.lblTotalHoursFromGrid.Location = new System.Drawing.Point(113, 38);
+            this.lblTotalHoursFromGrid.Location = new System.Drawing.Point(5, 3);
             this.lblTotalHoursFromGrid.Name = "lblTotalHoursFromGrid";
             this.lblTotalHoursFromGrid.Size = new System.Drawing.Size(123, 23);
             this.lblTotalHoursFromGrid.TabIndex = 3;
             this.lblTotalHoursFromGrid.Text = "اجمالي الساعات :";
+            this.lblTotalHoursFromGrid.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // dataGridView1
             // 
@@ -165,7 +167,7 @@ namespace Water
             this.MinutesCount,
             this.HoursAvalible,
             this.MinutesAvalible});
-            this.dataGridView1.Location = new System.Drawing.Point(239, 3);
+            this.dataGridView1.Location = new System.Drawing.Point(160, 3);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 26;
             this.dataGridView1.Size = new System.Drawing.Size(1055, 448);

@@ -438,6 +438,7 @@ namespace Water
         {
             try
             {
+            btnSave.Enabled = false;
                 DataTable dt = sal.GET_ALL_SALES();
 
                 if (dt.Rows.Count == 0)
@@ -674,7 +675,10 @@ namespace Water
                 {
                     MessageBox.Show("وقت النهاية يجب أن يكون بعد وقت البداية", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
-                } 
+                }
+                
+                // التحقق من بيانات الشركاء قبل حفظ الفاتورة
+                ValidatePartnersHoursData();
 
                 // تحديد نوع العميل/الشريك
                 string cusPartType = "";
@@ -1133,6 +1137,110 @@ namespace Water
             }
         }
 
+        // التحقق من بيانات الشركاء قبل الحفظ
+        private void ValidatePartnersHoursData()
+        {
+            DataGridView dgv = this.dataGridView1;
+            
+            if (dgv == null)
+            {
+                throw new Exception("يجب إدخال تفاصيل الساعات للشركاء");
+            }
+            
+            // التحقق من وجود بيانات صحيحة في DataGridView
+            bool hasValidPartnerData = false;
+            
+            foreach (DataGridViewRow row in dgv.Rows)
+            {
+                // تخطي الصف الجديد (NewRow)
+                if (row.IsNewRow)
+                    continue;
+                
+                // التحقق من وجود بيانات صحيحة في الصف
+                bool hasPartnerId = row.Cells["PartenerId"] != null && 
+                                  row.Cells["PartenerId"].Value != null && 
+                                  !string.IsNullOrWhiteSpace(row.Cells["PartenerId"].Value.ToString().Trim());
+                
+                bool hasHours = row.Cells["HoursUesed"] != null && 
+                              row.Cells["HoursUesed"].Value != null && 
+                              !string.IsNullOrWhiteSpace(row.Cells["HoursUesed"].Value.ToString().Trim());
+                
+                bool hasMinutes = row.Cells["MinutesCount"] != null && 
+                                row.Cells["MinutesCount"].Value != null && 
+                                !string.IsNullOrWhiteSpace(row.Cells["MinutesCount"].Value.ToString().Trim());
+                
+                // إذا كان هناك رقم شريك و (ساعات أو دقائق)
+                if (hasPartnerId && (hasHours || hasMinutes))
+                {
+                    hasValidPartnerData = true;
+                    break;
+                }
+            }
+            
+            if (!hasValidPartnerData)
+            {
+                throw new Exception("يجب إدخال تفاصيل الساعات للشركاء");
+            }
+            
+            // حساب إجمالي الساعات والدقائق من DataGridView
+            double totalHoursFromGrid = 0;
+            double totalMinutesFromGrid = 0;
+            
+            foreach (DataGridViewRow row in dgv.Rows)
+            {
+                if (row.IsNewRow)
+                    continue;
+                
+                // قراءة الساعات
+                if (row.Cells["HoursUesed"] != null && row.Cells["HoursUesed"].Value != null)
+                {
+                    string hoursStr = row.Cells["HoursUesed"].Value.ToString().Trim();
+                    if (!string.IsNullOrWhiteSpace(hoursStr))
+                    {
+                        if (double.TryParse(hoursStr, out double hours))
+                        {
+                            totalHoursFromGrid += hours;
+                        }
+                    }
+                }
+                
+                // قراءة الدقائق
+                if (row.Cells["MinutesCount"] != null && row.Cells["MinutesCount"].Value != null)
+                {
+                    string minutesStr = row.Cells["MinutesCount"].Value.ToString().Trim();
+                    if (!string.IsNullOrWhiteSpace(minutesStr))
+                    {
+                        if (double.TryParse(minutesStr, out double minutes))
+                        {
+                            totalMinutesFromGrid += minutes;
+                        }
+                    }
+                }
+            }
+            
+            // قراءة إجمالي الساعات والدقائق من الفاتورة
+            double totalHoursFromInvoice = 0;
+            double totalMinutesFromInvoice = 0;
+            
+            if (!string.IsNullOrWhiteSpace(txtHours.Text))
+            {
+                double.TryParse(txtHours.Text, out totalHoursFromInvoice);
+            }
+            
+            if (!string.IsNullOrWhiteSpace(txtMinutes.Text))
+            {
+                double.TryParse(txtMinutes.Text, out totalMinutesFromInvoice);
+            }
+            
+            // التحقق من المطابقة
+            if (Math.Abs(totalHoursFromGrid - totalHoursFromInvoice) > 0.01 || 
+                Math.Abs(totalMinutesFromGrid - totalMinutesFromInvoice) > 0.01)
+            {
+                string errorMsg = $"إجمالي الساعات والدقائق من الشركاء لاتساوي عدد الساعات والدقائق في الفاتورة.\n\n";
+                throw new Exception(errorMsg);
+            }
+        }
+
         private void SavePartnersHoursFromGrid()
         {
             try
@@ -1144,100 +1252,6 @@ namespace Water
 
                 string billNo = txtSalesId.Text.Trim();
                 DataGridView dgv = this.dataGridView1;
-                // التحقق من وجود بيانات صحيحة في DataGridView
-                bool hasValidPartnerData = false;
-                
-                foreach (DataGridViewRow row in dgv.Rows)
-                {
-                    // تخطي الصف الجديد (NewRow)
-                    if (row.IsNewRow)
-                        continue;
-                    
-                    // التحقق من وجود بيانات صحيحة في الصف
-                    bool hasPartnerId = row.Cells["PartenerId"] != null && 
-                                      row.Cells["PartenerId"].Value != null && 
-                                      !string.IsNullOrWhiteSpace(row.Cells["PartenerId"].Value.ToString().Trim());
-                    
-                    bool hasHours = row.Cells["HoursUesed"] != null && 
-                                  row.Cells["HoursUesed"].Value != null && 
-                                  !string.IsNullOrWhiteSpace(row.Cells["HoursUesed"].Value.ToString().Trim());
-                    
-                    bool hasMinutes = row.Cells["MinutesCount"] != null && 
-                                    row.Cells["MinutesCount"].Value != null && 
-                                    !string.IsNullOrWhiteSpace(row.Cells["MinutesCount"].Value.ToString().Trim());
-                    
-                    // إذا كان هناك رقم شريك و (ساعات أو دقائق)
-                    if (hasPartnerId && (hasHours || hasMinutes))
-                    {
-                        hasValidPartnerData = true;
-                        break;
-                    }
-                }
-                
-                if (!hasValidPartnerData)
-                {
-                    //MessageBox.Show("يجب إدخال تفاصيل الساعات للشركاء", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    throw new Exception("يجب إدخال تفاصيل الساعات للشركاء");
-                   
-                }
-                
-                // حساب إجمالي الساعات والدقائق من DataGridView
-                double totalHoursFromGrid = 0;
-                double totalMinutesFromGrid = 0;
-                
-                foreach (DataGridViewRow row in dgv.Rows)
-                {
-                    if (row.IsNewRow)
-                        continue;
-                    
-                    // قراءة الساعات
-                    if (row.Cells["HoursUesed"] != null && row.Cells["HoursUesed"].Value != null)
-                    {
-                        string hoursStr = row.Cells["HoursUesed"].Value.ToString().Trim();
-                        if (!string.IsNullOrWhiteSpace(hoursStr))
-                        {
-                            if (double.TryParse(hoursStr, out double hours))
-                            {
-                                totalHoursFromGrid += hours;
-                            }
-                        }
-                    }
-                    
-                    // قراءة الدقائق
-                    if (row.Cells["MinutesCount"] != null && row.Cells["MinutesCount"].Value != null)
-                    {
-                        string minutesStr = row.Cells["MinutesCount"].Value.ToString().Trim();
-                        if (!string.IsNullOrWhiteSpace(minutesStr))
-                        {
-                            if (double.TryParse(minutesStr, out double minutes))
-                            {
-                                totalMinutesFromGrid += minutes;
-                            }
-                        }
-                    }
-                }
-                
-                // قراءة إجمالي الساعات والدقائق من الفاتورة
-                double totalHoursFromInvoice = 0;
-                double totalMinutesFromInvoice = 0;
-                
-                if (!string.IsNullOrWhiteSpace(txtHours.Text))
-                {
-                    double.TryParse(txtHours.Text, out totalHoursFromInvoice);
-                }
-                
-                if (!string.IsNullOrWhiteSpace(txtMinutes.Text))
-                {
-                    double.TryParse(txtMinutes.Text, out totalMinutesFromInvoice);
-                }
-                
-                // التحقق من المطابقة
-                if (Math.Abs(totalHoursFromGrid - totalHoursFromInvoice) > 0.01 || 
-                    Math.Abs(totalMinutesFromGrid - totalMinutesFromInvoice) > 0.01)
-                {
-                    string errorMsg = $"إجمالي الساعات والدقائق من الشركاء لاتساوي عدد الساعات والدقائق في الفاتورة.\n\n";                                                                        
-                    throw new Exception(errorMsg);
-                }
 
                 int idCounter = 1;
 
