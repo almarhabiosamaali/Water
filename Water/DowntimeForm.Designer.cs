@@ -57,8 +57,9 @@ namespace Water
             this.lblPeriodEndDate = new System.Windows.Forms.Label();
             this.txtPeriodStartDate = new System.Windows.Forms.TextBox();
             this.lblPeriodStartDate = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtDescription = new System.Windows.Forms.TextBox();
             this.lblDesc = new System.Windows.Forms.Label();
+            this.chkIsProcessed = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // lblDowntimeCode
@@ -108,7 +109,7 @@ namespace Water
             // 
             this.lblDate.AutoSize = true;
             this.lblDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDate.Location = new System.Drawing.Point(329, 299);
+            this.lblDate.Location = new System.Drawing.Point(490, 76);
             this.lblDate.Name = "lblDate";
             this.lblDate.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblDate.Size = new System.Drawing.Size(51, 20);
@@ -119,7 +120,7 @@ namespace Water
             // 
             this.dtpDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dtpDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpDate.Location = new System.Drawing.Point(397, 294);
+            this.dtpDate.Location = new System.Drawing.Point(558, 71);
             this.dtpDate.Name = "dtpDate";
             this.dtpDate.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.dtpDate.RightToLeftLayout = true;
@@ -312,6 +313,7 @@ namespace Water
             // 
             this.txtDayesCount.Location = new System.Drawing.Point(112, 182);
             this.txtDayesCount.Name = "txtDayesCount";
+            this.txtDayesCount.ReadOnly = true;
             this.txtDayesCount.Size = new System.Drawing.Size(100, 24);
             this.txtDayesCount.TabIndex = 29;
             this.txtDayesCount.TabStop = false;
@@ -326,7 +328,7 @@ namespace Water
             // txtPeriodEndDate
             // 
             this.txtPeriodEndDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPeriodEndDate.Location = new System.Drawing.Point(777, 74);
+            this.txtPeriodEndDate.Location = new System.Drawing.Point(780, 473);
             this.txtPeriodEndDate.Name = "txtPeriodEndDate";
             this.txtPeriodEndDate.ReadOnly = true;
             this.txtPeriodEndDate.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -339,7 +341,7 @@ namespace Water
             // 
             this.lblPeriodEndDate.AutoSize = true;
             this.lblPeriodEndDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPeriodEndDate.Location = new System.Drawing.Point(734, 74);
+            this.lblPeriodEndDate.Location = new System.Drawing.Point(737, 477);
             this.lblPeriodEndDate.Name = "lblPeriodEndDate";
             this.lblPeriodEndDate.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblPeriodEndDate.Size = new System.Drawing.Size(37, 20);
@@ -349,7 +351,7 @@ namespace Water
             // txtPeriodStartDate
             // 
             this.txtPeriodStartDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPeriodStartDate.Location = new System.Drawing.Point(608, 74);
+            this.txtPeriodStartDate.Location = new System.Drawing.Point(611, 473);
             this.txtPeriodStartDate.Name = "txtPeriodStartDate";
             this.txtPeriodStartDate.ReadOnly = true;
             this.txtPeriodStartDate.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -362,20 +364,23 @@ namespace Water
             // 
             this.lblPeriodStartDate.AutoSize = true;
             this.lblPeriodStartDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPeriodStartDate.Location = new System.Drawing.Point(555, 74);
+            this.lblPeriodStartDate.Location = new System.Drawing.Point(529, 478);
             this.lblPeriodStartDate.Name = "lblPeriodStartDate";
             this.lblPeriodStartDate.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.lblPeriodStartDate.Size = new System.Drawing.Size(35, 20);
+            this.lblPeriodStartDate.Size = new System.Drawing.Size(74, 20);
             this.lblPeriodStartDate.TabIndex = 31;
-            this.lblPeriodStartDate.Text = "من :";
+            this.lblPeriodStartDate.Text = " الفترة من :";
             // 
-            // textBox1
+            // txtDescription
             // 
-            this.textBox1.Location = new System.Drawing.Point(112, 388);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(821, 111);
-            this.textBox1.TabIndex = 8;
+            this.txtDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtDescription.Location = new System.Drawing.Point(112, 374);
+            this.txtDescription.MaxLength = 255;
+            this.txtDescription.Multiline = true;
+            this.txtDescription.Name = "txtDescription";
+            this.txtDescription.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.txtDescription.Size = new System.Drawing.Size(683, 84);
+            this.txtDescription.TabIndex = 8;
             // 
             // lblDesc
             // 
@@ -388,13 +393,28 @@ namespace Water
             this.lblDesc.TabIndex = 36;
             this.lblDesc.Text = "التفاصيل :";
             // 
+            // chkIsProcessed
+            // 
+            this.chkIsProcessed.AutoSize = true;
+            this.chkIsProcessed.Enabled = false;
+            this.chkIsProcessed.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkIsProcessed.Location = new System.Drawing.Point(798, 71);
+            this.chkIsProcessed.Name = "chkIsProcessed";
+            this.chkIsProcessed.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.chkIsProcessed.Size = new System.Drawing.Size(104, 24);
+            this.chkIsProcessed.TabIndex = 37;
+            this.chkIsProcessed.TabStop = false;
+            this.chkIsProcessed.Text = "تمت المعالجة";
+            this.chkIsProcessed.UseVisualStyleBackColor = true;
+            // 
             // DowntimeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(945, 511);
+            this.Controls.Add(this.chkIsProcessed);
             this.Controls.Add(this.lblDesc);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.txtDescription);
             this.Controls.Add(this.txtPeriodEndDate);
             this.Controls.Add(this.lblPeriodEndDate);
             this.Controls.Add(this.txtPeriodStartDate);
@@ -468,8 +488,9 @@ namespace Water
         private System.Windows.Forms.Label lblPeriodEndDate;
         private System.Windows.Forms.TextBox txtPeriodStartDate;
         private System.Windows.Forms.Label lblPeriodStartDate;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtDescription;
         private System.Windows.Forms.Label lblDesc;
+        private System.Windows.Forms.CheckBox chkIsProcessed;
     }
 }
 

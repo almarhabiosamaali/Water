@@ -310,7 +310,7 @@ namespace Water
             // txtAmount
             // 
             this.txtAmount.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtAmount.Location = new System.Drawing.Point(282, 319);
+            this.txtAmount.Location = new System.Drawing.Point(282, 311);
             this.txtAmount.Name = "txtAmount";
             this.txtAmount.ReadOnly = true;
             this.txtAmount.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
@@ -402,16 +402,16 @@ namespace Water
             // dgvPartners
             // 
             this.dgvPartners.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvPartners.Location = new System.Drawing.Point(111, 358);
+            this.dgvPartners.Location = new System.Drawing.Point(111, 345);
             this.dgvPartners.Name = "dgvPartners";
             this.dgvPartners.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.dgvPartners.Size = new System.Drawing.Size(1068, 334);
+            this.dgvPartners.Size = new System.Drawing.Size(1068, 346);
             this.dgvPartners.TabIndex = 31;
             // 
             // btnDistributeAmount
             // 
             this.btnDistributeAmount.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDistributeAmount.Location = new System.Drawing.Point(113, 312);
+            this.btnDistributeAmount.Location = new System.Drawing.Point(113, 304);
             this.btnDistributeAmount.Name = "btnDistributeAmount";
             this.btnDistributeAmount.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnDistributeAmount.Size = new System.Drawing.Size(120, 40);
@@ -433,7 +433,7 @@ namespace Water
             // txtPeriodEndDate
             // 
             this.txtPeriodEndDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPeriodEndDate.Location = new System.Drawing.Point(880, 13);
+            this.txtPeriodEndDate.Location = new System.Drawing.Point(856, 697);
             this.txtPeriodEndDate.Name = "txtPeriodEndDate";
             this.txtPeriodEndDate.ReadOnly = true;
             this.txtPeriodEndDate.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -446,7 +446,7 @@ namespace Water
             // 
             this.lblPeriodEndDate.AutoSize = true;
             this.lblPeriodEndDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPeriodEndDate.Location = new System.Drawing.Point(805, 15);
+            this.lblPeriodEndDate.Location = new System.Drawing.Point(1002, 699);
             this.lblPeriodEndDate.Name = "lblPeriodEndDate";
             this.lblPeriodEndDate.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblPeriodEndDate.Size = new System.Drawing.Size(37, 20);
@@ -456,7 +456,7 @@ namespace Water
             // txtPeriodStartDate
             // 
             this.txtPeriodStartDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPeriodStartDate.Location = new System.Drawing.Point(1069, 12);
+            this.txtPeriodStartDate.Location = new System.Drawing.Point(1045, 696);
             this.txtPeriodStartDate.Name = "txtPeriodStartDate";
             this.txtPeriodStartDate.ReadOnly = true;
             this.txtPeriodStartDate.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -469,18 +469,18 @@ namespace Water
             // 
             this.lblPeriodStartDate.AutoSize = true;
             this.lblPeriodStartDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPeriodStartDate.Location = new System.Drawing.Point(1028, 16);
+            this.lblPeriodStartDate.Location = new System.Drawing.Point(781, 699);
             this.lblPeriodStartDate.Name = "lblPeriodStartDate";
             this.lblPeriodStartDate.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.lblPeriodStartDate.Size = new System.Drawing.Size(35, 20);
+            this.lblPeriodStartDate.Size = new System.Drawing.Size(69, 20);
             this.lblPeriodStartDate.TabIndex = 88;
-            this.lblPeriodStartDate.Text = "من :";
+            this.lblPeriodStartDate.Text = "الفترة من :";
             // 
             // PartnerCostForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1196, 713);
+            this.ClientSize = new System.Drawing.Size(1196, 727);
             this.Controls.Add(this.txtPeriodEndDate);
             this.Controls.Add(this.lblPeriodEndDate);
             this.Controls.Add(this.txtPeriodStartDate);

@@ -585,9 +585,7 @@ namespace Water
             {
                 txtSalesId.Text = "1";
             }
-            txtSalesId.Enabled = false;
             btnSave.Text = "حفظ";
-            // MessageBox.Show("يمكنك الآن إدخال بيانات فاتورة جديدة", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
@@ -610,9 +608,7 @@ namespace Water
 
                 LoadSalesData(dt.Rows[0]);
                 isEditMode = true;
-                txtSalesId.Enabled = false;
                 btnSave.Text = "تحديث";
-                MessageBox.Show("يمكنك الآن تعديل بيانات الفاتورة", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
@@ -665,13 +661,20 @@ namespace Water
                     MessageBox.Show("الرجاء إكمال جميع البيانات المطلوبة", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
+                int hours = Convert.ToInt32(txtHours.Text);
+                int minuts = Convert.ToInt32(txtMinutes.Text);
+                if( hours <= 0 && minuts <= 0 )
+                {
+                    MessageBox.Show("يرجى تحديد عدد الساعات او الدقائق المستخدمة", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
 
                 // التحقق من أن وقت النهاية بعد وقت البداية
-                if (dtpEndTime.Value < dtpStartTime.Value)
+                 if (dtpEndTime.Value < dtpStartTime.Value)
                 {
                     MessageBox.Show("وقت النهاية يجب أن يكون بعد وقت البداية", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
-                }
+                } 
 
                 // تحديد نوع العميل/الشريك
                 string cusPartType = "";
@@ -766,7 +769,7 @@ namespace Water
 
                 clear_SALES();
                 isEditMode = false;
-                txtSalesId.Enabled = true;
+               // txtSalesId.Enabled = true;
                 btnSave.Text = "حفظ";
             }
             catch (SqlException sqlEx)
@@ -785,7 +788,19 @@ namespace Water
             }
             catch (Exception ee)
             {
-                MessageBox.Show("حدث خطأ أثناء الحفظ: " + ee.Message + "\n\nالتفاصيل: " + ee.ToString(), "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // التحقق من نوع الخطأ
+                if (ee.Message.Contains("يجب إدخال تفاصيل الساعات"))
+                {
+                    // رسالة واضحة للتحقق من البيانات
+                    MessageBox.Show("يجب إدخال تفاصيل الساعات للشركاء", "تنبيه", 
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                else
+                {
+                    // رسالة خطأ عامة للأخطاء الأخرى
+                    MessageBox.Show("حدث خطأ أثناء الحفظ: " + ee.Message, "خطأ", 
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
@@ -1024,6 +1039,8 @@ namespace Water
             txtDueAmount.Clear();
             txtPaidAmount.Clear();
             txtRemainingAmount.Clear();
+            txtTotalHoursFromGrid.Clear();
+            txtTotalMinutesFromGrid.Clear();
             if (txtNote != null)
             {
                 txtNote.Clear();
@@ -1122,15 +1139,104 @@ namespace Water
             {
                 if (string.IsNullOrWhiteSpace(txtSalesId.Text))
                 {
-                    return; // لا يوجد رقم فاتورة
+                    throw new Exception("لا يوجد رقم فاتورة");
                 }
 
                 string billNo = txtSalesId.Text.Trim();
                 DataGridView dgv = this.dataGridView1;
-
-                if (dgv == null || dgv.Rows.Count == 0)
+                // التحقق من وجود بيانات صحيحة في DataGridView
+                bool hasValidPartnerData = false;
+                
+                foreach (DataGridViewRow row in dgv.Rows)
                 {
-                    return; // لا توجد بيانات في الجدول
+                    // تخطي الصف الجديد (NewRow)
+                    if (row.IsNewRow)
+                        continue;
+                    
+                    // التحقق من وجود بيانات صحيحة في الصف
+                    bool hasPartnerId = row.Cells["PartenerId"] != null && 
+                                      row.Cells["PartenerId"].Value != null && 
+                                      !string.IsNullOrWhiteSpace(row.Cells["PartenerId"].Value.ToString().Trim());
+                    
+                    bool hasHours = row.Cells["HoursUesed"] != null && 
+                                  row.Cells["HoursUesed"].Value != null && 
+                                  !string.IsNullOrWhiteSpace(row.Cells["HoursUesed"].Value.ToString().Trim());
+                    
+                    bool hasMinutes = row.Cells["MinutesCount"] != null && 
+                                    row.Cells["MinutesCount"].Value != null && 
+                                    !string.IsNullOrWhiteSpace(row.Cells["MinutesCount"].Value.ToString().Trim());
+                    
+                    // إذا كان هناك رقم شريك و (ساعات أو دقائق)
+                    if (hasPartnerId && (hasHours || hasMinutes))
+                    {
+                        hasValidPartnerData = true;
+                        break;
+                    }
+                }
+                
+                if (!hasValidPartnerData)
+                {
+                    //MessageBox.Show("يجب إدخال تفاصيل الساعات للشركاء", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    throw new Exception("يجب إدخال تفاصيل الساعات للشركاء");
+                   
+                }
+                
+                // حساب إجمالي الساعات والدقائق من DataGridView
+                double totalHoursFromGrid = 0;
+                double totalMinutesFromGrid = 0;
+                
+                foreach (DataGridViewRow row in dgv.Rows)
+                {
+                    if (row.IsNewRow)
+                        continue;
+                    
+                    // قراءة الساعات
+                    if (row.Cells["HoursUesed"] != null && row.Cells["HoursUesed"].Value != null)
+                    {
+                        string hoursStr = row.Cells["HoursUesed"].Value.ToString().Trim();
+                        if (!string.IsNullOrWhiteSpace(hoursStr))
+                        {
+                            if (double.TryParse(hoursStr, out double hours))
+                            {
+                                totalHoursFromGrid += hours;
+                            }
+                        }
+                    }
+                    
+                    // قراءة الدقائق
+                    if (row.Cells["MinutesCount"] != null && row.Cells["MinutesCount"].Value != null)
+                    {
+                        string minutesStr = row.Cells["MinutesCount"].Value.ToString().Trim();
+                        if (!string.IsNullOrWhiteSpace(minutesStr))
+                        {
+                            if (double.TryParse(minutesStr, out double minutes))
+                            {
+                                totalMinutesFromGrid += minutes;
+                            }
+                        }
+                    }
+                }
+                
+                // قراءة إجمالي الساعات والدقائق من الفاتورة
+                double totalHoursFromInvoice = 0;
+                double totalMinutesFromInvoice = 0;
+                
+                if (!string.IsNullOrWhiteSpace(txtHours.Text))
+                {
+                    double.TryParse(txtHours.Text, out totalHoursFromInvoice);
+                }
+                
+                if (!string.IsNullOrWhiteSpace(txtMinutes.Text))
+                {
+                    double.TryParse(txtMinutes.Text, out totalMinutesFromInvoice);
+                }
+                
+                // التحقق من المطابقة
+                if (Math.Abs(totalHoursFromGrid - totalHoursFromInvoice) > 0.01 || 
+                    Math.Abs(totalMinutesFromGrid - totalMinutesFromInvoice) > 0.01)
+                {
+                    string errorMsg = $"إجمالي الساعات والدقائق من الشركاء لاتساوي عدد الساعات والدقائق في الفاتورة.\n\n";                                                                        
+                    throw new Exception(errorMsg);
                 }
 
                 int idCounter = 1;
@@ -1286,8 +1392,9 @@ namespace Water
             }
             catch (Exception ex)
             {
-                MessageBox.Show("حدث خطأ أثناء حفظ بيانات الشركاء: " + ex.Message, "خطأ",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // إعادة رمي الاستثناء للتعامل معه في btnSave_Click
+                // لا نعرض رسالة هنا لتجنب التكرار
+                throw;
             }
         }
 
@@ -1455,27 +1562,6 @@ namespace Water
                                                     out int hours,
                                                     out int minutes);
 
-                    if (!ok)
-                    {
-                        // عرض رسالة خطأ
-                        MessageBox.Show(
-                            "وقت النهاية يجب أن يكون بعد وقت البداية.",
-                            "تنبيه",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Error
-                        );
-
-                        // تفريغ الحقول
-                        txtHours.Clear();
-                        txtMinutes.Clear();
-
-                        // إعادة المؤشر إلى الحقل
-                        dtpEndTime.Focus();
-                        dtpEndTime.Select();
-
-                        return; // لا تكمل الحساب
-                    }
-
                     // إذا لا يوجد خطأ → اعرض القيم
                     txtHours.Text = hours.ToString();
                     txtMinutes.Text = minutes.ToString("00");
@@ -1512,31 +1598,7 @@ namespace Water
 
 
 
-        public void CalculateCustomWorkTime1(DateTime start, DateTime end,
-                                      out int hours, out int minutes)
-        {
-            // if (end < start)
-            // throw new Exception("End time must be after start time");
-            if (end < start)
-            {
-                // إذا كان وقت النهاية قبل وقت البداية، نترك الحقول فارغة
-                txtHours.Clear();
-                txtMinutes.Clear();
-                // return;
-            }
-            // 1) الفرق الطبيعي
-            TimeSpan diff = end - start;
-
-            // 2) تحويل كل الوقت إلى دقائق
-            int totalMinutes = (int)diff.TotalMinutes;
-
-            // 3) منطقك الخاص: إضافة 30 دقيقة ثابتة
-            //totalMinutes += 30;
-
-            // 4) استخراج الساعات والدقائق
-            hours = totalMinutes / 60;
-            minutes = totalMinutes % 60;
-        }
+        
 
 
         private double GetDieselUsedInHour()
@@ -1696,6 +1758,12 @@ namespace Water
                     return;
 
                 // التحقق من أن التغيير في عمود الساعات أو الدقائق المستخدمة
+                if (column.Name == "HoursUesed" || column.Name == "MinutesCount")
+                {
+                    // حساب إجمالي الساعات والدقائق من DataGridView
+                    CalculateTotalHoursAndMinutesFromGrid();
+                }
+                
                 if (column.Name != "HoursUesed" && column.Name != "MinutesCount")
                     return;
 
@@ -1759,10 +1827,74 @@ namespace Water
                 // إعادة حساب الإجماليات مع تطبيق الخصومات من جميع الصفوف
                 // (لأنه قد يكون هناك عدة صفوف للشريك نفسه)
                 CalculateTotals_TextChanged(null, null);
+                
+                // حساب إجمالي الساعات والدقائق من DataGridView
+                CalculateTotalHoursAndMinutesFromGrid();
             }
             catch (Exception ex)
             {
                 // في حالة الخطأ، لا نفعل شيئاً لتجنب تعطيل العملية
+            }
+        }
+        
+        // حساب إجمالي الساعات والدقائق من DataGridView
+        private void CalculateTotalHoursAndMinutesFromGrid()
+        {
+            try
+            {
+                double totalHours = 0;
+                double totalMinutes = 0;
+                
+                if (this.dataGridView1 != null)
+                {
+                    foreach (DataGridViewRow row in this.dataGridView1.Rows)
+                    {
+                        // تخطي الصف الجديد (NewRow)
+                        if (row.IsNewRow)
+                            continue;
+                        
+                        // قراءة الساعات
+                        if (row.Cells["HoursUesed"] != null && row.Cells["HoursUesed"].Value != null)
+                        {
+                            string hoursStr = row.Cells["HoursUesed"].Value.ToString().Trim();
+                            if (!string.IsNullOrWhiteSpace(hoursStr))
+                            {
+                                if (double.TryParse(hoursStr, out double hours))
+                                {
+                                    totalHours += hours;
+                                }
+                            }
+                        }
+                        
+                        // قراءة الدقائق
+                        if (row.Cells["MinutesCount"] != null && row.Cells["MinutesCount"].Value != null)
+                        {
+                            string minutesStr = row.Cells["MinutesCount"].Value.ToString().Trim();
+                            if (!string.IsNullOrWhiteSpace(minutesStr))
+                            {
+                                if (double.TryParse(minutesStr, out double minutes))
+                                {
+                                    totalMinutes += minutes;
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                // عرض الإجماليات في الحقول
+                if (txtTotalHoursFromGrid != null)
+                {
+                    txtTotalHoursFromGrid.Text = totalHours.ToString();
+                }
+                
+                if (txtTotalMinutesFromGrid != null)
+                {
+                    txtTotalMinutesFromGrid.Text = totalMinutes.ToString();
+                }
+            }
+            catch
+            {
+                // في حالة الخطأ، لا نفعل شيئاً
             }
         }
 
@@ -1847,13 +1979,6 @@ namespace Water
 
         private void txtPeriodId_KeyDown(object sender, KeyEventArgs e)
         {
-           /*  if (e.KeyCode == Keys.F2 || e.KeyCode == Keys.Enter)
-            {
-                e.Handled = true; // منع التنقل الافتراضي لـ Enter
-                e.SuppressKeyPress = true; // منع معالجة المفتاح بشكل كامل
-                // استخدام الكلاس المساعد الموحد لعرض قائمة الفترات وملء الحقول
-                Clas.PeriodHelper.ShowPeriodsList(txtPeriodId, txtPeriodStartDate, txtPeriodEndDate);
-            } */
                if (e.KeyCode == Keys.F2 || e.KeyCode == Keys.Enter)
             {
                 e.Handled = true; // منع التنقل الافتراضي لـ Enter

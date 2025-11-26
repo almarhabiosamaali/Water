@@ -171,6 +171,19 @@ namespace Water
 
                 string note = !string.IsNullOrWhiteSpace(txtNote.Text) ? txtNote.Text.Trim() : null;
                 string periodId = !string.IsNullOrWhiteSpace(txtPeriodId.Text) ? txtPeriodId.Text.Trim() : null;
+                string description = !string.IsNullOrWhiteSpace(txtDescription.Text) ? txtDescription.Text.Trim() : null;
+                
+                // القيمة الافتراضية عند الإضافة = 0، وعند التحديث نستخدم القيمة الحالية
+                int? isProcessed;
+                if (isEditMode)
+                {
+                    isProcessed = chkIsProcessed.Checked ? 1 : 0;
+                }
+                else
+                {
+                    // عند الإضافة، القيمة الافتراضية = 0
+                    isProcessed = 0;
+                }
 
                 if (isEditMode)
                 {
@@ -185,7 +198,9 @@ namespace Water
                         startTime,
                         endTime,
                         amount,
-                        note
+                        note,
+                        description,
+                        isProcessed
                     );
 
                     MessageBox.Show("تم تحديث بيانات التوقف بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -203,7 +218,9 @@ namespace Water
                         startTime,
                         endTime,
                         amount,
-                        note
+                        note,
+                        description,
+                        isProcessed
                     );
 
                     MessageBox.Show("تم حفظ بيانات التوقف بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -302,6 +319,25 @@ namespace Water
             {
                 txtNote.Clear();
             }
+
+            if (row["description"] != DBNull.Value)
+            {
+                txtDescription.Text = row["description"].ToString();
+            }
+            else
+            {
+                txtDescription.Clear();
+            }
+
+            if (row["isProcessed"] != DBNull.Value)
+            {
+                int processedValue = Convert.ToInt32(row["isProcessed"]);
+                chkIsProcessed.Checked = processedValue == 1;
+            }
+            else
+            {
+                chkIsProcessed.Checked = false;
+            }
         }
 
         private void clear_DOWNTIME()
@@ -316,6 +352,8 @@ namespace Water
             dtpEndTime.Checked = false;
             txtAmount.Clear();
             txtNote.Clear();
+            txtDescription.Clear();
+            chkIsProcessed.Checked = false;
         }
 
         private void txtPeriodId_KeyDown(object sender, KeyEventArgs e)

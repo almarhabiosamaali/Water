@@ -10,11 +10,11 @@ namespace Water.Clas
 {
     class downtime
     {
-        public void ADD_DOWNTIME(string id, string period_id, DateTime date, string dayesCount, string hours, string minutes, DateTime? startTime, DateTime? endTime, double? amount, string note)
+        public void ADD_DOWNTIME(string id, string period_id, DateTime date, string dayesCount, string hours, string minutes, DateTime? startTime, DateTime? endTime, double? amount, string note, string description, int? isProcessed)
         {
             Clas.DataAccessLayer DAL = new Clas.DataAccessLayer();
             DAL.Open();
-            SqlParameter[] param = new SqlParameter[10];
+            SqlParameter[] param = new SqlParameter[12];
             
             param[0] = new SqlParameter("@id", SqlDbType.VarChar, 50);
             param[0].Value = id;
@@ -45,6 +45,12 @@ namespace Water.Clas
 
             param[9] = new SqlParameter("@note", SqlDbType.VarChar, 255);
             param[9].Value = (object)note ?? DBNull.Value;
+
+            param[10] = new SqlParameter("@description", SqlDbType.VarChar, 255);
+            param[10].Value = (object)description ?? DBNull.Value;
+
+            param[11] = new SqlParameter("@isProcessed", SqlDbType.Int);
+            param[11].Value = (object)isProcessed ?? DBNull.Value;
 
             DAL.ExecuteCommand("downtime_insert", param);
             DAL.Close();
@@ -73,11 +79,11 @@ namespace Water.Clas
             return dt;
         }
 
-        public void UPDATE_DOWNTIME(string id, string period_id, DateTime date,string dayesCount, string hours, string minutes, DateTime? startTime, DateTime? endTime, double? amount, string note)
+        public void UPDATE_DOWNTIME(string id, string period_id, DateTime date,string dayesCount, string hours, string minutes, DateTime? startTime, DateTime? endTime, double? amount, string note, string description, int? isProcessed)
         {
             Clas.DataAccessLayer DAL = new Clas.DataAccessLayer();
             DAL.Open();
-            SqlParameter[] param = new SqlParameter[10];
+            SqlParameter[] param = new SqlParameter[12];
             
             param[0] = new SqlParameter("@id", SqlDbType.VarChar, 50);
             param[0].Value = id;
@@ -108,6 +114,12 @@ namespace Water.Clas
 
             param[9] = new SqlParameter("@note", SqlDbType.VarChar, 255);
             param[9].Value = (object)note ?? DBNull.Value;
+
+            param[10] = new SqlParameter("@description", SqlDbType.VarChar, 255);
+            param[10].Value = (object)description ?? DBNull.Value;
+
+            param[11] = new SqlParameter("@isProcessed", SqlDbType.Int);
+            param[11].Value = (object)isProcessed ?? DBNull.Value;
 
             DAL.ExecuteCommand("downtime_update", param);
             DAL.Close();
