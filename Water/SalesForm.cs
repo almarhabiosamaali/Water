@@ -1209,9 +1209,7 @@ namespace Water
                     {
                         double.TryParse(hoursAvailableStr, out hoursAvailable);
                     }
-                    // إذا كانت فارغة، hoursAvailable = 0 (القيمة الافتراضية)
                 }
-                // إذا كانت الخلية فارغة أو null، hoursAvailable = 0 (القيمة الافتراضية)
                 
                 // قراءة الدقائق المدخلة والمتاحة
                 double minutesUsed = 0;
@@ -1234,12 +1232,17 @@ namespace Water
                     {
                         double.TryParse(minutesAvailableStr, out minutesAvailable);
                     }
-                    // إذا كانت فارغة، minutesAvailable = 0 (القيمة الافتراضية)
                 }
-                // إذا كانت الخلية فارغة أو null، minutesAvailable = 0 (القيمة الافتراضية)
                 
-                // التحقق من أن الساعات المدخلة لا تتجاوز المتاحة (حتى لو كانت المتاحة = 0)
-                if (hoursUsed > hoursAvailable)
+                // تحويل الساعات والدقائق إلى إجمالي دقائق للمقارنة
+                // المدخلة: تحويل الساعات إلى دقائق + الدقائق
+                double totalMinutesUsed = (hoursUsed * 60) + minutesUsed;
+                
+                // المتاحة: تحويل الساعات إلى دقائق + الدقائق
+                double totalMinutesAvailable = (hoursAvailable * 60) + minutesAvailable;
+                
+                // التحقق من أن الإجمالي المدخل لا يتجاوز المتاح
+                if (totalMinutesUsed > totalMinutesAvailable)
                 {
                     string partnerName = "";
                     if (row.Cells["PartenerName"] != null && row.Cells["PartenerName"].Value != null)
@@ -1253,34 +1256,11 @@ namespace Water
                         partnerId = row.Cells["PartenerId"].Value.ToString().Trim();
                     }
                     
-                    string errorMsg = $"عدد الساعات المدخلة ({hoursUsed}) أكبر من الساعات المتاحة ({hoursAvailable})";
-                    if (!string.IsNullOrWhiteSpace(partnerName))
-                    {
-                        errorMsg += $" للشريك: {partnerName}";
-                    }
-                    else if (!string.IsNullOrWhiteSpace(partnerId))
-                    {
-                        errorMsg += $" للشريك رقم: {partnerId}";
-                    }
-                    throw new Exception(errorMsg);
-                }
-                
-                // التحقق من أن الدقائق المدخلة لا تتجاوز المتاحة (حتى لو كانت المتاحة = 0)
-                if (minutesUsed > minutesAvailable)
-                {
-                    string partnerName = "";
-                    if (row.Cells["PartenerName"] != null && row.Cells["PartenerName"].Value != null)
-                    {
-                        partnerName = row.Cells["PartenerName"].Value.ToString().Trim();
-                    }
+                    // عرض القيم بشكل واضح (ساعات ودقائق)
+                    string usedDisplay = $"{hoursUsed} ساعة و {minutesUsed} دقيقة";
+                    string availableDisplay = $"{hoursAvailable} ساعة و {minutesAvailable} دقيقة";
                     
-                    string partnerId = "";
-                    if (row.Cells["PartenerId"] != null && row.Cells["PartenerId"].Value != null)
-                    {
-                        partnerId = row.Cells["PartenerId"].Value.ToString().Trim();
-                    }
-                    
-                    string errorMsg = $"عدد الدقائق المدخلة ({minutesUsed}) أكبر من الدقائق المتاحة ({minutesAvailable})";
+                    string errorMsg = $"الوقت المدخل ({usedDisplay}) أكبر من الوقت المتاح ({availableDisplay})";
                     if (!string.IsNullOrWhiteSpace(partnerName))
                     {
                         errorMsg += $" للشريك: {partnerName}";
@@ -1329,6 +1309,14 @@ namespace Water
                 }
             }
             
+            // تحويل الدقائق الزائدة (كل 60 دقيقة = ساعة واحدة) إلى ساعات للقيم من Grid
+            if (totalMinutesFromGrid >= 60)
+            {
+                int additionalHours = (int)(totalMinutesFromGrid / 60);
+                totalHoursFromGrid += additionalHours;
+                totalMinutesFromGrid = totalMinutesFromGrid % 60;
+            }
+            
             // قراءة إجمالي الساعات والدقائق من الفاتورة
             double totalHoursFromInvoice = 0;
             double totalMinutesFromInvoice = 0;
@@ -1342,7 +1330,6 @@ namespace Water
             {
                 double.TryParse(txtMinutes.Text, out totalMinutesFromInvoice);
             }
-            
             // التحقق من المطابقة
             if (Math.Abs(totalHoursFromGrid - totalHoursFromInvoice) > 0.01 || 
                 Math.Abs(totalMinutesFromGrid - totalMinutesFromInvoice) > 0.01)
@@ -2004,6 +1991,17 @@ namespace Water
                             }
                         }
                     }
+                }
+                
+                // تحويل الدقائق الزائدة (كل 60 دقيقة = ساعة واحدة) إلى ساعات
+                if (totalMinutes >= 60)
+                {
+                    // حساب عدد الساعات الإضافية من الدقائق
+                    int additionalHours = (int)(totalMinutes / 60);
+                    totalHours += additionalHours;
+                    
+                    // حساب الدقائق المتبقية بعد التحويل
+                    totalMinutes = totalMinutes % 60;
                 }
                 
                 // عرض الإجماليات في الحقول

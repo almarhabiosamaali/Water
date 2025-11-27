@@ -65,6 +65,24 @@ namespace Water
 
                 viewForm.Controls.Add(dgv);
                 viewForm.ShowDialog();
+                /*txtPartnerName.Enabled = false;
+                txtAllocatedHours.Enabled = false;
+                txtMinutes.Enabled = false;
+                txtAvalibleHours.Enabled = false;
+                txtAvalibleMinutes.Enabled = false;
+                txtPhone.Enabled = false;
+                txtAddress.Enabled = false;
+                txtNotes.Enabled = false;
+                dtpDate.Enabled = false;
+                btnSave.Enabled = false;*/
+               
+               
+               
+               
+               
+               
+               
+               
             }
             catch (Exception ex)
             {
@@ -84,7 +102,7 @@ namespace Water
             {
                 txtPartnerCode.Text = "1";
             }
-            txtPartnerCode.Enabled = false;
+            //txtPartnerCode.Enabled = false;
             btnSave.Text = "حفظ";
            // MessageBox.Show("يمكنك الآن إدخال بيانات شريك جديد", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
@@ -109,9 +127,10 @@ namespace Water
 
                 LoadPartnerData(dt.Rows[0]);
                 isEditMode = true;
-                txtPartnerCode.Enabled = false;
+                //txtPartnerCode.Enabled = false;
+                //btnSave.Enabled = true;
                 btnSave.Text = "تحديث";
-                MessageBox.Show("يمكنك الآن تعديل بيانات الشريك", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
+              //  MessageBox.Show("يمكنك الآن تعديل بيانات الشريك", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
