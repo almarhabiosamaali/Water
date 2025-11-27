@@ -34,6 +34,13 @@ namespace Water
             this.txtTotalHoursFromGrid = new System.Windows.Forms.TextBox();
             this.lblTotalHoursFromGrid = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.bill_no = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PartenerId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PartenerName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.HoursUesed = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MinutesCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.HoursAvalible = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MinutesAvalible = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -91,13 +98,6 @@ namespace Water
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnView = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.bill_no = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.PartenerId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.PartenerName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.HoursUesed = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MinutesCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.HoursAvalible = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MinutesAvalible = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tabPage1.SuspendLayout();
@@ -172,6 +172,46 @@ namespace Water
             this.dataGridView1.RowTemplate.Height = 26;
             this.dataGridView1.Size = new System.Drawing.Size(1055, 448);
             this.dataGridView1.TabIndex = 19;
+            // 
+            // bill_no
+            // 
+            this.bill_no.HeaderText = "رقم الفاتورة";
+            this.bill_no.Name = "bill_no";
+            this.bill_no.ReadOnly = true;
+            // 
+            // PartenerId
+            // 
+            this.PartenerId.HeaderText = "رقم الشريك";
+            this.PartenerId.Name = "PartenerId";
+            // 
+            // PartenerName
+            // 
+            this.PartenerName.HeaderText = "اسم الشريك";
+            this.PartenerName.Name = "PartenerName";
+            this.PartenerName.ReadOnly = true;
+            this.PartenerName.Width = 200;
+            // 
+            // HoursUesed
+            // 
+            this.HoursUesed.HeaderText = "عدد الساعات";
+            this.HoursUesed.Name = "HoursUesed";
+            // 
+            // MinutesCount
+            // 
+            this.MinutesCount.HeaderText = "عدد الدقائق";
+            this.MinutesCount.Name = "MinutesCount";
+            // 
+            // HoursAvalible
+            // 
+            this.HoursAvalible.HeaderText = "الساعات المتاحة";
+            this.HoursAvalible.Name = "HoursAvalible";
+            this.HoursAvalible.ReadOnly = true;
+            // 
+            // MinutesAvalible
+            // 
+            this.MinutesAvalible.HeaderText = "الدقائق المتاحة";
+            this.MinutesAvalible.Name = "MinutesAvalible";
+            this.MinutesAvalible.ReadOnly = true;
             // 
             // tabPage1
             // 
@@ -636,6 +676,7 @@ namespace Water
             this.txtCustomerId.Size = new System.Drawing.Size(162, 26);
             this.txtCustomerId.TabIndex = 9;
             this.txtCustomerId.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtCustomerId_KeyDown);
+            this.txtCustomerId.Leave += new System.EventHandler(this.txtCustomerId_Leave);
             // 
             // txtSalesId
             // 
@@ -847,46 +888,6 @@ namespace Water
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(1312, 489);
             this.tabControl1.TabIndex = 2;
-            // 
-            // bill_no
-            // 
-            this.bill_no.HeaderText = "رقم الفاتورة";
-            this.bill_no.Name = "bill_no";
-            this.bill_no.ReadOnly = true;
-            // 
-            // PartenerId
-            // 
-            this.PartenerId.HeaderText = "رقم الشريك";
-            this.PartenerId.Name = "PartenerId";
-            // 
-            // PartenerName
-            // 
-            this.PartenerName.HeaderText = "اسم الشريك";
-            this.PartenerName.Name = "PartenerName";
-            this.PartenerName.ReadOnly = true;
-            this.PartenerName.Width = 200;
-            // 
-            // HoursUesed
-            // 
-            this.HoursUesed.HeaderText = "عدد الساعات";
-            this.HoursUesed.Name = "HoursUesed";
-            // 
-            // MinutesCount
-            // 
-            this.MinutesCount.HeaderText = "عدد الدقائق";
-            this.MinutesCount.Name = "MinutesCount";
-            // 
-            // HoursAvalible
-            // 
-            this.HoursAvalible.HeaderText = "الساعات المتاحة";
-            this.HoursAvalible.Name = "HoursAvalible";
-            this.HoursAvalible.ReadOnly = true;
-            // 
-            // MinutesAvalible
-            // 
-            this.MinutesAvalible.HeaderText = "الدقائق المتاحة";
-            this.MinutesAvalible.Name = "MinutesAvalible";
-            this.MinutesAvalible.ReadOnly = true;
             // 
             // SalesForm
             // 

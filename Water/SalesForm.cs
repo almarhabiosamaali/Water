@@ -48,6 +48,13 @@ namespace Water
 
             txtPeriodId.KeyDown += txtPeriodId_KeyDown;
 
+            // ربط أحداث حقل رقم العميل
+            if (txtCustomerId != null)
+            {
+                txtCustomerId.KeyDown += txtCustomerId_KeyDown;
+                txtCustomerId.Leave += txtCustomerId_Leave;
+            }
+
             // تهيئة ComboBox نوع العميل
             if (cmbCustomerType != null)
             {
@@ -264,6 +271,45 @@ namespace Water
                 ShowCustomersList();
             }
         }
+
+        private void txtCustomerId_Leave(object sender, EventArgs e)
+        {
+            // التحقق من وجود العميل/الشريك/الحساب عند الانتقال من الحقل
+            if (txtCustomerId == null || string.IsNullOrWhiteSpace(txtCustomerId.Text))
+                return;
+
+            try
+            {
+                string customerId = txtCustomerId.Text.Trim();
+                DataTable dt = null;
+
+                // تحديد نوع البيانات بناءً على اختيار نوع العميل
+                if (cmbCustomerType != null && cmbCustomerType.SelectedIndex == 1) // شريك
+                {
+                    dt = partners.VIEW_PARTNER(customerId);
+                }
+                else // عميل (افتراضي)
+                {
+                    dt = customer.VIEW_CUSTOMER(customerId);
+                }
+
+                // التحقق من وجود البيانات
+                if (dt == null || dt.Rows.Count == 0)
+                {
+                    MessageBox.Show("رقم العميل/الشريك غير موجود", "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    txtCustomerId.Focus();
+                    return;
+                }
+
+                // تحميل بيانات العميل/الشريك
+                LoadCustomerDataToBill(dt.Rows[0]);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("حدث خطأ أثناء التحقق من رقم العميل: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                txtCustomerId.Focus();
+            }
+        }
         private void ShowCustomersList()
         {
             try
@@ -286,6 +332,28 @@ namespace Water
                 if (dt == null || dt.Rows.Count == 0)
                 {
                     MessageBox.Show("لا توجد بيانات للعرض", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                // تصفية البيانات بناءً على الرقم المدخل في txtCustomerId (إذا كان موجود)
+                string searchId = txtCustomerId != null ? txtCustomerId.Text.Trim() : "";
+                if (!string.IsNullOrWhiteSpace(searchId))
+                {
+                    // تصفية الصفوف التي تحتوي على الرقم المدخل في عمود id
+                    DataTable filteredDt = dt.Clone();
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        if (row["id"] != DBNull.Value && row["id"].ToString().Contains(searchId))
+                        {
+                            filteredDt.ImportRow(row);
+                        }
+                    }
+                    dt = filteredDt;
+                }
+
+                if (dt.Rows.Count == 0)
+                {
+                    MessageBox.Show("لا توجد بيانات تطابق الرقم المدخل", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
 
