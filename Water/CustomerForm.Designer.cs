@@ -33,7 +33,6 @@ namespace Water
             this.lblCustomerName = new System.Windows.Forms.Label();
             this.txtCustomerName = new System.Windows.Forms.TextBox();
             this.lblType = new System.Windows.Forms.Label();
-            this.cmbType = new System.Windows.Forms.ComboBox();
             this.lblPhone = new System.Windows.Forms.Label();
             this.txtPhone = new System.Windows.Forms.TextBox();
             this.lblAddress = new System.Windows.Forms.Label();
@@ -47,6 +46,7 @@ namespace Water
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
+            this.cmbType = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // lblCustomerCode
@@ -100,20 +100,6 @@ namespace Water
             this.lblType.Size = new System.Drawing.Size(74, 20);
             this.lblType.TabIndex = 4;
             this.lblType.Text = "نوع العميل:";
-            // 
-            // cmbType
-            // 
-            this.cmbType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbType.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbType.FormattingEnabled = true;
-            this.cmbType.Items.AddRange(new object[] {
-            "عميل",
-            "شريك"});
-            this.cmbType.Location = new System.Drawing.Point(155, 24);
-            this.cmbType.Name = "cmbType";
-            this.cmbType.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.cmbType.Size = new System.Drawing.Size(263, 28);
-            this.cmbType.TabIndex = 5;
             // 
             // lblPhone
             // 
@@ -254,6 +240,20 @@ namespace Water
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
+            // cmbType
+            // 
+            this.cmbType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbType.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbType.FormattingEnabled = true;
+            this.cmbType.Items.AddRange(new object[] {
+            "عميل نقدي",
+            "عميل اجل"});
+            this.cmbType.Location = new System.Drawing.Point(155, 24);
+            this.cmbType.Name = "cmbType";
+            this.cmbType.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.cmbType.Size = new System.Drawing.Size(263, 28);
+            this.cmbType.TabIndex = 5;
+            // 
             // CustomerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
@@ -298,7 +298,6 @@ namespace Water
         private System.Windows.Forms.Label lblCustomerName;
         private System.Windows.Forms.TextBox txtCustomerName;
         private System.Windows.Forms.Label lblType;
-        private System.Windows.Forms.ComboBox cmbType;
         private System.Windows.Forms.Label lblPhone;
         private System.Windows.Forms.TextBox txtPhone;
         private System.Windows.Forms.Label lblAddress;
@@ -312,5 +311,6 @@ namespace Water
         private System.Windows.Forms.Button btnEdit;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.ComboBox cmbType;
     }
 }

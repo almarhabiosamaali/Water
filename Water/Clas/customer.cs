@@ -110,7 +110,7 @@ namespace Water.Clas
 
         public string GET_NEXT_CUSTOMER_CODE()
         {
-            return AutoNumberHelper.GetNextNumber("customer", "id");
+            return AutoNumberHelper.GetNextNumber("customers", "id");
         }
     }
 }

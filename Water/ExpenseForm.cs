@@ -122,7 +122,7 @@ namespace Water
                 isEditMode = true;
                 txtExpenseCode.Enabled = false;
                 btnSave.Text = "تحديث";
-                MessageBox.Show("يمكنك الآن تعديل بيانات القيد", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
+               // MessageBox.Show("يمكنك الآن تعديل بيانات القيد", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
@@ -148,6 +148,7 @@ namespace Water
             {
                 try
                 {
+                    exp.DELETE_POST("delete", "2", txtExpenseCode.Text.Trim());
                     exp.DELETE_EXPENSE(txtExpenseCode.Text.Trim());
                     MessageBox.Show("تم حذف القيد بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     clear_EXPENSE();
@@ -179,7 +180,7 @@ namespace Water
 
                 if (isEditMode)
                 {
-                    // تحديث بيانات القيد
+                    exp.DELETE_POST("delete", "2", txtExpenseCode.Text.Trim());
                     exp.UPDATE_EXPENSE(
                         txtExpenseCode.Text.Trim(),
                         "2", // doc_type = 2 (قيمة ثابتة)
@@ -208,7 +209,7 @@ namespace Water
                             dr = 0;
                         }
                     exp.ADD_POST(
-                            "update",                                      // action
+                            "insert",                                      // action
                             "2",                                           // doc_type (فاتورة مثلاً)
                             txtExpenseCode.Text.Trim(),                       // doc_no
                             cmbType.SelectedItem != null ? cmbType.SelectedItem.ToString() : "",                                            // doc_no_type (لو عندك كومبو أو قيمة.. حطها هنا)

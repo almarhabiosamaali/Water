@@ -168,6 +168,25 @@ namespace Water.Clas
             DAL.Close();
         }
 
+         public void DELETE_POST(string action, string doc_type, string doc_no)
+        {
+            Clas.DataAccessLayer DAL = new Clas.DataAccessLayer();
+            DAL.Open();
+
+            SqlParameter[] param = new SqlParameter[3];
+
+            param[0] = new SqlParameter("@action", SqlDbType.NVarChar, 20);
+            param[0].Value = action;
+
+            param[1] = new SqlParameter("@doc_type", SqlDbType.VarChar, 50);
+            param[1].Value = doc_type;
+
+            param[2] = new SqlParameter("@doc_no", SqlDbType.VarChar, 50);
+            param[2].Value = doc_no;
+            DAL.ExecuteCommand("sp_post_crud", param);
+            DAL.Close();
+        }
+
     }
 }
 

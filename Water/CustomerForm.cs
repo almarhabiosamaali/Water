@@ -110,7 +110,7 @@ namespace Water
                 isEditMode = true;
                 txtCustomerCode.Enabled = false;
                 btnSave.Text = "تحديث";
-                MessageBox.Show("يمكنك الآن تعديل بيانات العميل", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
+              //  MessageBox.Show("يمكنك الآن تعديل بيانات العميل", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
@@ -153,8 +153,9 @@ namespace Water
             {
                 // التحقق من أن جميع الحقول المطلوبة مملوءة
                 if (string.IsNullOrWhiteSpace(txtCustomerCode.Text) ||
-                    string.IsNullOrWhiteSpace(txtCustomerName.Text) ||
-                    cmbType.SelectedIndex == -1)
+                    string.IsNullOrWhiteSpace(txtCustomerName.Text) 
+                   // cmbType.SelectedIndex == -1
+                    )
                 {
                     MessageBox.Show("الرجاء إدخال كود العميل واسم العميل ونوع العميل على الأقل", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;

@@ -95,12 +95,12 @@ namespace Water
             // 
             this.lblDocType.AutoSize = true;
             this.lblDocType.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDocType.Location = new System.Drawing.Point(344, 62);
+            this.lblDocType.Location = new System.Drawing.Point(295, 63);
             this.lblDocType.Name = "lblDocType";
             this.lblDocType.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.lblDocType.Size = new System.Drawing.Size(77, 20);
+            this.lblDocType.Size = new System.Drawing.Size(114, 20);
             this.lblDocType.TabIndex = 2;
-            this.lblDocType.Text = "نوع المستند:";
+            this.lblDocType.Text = "انزال البيانات من :";
             // 
             // lblDate
             // 

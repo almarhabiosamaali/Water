@@ -14,6 +14,7 @@ namespace Water
     public partial class SalesForm : Form
     {
         private bool isEditMode = false;
+        private bool isLoadingCustomerFromList = false; // للتحكم في عدم فتح القائمة تلقائياً عند تحميل البيانات
         Clas.sales sal = new Clas.sales();
         Clas.salePartnersHours partnersHours = new Clas.salePartnersHours();
         Clas.customer customer = new Clas.customer();
@@ -45,15 +46,6 @@ namespace Water
             txtDieselMinutesPrice.TextChanged += CalculateTotals_TextChanged;
             txtPaidAmount.TextChanged += CalculateRemainingAmount_TextChanged;
             txtDueAmount.TextChanged += CalculateRemainingAmount_TextChanged;
-
-            txtPeriodId.KeyDown += txtPeriodId_KeyDown;
-
-            // ربط أحداث حقل رقم العميل
-            if (txtCustomerId != null)
-            {
-                txtCustomerId.KeyDown += txtCustomerId_KeyDown;
-                txtCustomerId.Leave += txtCustomerId_Leave;
-            }
 
             // تهيئة ComboBox نوع العميل
             if (cmbCustomerType != null)
@@ -268,12 +260,19 @@ namespace Water
             if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.F2)
             {
                 e.Handled = true;
+                e.SuppressKeyPress = true; // منع معالجة المفتاح بشكل افتراضي
+                isLoadingCustomerFromList = true; // تعطيل التحقق التلقائي مؤقتاً
                 ShowCustomersList();
+                isLoadingCustomerFromList = false; // إعادة تفعيل التحقق
             }
         }
 
         private void txtCustomerId_Leave(object sender, EventArgs e)
         {
+            // إذا كان يتم تحميل البيانات من القائمة، لا نتحقق مرة أخرى
+            if (isLoadingCustomerFromList)
+                return;
+
             // التحقق من وجود العميل/الشريك/الحساب عند الانتقال من الحقل
             if (txtCustomerId == null || string.IsNullOrWhiteSpace(txtCustomerId.Text))
                 return;
@@ -378,7 +377,22 @@ namespace Water
                     if (args.RowIndex >= 0)
                     {
                         DataRow row = dt.Rows[args.RowIndex];
+                        isLoadingCustomerFromList = true; // تعطيل التحقق التلقائي
                         LoadCustomerDataToBill(row);
+                        isLoadingCustomerFromList = false; // إعادة تفعيل التحقق
+                        viewForm.Close();
+                    }
+                };
+
+                // إضافة حدث النقر مرة واحدة (بدلاً من النقر المزدوج فقط)
+                dgv.CellClick += (s, args) =>
+                {
+                    if (args.RowIndex >= 0)
+                    {
+                        DataRow row = dt.Rows[args.RowIndex];
+                        isLoadingCustomerFromList = true; // تعطيل التحقق التلقائي
+                        LoadCustomerDataToBill(row);
+                        isLoadingCustomerFromList = false; // إعادة تفعيل التحقق
                         viewForm.Close();
                     }
                 };
