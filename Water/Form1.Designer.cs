@@ -37,6 +37,7 @@
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
+            this.btnRpt = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnCustomers
@@ -147,11 +148,24 @@
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
+            // btnRpt
+            // 
+            this.btnRpt.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRpt.Location = new System.Drawing.Point(293, 315);
+            this.btnRpt.Name = "btnRpt";
+            this.btnRpt.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.btnRpt.Size = new System.Drawing.Size(175, 50);
+            this.btnRpt.TabIndex = 9;
+            this.btnRpt.Text = "تقارير";
+            this.btnRpt.UseVisualStyleBackColor = true;
+            this.btnRpt.Click += new System.EventHandler(this.btnRpt_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(697, 302);
+            this.ClientSize = new System.Drawing.Size(758, 393);
+            this.Controls.Add(this.btnRpt);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
@@ -183,6 +197,7 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button btnRpt;
     }
 }
 
