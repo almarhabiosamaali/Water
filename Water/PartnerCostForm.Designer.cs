@@ -162,6 +162,7 @@ namespace Water
             this.txtDownTimeNote.Location = new System.Drawing.Point(424, 101);
             this.txtDownTimeNote.Multiline = true;
             this.txtDownTimeNote.Name = "txtDownTimeNote";
+            this.txtDownTimeNote.ReadOnly = true;
             this.txtDownTimeNote.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtDownTimeNote.Size = new System.Drawing.Size(765, 35);
             this.txtDownTimeNote.TabIndex = 0;
@@ -273,6 +274,7 @@ namespace Water
             // dtpStartTime
             // 
             this.dtpStartTime.CustomFormat = "dd/MM/yyyy hh:mm tt";
+            this.dtpStartTime.Enabled = false;
             this.dtpStartTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dtpStartTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtpStartTime.Location = new System.Drawing.Point(117, 149);
@@ -297,6 +299,7 @@ namespace Water
             // dtpEndTime
             // 
             this.dtpEndTime.CustomFormat = "dd/MM/yyyy hh:mm tt";
+            this.dtpEndTime.Enabled = false;
             this.dtpEndTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dtpEndTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtpEndTime.Location = new System.Drawing.Point(424, 152);

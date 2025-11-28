@@ -10,11 +10,11 @@ namespace Water.Clas
 {
     class partners
     {
-        public void ADD_PARTNER(string id, string name, string allocated_hours, string minutes, string avalibleHours, string avalibleMinutes, string phone, string address, string notes, DateTime? date)
+        public void ADD_PARTNER(string id, string name, string allocated_hours, string minutes, string phone, string address, string notes, DateTime? date)
         {
             Clas.DataAccessLayer DAL = new Clas.DataAccessLayer();
             DAL.Open();
-            SqlParameter[] param = new SqlParameter[10];
+            SqlParameter[] param = new SqlParameter[8];
             
             param[0] = new SqlParameter("@id", SqlDbType.VarChar, 50);
             param[0].Value = id;
@@ -28,23 +28,17 @@ namespace Water.Clas
             param[3] = new SqlParameter("@minutes", SqlDbType.Int);
             param[3].Value = string.IsNullOrWhiteSpace(minutes) ? DBNull.Value : (object)Convert.ToInt32(minutes);
 
-            param[4] = new SqlParameter("@avalibleHours", SqlDbType.Int);
-            param[4].Value = string.IsNullOrWhiteSpace(avalibleHours) ? DBNull.Value : (object)Convert.ToInt32(avalibleHours);
+            param[4] = new SqlParameter("@phone", SqlDbType.VarChar, 50);
+            param[4].Value = phone;
 
-            param[5] = new SqlParameter("@avalibleMinutes", SqlDbType.Int);
-            param[5].Value = string.IsNullOrWhiteSpace(avalibleMinutes) ? DBNull.Value : (object)Convert.ToInt32(avalibleMinutes);
+            param[5] = new SqlParameter("@address", SqlDbType.VarChar, 255);
+            param[5].Value = address;
 
-            param[6] = new SqlParameter("@phone", SqlDbType.VarChar, 50);
-            param[6].Value = phone;
+            param[6] = new SqlParameter("@notes", SqlDbType.VarChar, 255);
+            param[6].Value = notes;
 
-            param[7] = new SqlParameter("@address", SqlDbType.VarChar, 255);
-            param[7].Value = address;
-
-            param[8] = new SqlParameter("@notes", SqlDbType.VarChar, 255);
-            param[8].Value = notes;
-
-            param[9] = new SqlParameter("@created_date", SqlDbType.DateTime);
-            param[9].Value = date.HasValue ? (object)date.Value : DBNull.Value;
+            param[7] = new SqlParameter("@created_date", SqlDbType.DateTime);
+            param[7].Value = date.HasValue ? (object)date.Value : DBNull.Value;
 
             DAL.ExecuteCommand("partner_insert", param);
             DAL.Close();
@@ -73,11 +67,11 @@ namespace Water.Clas
             return dt;
         }
 
-        public void UPDATE_PARTNER(string id, string name, string allocated_hours, string minutes, string avalibleHours, string avalibleMinutes, string phone, string address, string notes, DateTime? date)
+        public void UPDATE_PARTNER(string id, string name, string allocated_hours, string minutes, string phone, string address, string notes, DateTime? date)
         {
             Clas.DataAccessLayer DAL = new Clas.DataAccessLayer();
             DAL.Open();
-            SqlParameter[] param = new SqlParameter[10];
+            SqlParameter[] param = new SqlParameter[8];
             
             param[0] = new SqlParameter("@id", SqlDbType.VarChar, 50);
             param[0].Value = id;
@@ -91,23 +85,17 @@ namespace Water.Clas
             param[3] = new SqlParameter("@minutes", SqlDbType.Int);
             param[3].Value = string.IsNullOrWhiteSpace(minutes) ? DBNull.Value : (object)Convert.ToInt32(minutes);
 
-            param[4] = new SqlParameter("@avalibleHours", SqlDbType.Int);
-            param[4].Value = string.IsNullOrWhiteSpace(avalibleHours) ? DBNull.Value : (object)Convert.ToInt32(avalibleHours);
+            param[4] = new SqlParameter("@phone", SqlDbType.VarChar, 50);
+            param[4].Value = phone;
 
-            param[5] = new SqlParameter("@avalibleMinutes", SqlDbType.Int);
-            param[5].Value = string.IsNullOrWhiteSpace(avalibleMinutes) ? DBNull.Value : (object)Convert.ToInt32(avalibleMinutes);
+            param[5] = new SqlParameter("@address", SqlDbType.VarChar, 255);
+            param[5].Value = address;
 
-            param[6] = new SqlParameter("@phone", SqlDbType.VarChar, 50);
-            param[6].Value = phone;
+            param[6] = new SqlParameter("@notes", SqlDbType.VarChar, 255);
+            param[6].Value = notes;
 
-            param[7] = new SqlParameter("@address", SqlDbType.VarChar, 255);
-            param[7].Value = address;
-
-            param[8] = new SqlParameter("@notes", SqlDbType.VarChar, 255);
-            param[8].Value = notes;
-
-            param[9] = new SqlParameter("@created_date", SqlDbType.DateTime);
-            param[9].Value = date.HasValue ? (object)date.Value : DBNull.Value;
+            param[7] = new SqlParameter("@created_date", SqlDbType.DateTime);
+            param[7].Value = date.HasValue ? (object)date.Value : DBNull.Value;
 
             DAL.ExecuteCommand("partner_update", param);
             DAL.Close();

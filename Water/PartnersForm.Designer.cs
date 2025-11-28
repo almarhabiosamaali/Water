@@ -73,6 +73,7 @@ namespace Water
             this.txtPartnerCode.ReadOnly = true;
             this.txtPartnerCode.Size = new System.Drawing.Size(263, 26);
             this.txtPartnerCode.TabIndex = 1;
+            this.txtPartnerCode.TabStop = false;
             this.txtPartnerCode.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // lblPartnerName
@@ -93,7 +94,7 @@ namespace Water
             this.txtPartnerName.Name = "txtPartnerName";
             this.txtPartnerName.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtPartnerName.Size = new System.Drawing.Size(263, 26);
-            this.txtPartnerName.TabIndex = 3;
+            this.txtPartnerName.TabIndex = 1;
             // 
             // lblAllocatedHours
             // 
@@ -113,7 +114,7 @@ namespace Water
             this.txtAllocatedHours.Name = "txtAllocatedHours";
             this.txtAllocatedHours.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtAllocatedHours.Size = new System.Drawing.Size(263, 26);
-            this.txtAllocatedHours.TabIndex = 5;
+            this.txtAllocatedHours.TabIndex = 2;
             this.txtAllocatedHours.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtAllocatedHours.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtAllocatedHours_KeyPress);
             // 
@@ -135,7 +136,7 @@ namespace Water
             this.txtMinutes.Name = "txtMinutes";
             this.txtMinutes.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtMinutes.Size = new System.Drawing.Size(263, 26);
-            this.txtMinutes.TabIndex = 7;
+            this.txtMinutes.TabIndex = 3;
             this.txtMinutes.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtMinutes.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtMinutes_KeyPress);
             // 
@@ -155,9 +156,10 @@ namespace Water
             this.txtAvalibleHours.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtAvalibleHours.Location = new System.Drawing.Point(155, 117);
             this.txtAvalibleHours.Name = "txtAvalibleHours";
-            this.txtAvalibleHours.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.txtAvalibleHours.ReadOnly = true;
             this.txtAvalibleHours.Size = new System.Drawing.Size(263, 26);
             this.txtAvalibleHours.TabIndex = 9;
+            this.txtAvalibleHours.TabStop = false;
             this.txtAvalibleHours.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtAvalibleHours.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtAvalibleHours_KeyPress);
             // 
@@ -177,9 +179,10 @@ namespace Water
             this.txtAvalibleMinutes.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtAvalibleMinutes.Location = new System.Drawing.Point(583, 117);
             this.txtAvalibleMinutes.Name = "txtAvalibleMinutes";
-            this.txtAvalibleMinutes.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.txtAvalibleMinutes.ReadOnly = true;
             this.txtAvalibleMinutes.Size = new System.Drawing.Size(263, 26);
             this.txtAvalibleMinutes.TabIndex = 11;
+            this.txtAvalibleMinutes.TabStop = false;
             this.txtAvalibleMinutes.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtAvalibleMinutes.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtAvalibleMinutes_KeyPress);
             // 
@@ -201,7 +204,7 @@ namespace Water
             this.txtPhone.Name = "txtPhone";
             this.txtPhone.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtPhone.Size = new System.Drawing.Size(263, 26);
-            this.txtPhone.TabIndex = 13;
+            this.txtPhone.TabIndex = 4;
             // 
             // lblAddress
             // 
@@ -221,7 +224,7 @@ namespace Water
             this.txtAddress.Name = "txtAddress";
             this.txtAddress.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtAddress.Size = new System.Drawing.Size(263, 26);
-            this.txtAddress.TabIndex = 15;
+            this.txtAddress.TabIndex = 5;
             // 
             // lblNotes
             // 
@@ -242,7 +245,7 @@ namespace Water
             this.txtNotes.Name = "txtNotes";
             this.txtNotes.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtNotes.Size = new System.Drawing.Size(691, 80);
-            this.txtNotes.TabIndex = 17;
+            this.txtNotes.TabIndex = 6;
             // 
             // lblDate
             // 
@@ -264,7 +267,7 @@ namespace Water
             this.dtpDate.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.dtpDate.RightToLeftLayout = true;
             this.dtpDate.Size = new System.Drawing.Size(263, 26);
-            this.dtpDate.TabIndex = 19;
+            this.dtpDate.TabIndex = 7;
             // 
             // btnView
             // 
@@ -284,7 +287,7 @@ namespace Water
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnAdd.Size = new System.Drawing.Size(74, 40);
-            this.btnAdd.TabIndex = 19;
+            this.btnAdd.TabIndex = 0;
             this.btnAdd.Text = "إضافة";
             this.btnAdd.UseVisualStyleBackColor = true;
             // 
@@ -296,6 +299,7 @@ namespace Water
             this.btnEdit.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnEdit.Size = new System.Drawing.Size(74, 40);
             this.btnEdit.TabIndex = 20;
+            this.btnEdit.TabStop = false;
             this.btnEdit.Text = "تعديل";
             this.btnEdit.UseVisualStyleBackColor = true;
             // 
@@ -307,6 +311,7 @@ namespace Water
             this.btnDelete.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnDelete.Size = new System.Drawing.Size(74, 40);
             this.btnDelete.TabIndex = 21;
+            this.btnDelete.TabStop = false;
             this.btnDelete.Text = "حذف";
             this.btnDelete.UseVisualStyleBackColor = true;
             // 
@@ -317,7 +322,7 @@ namespace Water
             this.btnSave.Name = "btnSave";
             this.btnSave.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnSave.Size = new System.Drawing.Size(74, 40);
-            this.btnSave.TabIndex = 22;
+            this.btnSave.TabIndex = 8;
             this.btnSave.Text = "حفظ";
             this.btnSave.UseVisualStyleBackColor = true;
             // 

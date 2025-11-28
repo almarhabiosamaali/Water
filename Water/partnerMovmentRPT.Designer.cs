@@ -34,16 +34,16 @@
             // 
             // txtPartnerID
             // 
-            this.txtPartnerID.Location = new System.Drawing.Point(301, 33);
+            this.txtPartnerID.Location = new System.Drawing.Point(263, 33);
             this.txtPartnerID.Name = "txtPartnerID";
-            this.txtPartnerID.Size = new System.Drawing.Size(295, 22);
+            this.txtPartnerID.Size = new System.Drawing.Size(259, 24);
             this.txtPartnerID.TabIndex = 0;
             // 
             // btnShowRPT
             // 
-            this.btnShowRPT.Location = new System.Drawing.Point(301, 129);
+            this.btnShowRPT.Location = new System.Drawing.Point(263, 129);
             this.btnShowRPT.Name = "btnShowRPT";
-            this.btnShowRPT.Size = new System.Drawing.Size(295, 23);
+            this.btnShowRPT.Size = new System.Drawing.Size(258, 23);
             this.btnShowRPT.TabIndex = 1;
             this.btnShowRPT.Text = "عرض";
             this.btnShowRPT.UseVisualStyleBackColor = true;
@@ -51,9 +51,9 @@
             // 
             // partnerMovmentRPT
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(895, 342);
+            this.ClientSize = new System.Drawing.Size(783, 342);
             this.Controls.Add(this.btnShowRPT);
             this.Controls.Add(this.txtPartnerID);
             this.Name = "partnerMovmentRPT";
