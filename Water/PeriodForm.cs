@@ -154,12 +154,32 @@ namespace Water
             {
                 // التحقق من أن جميع الحقول مملوءة
                 if (string.IsNullOrWhiteSpace(txtPeriodCode.Text) ||
-                    numBaseDays.Value <= 0 ||
+                    string.IsNullOrWhiteSpace(textBox1.Text) ||
                     string.IsNullOrWhiteSpace(txtDowntimeHours.Text) ||
-                    numExtendedDays.Value <= 0 ||
-                    numTotalHours.Value <= 0)
+                    string.IsNullOrWhiteSpace(textBox2.Text) ||
+                    string.IsNullOrWhiteSpace(txtTotalHours.Text))
                 {
                     MessageBox.Show("الرجاء إكمال جميع البيانات المطلوبة", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // التحقق من صحة الأرقام المدخلة
+                int baseDays, extendedDays, totalHours;
+                if (!int.TryParse(textBox1.Text.Trim(), out baseDays) || baseDays <= 0)
+                {
+                    MessageBox.Show("الرجاء إدخال قيمة صحيحة للأيام الأساسية", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                if (!int.TryParse(textBox2.Text.Trim(), out extendedDays) || extendedDays <= 0)
+                {
+                    MessageBox.Show("الرجاء إدخال قيمة صحيحة لأيام التوقف", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                if (!int.TryParse(txtTotalHours.Text.Trim(), out totalHours) || totalHours <= 0)
+                {
+                    MessageBox.Show("الرجاء إدخال قيمة صحيحة لإجمالي الساعات", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -177,10 +197,10 @@ namespace Water
                         txtPeriodCode.Text.Trim(),
                         dtpStartDate.Value,
                         dtpEndDate.Value,
-                        (int)numBaseDays.Value,
+                        baseDays,
                         txtDowntimeHours.Text.Trim(),
-                        (int)numExtendedDays.Value,
-                        (double)numTotalHours.Value
+                        extendedDays,
+                        totalHours
                     );
 
                     MessageBox.Show("تم تحديث بيانات الفترة بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -192,10 +212,10 @@ namespace Water
                         txtPeriodCode.Text.Trim(),
                         dtpStartDate.Value,
                         dtpEndDate.Value,
-                        (int)numBaseDays.Value,
+                        baseDays,
                         txtDowntimeHours.Text.Trim(),
-                        (int)numExtendedDays.Value,
-                        (double)numTotalHours.Value
+                        extendedDays,
+                        totalHours
                     );
 
                     MessageBox.Show("تم حفظ بيانات الفترة بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -241,19 +261,31 @@ namespace Water
 
             if (row["base_days"] != DBNull.Value)
             {
-                numBaseDays.Value = Convert.ToInt32(row["base_days"]);
+                textBox1.Text = row["base_days"].ToString();
+            }
+            else
+            {
+                textBox1.Clear();
             }
 
             txtDowntimeHours.Text = row["downtime_hours"].ToString();
 
             if (row["extended_days"] != DBNull.Value)
             {
-                numExtendedDays.Value = Convert.ToInt32(row["extended_days"]);
+                textBox2.Text = row["extended_days"].ToString();
+            }
+            else
+            {
+                textBox2.Clear();
             }
 
             if (row["total_hours"] != DBNull.Value)
             {
-                numTotalHours.Value = Convert.ToDecimal(row["total_hours"]);
+                txtTotalHours.Text = row["total_hours"].ToString();
+            }
+            else
+            {
+                txtTotalHours.Clear();
             }
         }
 
@@ -262,10 +294,10 @@ namespace Water
             txtPeriodCode.Clear();
             dtpStartDate.Value = DateTime.Now;
             dtpEndDate.Value = DateTime.Now;
-            numBaseDays.Value = 0;
+            textBox1.Clear();
             txtDowntimeHours.Clear();
-            numExtendedDays.Value = 0;
-            numTotalHours.Value = 0;
+            textBox2.Clear();
+            txtTotalHours.Clear();
         }
     }
 }

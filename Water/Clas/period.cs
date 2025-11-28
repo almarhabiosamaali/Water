@@ -10,8 +10,8 @@ namespace Water.Clas
 {
     class period
     {
-        public void ADD_PERIOD(string id, DateTime start_date, DateTime end_date, int base_days, 
-            string downtime_hours, int extended_days, double total_hours)
+        public void ADD_PERIOD(string id, DateTime start_date, DateTime end_date, int? base_days, 
+            string downtime_hours, int? extended_days, int? total_hours)
         {
             Clas.DataAccessLayer DAL = new Clas.DataAccessLayer();
             DAL.Open();
@@ -27,16 +27,16 @@ namespace Water.Clas
             param[2].Value = end_date;
 
             param[3] = new SqlParameter("@base_days", SqlDbType.Int);
-            param[3].Value = base_days;
+            param[3].Value = (object)base_days ?? DBNull.Value;
 
             param[4] = new SqlParameter("@downtime_hours", SqlDbType.VarChar, 50);
             param[4].Value = downtime_hours;
 
             param[5] = new SqlParameter("@extended_days", SqlDbType.Int);
-            param[5].Value = extended_days;
+            param[5].Value = (object)extended_days ?? DBNull.Value;
 
-            param[6] = new SqlParameter("@total_hours", SqlDbType.Float);
-            param[6].Value = total_hours;
+            param[6] = new SqlParameter("@total_hours", SqlDbType.Int);
+            param[6].Value = (object)total_hours ?? DBNull.Value;
 
             DAL.ExecuteCommand("period_insert", param);
             DAL.Close();
@@ -65,8 +65,8 @@ namespace Water.Clas
             return dt;
         }
 
-        public void UPDATE_PERIOD(string id, DateTime start_date, DateTime end_date, int base_days, 
-            string downtime_hours, int extended_days, double total_hours)
+        public void UPDATE_PERIOD(string id, DateTime start_date, DateTime end_date, int? base_days, 
+            string downtime_hours, int? extended_days, int? total_hours)
         {
             Clas.DataAccessLayer DAL = new Clas.DataAccessLayer();
             DAL.Open();
@@ -82,16 +82,16 @@ namespace Water.Clas
             param[2].Value = end_date;
 
             param[3] = new SqlParameter("@base_days", SqlDbType.Int);
-            param[3].Value = base_days;
+            param[3].Value = (object)base_days ?? DBNull.Value;
 
             param[4] = new SqlParameter("@downtime_hours", SqlDbType.VarChar, 50);
             param[4].Value = downtime_hours;
 
             param[5] = new SqlParameter("@extended_days", SqlDbType.Int);
-            param[5].Value = extended_days;
+            param[5].Value = (object)extended_days ?? DBNull.Value;
 
-            param[6] = new SqlParameter("@total_hours", SqlDbType.Float);
-            param[6].Value = total_hours;
+            param[6] = new SqlParameter("@total_hours", SqlDbType.Int);
+            param[6].Value = (object)total_hours ?? DBNull.Value;
 
             DAL.ExecuteCommand("period_update", param);
             DAL.Close();
@@ -112,7 +112,7 @@ namespace Water.Clas
 
         public string GET_NEXT_PERIOD_CODE()
         {
-            return AutoNumberHelper.GetNextNumber("period", "id");
+            return AutoNumberHelper.GetNextNumber("periods", "id");
         }
     }
 }

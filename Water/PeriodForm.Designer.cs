@@ -35,21 +35,18 @@ namespace Water
             this.lblEndDate = new System.Windows.Forms.Label();
             this.dtpEndDate = new System.Windows.Forms.DateTimePicker();
             this.lblBaseDays = new System.Windows.Forms.Label();
-            this.numBaseDays = new System.Windows.Forms.NumericUpDown();
             this.lblDowntimeHours = new System.Windows.Forms.Label();
             this.txtDowntimeHours = new System.Windows.Forms.TextBox();
             this.lblExtendedDays = new System.Windows.Forms.Label();
-            this.numExtendedDays = new System.Windows.Forms.NumericUpDown();
             this.lblTotalHours = new System.Windows.Forms.Label();
-            this.numTotalHours = new System.Windows.Forms.NumericUpDown();
             this.btnView = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.numBaseDays)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numExtendedDays)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numTotalHours)).BeginInit();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.txtTotalHours = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // lblPeriodCode
@@ -129,24 +126,6 @@ namespace Water
             this.lblBaseDays.TabIndex = 6;
             this.lblBaseDays.Text = "الأيام الأساسية:";
             // 
-            // numBaseDays
-            // 
-            this.numBaseDays.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numBaseDays.Location = new System.Drawing.Point(127, 114);
-            this.numBaseDays.Maximum = new decimal(new int[] {
-            10000,
-            0,
-            0,
-            0});
-            this.numBaseDays.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            -2147483648});
-            this.numBaseDays.Name = "numBaseDays";
-            this.numBaseDays.Size = new System.Drawing.Size(262, 26);
-            this.numBaseDays.TabIndex = 7;
-            this.numBaseDays.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblDowntimeHours
             // 
@@ -179,24 +158,6 @@ namespace Water
             this.lblExtendedDays.TabIndex = 10;
             this.lblExtendedDays.Text = "أيام التوقف";
             // 
-            // numExtendedDays
-            // 
-            this.numExtendedDays.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numExtendedDays.Location = new System.Drawing.Point(126, 202);
-            this.numExtendedDays.Maximum = new decimal(new int[] {
-            10000,
-            0,
-            0,
-            0});
-            this.numExtendedDays.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            -2147483648});
-            this.numExtendedDays.Name = "numExtendedDays";
-            this.numExtendedDays.Size = new System.Drawing.Size(262, 26);
-            this.numExtendedDays.TabIndex = 11;
-            this.numExtendedDays.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblTotalHours
             // 
@@ -209,25 +170,6 @@ namespace Water
             this.lblTotalHours.TabIndex = 12;
             this.lblTotalHours.Text = "إجمالي الساعات:";
             // 
-            // numTotalHours
-            // 
-            this.numTotalHours.DecimalPlaces = 2;
-            this.numTotalHours.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numTotalHours.Location = new System.Drawing.Point(127, 247);
-            this.numTotalHours.Maximum = new decimal(new int[] {
-            100000,
-            0,
-            0,
-            0});
-            this.numTotalHours.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            -2147483648});
-            this.numTotalHours.Name = "numTotalHours";
-            this.numTotalHours.Size = new System.Drawing.Size(262, 26);
-            this.numTotalHours.TabIndex = 13;
-            this.numTotalHours.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // btnView
             // 
@@ -284,23 +226,53 @@ namespace Water
             this.btnSave.Text = "حفظ";
             this.btnSave.UseVisualStyleBackColor = true;
             // 
+            // txtBaseDays
+            // 
+            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox1.Location = new System.Drawing.Point(127, 114);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.textBox1.Size = new System.Drawing.Size(262, 26);
+            this.textBox1.TabIndex = 7;
+            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txtExtendedDays
+            // 
+            this.textBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox2.Location = new System.Drawing.Point(126, 202);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.textBox2.Size = new System.Drawing.Size(262, 26);
+            this.textBox2.TabIndex = 11;
+            this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txtTotalHours
+            // 
+            this.txtTotalHours.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtTotalHours.Location = new System.Drawing.Point(127, 247);
+            this.txtTotalHours.Name = "txtTotalHours";
+            this.txtTotalHours.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.txtTotalHours.Size = new System.Drawing.Size(262, 26);
+            this.txtTotalHours.TabIndex = 13;
+            this.txtTotalHours.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
             // PeriodForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(792, 377);
+            this.Controls.Add(this.txtTotalHours);
+            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnEdit);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.btnView);
-            this.Controls.Add(this.numTotalHours);
             this.Controls.Add(this.lblTotalHours);
-            this.Controls.Add(this.numExtendedDays);
             this.Controls.Add(this.lblExtendedDays);
             this.Controls.Add(this.txtDowntimeHours);
             this.Controls.Add(this.lblDowntimeHours);
-            this.Controls.Add(this.numBaseDays);
             this.Controls.Add(this.lblBaseDays);
             this.Controls.Add(this.dtpEndDate);
             this.Controls.Add(this.lblEndDate);
@@ -316,9 +288,6 @@ namespace Water
             this.RightToLeftLayout = true;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "إدخال بيانات الفترة";
-            ((System.ComponentModel.ISupportInitialize)(this.numBaseDays)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numExtendedDays)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numTotalHours)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -333,18 +302,18 @@ namespace Water
         private System.Windows.Forms.Label lblEndDate;
         private System.Windows.Forms.DateTimePicker dtpEndDate;
         private System.Windows.Forms.Label lblBaseDays;
-        private System.Windows.Forms.NumericUpDown numBaseDays;
         private System.Windows.Forms.Label lblDowntimeHours;
         private System.Windows.Forms.TextBox txtDowntimeHours;
         private System.Windows.Forms.Label lblExtendedDays;
-        private System.Windows.Forms.NumericUpDown numExtendedDays;
         private System.Windows.Forms.Label lblTotalHours;
-        private System.Windows.Forms.NumericUpDown numTotalHours;
         private System.Windows.Forms.Button btnView;
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Button btnEdit;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox txtTotalHours;
     }
 }
 

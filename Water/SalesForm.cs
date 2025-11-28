@@ -1512,16 +1512,58 @@ namespace Water
                     {
                         try
                         {
+                            // تحويل القيم من string إلى int?
+                            int? hoursCountInt = null;
+                            int? minutesCountInt = null;
+                            int? hoursAvalibleInt = null;
+                            int? minutesAvalibleInt = null;
+                            int? totalHoursInt = null;
+
+                            if (!string.IsNullOrWhiteSpace(hoursCount))
+                            {
+                                int temp;
+                                if (int.TryParse(hoursCount, out temp))
+                                    hoursCountInt = temp;
+                            }
+
+                            if (!string.IsNullOrWhiteSpace(minutesCount))
+                            {
+                                int temp;
+                                if (int.TryParse(minutesCount, out temp))
+                                    minutesCountInt = temp;
+                            }
+
+                            if (!string.IsNullOrWhiteSpace(hoursAvalible))
+                            {
+                                int temp;
+                                if (int.TryParse(hoursAvalible, out temp))
+                                    hoursAvalibleInt = temp;
+                            }
+
+                            if (!string.IsNullOrWhiteSpace(minutesAvalible))
+                            {
+                                int temp;
+                                if (int.TryParse(minutesAvalible, out temp))
+                                    minutesAvalibleInt = temp;
+                            }
+
+                            if (!string.IsNullOrWhiteSpace(totalHours))
+                            {
+                                int temp;
+                                if (int.TryParse(totalHours, out temp))
+                                    totalHoursInt = temp;
+                            }
+
                             partnersHours.ADD_SALE_PARTNER_HOURS(
                                 billNo,
                                 idCounter,
                                 partnerNumber ?? "",
                                 partnerName ?? "",
-                                hoursCount ?? "",
-                                minutesCount ?? "",
-                                hoursAvalible ?? "",
-                                minutesAvalible ?? "",
-                                totalHours ?? ""
+                                hoursCountInt,
+                                minutesCountInt,
+                                hoursAvalibleInt,
+                                minutesAvalibleInt,
+                                totalHoursInt
                             );
 
                             // إضافة POST للشريك
@@ -1696,16 +1738,58 @@ namespace Water
                     // تحديث بيانات الشريك
                     try
                     {
+                        // تحويل القيم من string إلى int?
+                        int? hoursCountInt = null;
+                        int? minutesCountInt = null;
+                        int? hoursAvalibleInt = null;
+                        int? minutesAvalibleInt = null;
+                        int? totalHoursInt = null;
+
+                        if (!string.IsNullOrWhiteSpace(hoursCount))
+                        {
+                            int temp;
+                            if (int.TryParse(hoursCount, out temp))
+                                hoursCountInt = temp;
+                        }
+
+                        if (!string.IsNullOrWhiteSpace(minutesCount))
+                        {
+                            int temp;
+                            if (int.TryParse(minutesCount, out temp))
+                                minutesCountInt = temp;
+                        }
+
+                        if (!string.IsNullOrWhiteSpace(hoursAvalible))
+                        {
+                            int temp;
+                            if (int.TryParse(hoursAvalible, out temp))
+                                hoursAvalibleInt = temp;
+                        }
+
+                        if (!string.IsNullOrWhiteSpace(minutesAvalible))
+                        {
+                            int temp;
+                            if (int.TryParse(minutesAvalible, out temp))
+                                minutesAvalibleInt = temp;
+                        }
+
+                        if (!string.IsNullOrWhiteSpace(totalHours))
+                        {
+                            int temp;
+                            if (int.TryParse(totalHours, out temp))
+                                totalHoursInt = temp;
+                        }
+
                         partnersHours.UPDATE_SALE_PARTNER_HOURS_BY_BILLNO(
                             billNo,
                             partnerId,
                             partnerNumber ?? "",
                             partnerName ?? "",
-                            hoursCount ?? "",
-                            minutesCount ?? "",
-                            hoursAvalible ?? "",
-                            minutesAvalible ?? "",
-                            totalHours ?? ""
+                            hoursCountInt,
+                            minutesCountInt,
+                            hoursAvalibleInt,
+                            minutesAvalibleInt,
+                            totalHoursInt
                         );
                         updatedCount++;
                     }
