@@ -1,0 +1,35 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace Water
+{
+    public partial class partnerMovmentRPT : Form
+    {
+        public partnerMovmentRPT()
+        {
+            InitializeComponent();
+        }
+
+        private void btnShowRPT_Click(object sender, EventArgs e)
+        {
+            DataTable dTt = new DataTable();
+            Clas.partnersReport pTp = new Clas.partnersReport();
+            dTt = pTp.PRINT_PARTNER_MOVEMENT(txtPartnerID.Text);
+            RPT.partnerMovements myRept = new RPT.partnerMovements();
+            myRept.DataSourceConnections[0].IntegratedSecurity = false;
+            myRept.DataSourceConnections[0].SetConnection(Properties.Settings.Default.Server, Properties.Settings.Default.Database, Properties.Settings.Default.ID, Properties.Settings.Default.Password);
+            myRept.SetDataSource(dTt);
+            // myReport.SetParameterValue("@p_whr", p);
+            RPT.reportCaller myFom = new RPT.reportCaller();
+            myFom.crystalReportViewer1.ReportSource = myRept;
+            myFom.ShowDialog();
+        }
+    }
+}

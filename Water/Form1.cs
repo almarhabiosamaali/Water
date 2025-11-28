@@ -73,7 +73,7 @@ namespace Water
 
         private void btnRpt_Click(object sender, EventArgs e)
         {
-            Cust_Account_FRM rptCust = new Cust_Account_FRM();
+            partnerMovmentRPT rptCust = new partnerMovmentRPT();
             rptCust.ShowDialog();
         }
     }
