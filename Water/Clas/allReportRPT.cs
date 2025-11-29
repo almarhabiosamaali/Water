@@ -8,31 +8,9 @@ using System.Data;
 
 namespace Water.Clas
 {
-    class partnersReport
+    class allReportRPT
     {
-
-        public DataTable PRINT_PARTNER_MOVEMENT(string p_where)
-        {
-
-            Clas.DataAccessLayer DBL = new Clas.DataAccessLayer();
-            DBL.Open();
-            SqlParameter[] param = new SqlParameter[1];
-            param[0] = new SqlParameter("@p_where", SqlDbType.VarChar,500);
-            param[0].Value = p_where;
-
-
-
-            DataTable dt = new DataTable();
-            dt = DBL.SelectData("proc_partner_movements", param);
-
-
-
-            DBL.Close();
-            return dt;
-        }
-
-
-        public DataTable PRINT_ALL_PARTNER_MOVEMENT(string p_where)
+        public DataTable PRINT_ALL_MOVEMENT(string p_where)
         {
 
             Clas.DataAccessLayer DBL = new Clas.DataAccessLayer();
@@ -44,7 +22,28 @@ namespace Water.Clas
 
 
             DataTable dt = new DataTable();
-            dt = DBL.SelectData("proc_all_partner_movements_RPT", param);
+            dt = DBL.SelectData("proc_all_movements_RPT", param);
+
+
+
+            DBL.Close();
+            return dt;
+        }
+
+
+        public DataTable PRINT_CUSTOMER_MOVEMENT(string p_where)
+        {
+
+            Clas.DataAccessLayer DBL = new Clas.DataAccessLayer();
+            DBL.Open();
+            SqlParameter[] param = new SqlParameter[1];
+            param[0] = new SqlParameter("@p_where", SqlDbType.VarChar, 500);
+            param[0].Value = p_where;
+
+
+
+            DataTable dt = new DataTable();
+            dt = DBL.SelectData("proc_customer_movements_RPT", param);
 
 
 

@@ -51,6 +51,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="allMovementRPT.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="allMovementRPT.Designer.cs">
+      <DependentUpon>allMovementRPT.cs</DependentUpon>
+    </Compile>
     <Compile Include="AmountTextBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -58,6 +64,7 @@
       <DependentUpon>AmountTextBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Clas\account.cs" />
+    <Compile Include="Clas\allReportRPT.cs" />
     <Compile Include="Clas\AutoNumberHelper.cs" />
     <Compile Include="Clas\customer.cs" />
     <Compile Include="Clas\DataAccessLayer.cs" />
@@ -72,6 +79,12 @@
     <Compile Include="Clas\pricing.cs" />
     <Compile Include="Clas\partner_cost_mst.cs" />
     <Compile Include="Clas\partner_cost_dtl.cs" />
+    <Compile Include="customerMovementRPT.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="customerMovementRPT.Designer.cs">
+      <DependentUpon>customerMovementRPT.cs</DependentUpon>
+    </Compile>
     <Compile Include="Cust_AccountPROC.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -126,6 +139,24 @@
     <Compile Include="DowntimeForm.Designer.cs">
       <DependentUpon>DowntimeForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="RPT\allMovementDTL.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>allMovementDTL.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="RPT\customerMovementDTL.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>customerMovementDTL.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="RPT\movementsDTL.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>movementsDTL.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="RPT\partnerMovements.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -175,8 +206,14 @@
     <Compile Include="testTab.Designer.cs">
       <DependentUpon>testTab.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="allMovementRPT.resx">
+      <DependentUpon>allMovementRPT.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="AmountTextBox.resx">
       <DependentUpon>AmountTextBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="customerMovementRPT.resx">
+      <DependentUpon>customerMovementRPT.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Cust_AccountPROC.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
@@ -205,6 +242,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DowntimeForm.resx">
       <DependentUpon>DowntimeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RPT\allMovementDTL.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>allMovementDTL.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RPT\customerMovementDTL.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>customerMovementDTL.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RPT\movementsDTL.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>movementsDTL.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="RPT\partnerMovements.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

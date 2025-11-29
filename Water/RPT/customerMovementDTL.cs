@@ -16,14 +16,14 @@ namespace Water.RPT {
     using CrystalDecisions.CrystalReports.Engine;
     
     
-    public class partnerMovements : ReportClass {
+    public class customerMovementDTL : ReportClass {
         
-        public partnerMovements() {
+        public customerMovementDTL() {
         }
         
         public override string ResourceName {
             get {
-                return "partnerMovements.rpt";
+                return "customerMovementDTL.rpt";
             }
             set {
                 // Do nothing
@@ -41,7 +41,7 @@ namespace Water.RPT {
         
         public override string FullResourceName {
             get {
-                return "Water.RPT.partnerMovements.rpt";
+                return "Water.RPT.customerMovementDTL.rpt";
             }
             set {
                 // Do nothing
@@ -66,7 +66,7 @@ namespace Water.RPT {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.CrystalReports.Engine.Section GroupHeaderSection1 {
+        public CrystalDecisions.CrystalReports.Engine.Section Section3 {
             get {
                 return this.ReportDefinition.Sections[2];
             }
@@ -74,7 +74,7 @@ namespace Water.RPT {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.CrystalReports.Engine.Section Section3 {
+        public CrystalDecisions.CrystalReports.Engine.Section Section4 {
             get {
                 return this.ReportDefinition.Sections[3];
             }
@@ -82,25 +82,9 @@ namespace Water.RPT {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.CrystalReports.Engine.Section GroupFooterSection1 {
-            get {
-                return this.ReportDefinition.Sections[4];
-            }
-        }
-        
-        [Browsable(false)]
-        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.CrystalReports.Engine.Section Section4 {
-            get {
-                return this.ReportDefinition.Sections[5];
-            }
-        }
-        
-        [Browsable(false)]
-        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
         public CrystalDecisions.CrystalReports.Engine.Section Section5 {
             get {
-                return this.ReportDefinition.Sections[6];
+                return this.ReportDefinition.Sections[4];
             }
         }
         
@@ -114,9 +98,9 @@ namespace Water.RPT {
     }
     
     [System.Drawing.ToolboxBitmapAttribute(typeof(CrystalDecisions.Shared.ExportOptions), "report.bmp")]
-    public class CachedpartnerMovements : Component, ICachedReport {
+    public class CachedcustomerMovementDTL : Component, ICachedReport {
         
-        public CachedpartnerMovements() {
+        public CachedcustomerMovementDTL() {
         }
         
         [Browsable(false)]
@@ -153,7 +137,7 @@ namespace Water.RPT {
         }
         
         public virtual CrystalDecisions.CrystalReports.Engine.ReportDocument CreateReport() {
-            partnerMovements rpt = new partnerMovements();
+            customerMovementDTL rpt = new customerMovementDTL();
             rpt.Site = this.Site;
             return rpt;
         }

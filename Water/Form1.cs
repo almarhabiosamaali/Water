@@ -76,5 +76,17 @@ namespace Water
             partnerMovmentRPT rptCust = new partnerMovmentRPT();
             rptCust.ShowDialog();
         }
+
+        private void btnMov_Click(object sender, EventArgs e)
+        {
+            allMovementRPT rr = new allMovementRPT();
+            rr.ShowDialog();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            customerMovementRPT rr = new customerMovementRPT();
+            rr.ShowDialog();
+        }
     }
 }

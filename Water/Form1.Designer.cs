@@ -38,15 +38,17 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.btnRpt = new System.Windows.Forms.Button();
+            this.btnMov = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnCustomers
             // 
             this.btnCustomers.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCustomers.Location = new System.Drawing.Point(53, 124);
+            this.btnCustomers.Location = new System.Drawing.Point(61, 124);
             this.btnCustomers.Name = "btnCustomers";
             this.btnCustomers.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.btnCustomers.Size = new System.Drawing.Size(175, 50);
+            this.btnCustomers.Size = new System.Drawing.Size(200, 50);
             this.btnCustomers.TabIndex = 0;
             this.btnCustomers.Text = "العملاء";
             this.btnCustomers.UseVisualStyleBackColor = true;
@@ -55,10 +57,10 @@
             // btnAccounts
             // 
             this.btnAccounts.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAccounts.Location = new System.Drawing.Point(438, 124);
+            this.btnAccounts.Location = new System.Drawing.Point(501, 124);
             this.btnAccounts.Name = "btnAccounts";
             this.btnAccounts.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.btnAccounts.Size = new System.Drawing.Size(175, 50);
+            this.btnAccounts.Size = new System.Drawing.Size(200, 50);
             this.btnAccounts.TabIndex = 1;
             this.btnAccounts.Text = "الحسابات";
             this.btnAccounts.UseVisualStyleBackColor = true;
@@ -67,10 +69,10 @@
             // btnDowntime
             // 
             this.btnDowntime.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDowntime.Location = new System.Drawing.Point(438, 68);
+            this.btnDowntime.Location = new System.Drawing.Point(501, 68);
             this.btnDowntime.Name = "btnDowntime";
             this.btnDowntime.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.btnDowntime.Size = new System.Drawing.Size(175, 50);
+            this.btnDowntime.Size = new System.Drawing.Size(200, 50);
             this.btnDowntime.TabIndex = 2;
             this.btnDowntime.Text = "التوقف";
             this.btnDowntime.UseVisualStyleBackColor = true;
@@ -79,10 +81,10 @@
             // btnExpenses
             // 
             this.btnExpenses.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnExpenses.Location = new System.Drawing.Point(53, 192);
+            this.btnExpenses.Location = new System.Drawing.Point(61, 192);
             this.btnExpenses.Name = "btnExpenses";
             this.btnExpenses.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.btnExpenses.Size = new System.Drawing.Size(175, 50);
+            this.btnExpenses.Size = new System.Drawing.Size(200, 50);
             this.btnExpenses.TabIndex = 3;
             this.btnExpenses.Text = "القيود اليومية";
             this.btnExpenses.UseVisualStyleBackColor = true;
@@ -91,10 +93,10 @@
             // btnPeriods
             // 
             this.btnPeriods.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPeriods.Location = new System.Drawing.Point(53, 66);
+            this.btnPeriods.Location = new System.Drawing.Point(61, 66);
             this.btnPeriods.Name = "btnPeriods";
             this.btnPeriods.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.btnPeriods.Size = new System.Drawing.Size(175, 50);
+            this.btnPeriods.Size = new System.Drawing.Size(200, 50);
             this.btnPeriods.TabIndex = 4;
             this.btnPeriods.Text = "الفترات";
             this.btnPeriods.UseVisualStyleBackColor = true;
@@ -103,10 +105,10 @@
             // btnSales
             // 
             this.btnSales.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSales.Location = new System.Drawing.Point(246, 192);
+            this.btnSales.Location = new System.Drawing.Point(281, 192);
             this.btnSales.Name = "btnSales";
             this.btnSales.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.btnSales.Size = new System.Drawing.Size(175, 50);
+            this.btnSales.Size = new System.Drawing.Size(200, 50);
             this.btnSales.TabIndex = 5;
             this.btnSales.Text = "المبيعات";
             this.btnSales.UseVisualStyleBackColor = true;
@@ -115,10 +117,10 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(246, 66);
+            this.button1.Location = new System.Drawing.Point(281, 66);
             this.button1.Name = "button1";
             this.button1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.button1.Size = new System.Drawing.Size(175, 50);
+            this.button1.Size = new System.Drawing.Size(200, 50);
             this.button1.TabIndex = 6;
             this.button1.Text = "مستويات التسعيرة";
             this.button1.UseVisualStyleBackColor = true;
@@ -127,10 +129,10 @@
             // button2
             // 
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(246, 124);
+            this.button2.Location = new System.Drawing.Point(281, 124);
             this.button2.Name = "button2";
             this.button2.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.button2.Size = new System.Drawing.Size(175, 50);
+            this.button2.Size = new System.Drawing.Size(200, 50);
             this.button2.TabIndex = 7;
             this.button2.Text = "الشركاء";
             this.button2.UseVisualStyleBackColor = true;
@@ -139,10 +141,10 @@
             // button3
             // 
             this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button3.Location = new System.Drawing.Point(438, 192);
+            this.button3.Location = new System.Drawing.Point(501, 192);
             this.button3.Name = "button3";
             this.button3.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.button3.Size = new System.Drawing.Size(175, 50);
+            this.button3.Size = new System.Drawing.Size(200, 50);
             this.button3.TabIndex = 8;
             this.button3.Text = "تقسيم التكاليف";
             this.button3.UseVisualStyleBackColor = true;
@@ -151,20 +153,46 @@
             // btnRpt
             // 
             this.btnRpt.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRpt.Location = new System.Drawing.Point(293, 315);
+            this.btnRpt.Location = new System.Drawing.Point(335, 315);
             this.btnRpt.Name = "btnRpt";
             this.btnRpt.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.btnRpt.Size = new System.Drawing.Size(175, 50);
+            this.btnRpt.Size = new System.Drawing.Size(200, 50);
             this.btnRpt.TabIndex = 9;
             this.btnRpt.Text = "تقارير";
             this.btnRpt.UseVisualStyleBackColor = true;
             this.btnRpt.Click += new System.EventHandler(this.btnRpt_Click);
             // 
+            // btnMov
+            // 
+            this.btnMov.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnMov.Location = new System.Drawing.Point(570, 315);
+            this.btnMov.Name = "btnMov";
+            this.btnMov.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.btnMov.Size = new System.Drawing.Size(200, 50);
+            this.btnMov.TabIndex = 10;
+            this.btnMov.Text = "تقارير الحركه";
+            this.btnMov.UseVisualStyleBackColor = true;
+            this.btnMov.Click += new System.EventHandler(this.btnMov_Click);
+            // 
+            // button4
+            // 
+            this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button4.Location = new System.Drawing.Point(61, 315);
+            this.button4.Name = "button4";
+            this.button4.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.button4.Size = new System.Drawing.Size(200, 50);
+            this.button4.TabIndex = 11;
+            this.button4.Text = "تقارير العملاء";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(758, 393);
+            this.ClientSize = new System.Drawing.Size(866, 393);
+            this.Controls.Add(this.button4);
+            this.Controls.Add(this.btnMov);
             this.Controls.Add(this.btnRpt);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
@@ -198,6 +226,8 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button btnRpt;
+        private System.Windows.Forms.Button btnMov;
+        private System.Windows.Forms.Button button4;
     }
 }
 
