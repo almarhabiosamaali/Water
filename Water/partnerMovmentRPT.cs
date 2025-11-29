@@ -35,7 +35,7 @@ namespace Water
 
         string p_where ()
         {
-            string p = "ok";
+            string p = "1";
             if (txtPartnerID.Text != "")
                 p = p + " and m.partner_no = '" + txtPartnerID.Text + "'";
 

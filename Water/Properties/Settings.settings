@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="Server" Type="System.String" Scope="User">
-      <Value Profile="(Default)">server</Value>
+      <Value Profile="(Default)">LAPTOP-UDOB2GCQ</Value>
     </Setting>
     <Setting Name="Database" Type="System.String" Scope="User">
       <Value Profile="(Default)">Water</Value>
@@ -12,7 +12,7 @@
       <Value Profile="(Default)">sa</Value>
     </Setting>
     <Setting Name="Password" Type="System.String" Scope="User">
-      <Value Profile="(Default)">sa@123</Value>
+      <Value Profile="(Default)">osama@123</Value>
     </Setting>
   </Settings>
 </SettingsFile>
