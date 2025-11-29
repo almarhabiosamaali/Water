@@ -303,9 +303,8 @@ namespace Water
             {
                 txtCostId.Text = "1";
             }
-            //txtCostId.Enabled = false;
             btnSave.Text = "حفظ";
-           // MessageBox.Show("يمكنك الآن إدخال بيانات توزيع تكاليف جديد", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            btnSave.Enabled = false;
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
@@ -419,9 +418,9 @@ namespace Water
                       "3",
                        "100011",
                         "حساب التوقف",
-                         0,
                            string.IsNullOrWhiteSpace(txtAmount.Text)
                                 ? 0: (int)Convert.ToDouble(txtAmount.Text), 
+                                0,
                           dtpDate.Value.Date,
                            dtpStartTime.Value.Date,
                              dtpEndTime.Value,
@@ -465,9 +464,9 @@ namespace Water
                       "3",
                        "100011",
                         "حساب التوقف",
-                         0,
                            string.IsNullOrWhiteSpace(txtAmount.Text)
                                 ? 0: (int)Convert.ToDouble(txtAmount.Text), 
+                                0,
                           dtpDate.Value.Date,
                            dtpStartTime.Value.Date,
                              dtpEndTime.Value,
@@ -683,30 +682,35 @@ namespace Water
             colPartnerId.Name = "partner_id";
             colPartnerId.HeaderText = "رقم الشريك";
             colPartnerId.Width = 100;
+            colPartnerId.ReadOnly = true;
             dgvPartners.Columns.Add(colPartnerId);
 
             DataGridViewTextBoxColumn colPartnerName = new DataGridViewTextBoxColumn();
             colPartnerName.Name = "partner_name";
             colPartnerName.HeaderText = "اسم الشريك";
             colPartnerName.Width = 200;
+            colPartnerName.ReadOnly = true;
             dgvPartners.Columns.Add(colPartnerName);
 
             DataGridViewTextBoxColumn colAllocatedHours = new DataGridViewTextBoxColumn();
             colAllocatedHours.Name = "allocated_hours";
             colAllocatedHours.HeaderText = "الساعات المخصصة";
             colAllocatedHours.Width = 120;
+            colAllocatedHours.ReadOnly = true;
             dgvPartners.Columns.Add(colAllocatedHours);
 
             DataGridViewTextBoxColumn colMinutes = new DataGridViewTextBoxColumn();
             colMinutes.Name = "minutes";
             colMinutes.HeaderText = "الدقائق";
             colMinutes.Width = 100;
+            colMinutes.ReadOnly = true;
             dgvPartners.Columns.Add(colMinutes);
 
             DataGridViewTextBoxColumn colAllocatedAmount = new DataGridViewTextBoxColumn();
             colAllocatedAmount.Name = "allocated_amount";
             colAllocatedAmount.HeaderText = "المبلغ المخصص";
             colAllocatedAmount.Width = 150;
+            colAllocatedAmount.ReadOnly = true;
             dgvPartners.Columns.Add(colAllocatedAmount);
 
             DataGridViewTextBoxColumn colNote = new DataGridViewTextBoxColumn();
@@ -776,7 +780,7 @@ namespace Water
                         dgvRow.Cells["allocated_amount"].Value = row["allocated_amount"].ToString();
                     }
                 }
-
+                btnSave.Enabled = true;
                 MessageBox.Show("تم توزيع المبلغ بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)

@@ -75,14 +75,7 @@ namespace Water
                 txtNotes.Enabled = false;
                 dtpDate.Enabled = false;
                 btnSave.Enabled = false;*/
-               
-               
-               
-               
-               
-               
-               
-               
+             
             }
             catch (Exception ex)
             {
@@ -187,8 +180,8 @@ namespace Water
                         txtPartnerName.Text.Trim(),
                         txtAllocatedHours.Text.Trim(),
                         txtMinutes.Text.Trim(),
-                        txtAvalibleHours.Text.Trim(),
-                        txtAvalibleMinutes.Text.Trim(),
+                      //  txtAvalibleHours.Text.Trim(),
+                        //txtAvalibleMinutes.Text.Trim(),
                         txtPhone.Text.Trim(),
                         txtAddress.Text.Trim(),
                         txtNotes.Text.Trim(),
@@ -205,8 +198,8 @@ namespace Water
                         txtPartnerName.Text.Trim(),
                         txtAllocatedHours.Text.Trim(),
                         txtMinutes.Text.Trim(),
-                        txtAvalibleHours.Text.Trim(),
-                        txtAvalibleMinutes.Text.Trim(),
+                        //txtAvalibleHours.Text.Trim(),
+                        //txtAvalibleMinutes.Text.Trim(),
                         txtPhone.Text.Trim(),
                         txtAddress.Text.Trim(),
                         txtNotes.Text.Trim(),

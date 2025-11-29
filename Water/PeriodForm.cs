@@ -154,9 +154,9 @@ namespace Water
             {
                 // التحقق من أن جميع الحقول مملوءة
                 if (string.IsNullOrWhiteSpace(txtPeriodCode.Text) ||
-                    string.IsNullOrWhiteSpace(textBox1.Text) ||
+                   // string.IsNullOrWhiteSpace(txtBa.Text) ||
                     string.IsNullOrWhiteSpace(txtDowntimeHours.Text) ||
-                    string.IsNullOrWhiteSpace(textBox2.Text) ||
+                    //string.IsNullOrWhiteSpace(txtDownDays.Text) ||
                     string.IsNullOrWhiteSpace(txtTotalHours.Text))
                 {
                     MessageBox.Show("الرجاء إكمال جميع البيانات المطلوبة", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -165,13 +165,13 @@ namespace Water
 
                 // التحقق من صحة الأرقام المدخلة
                 int baseDays, extendedDays, totalHours;
-                if (!int.TryParse(textBox1.Text.Trim(), out baseDays) || baseDays <= 0)
+                if (!int.TryParse(txtBaseDays.Text.Trim(), out baseDays) || baseDays <= 0)
                 {
                     MessageBox.Show("الرجاء إدخال قيمة صحيحة للأيام الأساسية", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                if (!int.TryParse(textBox2.Text.Trim(), out extendedDays) || extendedDays <= 0)
+                if (!int.TryParse(txtDownDays.Text.Trim(), out extendedDays) || extendedDays <= 0)
                 {
                     MessageBox.Show("الرجاء إدخال قيمة صحيحة لأيام التوقف", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
@@ -261,22 +261,22 @@ namespace Water
 
             if (row["base_days"] != DBNull.Value)
             {
-                textBox1.Text = row["base_days"].ToString();
+                txtBaseDays.Text = row["base_days"].ToString();
             }
             else
             {
-                textBox1.Clear();
+                txtBaseDays.Clear();
             }
 
             txtDowntimeHours.Text = row["downtime_hours"].ToString();
 
             if (row["extended_days"] != DBNull.Value)
             {
-                textBox2.Text = row["extended_days"].ToString();
+                txtDownDays.Text = row["extended_days"].ToString();
             }
             else
             {
-                textBox2.Clear();
+                txtDownDays.Clear();
             }
 
             if (row["total_hours"] != DBNull.Value)
@@ -294,9 +294,9 @@ namespace Water
             txtPeriodCode.Clear();
             dtpStartDate.Value = DateTime.Now;
             dtpEndDate.Value = DateTime.Now;
-            textBox1.Clear();
+            txtBaseDays.Clear();
             txtDowntimeHours.Clear();
-            textBox2.Clear();
+            txtDownDays.Clear();
             txtTotalHours.Clear();
         }
     }

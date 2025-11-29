@@ -44,8 +44,8 @@ namespace Water
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.txtBaseDays = new System.Windows.Forms.TextBox();
+           this.txtDownDays = new System.Windows.Forms.TextBox();
             this.txtTotalHours = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
@@ -126,7 +126,6 @@ namespace Water
             this.lblBaseDays.TabIndex = 6;
             this.lblBaseDays.Text = "الأيام الأساسية:";
             // 
-            // 
             // lblDowntimeHours
             // 
             this.lblDowntimeHours.AutoSize = true;
@@ -158,18 +157,16 @@ namespace Water
             this.lblExtendedDays.TabIndex = 10;
             this.lblExtendedDays.Text = "أيام التوقف";
             // 
-            // 
             // lblTotalHours
             // 
             this.lblTotalHours.AutoSize = true;
             this.lblTotalHours.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTotalHours.Location = new System.Drawing.Point(22, 250);
+            this.lblTotalHours.Location = new System.Drawing.Point(412, 117);
             this.lblTotalHours.Name = "lblTotalHours";
             this.lblTotalHours.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblTotalHours.Size = new System.Drawing.Size(103, 20);
             this.lblTotalHours.TabIndex = 12;
             this.lblTotalHours.Text = "إجمالي الساعات:";
-            // 
             // 
             // btnView
             // 
@@ -228,28 +225,28 @@ namespace Water
             // 
             // txtBaseDays
             // 
-            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.Location = new System.Drawing.Point(127, 114);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.textBox1.Size = new System.Drawing.Size(262, 26);
-            this.textBox1.TabIndex = 7;
-            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtBaseDays.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtBaseDays.Location = new System.Drawing.Point(127, 114);
+            this.txtBaseDays.Name = "txtBaseDays";
+            this.txtBaseDays.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.txtBaseDays.Size = new System.Drawing.Size(262, 26);
+            this.txtBaseDays.TabIndex = 7;
+            this.txtBaseDays.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // txtExtendedDays
+            // txtDownDays
             // 
-            this.textBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox2.Location = new System.Drawing.Point(126, 202);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.textBox2.Size = new System.Drawing.Size(262, 26);
-            this.textBox2.TabIndex = 11;
-            this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtDownDays.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtDownDays.Location = new System.Drawing.Point(126, 202);
+            this.txtDownDays.Name = "txtDownDays";
+            this.txtDownDays.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.txtDownDays.Size = new System.Drawing.Size(262, 26);
+            this.txtDownDays.TabIndex = 11;
+            this.txtDownDays.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtTotalHours
             // 
             this.txtTotalHours.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtTotalHours.Location = new System.Drawing.Point(127, 247);
+            this.txtTotalHours.Location = new System.Drawing.Point(517, 114);
             this.txtTotalHours.Name = "txtTotalHours";
             this.txtTotalHours.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtTotalHours.Size = new System.Drawing.Size(262, 26);
@@ -262,8 +259,8 @@ namespace Water
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(792, 377);
             this.Controls.Add(this.txtTotalHours);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.txtDownDays);
+            this.Controls.Add(this.txtBaseDays);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnEdit);
@@ -311,8 +308,8 @@ namespace Water
         private System.Windows.Forms.Button btnEdit;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnSave;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox txtBaseDays;
+        private System.Windows.Forms.TextBox txtDownDays;
         private System.Windows.Forms.TextBox txtTotalHours;
     }
 }
