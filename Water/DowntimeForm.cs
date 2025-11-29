@@ -26,6 +26,10 @@ namespace Water
             
             // ربط أحداث F2 و Enter على حقل رقم الفترة لعرض قائمة الفترات
             txtPeriodId.KeyDown += txtPeriodId_KeyDown;
+            
+            // ربط أحداث حساب الأيام والساعات تلقائياً
+            dtpStartTime.ValueChanged += CalculateDaysAndHours;
+            dtpEndTime.ValueChanged += CalculateDaysAndHours;
         }
 
         private void btnView_Click(object sender, EventArgs e)
@@ -354,6 +358,7 @@ namespace Water
             txtNote.Clear();
             txtDescription.Clear();
             chkIsProcessed.Checked = false;
+            txtWorkingHours.Clear();
         }
 
         private void txtPeriodId_KeyDown(object sender, KeyEventArgs e)
@@ -368,6 +373,57 @@ namespace Water
             }
         }
 
+        /// <summary>
+        /// حساب عدد الأيام والساعات تلقائياً من وقت البداية ووقت النهاية
+        /// </summary>
+        private void CalculateDaysAndHours(object sender, EventArgs e)
+        {
+            try
+            {
+                // التحقق من أن وقت البداية ووقت النهاية مفعّلان (Checked)
+                if (!dtpStartTime.Checked || !dtpEndTime.Checked)
+                {
+                    // إذا لم يكن أحدهما مفعلاً، لا نحسب
+                    return;
+                }
+
+                // التحقق من أن وقت النهاية بعد وقت البداية أو يساويه
+                if (dtpEndTime.Value < dtpStartTime.Value)
+                {
+                    // إذا كان وقت النهاية قبل وقت البداية، لا نحسب
+                    return;
+                }
+
+                // حساب الفرق بين وقت النهاية ووقت البداية
+                TimeSpan difference = dtpEndTime.Value - dtpStartTime.Value;
+
+                // حساب عدد الأيام (الفرق في الأيام)
+                int days = difference.Days;
+
+                // حساب إجمالي الساعات (الفرق في الساعات)
+                int totalHours = (int)difference.TotalHours;
+
+                // حساب الساعات المتبقية بعد الأيام الكاملة
+                int hours = totalHours % 24;
+
+                // حساب الدقائق
+                int minutes = difference.Minutes;
+
+                // حساب ساعات العمل الفعلية: عدد الأيام × 20 ساعة
+                int workingHours = days * 20;
+
+                // تحديث الحقول
+                txtDayesCount.Text = days.ToString();
+                txtHours.Text = hours.ToString();
+                txtMinutes.Text = minutes.ToString();
+                txtWorkingHours.Text = workingHours.ToString();
+            }
+            catch (Exception ex)
+            {
+                // في حالة حدوث خطأ، لا نفعل شيئاً لتجنب تعطيل المستخدم
+                // يمكن إضافة تسجيل الخطأ هنا إذا لزم الأمر
+            }
+        }
       
     }
 }

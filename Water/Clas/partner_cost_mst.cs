@@ -10,14 +10,14 @@ namespace Water.Clas
 {
     class partner_cost_mst
     {
-        public void ADD_PARTNER_COST_MST(string cost_id, string doc_type, DateTime? date, string down_timeId, 
-            string down_timeNote, string period_id, int? dayesCount, int? hours, int? minutes, 
+        public void ADD_PARTNER_COST_MST(string cost_id, string doc_type, DateTime? date, string down_timeId,
+            string down_timeNote, string period_id, int? dayesCount, int? hours, int? minutes,
             DateTime? startTime, DateTime? endTime, double? amount, string note)
         {
             Clas.DataAccessLayer DAL = new Clas.DataAccessLayer();
             DAL.Open();
             SqlParameter[] param = new SqlParameter[13];
-            
+
             param[0] = new SqlParameter("@cost_id", SqlDbType.VarChar, 50);
             param[0].Value = string.IsNullOrWhiteSpace(cost_id) ? DBNull.Value : (object)cost_id;
 
@@ -66,7 +66,7 @@ namespace Water.Clas
             Clas.DataAccessLayer DAL = new Clas.DataAccessLayer();
             DAL.Open();
             SqlParameter[] param = new SqlParameter[1];
-            
+
             param[0] = new SqlParameter("@cost_id", SqlDbType.VarChar, 50);
             param[0].Value = string.IsNullOrWhiteSpace(cost_id) ? DBNull.Value : (object)cost_id;
 
@@ -84,14 +84,14 @@ namespace Water.Clas
             return dt;
         }
 
-        public void UPDATE_PARTNER_COST_MST(string cost_id, string doc_type, DateTime? date, string down_timeId, 
-            string down_timeNote, string period_id, int? dayesCount, int? hours, int? minutes, 
+        public void UPDATE_PARTNER_COST_MST(string cost_id, string doc_type, DateTime? date, string down_timeId,
+            string down_timeNote, string period_id, int? dayesCount, int? hours, int? minutes,
             DateTime? startTime, DateTime? endTime, double? amount, string note)
         {
             Clas.DataAccessLayer DAL = new Clas.DataAccessLayer();
             DAL.Open();
             SqlParameter[] param = new SqlParameter[13];
-            
+
             param[0] = new SqlParameter("@cost_id", SqlDbType.VarChar, 50);
             param[0].Value = string.IsNullOrWhiteSpace(cost_id) ? DBNull.Value : (object)cost_id;
 
@@ -140,7 +140,7 @@ namespace Water.Clas
             Clas.DataAccessLayer DAL = new Clas.DataAccessLayer();
             DAL.Open();
             SqlParameter[] param = new SqlParameter[1];
-            
+
             param[0] = new SqlParameter("@cost_id", SqlDbType.VarChar, 50);
             param[0].Value = string.IsNullOrWhiteSpace(cost_id) ? DBNull.Value : (object)cost_id;
 
@@ -153,10 +153,10 @@ namespace Water.Clas
             return AutoNumberHelper.GetNextNumber("partner_cost_mst", "cost_id");
         }
 
-        public void ADD_POST(string action, string doc_type, string doc_no,  string doc_no_type, string period_id,
+        public void ADD_POST(string action, string doc_type, string doc_no, string doc_no_type, string period_id,
            string cus_part_type, string cus_part_no, string cus_part_name, double dr_amt, double cr_amt,
            DateTime date, DateTime start_time, DateTime end_time, double hours,
-           double minutes, string note ,string user_id)
+           double minutes, string note, string user_id)
         {
             Clas.DataAccessLayer DAL = new Clas.DataAccessLayer();
             DAL.Open();
@@ -215,7 +215,7 @@ namespace Water.Clas
             DAL.Close();
         }
 
-        
+
         public void DELETE_POST(string action, string doc_type, string doc_no)
         {
             Clas.DataAccessLayer DAL = new Clas.DataAccessLayer();
@@ -234,6 +234,15 @@ namespace Water.Clas
             DAL.ExecuteCommand("sp_post_crud", param);
             DAL.Close();
         }
+
+
+        public void UPDATE_DOWNTIME(string id, int isProcessed)
+        {
+            // استخدام دالة downtime لتحديث isProcessed فقط
+            Clas.downtime downtime = new Clas.downtime();
+            downtime.UPDATE_DOWNTIME_ISPROCESSED(id, isProcessed);
+        }
     }
+
 }
 

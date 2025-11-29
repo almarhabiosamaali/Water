@@ -24,6 +24,10 @@ namespace Water
             btnEdit.Click += btnEdit_Click;
             btnDelete.Click += btnDelete_Click;
             btnSave.Click += btnSave_Click;
+            
+            // ربط أحداث حساب عدد الأيام وإجمالي الساعات تلقائياً
+            dtpStartDate.ValueChanged += CalculateDaysAndHours;
+            dtpEndDate.ValueChanged += CalculateDaysAndHours;
         }
 
         private void btnView_Click(object sender, EventArgs e)
@@ -155,7 +159,7 @@ namespace Water
                 // التحقق من أن جميع الحقول مملوءة
                 if (string.IsNullOrWhiteSpace(txtPeriodCode.Text) ||
                    // string.IsNullOrWhiteSpace(txtBa.Text) ||
-                    string.IsNullOrWhiteSpace(txtDowntimeHours.Text) ||
+                  //  string.IsNullOrWhiteSpace(txtDowntimeHours.Text) ||
                     //string.IsNullOrWhiteSpace(txtDownDays.Text) ||
                     string.IsNullOrWhiteSpace(txtTotalHours.Text))
                 {
@@ -165,7 +169,7 @@ namespace Water
 
                 // التحقق من صحة الأرقام المدخلة
                 int baseDays, extendedDays, totalHours;
-                if (!int.TryParse(txtBaseDays.Text.Trim(), out baseDays) || baseDays <= 0)
+                /*if (!int.TryParse(txtBaseDays.Text.Trim(), out baseDays) || baseDays <= 0)
                 {
                     MessageBox.Show("الرجاء إدخال قيمة صحيحة للأيام الأساسية", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
@@ -175,7 +179,7 @@ namespace Water
                 {
                     MessageBox.Show("الرجاء إدخال قيمة صحيحة لأيام التوقف", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
-                }
+                }*/
 
                 if (!int.TryParse(txtTotalHours.Text.Trim(), out totalHours) || totalHours <= 0)
                 {
@@ -189,6 +193,8 @@ namespace Water
                     MessageBox.Show("تاريخ النهاية يجب أن يكون بعد تاريخ البداية", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
+                baseDays = Convert.ToInt32(txtBaseDays.Text);
+                extendedDays = Convert.ToInt32(txtDownDays.Text);
 
                 if (isEditMode)
                 {
@@ -197,7 +203,7 @@ namespace Water
                         txtPeriodCode.Text.Trim(),
                         dtpStartDate.Value,
                         dtpEndDate.Value,
-                        baseDays,
+                      baseDays,
                         txtDowntimeHours.Text.Trim(),
                         extendedDays,
                         totalHours
@@ -298,6 +304,42 @@ namespace Water
             txtDowntimeHours.Clear();
             txtDownDays.Clear();
             txtTotalHours.Clear();
+            txtWorkingHours.Clear();
+        }
+
+        /// <summary>
+        /// حساب عدد الأيام وإجمالي الساعات تلقائياً من تاريخ البداية وتاريخ النهاية
+        /// </summary>
+        private void CalculateDaysAndHours(object sender, EventArgs e)
+        {
+            try
+            {
+                // التحقق من أن تاريخ النهاية بعد تاريخ البداية أو يساويه
+                if (dtpEndDate.Value < dtpStartDate.Value)
+                {
+                    // إذا كان تاريخ النهاية قبل تاريخ البداية، لا نحسب
+                    return;
+                }
+
+                // حساب عدد الأيام: الفرق بين تاريخ النهاية وتاريخ البداية + 1
+                // (لأننا نريد تضمين يوم البداية ويوم النهاية)
+                TimeSpan difference = dtpEndDate.Value.Date - dtpStartDate.Value.Date;
+                int days = (int)difference.TotalDays + 1; // +1 لتضمين يوم البداية
+
+                // حساب إجمالي الساعات: عدد الأيام × 24 ساعة
+                int totalHours = days * 24;
+                int workingHours =days * 20;
+
+                // تحديث الحقول
+                txtBaseDays.Text = days.ToString();
+                txtTotalHours.Text = totalHours.ToString();
+                txtWorkingHours.Text = workingHours.ToString();
+            }
+            catch (Exception ex)
+            {
+                // في حالة حدوث خطأ، لا نفعل شيئاً لتجنب تعطيل المستخدم
+                // يمكن إضافة تسجيل الخطأ هنا إذا لزم الأمر
+            }
         }
     }
 }
