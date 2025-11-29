@@ -34,6 +34,7 @@ namespace Water
                 myFom.ShowDialog();
             }
             else
+            
             {
                 DataTable dTt = new DataTable();
                 Clas.partnersReport pTp = new Clas.partnersReport();
