@@ -21,7 +21,8 @@ namespace Water
         {
             DataTable dTt = new DataTable();
             Clas.partnersReport pTp = new Clas.partnersReport();
-            dTt = pTp.PRINT_PARTNER_MOVEMENT(p_where());
+            MessageBox.Show(p_where().ToString());
+            dTt = pTp.PRINT_PARTNER_MOVEMENT(p_where().ToString());
             RPT.partnerMovements myRept = new RPT.partnerMovements();
             myRept.DataSourceConnections[0].IntegratedSecurity = false;
             myRept.DataSourceConnections[0].SetConnection(Properties.Settings.Default.Server, Properties.Settings.Default.Database, Properties.Settings.Default.ID, Properties.Settings.Default.Password);
@@ -34,9 +35,9 @@ namespace Water
 
         string p_where ()
         {
-            string p = "1";
+            string p = "ok";
             if (txtPartnerID.Text != "")
-                p = p + " and " + txtPartnerID.Text;
+                p = p + " and m.partner_no = '" + txtPartnerID.Text + "'";
 
             return p;
         }
