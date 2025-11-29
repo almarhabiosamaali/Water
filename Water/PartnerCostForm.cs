@@ -49,7 +49,8 @@ namespace Water
         {
             try
             {
-                DataTable dt = downtime.GET_ALL_DOWNTIMES();
+                // تحميل التوقفات التي لم يتم تقسيمها بعد (isProcessed = 0)
+                DataTable dt = downtime.GET_UNPROCESSED_DOWNTIMES();
                 cmbDownTimeId.DataSource = dt;
                 cmbDownTimeId.DisplayMember = "id";
                 cmbDownTimeId.ValueMember = "id";
@@ -73,11 +74,12 @@ namespace Water
         {
             try
             {
-                DataTable dt = downtime.GET_ALL_DOWNTIMES();
+                // عرض التوقفات التي لم يتم تقسيمها بعد (isProcessed = 0)
+                DataTable dt = downtime.GET_UNPROCESSED_DOWNTIMES();
 
                 if (dt.Rows.Count == 0)
                 {
-                    MessageBox.Show("لا توجد بيانات للعرض", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("لا توجد توقفات غير مقسمة للعرض", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
 
@@ -281,7 +283,8 @@ namespace Water
                         viewForm.Close();
                     }
                 };
-
+                btnSave.Enabled = false;
+               // btnDistributeAmount.Enabled = false;
                 viewForm.Controls.Add(dgv);
                 viewForm.ShowDialog();
             }
@@ -304,6 +307,9 @@ namespace Water
                 txtCostId.Text = "1";
             }
             btnSave.Text = "حفظ";
+            cmbDownTimeId.Enabled = true;
+            cmpDocType.Enabled = true;
+           // btnDistributeAmount.Enabled = true;
             btnSave.Enabled = false;
         }
 
@@ -328,7 +334,10 @@ namespace Water
 
                 LoadPartnerCostData(dt.Rows[0]);
                 isEditMode = true;
-                txtCostId.Enabled = false;
+                btnSave.Enabled = true;
+                btnDistributeAmount.Enabled = true;
+                 cmbDownTimeId.Enabled = true;
+                cmpDocType.Enabled = true;
                 btnSave.Text = "تحديث";
             }
             catch (Exception ex)
@@ -352,9 +361,33 @@ namespace Water
                 try
                 {
                     string costId = txtCostId.Text.Trim();
+                    
+                    // قراءة downTimeId من قاعدة البيانات قبل الحذف
+                    string downTimeId = null;
+                    DataTable dt = partner_Cost_mst.VIEW_PARTNER_COST_MST(costId);
+                    if (dt.Rows.Count > 0 && dt.Rows[0]["down_timeId"] != DBNull.Value)
+                    {
+                        downTimeId = dt.Rows[0]["down_timeId"].ToString();
+                    }
+                    else if (cmbDownTimeId.SelectedValue != null && cmbDownTimeId.SelectedValue != DBNull.Value)
+                    {
+                        downTimeId = cmbDownTimeId.SelectedValue.ToString();
+                    }
+                    else if (!string.IsNullOrWhiteSpace(cmbDownTimeId.Text))
+                    {
+                        downTimeId = cmbDownTimeId.Text.Trim();
+                    }
+                    
                     partner_Cost_mst.DELETE_PARTNER_COST_MST(costId);
                     partner_Cost_mst.DELETE_POST("delete","3",costId);
                     partner_Cost_dtl.DELETE_POST("delete","5",costId);
+                    
+                    // تحديث حالة التوقف إلى isProcessed = 0 إذا كان downTimeId موجوداً
+                    if (!string.IsNullOrWhiteSpace(downTimeId))
+                    {
+                        partner_Cost_mst.UPDATE_DOWNTIME(downTimeId, 0);
+                    }
+                    
                     MessageBox.Show("تم حذف التكلفة بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     clear_PARTNER_COST();
                 }
@@ -370,16 +403,23 @@ namespace Water
             try
             {
                 // التحقق من أن جميع الحقول المطلوبة مملوءة
-               /*  if (string.IsNullOrWhiteSpace(txtCostId.Text))
+                /*  if (string.IsNullOrWhiteSpace(txtCostId.Text))
+                 {
+                     MessageBox.Show("الرجاء إدخال رقم التكلفة", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                     return;
+                 } */
+                string downTimeId = cmbDownTimeId.SelectedValue.ToString();
+                if (string.IsNullOrWhiteSpace(downTimeId))
                 {
-                    MessageBox.Show("الرجاء إدخال رقم التكلفة", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("الرجاء اختيار التوقف", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    cmbDownTimeId.Focus();
                     return;
-                } */
+                }
 
                 string costId = txtCostId.Text.Trim();
                 string docType = string.IsNullOrWhiteSpace(cmpDocType.Text) ? null : cmpDocType.Text.Trim();
                 DateTime? date = dtpDate.Checked ? (DateTime?)dtpDate.Value.Date : null;
-                string downTimeId = cmbDownTimeId.SelectedValue != null ? cmbDownTimeId.SelectedValue.ToString() : null;
+                //!= null ? cmbDownTimeId.SelectedValue.ToString() : null;
                 string downTimeNote = txtDownTimeNote.Text.Trim();
                 string periodId = string.IsNullOrWhiteSpace(txtPeriodId.Text) ? null : txtPeriodId.Text.Trim();
                 int? dayesCount = string.IsNullOrWhiteSpace(txtDayesCount.Text) ? (int?)null : Convert.ToInt32(txtDayesCount.Text);
@@ -432,8 +472,9 @@ namespace Water
                              "1"
                              );
 
-                    // حفظ تفاصيل الشركاء
+
                     SavePartnerCostDetails(costId);
+                    partner_Cost_mst.UPDATE_DOWNTIME(downTimeId, 1);
 
                     MessageBox.Show("تم تحديث بيانات التكلفة بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -477,9 +518,10 @@ namespace Water
                              note, 
                              "1"
                              ); 
+                             
                     // حفظ تفاصيل الشركاء
                     SavePartnerCostDetails(costId);
-
+                    partner_Cost_mst.UPDATE_DOWNTIME(downTimeId, 1);
                     MessageBox.Show("تم حفظ بيانات التكلفة بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
 
@@ -621,7 +663,6 @@ namespace Water
         private void clear_PARTNER_COST()
         {
             txtCostId.Clear();
-            /*  txtDocType.Clear(); */
             cmpDocType.SelectedIndex = -1;
             dtpDate.Value = DateTime.Now;
             dtpDate.Checked = false;
@@ -780,6 +821,9 @@ namespace Water
                         dgvRow.Cells["allocated_amount"].Value = row["allocated_amount"].ToString();
                     }
                 }
+                
+                cmbDownTimeId.Enabled = false;
+                cmpDocType.Enabled = false;
                 btnSave.Enabled = true;
                 MessageBox.Show("تم توزيع المبلغ بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }

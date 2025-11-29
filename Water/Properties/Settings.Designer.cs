@@ -25,7 +25,7 @@ namespace Water.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("LAPTOP-UDOB2GCQ")]
+        [global::System.Configuration.DefaultSettingValueAttribute("server")]
         public string Server {
             get {
                 return ((string)(this["Server"]));
@@ -61,7 +61,7 @@ namespace Water.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("osama@123")]
+        [global::System.Configuration.DefaultSettingValueAttribute("sa@123")]
         public string Password {
             get {
                 return ((string)(this["Password"]));

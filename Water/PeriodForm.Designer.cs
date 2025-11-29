@@ -45,8 +45,10 @@ namespace Water
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.txtBaseDays = new System.Windows.Forms.TextBox();
-           this.txtDownDays = new System.Windows.Forms.TextBox();
+            this.txtDownDays = new System.Windows.Forms.TextBox();
             this.txtTotalHours = new System.Windows.Forms.TextBox();
+            this.txtWorkingHours = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblPeriodCode
@@ -253,11 +255,36 @@ namespace Water
             this.txtTotalHours.TabIndex = 13;
             this.txtTotalHours.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
+            // txtWorkingHours
+            // 
+            this.txtWorkingHours.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtWorkingHours.Location = new System.Drawing.Point(556, 247);
+            this.txtWorkingHours.Name = "txtWorkingHours";
+            this.txtWorkingHours.ReadOnly = true;
+            this.txtWorkingHours.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.txtWorkingHours.Size = new System.Drawing.Size(223, 26);
+            this.txtWorkingHours.TabIndex = 14;
+            this.txtWorkingHours.TabStop = false;
+            this.txtWorkingHours.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(412, 250);
+            this.label2.Name = "label2";
+            this.label2.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.label2.Size = new System.Drawing.Size(126, 20);
+            this.label2.TabIndex = 22;
+            this.label2.Text = "ساعات العمل الفعلية:";
+            // 
             // PeriodForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(792, 377);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.txtWorkingHours);
             this.Controls.Add(this.txtTotalHours);
             this.Controls.Add(this.txtDownDays);
             this.Controls.Add(this.txtBaseDays);
@@ -311,6 +338,8 @@ namespace Water
         private System.Windows.Forms.TextBox txtBaseDays;
         private System.Windows.Forms.TextBox txtDownDays;
         private System.Windows.Forms.TextBox txtTotalHours;
+        private System.Windows.Forms.TextBox txtWorkingHours;
+        private System.Windows.Forms.Label label2;
     }
 }
 

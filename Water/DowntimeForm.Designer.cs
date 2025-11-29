@@ -60,6 +60,8 @@ namespace Water
             this.txtDescription = new System.Windows.Forms.TextBox();
             this.lblDesc = new System.Windows.Forms.Label();
             this.chkIsProcessed = new System.Windows.Forms.CheckBox();
+            this.txtWorkingHours = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblDowntimeCode
@@ -287,7 +289,7 @@ namespace Water
             // 
             this.dtpEndTime.CustomFormat = "dd/MM/yyyy hh:mm tt";
             this.dtpEndTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpEndTime.Location = new System.Drawing.Point(435, 141);
+            this.dtpEndTime.Location = new System.Drawing.Point(474, 140);
             this.dtpEndTime.Name = "dtpEndTime";
             this.dtpEndTime.RightToLeftLayout = true;
             this.dtpEndTime.Size = new System.Drawing.Size(263, 24);
@@ -295,28 +297,39 @@ namespace Water
             // 
             // txtHours
             // 
+            this.txtHours.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtHours.Location = new System.Drawing.Point(112, 216);
             this.txtHours.Name = "txtHours";
-            this.txtHours.Size = new System.Drawing.Size(100, 24);
+            this.txtHours.ReadOnly = true;
+            this.txtHours.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.txtHours.Size = new System.Drawing.Size(100, 26);
             this.txtHours.TabIndex = 27;
             this.txtHours.TabStop = false;
+            this.txtHours.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtMinutes
             // 
+            this.txtMinutes.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtMinutes.Location = new System.Drawing.Point(112, 256);
             this.txtMinutes.Name = "txtMinutes";
-            this.txtMinutes.Size = new System.Drawing.Size(100, 24);
+            this.txtMinutes.ReadOnly = true;
+            this.txtMinutes.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.txtMinutes.Size = new System.Drawing.Size(100, 26);
             this.txtMinutes.TabIndex = 28;
             this.txtMinutes.TabStop = false;
+            this.txtMinutes.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtDayesCount
             // 
+            this.txtDayesCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtDayesCount.Location = new System.Drawing.Point(112, 182);
             this.txtDayesCount.Name = "txtDayesCount";
             this.txtDayesCount.ReadOnly = true;
-            this.txtDayesCount.Size = new System.Drawing.Size(100, 24);
+            this.txtDayesCount.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.txtDayesCount.Size = new System.Drawing.Size(100, 26);
             this.txtDayesCount.TabIndex = 29;
             this.txtDayesCount.TabStop = false;
+            this.txtDayesCount.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtAmount
             // 
@@ -407,11 +420,36 @@ namespace Water
             this.chkIsProcessed.Text = "تمت المعالجة";
             this.chkIsProcessed.UseVisualStyleBackColor = true;
             // 
+            // txtWorkingHours
+            // 
+            this.txtWorkingHours.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtWorkingHours.Location = new System.Drawing.Point(474, 190);
+            this.txtWorkingHours.Name = "txtWorkingHours";
+            this.txtWorkingHours.ReadOnly = true;
+            this.txtWorkingHours.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.txtWorkingHours.Size = new System.Drawing.Size(100, 26);
+            this.txtWorkingHours.TabIndex = 38;
+            this.txtWorkingHours.TabStop = false;
+            this.txtWorkingHours.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(343, 194);
+            this.label1.Name = "label1";
+            this.label1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.label1.Size = new System.Drawing.Size(126, 20);
+            this.label1.TabIndex = 39;
+            this.label1.Text = "ساعات العمل الفعلية ";
+            // 
             // DowntimeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(945, 511);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.txtWorkingHours);
             this.Controls.Add(this.chkIsProcessed);
             this.Controls.Add(this.lblDesc);
             this.Controls.Add(this.txtDescription);
@@ -491,6 +529,8 @@ namespace Water
         private System.Windows.Forms.TextBox txtDescription;
         private System.Windows.Forms.Label lblDesc;
         private System.Windows.Forms.CheckBox chkIsProcessed;
+        private System.Windows.Forms.TextBox txtWorkingHours;
+        private System.Windows.Forms.Label label1;
     }
 }
 
