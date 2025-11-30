@@ -1588,7 +1588,7 @@ namespace Water
                                 billNo,                                        // doc_no
                                 idCounter.ToString(),                           // doc_no_type
                                 txtPeriodId.Text.Trim(),                       // period_id
-                                "PARTNER",                                     // cus_part_type
+                                "2",                                     // cus_part_type
                                 partnerNumber ?? "",                           // cus_part_no
                                 partnerName ?? "",                              // cus_part_name
                                 0,                                             // dr_amt

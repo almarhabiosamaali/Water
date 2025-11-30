@@ -208,13 +208,27 @@ namespace Water
                             cr = Convert.ToDouble(txtAmount.Text);  // دائن
                             dr = 0;
                         }
+
+                    string cusPartType = "";
+                    if (cmbAccountType != null && cmbAccountType.SelectedIndex == 1) // شريك
+                    {
+                        cusPartType = "2";
+                    }
+                    else if (cmbAccountType != null && cmbAccountType.SelectedIndex == 0) //عميل
+                    {
+                        cusPartType = "1";
+                    }
+                    else // عميل
+                    {
+                        cusPartType = "3";
+                    }
                     exp.ADD_POST(
                             "insert",                                      // action
                             "2",                                           // doc_type (فاتورة مثلاً)
                             txtExpenseCode.Text.Trim(),                       // doc_no
                             cmbType.SelectedItem != null ? cmbType.SelectedItem.ToString() : "",                                            // doc_no_type (لو عندك كومبو أو قيمة.. حطها هنا)
                             txtPeriodId.Text.Trim(),                                            // period_id  (لو عندك فترة محاسبية.. حطها هنا)
-                            cmbAccountType.SelectedItem.ToString(),                                        // cus_part_type (نوع العميل/الشريك - غيّرها حسب تصميمك)
+                            cusPartType,                                        // cus_part_type (نوع العميل/الشريك - غيّرها حسب تصميمك)
                             txtAccountId.Text.Trim(),                     // cus_part_no
                             txtAccountName.Text.Trim(),
                             dr,
@@ -255,13 +269,26 @@ namespace Water
                             cr = Convert.ToDouble(txtAmount.Text);  // دائن
                         dr = 0;
                         }
+                    string cusPartType = "";
+                    if (cmbAccountType != null && cmbAccountType.SelectedIndex == 1) // شريك
+                    {
+                        cusPartType = "2";
+                    }
+                    else if (cmbAccountType != null && cmbAccountType.SelectedIndex == 0) //عميل
+                    {
+                        cusPartType = "1";
+                    }
+                    else // عميل
+                    {
+                        cusPartType = "3";
+                    }
                     exp.ADD_POST(
                             "insert",                                      // action
                             "2",                                           // doc_type (فاتورة مثلاً)
                             txtExpenseCode.Text.Trim(),                       // doc_no
                             cmbType.SelectedItem != null ? cmbType.SelectedItem.ToString() : "",                                            // doc_no_type (لو عندك كومبو أو قيمة.. حطها هنا)
                             txtPeriodId.Text.Trim(),                                            // period_id  (لو عندك فترة محاسبية.. حطها هنا)
-                            cmbAccountType.SelectedItem.ToString(),                                        // cus_part_type (نوع العميل/الشريك - غيّرها حسب تصميمك)
+                            cusPartType,                                        // cus_part_type (نوع العميل/الشريك - غيّرها حسب تصميمك)
                             txtAccountId.Text.Trim(),                     // cus_part_no
                             txtAccountName.Text.Trim(),
                             dr,

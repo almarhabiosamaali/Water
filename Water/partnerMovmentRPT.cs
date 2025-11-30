@@ -56,7 +56,7 @@ namespace Water
             string p = "";
             if (anly.Checked)
             {
-                p = p + " and movement_type not in ('CUSTOMER_MOVEMENT')";
+                p = p + " and movement_type not in ('CUSTOMER_MOVEMENT','FROM_OWN_BALANCE','RECEIVED_FROM_OTHERS')";
                 if (txtPartnerID.Text != "")
                     p = p + " and partner_no = '" + txtPartnerID.Text + "'";
             }
