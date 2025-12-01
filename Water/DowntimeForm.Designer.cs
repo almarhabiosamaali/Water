@@ -105,7 +105,7 @@ namespace Water
             this.txtPeriodId.Name = "txtPeriodId";
             this.txtPeriodId.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtPeriodId.Size = new System.Drawing.Size(72, 26);
-            this.txtPeriodId.TabIndex = 2;
+            this.txtPeriodId.TabIndex = 1;
             // 
             // lblDate
             // 
@@ -127,7 +127,7 @@ namespace Water
             this.dtpDate.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.dtpDate.RightToLeftLayout = true;
             this.dtpDate.Size = new System.Drawing.Size(193, 26);
-            this.dtpDate.TabIndex = 6;
+            this.dtpDate.TabIndex = 2;
             // 
             // lblHours
             // 
@@ -236,7 +236,7 @@ namespace Water
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnAdd.Size = new System.Drawing.Size(74, 40);
-            this.btnAdd.TabIndex = 1;
+            this.btnAdd.TabIndex = 0;
             this.btnAdd.Text = "إضافة";
             this.btnAdd.UseVisualStyleBackColor = true;
             // 

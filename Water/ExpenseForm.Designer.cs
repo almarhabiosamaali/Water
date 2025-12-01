@@ -66,9 +66,9 @@ namespace Water
             this.lblExpenseCode.Location = new System.Drawing.Point(14, 85);
             this.lblExpenseCode.Name = "lblExpenseCode";
             this.lblExpenseCode.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.lblExpenseCode.Size = new System.Drawing.Size(60, 20);
+            this.lblExpenseCode.Size = new System.Drawing.Size(70, 20);
             this.lblExpenseCode.TabIndex = 0;
-            this.lblExpenseCode.Text = "رقم القيد:";
+            this.lblExpenseCode.Text = "رقم السند :";
             // 
             // txtExpenseCode
             // 
@@ -79,6 +79,7 @@ namespace Water
             this.txtExpenseCode.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtExpenseCode.Size = new System.Drawing.Size(263, 26);
             this.txtExpenseCode.TabIndex = 1;
+            this.txtExpenseCode.TabStop = false;
             this.txtExpenseCode.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // lblDate
@@ -101,7 +102,7 @@ namespace Water
             this.dtpDate.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.dtpDate.RightToLeftLayout = true;
             this.dtpDate.Size = new System.Drawing.Size(173, 26);
-            this.dtpDate.TabIndex = 4;
+            this.dtpDate.TabIndex = 3;
             // 
             // lblType
             // 
@@ -127,6 +128,7 @@ namespace Water
             this.cmbType.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.cmbType.Size = new System.Drawing.Size(263, 28);
             this.cmbType.TabIndex = 3;
+            this.cmbType.TabStop = false;
             // 
             // lblAccountType
             // 
@@ -153,6 +155,7 @@ namespace Water
             this.cmbAccountType.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.cmbAccountType.Size = new System.Drawing.Size(263, 28);
             this.cmbAccountType.TabIndex = 5;
+            this.cmbAccountType.TabStop = false;
             // 
             // lblAccountId
             // 
@@ -172,7 +175,7 @@ namespace Water
             this.txtAccountId.Name = "txtAccountId";
             this.txtAccountId.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtAccountId.Size = new System.Drawing.Size(263, 26);
-            this.txtAccountId.TabIndex = 6;
+            this.txtAccountId.TabIndex = 4;
             // 
             // lblAccountName
             // 
@@ -194,6 +197,7 @@ namespace Water
             this.txtAccountName.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtAccountName.Size = new System.Drawing.Size(263, 26);
             this.txtAccountName.TabIndex = 11;
+            this.txtAccountName.TabStop = false;
             // 
             // lblAmount
             // 
@@ -246,6 +250,7 @@ namespace Water
             this.txtPeriodStartDate.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.txtPeriodStartDate.Size = new System.Drawing.Size(120, 26);
             this.txtPeriodStartDate.TabIndex = 27;
+            this.txtPeriodStartDate.TabStop = false;
             this.txtPeriodStartDate.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // lblPeriodEndDate
@@ -268,6 +273,7 @@ namespace Water
             this.txtPeriodEndDate.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.txtPeriodEndDate.Size = new System.Drawing.Size(156, 26);
             this.txtPeriodEndDate.TabIndex = 29;
+            this.txtPeriodEndDate.TabStop = false;
             this.txtPeriodEndDate.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // lblDescription
@@ -289,7 +295,7 @@ namespace Water
             this.txtDescription.Name = "txtDescription";
             this.txtDescription.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtDescription.Size = new System.Drawing.Size(688, 35);
-            this.txtDescription.TabIndex = 9;
+            this.txtDescription.TabIndex = 10;
             // 
             // lblNotes
             // 
@@ -320,6 +326,7 @@ namespace Water
             this.btnView.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnView.Size = new System.Drawing.Size(74, 40);
             this.btnView.TabIndex = 20;
+            this.btnView.TabStop = false;
             this.btnView.Text = "عرض";
             this.btnView.UseVisualStyleBackColor = true;
             // 
@@ -342,6 +349,7 @@ namespace Water
             this.btnEdit.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnEdit.Size = new System.Drawing.Size(74, 40);
             this.btnEdit.TabIndex = 22;
+            this.btnEdit.TabStop = false;
             this.btnEdit.Text = "تعديل";
             this.btnEdit.UseVisualStyleBackColor = true;
             // 
@@ -353,6 +361,7 @@ namespace Water
             this.btnDelete.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnDelete.Size = new System.Drawing.Size(74, 40);
             this.btnDelete.TabIndex = 23;
+            this.btnDelete.TabStop = false;
             this.btnDelete.Text = "حذف";
             this.btnDelete.UseVisualStyleBackColor = true;
             // 
@@ -363,7 +372,7 @@ namespace Water
             this.btnSave.Name = "btnSave";
             this.btnSave.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnSave.Size = new System.Drawing.Size(74, 40);
-            this.btnSave.TabIndex = 10;
+            this.btnSave.TabIndex = 12;
             this.btnSave.Text = "حفظ";
             this.btnSave.UseVisualStyleBackColor = true;
             // 
@@ -372,7 +381,7 @@ namespace Water
             this.txtAmount.Location = new System.Drawing.Point(118, 279);
             this.txtAmount.Name = "txtAmount";
             this.txtAmount.Size = new System.Drawing.Size(263, 24);
-            this.txtAmount.TabIndex = 7;
+            this.txtAmount.TabIndex = 6;
             this.txtAmount.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtAmount_KeyPress);
             this.txtAmount.Leave += new System.EventHandler(this.txtAmount_Leave);
             // 
@@ -417,7 +426,7 @@ namespace Water
             this.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.RightToLeftLayout = true;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "القيود اليومية";
+            this.Text = "السندات ";
             this.ResumeLayout(false);
             this.PerformLayout();
 

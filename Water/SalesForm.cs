@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Globalization;
 
 namespace Water
 {
@@ -20,6 +21,8 @@ namespace Water
         Clas.customer customer = new Clas.customer();
         Clas.partners partners = new Clas.partners();
         Clas.pricing pricing = new Clas.pricing();
+        Clas.period period = new Clas.period();
+        private bool isLoadingPeriodFromList = false; // للتحكم في عدم فتح القائمة تلقائياً عند تحميل البيانات
 
         public SalesForm()
         {
@@ -47,6 +50,10 @@ namespace Water
             txtPaidAmount.TextChanged += CalculateRemainingAmount_TextChanged;
             txtDueAmount.TextChanged += CalculateRemainingAmount_TextChanged;
 
+            // ربط أحداث رقم الفترة
+           // txtPeriodId.KeyDown += txtPeriodId_KeyDown;
+            txtPeriodId.Leave += txtPeriodId_Leave;
+
             // تهيئة ComboBox نوع العميل
             if (cmbCustomerType != null)
             {
@@ -68,6 +75,7 @@ namespace Water
                 this.dataGridView1.KeyDown += DataGridView1_KeyDown;
                 this.dataGridView1.CellEnter += DataGridView1_CellEnter;
                 this.dataGridView1.CellValueChanged += DataGridView1_CellValueChanged;
+                this.dataGridView1.CellEndEdit += DataGridView1_CellEndEdit;
             }
         }
 
@@ -207,6 +215,23 @@ namespace Water
             }
         }
 
+            private void txtDecimal_KeyPress(object sender, KeyPressEventArgs e)
+            {
+                // يسمح بالأرقام والنقطة والـ Backspace فقط
+                if (!char.IsDigit(e.KeyChar) && e.KeyChar != '.' && e.KeyChar != (char)Keys.Back)
+                {
+                    e.Handled = true;
+                }
+
+                // يمنع إدخال أكثر من نقطة واحدة
+                TextBox txt = sender as TextBox;
+                if (e.KeyChar == '.' && txt != null && txt.Text.Contains("."))
+                {
+                    e.Handled = true;
+                }
+            }
+      
+
         private void LoadPartnerDataToGrid(DataRow partnerRow)
         {
             if (this.dataGridView1.CurrentCell == null || this.dataGridView1.CurrentCell.RowIndex < 0)
@@ -215,10 +240,36 @@ namespace Water
             int currentRowIndex = this.dataGridView1.CurrentCell.RowIndex;
             DataGridViewRow dgvRow = this.dataGridView1.Rows[currentRowIndex];
 
+            string partnerId = partnerRow["id"] != DBNull.Value ? partnerRow["id"].ToString() : "";
+
+            // التحقق من عدم تكرار رقم الشريك قبل التعبئة
+            if (!string.IsNullOrWhiteSpace(partnerId))
+            {
+                foreach (DataGridViewRow row in this.dataGridView1.Rows)
+                {
+                    // تخطي الصف الحالي والصف الجديد
+                    if (row.Index == currentRowIndex || row.IsNewRow)
+                        continue;
+
+                    // قراءة رقم الشريك من الصف الآخر
+                    if (row.Cells["PartenerId"] != null && row.Cells["PartenerId"].Value != null)
+                    {
+                        string otherPartnerId = row.Cells["PartenerId"].Value.ToString().Trim();
+                        
+                        // إذا كان نفس رقم الشريك، عرض رسالة خطأ
+                        if (otherPartnerId == partnerId)
+                        {
+                            MessageBox.Show("تم إدخال هذا الشريك مسبقاً. لا يمكن تكرار نفس الشريك", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return; // لا نملأ البيانات
+                        }
+                    }
+                }
+            }
+
             // تعبئة رقم الشريك
             if (dgvRow.Cells["PartenerId"] != null)
             {
-                dgvRow.Cells["PartenerId"].Value = partnerRow["id"] != DBNull.Value ? partnerRow["id"].ToString() : "";
+                dgvRow.Cells["PartenerId"].Value = partnerId;
             }
 
             // تعبئة اسم الشريك
@@ -797,10 +848,10 @@ namespace Water
                         GetDieselUsedInMinute(),
                         string.IsNullOrWhiteSpace(textWaterTotalPrice.Text) ? 0 : Convert.ToDouble(textWaterTotalPrice.Text),
                         string.IsNullOrWhiteSpace(txtDieselTotalPrice.Text) ? 0 : Convert.ToDouble(txtDieselTotalPrice.Text),
-                        string.IsNullOrWhiteSpace(txtTotalAmount.Text) ? 0 : Convert.ToDouble(txtTotalAmount.Text),
-                        string.IsNullOrWhiteSpace(txtDueAmount.Text) ? 0 : Convert.ToDouble(txtDueAmount.Text),
-                        string.IsNullOrWhiteSpace(txtPaidAmount.Text) ? 0 : Convert.ToDouble(txtPaidAmount.Text),
-                        string.IsNullOrWhiteSpace(txtRemainingAmount.Text) ? 0 : Convert.ToDouble(txtRemainingAmount.Text),
+                        string.IsNullOrWhiteSpace(txtTotalAmount.Text) ? 0 : Convert.ToDouble(RemoveFormatting(txtTotalAmount.Text)),
+                        string.IsNullOrWhiteSpace(txtDueAmount.Text) ? 0 : Convert.ToDouble(RemoveFormatting(txtDueAmount.Text)),
+                        string.IsNullOrWhiteSpace(txtPaidAmount.Text) ? 0 : Convert.ToDouble(RemoveFormatting(txtPaidAmount.Text)),
+                        string.IsNullOrWhiteSpace(txtRemainingAmount.Text) ? 0 : Convert.ToDouble(RemoveFormatting(txtRemainingAmount.Text)),
                         cmbBillType.SelectedItem != null ? cmbBillType.SelectedItem.ToString() : "",
                         string.IsNullOrWhiteSpace(txtPriceLevel.Text) ? "" : txtPriceLevel.Text.Trim(),
                         DateTime.Now,
@@ -837,10 +888,10 @@ namespace Water
                         GetDieselUsedInMinute(),
                         string.IsNullOrWhiteSpace(textWaterTotalPrice.Text) ? 0 : Convert.ToDouble(textWaterTotalPrice.Text),
                         string.IsNullOrWhiteSpace(txtDieselTotalPrice.Text) ? 0 : Convert.ToDouble(txtDieselTotalPrice.Text),
-                        string.IsNullOrWhiteSpace(txtTotalAmount.Text) ? 0 : Convert.ToDouble(txtTotalAmount.Text),
-                        string.IsNullOrWhiteSpace(txtDueAmount.Text) ? 0 : Convert.ToDouble(txtDueAmount.Text),
-                        string.IsNullOrWhiteSpace(txtPaidAmount.Text) ? 0 : Convert.ToDouble(txtPaidAmount.Text),
-                        string.IsNullOrWhiteSpace(txtRemainingAmount.Text) ? 0 : Convert.ToDouble(txtRemainingAmount.Text),
+                        string.IsNullOrWhiteSpace(txtTotalAmount.Text) ? 0 : Convert.ToDouble(RemoveFormatting(txtTotalAmount.Text)),
+                        string.IsNullOrWhiteSpace(txtDueAmount.Text) ? 0 : Convert.ToDouble(RemoveFormatting(txtDueAmount.Text)),
+                        string.IsNullOrWhiteSpace(txtPaidAmount.Text) ? 0 : Convert.ToDouble(RemoveFormatting(txtPaidAmount.Text)),
+                        string.IsNullOrWhiteSpace(txtRemainingAmount.Text) ? 0 : Convert.ToDouble(RemoveFormatting(txtRemainingAmount.Text)),
                         cmbBillType.SelectedItem != null ? cmbBillType.SelectedItem.ToString() : "",
                         string.IsNullOrWhiteSpace(txtPriceLevel.Text) ? "" : txtPriceLevel.Text.Trim(),
                         DateTime.Now,
@@ -945,11 +996,30 @@ namespace Water
 
             if (row["period_id"] != DBNull.Value)
             {
-                txtPeriodId.Text = row["period_id"].ToString();
+                string periodId = row["period_id"].ToString();
+                txtPeriodId.Text = periodId;
+                
+                // تحميل بيانات الفترة وعرضها
+                try
+                {
+                    DataTable periodDt = period.VIEW_PERIOD(periodId);
+                    if (periodDt != null && periodDt.Rows.Count > 0)
+                    {
+                        LoadPeriodDataToBill(periodDt.Rows[0]);
+                    }
+                }
+                catch
+                {
+                    // في حالة الخطأ، لا نفعل شيئاً
+                }
             }
             else
             {
                 txtPeriodId.Clear();
+                if (txtPeriodStartDate != null)
+                    txtPeriodStartDate.Clear();
+                if (txtPeriodEndDate != null)
+                    txtPeriodEndDate.Clear();
             }
 
             if (row["start_time"] != DBNull.Value)
@@ -1027,7 +1097,7 @@ namespace Water
 
             if (row["water_total"] != DBNull.Value)
             {
-                textWaterTotalPrice.Text = row["water_total"].ToString();
+                textWaterTotalPrice.Text = FormatNumber(row["water_total"]);
             }
             else
             {
@@ -1036,7 +1106,7 @@ namespace Water
 
             if (row["diesel_total"] != DBNull.Value)
             {
-                txtDieselTotalPrice.Text = row["diesel_total"].ToString();
+                txtDieselTotalPrice.Text = FormatNumber(row["diesel_total"]);
             }
             else
             {
@@ -1045,7 +1115,7 @@ namespace Water
 
             if (row["total_amount"] != DBNull.Value)
             {
-                txtTotalAmount.Text = row["total_amount"].ToString();
+                txtTotalAmount.Text = FormatNumber(row["total_amount"]);
             }
             else
             {
@@ -1054,7 +1124,7 @@ namespace Water
 
             if (row["due_amount"] != DBNull.Value)
             {
-                txtDueAmount.Text = row["due_amount"].ToString();
+                txtDueAmount.Text = FormatNumber(row["due_amount"]);
             }
             else
             {
@@ -1063,7 +1133,7 @@ namespace Water
 
             if (row["paid_amount"] != DBNull.Value)
             {
-                txtPaidAmount.Text = row["paid_amount"].ToString();
+                txtPaidAmount.Text = FormatNumber(row["paid_amount"]);
             }
             else
             {
@@ -1072,7 +1142,7 @@ namespace Water
 
             if (row["remaining_amount"] != DBNull.Value)
             {
-                txtRemainingAmount.Text = row["remaining_amount"].ToString();
+                txtRemainingAmount.Text = FormatNumber(row["remaining_amount"]);
             }
             else
             {
@@ -1110,6 +1180,10 @@ namespace Water
                 txtCustomerName.Clear();
             }
             txtPeriodId.Clear();
+            if (txtPeriodStartDate != null)
+                txtPeriodStartDate.Clear();
+            if (txtPeriodEndDate != null)
+                txtPeriodEndDate.Clear();
             dtpStartTime.Value = DateTime.Now;
             dtpEndTime.Value = DateTime.Now;
             txtHours.Clear();
@@ -1262,6 +1336,70 @@ namespace Water
             if (!hasValidPartnerData)
             {
                 throw new Exception("يجب إدخال تفاصيل الساعات للشركاء");
+            }
+            
+            // التحقق من عدم تكرار نفس الشريك
+            Dictionary<string, int> partnerCount = new Dictionary<string, int>();
+            foreach (DataGridViewRow row in dgv.Rows)
+            {
+                if (row.IsNewRow)
+                    continue;
+                
+                // قراءة رقم الشريك
+                string partnerId = "";
+                if (row.Cells["PartenerId"] != null && row.Cells["PartenerId"].Value != null)
+                {
+                    partnerId = row.Cells["PartenerId"].Value.ToString().Trim();
+                }
+                
+                // إذا كان هناك رقم شريك، نتحقق من التكرار
+                if (!string.IsNullOrWhiteSpace(partnerId))
+                {
+                    if (partnerCount.ContainsKey(partnerId))
+                    {
+                        partnerCount[partnerId]++;
+                    }
+                    else
+                    {
+                        partnerCount[partnerId] = 1;
+                    }
+                }
+            }
+            
+            // التحقق من وجود شركاء مكررين
+            foreach (var kvp in partnerCount)
+            {
+                if (kvp.Value > 1)
+                {
+                    string partnerName = "";
+                    // محاولة الحصول على اسم الشريك من أول صف يحتوي على هذا الرقم
+                    foreach (DataGridViewRow row in dgv.Rows)
+                    {
+                        if (row.IsNewRow)
+                            continue;
+                        
+                        if (row.Cells["PartenerId"] != null && row.Cells["PartenerId"].Value != null)
+                        {
+                            string rowPartnerId = row.Cells["PartenerId"].Value.ToString().Trim();
+                            if (rowPartnerId == kvp.Key)
+                            {
+                                if (row.Cells["PartenerName"] != null && row.Cells["PartenerName"].Value != null)
+                                {
+                                    partnerName = row.Cells["PartenerName"].Value.ToString().Trim();
+                                }
+                                break;
+                            }
+                        }
+                    }
+                    
+                    string errorMsg = $"تم إدخال الشريك رقم {kvp.Key}";
+                    if (!string.IsNullOrWhiteSpace(partnerName))
+                    {
+                        errorMsg += $" ({partnerName})";
+                    }
+                    errorMsg += $" {kvp.Value} مرات. لا يمكن تكرار نفس الشريك.";
+                    throw new Exception(errorMsg);
+                }
             }
             
             // التحقق من أن الساعات والدقائق المدخلة لا تتجاوز المتاحة
@@ -1927,6 +2065,27 @@ namespace Water
             return 0;
         }
 
+        // دالة لتنسيق الأرقام بفواصل الآلاف
+        private string FormatNumber(object value)
+        {
+            if (value == null || value == DBNull.Value)
+                return "";
+            
+            if (double.TryParse(value.ToString().Replace(",", ""), out double num))
+            {
+                return num.ToString("N0", new CultureInfo("en-US"));
+            }
+            return value.ToString();
+        }
+
+        // دالة لإزالة التنسيق من الأرقام
+        private string RemoveFormatting(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                return "";
+            return value.Replace(",", "").Trim();
+        }
+
         // حساب إجمالي الماء والديزل والإجمالي الكلي
         private void CalculateTotals_TextChanged(object sender, EventArgs e)
         {
@@ -1934,15 +2093,15 @@ namespace Water
             {
                 // حساب إجمالي الماء
                 double waterTotal = CalculateWaterTotal();
-                textWaterTotalPrice.Text = waterTotal.ToString("F2");
+                textWaterTotalPrice.Text = FormatNumber(waterTotal);
 
                 // حساب إجمالي الديزل
                 double dieselTotal = CalculateDieselTotal();
-                txtDieselTotalPrice.Text = dieselTotal.ToString("F2");
+                txtDieselTotalPrice.Text = FormatNumber(dieselTotal);
 
                 // حساب الإجمالي الكلي الأساسي (بدون خصم)
                 double totalAmount = waterTotal + dieselTotal;
-                txtTotalAmount.Text = totalAmount.ToString("F2");
+                txtTotalAmount.Text = FormatNumber(totalAmount);
 
                 // حساب المبلغ المستحق والمتبقي (مع تطبيق الخصم)
                 CalculateRemainingAmount();
@@ -2003,23 +2162,87 @@ namespace Water
         {
             try
             {
-                double totalAmount = string.IsNullOrWhiteSpace(txtTotalAmount.Text) ? 0 : Convert.ToDouble(txtTotalAmount.Text);
-                double paidAmount = string.IsNullOrWhiteSpace(txtPaidAmount.Text) ? 0 : Convert.ToDouble(txtPaidAmount.Text);
+                double totalAmount = string.IsNullOrWhiteSpace(txtTotalAmount.Text) ? 0 : Convert.ToDouble(RemoveFormatting(txtTotalAmount.Text));
+                double paidAmount = string.IsNullOrWhiteSpace(txtPaidAmount.Text) ? 0 : Convert.ToDouble(RemoveFormatting(txtPaidAmount.Text));
 
                 // حساب خصومات الشركاء (إذا كان نوع العميل = شريك)
                 double totalDiscounts = CalculateTotalPartnerDiscounts();
 
                 // المبلغ المستحق = الإجمالي الكلي - الخصم
                 double dueAmount = totalAmount - totalDiscounts;
-                txtDueAmount.Text = dueAmount.ToString("F2");
+                txtDueAmount.Text = FormatNumber(dueAmount);
 
                 // المتبقي = المبلغ المستحق - المدفوع
                 double remainingAmount = dueAmount - paidAmount;
-                txtRemainingAmount.Text = remainingAmount.ToString("F2");
+                txtRemainingAmount.Text = FormatNumber(remainingAmount);
             }
             catch
             {
                 // في حالة الخطأ، نترك الحقل فارغاً
+            }
+        }
+
+        private void DataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                // التحقق من أن التغيير في عمود PartenerId
+                if (e.RowIndex < 0 || e.ColumnIndex < 0)
+                    return;
+
+                DataGridViewColumn column = this.dataGridView1.Columns[e.ColumnIndex];
+                if (column == null || column.Name != "PartenerId")
+                    return;
+
+                DataGridViewRow currentRow = this.dataGridView1.Rows[e.RowIndex];
+                if (currentRow.IsNewRow)
+                    return;
+
+                // قراءة رقم الشريك من الصف الحالي
+                string currentPartnerId = "";
+                if (currentRow.Cells["PartenerId"] != null && currentRow.Cells["PartenerId"].Value != null)
+                {
+                    currentPartnerId = currentRow.Cells["PartenerId"].Value.ToString().Trim();
+                }
+
+                // إذا كان رقم الشريك فارغاً، لا نتحقق
+                if (string.IsNullOrWhiteSpace(currentPartnerId))
+                    return;
+
+                // التحقق من عدم تكرار رقم الشريك في الصفوف الأخرى
+                foreach (DataGridViewRow row in this.dataGridView1.Rows)
+                {
+                    // تخطي الصف الحالي والصف الجديد
+                    if (row.Index == e.RowIndex || row.IsNewRow)
+                        continue;
+
+                    // قراءة رقم الشريك من الصف الآخر
+                    if (row.Cells["PartenerId"] != null && row.Cells["PartenerId"].Value != null)
+                    {
+                        string otherPartnerId = row.Cells["PartenerId"].Value.ToString().Trim();
+                        
+                        // إذا كان نفس رقم الشريك، عرض رسالة خطأ ومسح الحقل
+                        if (!string.IsNullOrWhiteSpace(otherPartnerId) && otherPartnerId == currentPartnerId)
+                        {
+                            MessageBox.Show("تم إدخال هذا الشريك مسبقاً. لا يمكن تكرار نفس الشريك", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            
+                            // مسح رقم الشريك واسم الشريك من الصف الحالي
+                            if (currentRow.Cells["PartenerId"] != null)
+                                currentRow.Cells["PartenerId"].Value = "";
+                            if (currentRow.Cells["PartenerName"] != null)
+                                currentRow.Cells["PartenerName"].Value = "";
+                            
+                            // إعادة التركيز على خلية رقم الشريك
+                            this.dataGridView1.CurrentCell = currentRow.Cells["PartenerId"];
+                            this.dataGridView1.BeginEdit(true);
+                            return;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("حدث خطأ أثناء التحقق من رقم الشريك: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -2266,7 +2489,7 @@ namespace Water
             return totalDiscounts;
         }
 
-        private void txtPeriodId_KeyDown(object sender, KeyEventArgs e)
+       /* private void txtPeriodId_KeyDown(object sender, KeyEventArgs e)
         {
                if (e.KeyCode == Keys.F2 || e.KeyCode == Keys.Enter)
             {
@@ -2274,7 +2497,7 @@ namespace Water
                 // استخدام الكلاس المساعد الموحد
                 Clas.PeriodHelper.ShowPeriodsList(txtPeriodId, txtPeriodStartDate, txtPeriodEndDate);
             }
-        }
+        }*/
 
        
         public void AddPostFormSales()
@@ -2299,10 +2522,10 @@ namespace Water
                     txtCustomerName.Text.Trim(),                   // cus_part_name (لو ما عندك كنترول للاسم خله "")
                     string.IsNullOrWhiteSpace(txtDueAmount.Text)
                         ? 0
-                        : Convert.ToDouble(txtDueAmount.Text),   // dr_amt
+                        : Convert.ToDouble(RemoveFormatting(txtDueAmount.Text)),   // dr_amt
                 string.IsNullOrWhiteSpace(txtPaidAmount.Text)
                         ? 0
-                        : Convert.ToDouble(txtPaidAmount.Text),                                             // cr_amt (أو بدّل بينهم حسب طبيعة القيد)
+                        : Convert.ToDouble(RemoveFormatting(txtPaidAmount.Text)),                                             // cr_amt (أو بدّل بينهم حسب طبيعة القيد)
                     dateTimePicker1.Value.Date,                       // date
                     dtpStartTime.Value,                            // start_time (DateTime)
                     dtpEndTime.Value,                              // end_time   (DateTime)
@@ -2326,16 +2549,119 @@ namespace Water
                         : Convert.ToDouble(txtDieselMinutesPrice.Text),   // diesel_Minutes_price
                     string.IsNullOrWhiteSpace(textWaterTotalPrice.Text)
                         ? 0
-                        : Convert.ToDouble(textWaterTotalPrice.Text),     // water_total
+                        : Convert.ToDouble(RemoveFormatting(textWaterTotalPrice.Text)),     // water_total
                     string.IsNullOrWhiteSpace(txtDieselTotalPrice.Text)
                         ? 0
-                        : Convert.ToDouble(txtDieselTotalPrice.Text),     // diesel_total
+                        : Convert.ToDouble(RemoveFormatting(txtDieselTotalPrice.Text)),     // diesel_total
                     string.IsNullOrWhiteSpace(txtTotalAmount.Text)
                         ? 0
-                        : Convert.ToDouble(txtTotalAmount.Text),          // total_amount
+                        : Convert.ToDouble(RemoveFormatting(txtTotalAmount.Text)),          // total_amount
                     txtNote.Text.Trim(),                                            // note
                     ""                          // user_id
                 );
+        }
+
+        private void txtPaidAmount_Leave(object sender, EventArgs e)
+        {
+            if (double.TryParse(txtPaidAmount.Text, out double value))
+            {
+                txtPaidAmount.Text = value.ToString("N2");  // مثل 1,250.00
+            }
+        }
+
+        private void txtPeriodId_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F2 || e.KeyCode == Keys.Enter)
+            {
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+                isLoadingPeriodFromList = true;
+                Clas.PeriodHelper.ShowPeriodsList(txtPeriodId, txtPeriodStartDate, txtPeriodEndDate);
+                isLoadingPeriodFromList = false;
+            }
+        }
+
+        private void txtPeriodId_Leave(object sender, EventArgs e)
+        {
+            // إذا كان يتم تحميل البيانات من القائمة، لا نتحقق مرة أخرى
+            if (isLoadingPeriodFromList)
+                return;
+
+            // التحقق من وجود رقم الفترة عند الانتقال من الحقل
+            if (txtPeriodId == null || string.IsNullOrWhiteSpace(txtPeriodId.Text))
+            {
+                // مسح حقول الفترة إذا كان الحقل فارغاً
+                if (txtPeriodStartDate != null)
+                    txtPeriodStartDate.Clear();
+                if (txtPeriodEndDate != null)
+                    txtPeriodEndDate.Clear();
+                return;
+            }
+
+            try
+            {
+                string periodId = txtPeriodId.Text.Trim();
+                
+                // التحقق من وجود الفترة في قاعدة البيانات
+                DataTable dt = period.VIEW_PERIOD(periodId);
+
+                if (dt == null || dt.Rows.Count == 0)
+                {
+                    MessageBox.Show("رقم الفترة غير موجود", "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    txtPeriodId.Focus();
+                    // مسح حقول الفترة
+                    if (txtPeriodStartDate != null)
+                        txtPeriodStartDate.Clear();
+                    if (txtPeriodEndDate != null)
+                        txtPeriodEndDate.Clear();
+                    return;
+                }
+
+                // تحميل بيانات الفترة وعرضها في الحقول
+                LoadPeriodDataToBill(dt.Rows[0]);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("حدث خطأ أثناء التحقق من رقم الفترة: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                txtPeriodId.Focus();
+            }
+        }
+
+        // دالة لتحميل بيانات الفترة وعرضها في الحقول
+        private void LoadPeriodDataToBill(DataRow row)
+        {
+            try
+            {
+                // عرض بداية الفترة
+                if (txtPeriodStartDate != null)
+                {
+                    if (row["start_date"] != DBNull.Value)
+                    {
+                        txtPeriodStartDate.Text = Convert.ToDateTime(row["start_date"]).ToString("dd/MM/yyyy");
+                    }
+                    else
+                    {
+                        txtPeriodStartDate.Clear();
+                    }
+                }
+
+                // عرض نهاية الفترة
+                if (txtPeriodEndDate != null)
+                {
+                    if (row["end_date"] != DBNull.Value)
+                    {
+                        txtPeriodEndDate.Text = Convert.ToDateTime(row["end_date"]).ToString("dd/MM/yyyy");
+                    }
+                    else
+                    {
+                        txtPeriodEndDate.Clear();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("حدث خطأ أثناء تحميل بيانات الفترة: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

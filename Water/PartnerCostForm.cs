@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Globalization;
 
 namespace Water
 {
@@ -27,9 +28,9 @@ namespace Water
             btnDelete.Click += btnDelete_Click;
             btnSave.Click += btnSave_Click;
 
-            // ربط حدث اختيار رقم التوقف
-            cmbDownTimeId.SelectedIndexChanged += cmbDownTimeId_SelectedIndexChanged;
-            cmbDownTimeId.KeyDown += cmbDownTimeId_KeyDown;
+            // ربط أحداث رقم التوقف
+            txtDownTimeId.KeyDown += txtDownTimeId_KeyDown;
+            txtDownTimeId.Leave += txtDownTimeId_Leave;
 
             // ربط أحداث حساب الساعات والدقائق تلقائياً
             dtpStartTime.ValueChanged += DateTimePicker_ValueChanged;
@@ -38,35 +39,52 @@ namespace Water
             // ربط أحداث DataGridView والزر
             btnDistributeAmount.Click += btnDistributeAmount_Click;
 
-            // تحميل بيانات downtime في ComboBox
-            LoadDownTimeData();
-
             // تهيئة DataGridView
             InitializeDataGridView();
         }
 
-        private void LoadDownTimeData()
-        {
-            try
-            {
-                // تحميل التوقفات التي لم يتم تقسيمها بعد (isProcessed = 0)
-                DataTable dt = downtime.GET_UNPROCESSED_DOWNTIMES();
-                cmbDownTimeId.DataSource = dt;
-                cmbDownTimeId.DisplayMember = "id";
-                cmbDownTimeId.ValueMember = "id";
-                cmbDownTimeId.SelectedIndex = -1;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("حدث خطأ أثناء تحميل بيانات التوقف: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void cmbDownTimeId_KeyDown(object sender, KeyEventArgs e)
+        private void txtDownTimeId_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.F2 || e.KeyCode == Keys.Enter)
             {
+                e.Handled = true;
+                e.SuppressKeyPress = true;
                 ShowDownTimeList();
+            }
+        }
+
+        private void txtDownTimeId_Leave(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(txtDownTimeId.Text))
+            {
+                try
+                {
+                    string downTimeId = txtDownTimeId.Text.Trim();
+                    DataTable dt = downtime.VIEW_DOWNTIME(downTimeId);
+                    if (dt.Rows.Count > 0)
+                    {
+                        // التحقق من أن التوقف غير مقسم (isProcessed = 0)
+                        DataRow row = dt.Rows[0];
+                        if (row["isProcessed"] != DBNull.Value && Convert.ToInt32(row["isProcessed"]) == 1)
+                        {
+                            MessageBox.Show("هذا التوقف تم تقسيمه مسبقاً", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            txtDownTimeId.Clear();
+                            txtDownTimeId.Focus();
+                            return;
+                        }
+                        LoadDownTimeDataToForm(row);
+                    }
+                    else
+                    {
+                        MessageBox.Show("رقم التوقف غير موجود", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        txtDownTimeId.Clear();
+                        txtDownTimeId.Focus();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("حدث خطأ أثناء تحميل بيانات التوقف: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
@@ -99,7 +117,7 @@ namespace Water
                 dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
                 dgv.RightToLeft = RightToLeft.Yes;
 
-                dgv.CellDoubleClick += (s, args) =>
+                dgv.CellClick += (s, args) =>
                 {
                     if (args.RowIndex >= 0)
                     {
@@ -118,31 +136,33 @@ namespace Water
             }
         }
 
-        private void cmbDownTimeId_SelectedIndexChanged(object sender, EventArgs e)
+
+        // دالة لتنسيق الأرقام بفواصل الآلاف
+        private string FormatNumber(object value)
         {
-            if (cmbDownTimeId.SelectedIndex >= 0 && cmbDownTimeId.SelectedValue != null)
+            if (value == null || value == DBNull.Value)
+                return "";
+            
+            if (double.TryParse(value.ToString().Replace(",", ""), out double num))
             {
-                try
-                {
-                    string downTimeId = cmbDownTimeId.SelectedValue.ToString();
-                    DataTable dt = downtime.VIEW_DOWNTIME(downTimeId);
-                    if (dt.Rows.Count > 0)
-                    {
-                        LoadDownTimeDataToForm(dt.Rows[0]);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("حدث خطأ أثناء تحميل بيانات التوقف: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                return num.ToString("N0", new CultureInfo("en-US"));
             }
+            return value.ToString();
+        }
+
+        // دالة لإزالة التنسيق من الأرقام
+        private string RemoveFormatting(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                return "";
+            return value.Replace(",", "").Trim();
         }
 
         private void LoadDownTimeDataToForm(DataRow row)
         {
             try
             {
-                cmbDownTimeId.Text = row["id"].ToString();
+                txtDownTimeId.Text = row["id"].ToString();
 
                 if (row["period_id"] != DBNull.Value)
                 {
@@ -196,7 +216,11 @@ namespace Water
 
                 if (row["amount"] != DBNull.Value)
                 {
-                    txtAmount.Text = row["amount"].ToString();
+                    txtAmount.Text = FormatNumber(row["amount"]);
+                }
+                else
+                {
+                    txtAmount.Clear();
                 }
 
                 if (row["note"] != DBNull.Value)
@@ -307,7 +331,7 @@ namespace Water
                 txtCostId.Text = "1";
             }
             btnSave.Text = "حفظ";
-            cmbDownTimeId.Enabled = true;
+            txtDownTimeId.Enabled = true;
             cmpDocType.Enabled = true;
            // btnDistributeAmount.Enabled = true;
             btnSave.Enabled = false;
@@ -336,7 +360,7 @@ namespace Water
                 isEditMode = true;
                 btnSave.Enabled = true;
                 btnDistributeAmount.Enabled = true;
-                 cmbDownTimeId.Enabled = true;
+                txtDownTimeId.Enabled = true;
                 cmpDocType.Enabled = true;
                 btnSave.Text = "تحديث";
             }
@@ -369,13 +393,9 @@ namespace Water
                     {
                         downTimeId = dt.Rows[0]["down_timeId"].ToString();
                     }
-                    else if (cmbDownTimeId.SelectedValue != null && cmbDownTimeId.SelectedValue != DBNull.Value)
+                    else if (!string.IsNullOrWhiteSpace(txtDownTimeId.Text))
                     {
-                        downTimeId = cmbDownTimeId.SelectedValue.ToString();
-                    }
-                    else if (!string.IsNullOrWhiteSpace(cmbDownTimeId.Text))
-                    {
-                        downTimeId = cmbDownTimeId.Text.Trim();
+                        downTimeId = txtDownTimeId.Text.Trim();
                     }
                     
                     partner_Cost_mst.DELETE_PARTNER_COST_MST(costId);
@@ -408,11 +428,11 @@ namespace Water
                      MessageBox.Show("الرجاء إدخال رقم التكلفة", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                      return;
                  } */
-                string downTimeId = cmbDownTimeId.SelectedValue.ToString();
+                string downTimeId = txtDownTimeId.Text.Trim();
                 if (string.IsNullOrWhiteSpace(downTimeId))
                 {
-                    MessageBox.Show("الرجاء اختيار التوقف", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    cmbDownTimeId.Focus();
+                    MessageBox.Show("الرجاء إدخال رقم التوقف", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtDownTimeId.Focus();
                     return;
                 }
 
@@ -427,7 +447,7 @@ namespace Water
                 int? minutes = string.IsNullOrWhiteSpace(txtMinutes.Text) ? (int?)null : Convert.ToInt32(txtMinutes.Text);
                 DateTime? startTime = dtpStartTime.Checked ? (DateTime?)dtpStartTime.Value : null;
                 DateTime? endTime = dtpEndTime.Checked ? (DateTime?)dtpEndTime.Value : null;
-                double? amount = string.IsNullOrWhiteSpace(txtAmount.Text) ? (double?)null : Convert.ToDouble(txtAmount.Text);
+                double? amount = string.IsNullOrWhiteSpace(txtAmount.Text) ? (double?)null : Convert.ToDouble(RemoveFormatting(txtAmount.Text));
                 string note = txtNote.Text.Trim();
 
                 if (isEditMode)
@@ -565,11 +585,11 @@ namespace Water
 
             if (row["down_timeId"] != DBNull.Value)
             {
-                cmbDownTimeId.Text = row["down_timeId"].ToString();
+                txtDownTimeId.Text = row["down_timeId"].ToString();
             }
             else
             {
-                cmbDownTimeId.SelectedIndex = -1;
+                txtDownTimeId.Clear();
             }
 
             if (row["down_timeNote"] != DBNull.Value)
@@ -639,7 +659,7 @@ namespace Water
 
             if (row["amount"] != DBNull.Value)
             {
-                txtAmount.Text = row["amount"].ToString();
+                txtAmount.Text = FormatNumber(row["amount"]);
             }
             else
             {
@@ -666,7 +686,7 @@ namespace Water
             cmpDocType.SelectedIndex = -1;
             dtpDate.Value = DateTime.Now;
             dtpDate.Checked = false;
-            cmbDownTimeId.SelectedIndex = -1;
+            txtDownTimeId.Clear();
             txtDownTimeNote.Clear();
             txtPeriodId.Clear();
             txtDayesCount.Clear();
@@ -766,13 +786,13 @@ namespace Water
             try
             {
                 // التحقق من وجود رقم التوقف
-                if (cmbDownTimeId.SelectedValue == null && string.IsNullOrWhiteSpace(cmbDownTimeId.Text))
+                if (string.IsNullOrWhiteSpace(txtDownTimeId.Text))
                 {
-                    MessageBox.Show("الرجاء اختيار رقم التوقف أولاً", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("الرجاء إدخال رقم التوقف أولاً", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                string downTimeId = cmbDownTimeId.SelectedValue != null ? cmbDownTimeId.SelectedValue.ToString() : cmbDownTimeId.Text;
+                string downTimeId = txtDownTimeId.Text.Trim();
 
                 // استدعاء الـ Stored Procedure
                 DataTable dt = partner_Cost_dtl.AllocateDowntimeAmountToPartners(downTimeId);
@@ -818,11 +838,11 @@ namespace Water
                     // تعبئة المبلغ المخصص
                     if (row["allocated_amount"] != DBNull.Value)
                     {
-                        dgvRow.Cells["allocated_amount"].Value = row["allocated_amount"].ToString();
+                        dgvRow.Cells["allocated_amount"].Value = FormatNumber(row["allocated_amount"]);
                     }
                 }
                 
-                cmbDownTimeId.Enabled = false;
+                txtDownTimeId.Enabled = false;
                 cmpDocType.Enabled = false;
                 btnSave.Enabled = true;
                 MessageBox.Show("تم توزيع المبلغ بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -868,7 +888,7 @@ namespace Water
 
                     if (row["allocated_amount"] != DBNull.Value)
                     {
-                        dgvRow.Cells["allocated_amount"].Value = row["allocated_amount"].ToString();
+                        dgvRow.Cells["allocated_amount"].Value = FormatNumber(row["allocated_amount"]);
                     }
 
                     if (row["note"] != DBNull.Value)
@@ -927,7 +947,7 @@ namespace Water
 
                     if (row.Cells["allocated_amount"].Value != null && !string.IsNullOrWhiteSpace(row.Cells["allocated_amount"].Value.ToString()))
                     {
-                        allocatedAmount = Convert.ToDouble(row.Cells["allocated_amount"].Value);
+                        allocatedAmount = Convert.ToDouble(RemoveFormatting(row.Cells["allocated_amount"].Value.ToString()));
                     }
 
                     if (row.Cells["note"].Value != null)

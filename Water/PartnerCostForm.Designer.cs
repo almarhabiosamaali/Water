@@ -34,7 +34,7 @@ namespace Water
             this.lblDate = new System.Windows.Forms.Label();
             this.dtpDate = new System.Windows.Forms.DateTimePicker();
             this.lblDownTimeId = new System.Windows.Forms.Label();
-            this.cmbDownTimeId = new System.Windows.Forms.ComboBox();
+            this.txtDownTimeId = new System.Windows.Forms.TextBox();
             this.lblDownTimeNote = new System.Windows.Forms.Label();
             this.txtDownTimeNote = new System.Windows.Forms.TextBox();
             this.lblPeriodId = new System.Windows.Forms.Label();
@@ -135,15 +135,16 @@ namespace Water
             this.lblDownTimeId.TabIndex = 6;
             this.lblDownTimeId.Text = "رقم التوقف:";
             // 
-            // cmbDownTimeId
+            // txtDownTimeId
             // 
-            this.cmbDownTimeId.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbDownTimeId.FormattingEnabled = true;
-            this.cmbDownTimeId.Location = new System.Drawing.Point(121, 98);
-            this.cmbDownTimeId.Name = "cmbDownTimeId";
-            this.cmbDownTimeId.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.cmbDownTimeId.Size = new System.Drawing.Size(158, 28);
-            this.cmbDownTimeId.TabIndex = 4;
+            this.txtDownTimeId.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtDownTimeId.Location = new System.Drawing.Point(121, 98);
+            this.txtDownTimeId.Name = "txtDownTimeId";
+            this.txtDownTimeId.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.txtDownTimeId.Size = new System.Drawing.Size(158, 26);
+            this.txtDownTimeId.TabIndex = 4;
+            this.txtDownTimeId.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtDownTimeId.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNumeric_KeyPress);
             // 
             // lblDownTimeNote
             // 
@@ -513,7 +514,7 @@ namespace Water
             this.Controls.Add(this.lblPeriodId);
             this.Controls.Add(this.txtDownTimeNote);
             this.Controls.Add(this.lblDownTimeNote);
-            this.Controls.Add(this.cmbDownTimeId);
+            this.Controls.Add(this.txtDownTimeId);
             this.Controls.Add(this.lblDownTimeId);
             this.Controls.Add(this.dtpDate);
             this.Controls.Add(this.lblDate);
@@ -542,7 +543,7 @@ namespace Water
         private System.Windows.Forms.Label lblDate;
         private System.Windows.Forms.DateTimePicker dtpDate;
         private System.Windows.Forms.Label lblDownTimeId;
-        private System.Windows.Forms.ComboBox cmbDownTimeId;
+        private System.Windows.Forms.TextBox txtDownTimeId;
         private System.Windows.Forms.Label lblDownTimeNote;
         private System.Windows.Forms.TextBox txtDownTimeNote;
         private System.Windows.Forms.Label lblPeriodId;

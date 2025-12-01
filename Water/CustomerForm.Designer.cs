@@ -68,6 +68,7 @@ namespace Water
             this.txtCustomerCode.ReadOnly = true;
             this.txtCustomerCode.Size = new System.Drawing.Size(263, 26);
             this.txtCustomerCode.TabIndex = 1;
+            this.txtCustomerCode.TabStop = false;
             this.txtCustomerCode.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // lblCustomerName
@@ -119,7 +120,7 @@ namespace Water
             this.txtPhone.Name = "txtPhone";
             this.txtPhone.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtPhone.Size = new System.Drawing.Size(263, 26);
-            this.txtPhone.TabIndex = 7;
+            this.txtPhone.TabIndex = 5;
             // 
             // lblAddress
             // 
@@ -139,7 +140,7 @@ namespace Water
             this.txtAddress.Name = "txtAddress";
             this.txtAddress.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtAddress.Size = new System.Drawing.Size(263, 26);
-            this.txtAddress.TabIndex = 9;
+            this.txtAddress.TabIndex = 7;
             // 
             // lblNotes
             // 
@@ -160,7 +161,7 @@ namespace Water
             this.txtNotes.Name = "txtNotes";
             this.txtNotes.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtNotes.Size = new System.Drawing.Size(263, 80);
-            this.txtNotes.TabIndex = 11;
+            this.txtNotes.TabIndex = 9;
             // 
             // lblCreatedDate
             // 
@@ -182,7 +183,7 @@ namespace Water
             this.dtpCreatedDate.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.dtpCreatedDate.RightToLeftLayout = true;
             this.dtpCreatedDate.Size = new System.Drawing.Size(263, 26);
-            this.dtpCreatedDate.TabIndex = 13;
+            this.dtpCreatedDate.TabIndex = 11;
             // 
             // btnView
             // 
@@ -192,6 +193,7 @@ namespace Water
             this.btnView.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnView.Size = new System.Drawing.Size(74, 40);
             this.btnView.TabIndex = 14;
+            this.btnView.TabStop = false;
             this.btnView.Text = "عرض";
             this.btnView.UseVisualStyleBackColor = true;
             // 
@@ -202,7 +204,7 @@ namespace Water
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnAdd.Size = new System.Drawing.Size(74, 40);
-            this.btnAdd.TabIndex = 15;
+            this.btnAdd.TabIndex = 1;
             this.btnAdd.Text = "إضافة";
             this.btnAdd.UseVisualStyleBackColor = true;
             // 
@@ -214,6 +216,7 @@ namespace Water
             this.btnEdit.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnEdit.Size = new System.Drawing.Size(74, 40);
             this.btnEdit.TabIndex = 16;
+            this.btnEdit.TabStop = false;
             this.btnEdit.Text = "تعديل";
             this.btnEdit.UseVisualStyleBackColor = true;
             // 
@@ -225,6 +228,7 @@ namespace Water
             this.btnDelete.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnDelete.Size = new System.Drawing.Size(74, 40);
             this.btnDelete.TabIndex = 17;
+            this.btnDelete.TabStop = false;
             this.btnDelete.Text = "حذف";
             this.btnDelete.UseVisualStyleBackColor = true;
             // 
@@ -235,7 +239,7 @@ namespace Water
             this.btnSave.Name = "btnSave";
             this.btnSave.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnSave.Size = new System.Drawing.Size(74, 40);
-            this.btnSave.TabIndex = 14;
+            this.btnSave.TabIndex = 13;
             this.btnSave.Text = "حفظ";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
@@ -253,6 +257,7 @@ namespace Water
             this.cmbType.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.cmbType.Size = new System.Drawing.Size(263, 28);
             this.cmbType.TabIndex = 5;
+            this.cmbType.TabStop = false;
             // 
             // CustomerForm
             // 

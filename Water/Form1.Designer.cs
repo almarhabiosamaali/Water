@@ -86,7 +86,7 @@
             this.btnExpenses.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnExpenses.Size = new System.Drawing.Size(175, 50);
             this.btnExpenses.TabIndex = 3;
-            this.btnExpenses.Text = "القيود اليومية";
+            this.btnExpenses.Text = "السندات";
             this.btnExpenses.UseVisualStyleBackColor = true;
             this.btnExpenses.Click += new System.EventHandler(this.btnExpenses_Click);
             // 

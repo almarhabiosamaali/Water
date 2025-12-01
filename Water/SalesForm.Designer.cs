@@ -438,6 +438,8 @@ namespace Water
             this.txtPaidAmount.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtPaidAmount.Size = new System.Drawing.Size(262, 26);
             this.txtPaidAmount.TabIndex = 17;
+            this.txtPaidAmount.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtDecimal_KeyPress);
+            this.txtPaidAmount.Leave += new System.EventHandler(this.txtPaidAmount_Leave);
             // 
             // lblPaidAmount
             // 
@@ -657,6 +659,7 @@ namespace Water
             this.txtPeriodId.Size = new System.Drawing.Size(135, 26);
             this.txtPeriodId.TabIndex = 5;
             this.txtPeriodId.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPeriodId_KeyDown);
+            this.txtPeriodId.Leave += new System.EventHandler(this.txtPeriodId_Leave);
             // 
             // txtCustomerName
             // 

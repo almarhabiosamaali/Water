@@ -74,7 +74,8 @@ namespace Water
             this.txtPriceLevelId.ReadOnly = true;
             this.txtPriceLevelId.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.txtPriceLevelId.Size = new System.Drawing.Size(100, 26);
-            this.txtPriceLevelId.TabIndex = 1;
+            this.txtPriceLevelId.TabIndex = 0;
+            this.txtPriceLevelId.TabStop = false;
             this.txtPriceLevelId.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // lblLevelName
@@ -95,7 +96,7 @@ namespace Water
             this.txtLevelName.Name = "txtLevelName";
             this.txtLevelName.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtLevelName.Size = new System.Drawing.Size(222, 26);
-            this.txtLevelName.TabIndex = 3;
+            this.txtLevelName.TabIndex = 1;
             // 
             // lblPricingDate
             // 
@@ -117,7 +118,7 @@ namespace Water
             this.dtpPricingDate.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.dtpPricingDate.RightToLeftLayout = true;
             this.dtpPricingDate.Size = new System.Drawing.Size(263, 26);
-            this.dtpPricingDate.TabIndex = 5;
+            this.dtpPricingDate.TabIndex = 2;
             // 
             // lblDieselHourPrice
             // 
@@ -137,7 +138,7 @@ namespace Water
             this.txtDieselHourPrice.Name = "txtDieselHourPrice";
             this.txtDieselHourPrice.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtDieselHourPrice.Size = new System.Drawing.Size(166, 26);
-            this.txtDieselHourPrice.TabIndex = 7;
+            this.txtDieselHourPrice.TabIndex = 4;
             this.txtDieselHourPrice.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNumeric_KeyPress);
             // 
             // lblDieselMinutePrice
@@ -160,6 +161,7 @@ namespace Water
             this.txtDieselMinutePrice.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtDieselMinutePrice.Size = new System.Drawing.Size(175, 26);
             this.txtDieselMinutePrice.TabIndex = 9;
+            this.txtDieselMinutePrice.TabStop = false;
             this.txtDieselMinutePrice.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNumeric_KeyPress);
             // 
             // lblDieselUsedHour
@@ -180,7 +182,7 @@ namespace Water
             this.txtDieselUsedHour.Name = "txtDieselUsedHour";
             this.txtDieselUsedHour.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtDieselUsedHour.Size = new System.Drawing.Size(171, 26);
-            this.txtDieselUsedHour.TabIndex = 11;
+            this.txtDieselUsedHour.TabIndex = 5;
             this.txtDieselUsedHour.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNumeric_KeyPress);
             // 
             // lblDieselUsedMinute
@@ -203,6 +205,7 @@ namespace Water
             this.txtDieselUsedMinute.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtDieselUsedMinute.Size = new System.Drawing.Size(202, 26);
             this.txtDieselUsedMinute.TabIndex = 13;
+            this.txtDieselUsedMinute.TabStop = false;
             this.txtDieselUsedMinute.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNumeric_KeyPress);
             // 
             // lblWaterHourPrice
@@ -223,7 +226,7 @@ namespace Water
             this.txtWaterHourPrice.Name = "txtWaterHourPrice";
             this.txtWaterHourPrice.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtWaterHourPrice.Size = new System.Drawing.Size(171, 26);
-            this.txtWaterHourPrice.TabIndex = 15;
+            this.txtWaterHourPrice.TabIndex = 3;
             this.txtWaterHourPrice.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNumeric_KeyPress);
             // 
             // lblWaterMinutePrice
@@ -246,6 +249,7 @@ namespace Water
             this.txtWaterMinutePrice.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtWaterMinutePrice.Size = new System.Drawing.Size(198, 26);
             this.txtWaterMinutePrice.TabIndex = 17;
+            this.txtWaterMinutePrice.TabStop = false;
             this.txtWaterMinutePrice.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNumeric_KeyPress);
             // 
             // lblNotes
@@ -267,7 +271,7 @@ namespace Water
             this.txtNotes.Name = "txtNotes";
             this.txtNotes.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtNotes.Size = new System.Drawing.Size(767, 60);
-            this.txtNotes.TabIndex = 19;
+            this.txtNotes.TabIndex = 6;
             // 
             // btnView
             // 
@@ -277,6 +281,7 @@ namespace Water
             this.btnView.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnView.Size = new System.Drawing.Size(74, 40);
             this.btnView.TabIndex = 20;
+            this.btnView.TabStop = false;
             this.btnView.Text = "عرض";
             this.btnView.UseVisualStyleBackColor = true;
             // 
@@ -287,7 +292,7 @@ namespace Water
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnAdd.Size = new System.Drawing.Size(74, 40);
-            this.btnAdd.TabIndex = 21;
+            this.btnAdd.TabIndex = 0;
             this.btnAdd.Text = "إضافة";
             this.btnAdd.UseVisualStyleBackColor = true;
             // 
@@ -299,6 +304,7 @@ namespace Water
             this.btnEdit.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnEdit.Size = new System.Drawing.Size(74, 40);
             this.btnEdit.TabIndex = 22;
+            this.btnEdit.TabStop = false;
             this.btnEdit.Text = "تعديل";
             this.btnEdit.UseVisualStyleBackColor = true;
             // 
@@ -310,6 +316,7 @@ namespace Water
             this.btnDelete.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnDelete.Size = new System.Drawing.Size(74, 40);
             this.btnDelete.TabIndex = 23;
+            this.btnDelete.TabStop = false;
             this.btnDelete.Text = "حذف";
             this.btnDelete.UseVisualStyleBackColor = true;
             // 
@@ -320,7 +327,7 @@ namespace Water
             this.btnSave.Name = "btnSave";
             this.btnSave.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnSave.Size = new System.Drawing.Size(74, 40);
-            this.btnSave.TabIndex = 24;
+            this.btnSave.TabIndex = 7;
             this.btnSave.Text = "حفظ";
             this.btnSave.UseVisualStyleBackColor = true;
             // 
