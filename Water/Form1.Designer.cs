@@ -557,5 +557,6 @@
         private System.Windows.Forms.Panel pnlChart;
         private System.Windows.Forms.Label lblChartTitle;
         private System.Windows.Forms.TreeView treeViewReports;
-        private System.Windows.Forms.PictureBox pictu    }
+        private System.Windows.Forms.PictureBox pictureBox1;
+    }
 }

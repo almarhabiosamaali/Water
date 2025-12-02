@@ -169,6 +169,18 @@
     <Compile Include="RPT\reportCaller.Designer.cs">
       <DependentUpon>reportCaller.cs</DependentUpon>
     </Compile>
+    <Compile Include="RPT\salesBillDTL.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>salesBillDTL.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="salesBillDTLRPT.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="salesBillDTLRPT.Designer.cs">
+      <DependentUpon>salesBillDTLRPT.cs</DependentUpon>
+    </Compile>
     <Compile Include="SalesForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -261,6 +273,13 @@
     </EmbeddedResource>
     <EmbeddedResource Include="RPT\reportCaller.resx">
       <DependentUpon>reportCaller.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RPT\salesBillDTL.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>salesBillDTL.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="salesBillDTLRPT.resx">
+      <DependentUpon>salesBillDTLRPT.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SalesForm.resx">
       <DependentUpon>SalesForm.cs</DependentUpon>

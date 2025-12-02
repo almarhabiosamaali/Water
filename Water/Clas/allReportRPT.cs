@@ -50,5 +50,26 @@ namespace Water.Clas
             DBL.Close();
             return dt;
         }
+
+
+        public DataTable PRINT_SALES_BILL(string p_where)
+        {
+
+            Clas.DataAccessLayer DBL = new Clas.DataAccessLayer();
+            DBL.Open();
+            SqlParameter[] param = new SqlParameter[1];
+            param[0] = new SqlParameter("@p_where", SqlDbType.VarChar, 500);
+            param[0].Value = p_where;
+
+
+
+            DataTable dt = new DataTable();
+            dt = DBL.SelectData("proc_sales_bill_RPT", param);
+
+
+
+            DBL.Close();
+            return dt;
+        }
     }
 }

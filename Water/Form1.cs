@@ -48,7 +48,12 @@ namespace Water
             TreeNode customerReportNode = new TreeNode("تقارير العملاء");
             customerReportNode.Tag = "CUSTOMER_REPORT";
             rootNode.Nodes.Add(customerReportNode);
-            
+
+            // إضافة تقارير المبيعات
+            TreeNode salesBillNode = new TreeNode("تقارير المبيعات");
+            salesBillNode.Tag = "SALES_REPORT";
+            rootNode.Nodes.Add(salesBillNode);
+
             treeViewReports.Nodes.Add(rootNode);
             rootNode.Expand(); // توسيع العقدة الرئيسية
         }
@@ -299,6 +304,9 @@ namespace Water
                     break;
                 case "CUSTOMER_REPORT":
                     reportForm = new customerMovementRPT();
+                    break;
+                case "SALES_REPORT":
+                    reportForm = new salesBillDTLRPT();
                     break;
             }
 
