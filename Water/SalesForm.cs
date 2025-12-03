@@ -2663,6 +2663,35 @@ namespace Water
                 MessageBox.Show("حدث خطأ أثناء تحميل بيانات الفترة: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void btnDstAmount_Click(object sender, EventArgs e)
+        {
+            double padMdasel = (Convert.ToDouble(txtPaidAmount.Text) - Convert.ToDouble(txtDieselTotalPrice.Text));
+            if (padMdasel >= 0)
+            {
+                this.calculat_Distribution(padMdasel);
+            }
+            else
+            {
+                MessageBox.Show("يجب ان يكون المبلغ المدفوع اكبر من اجمالي قيمه الديزل لكي يتم الاحتساب");
+            }
+            
+            
+        }
+
+
+        private void calculat_Distribution (double total_water)
+        {
+            double hours = string.IsNullOrWhiteSpace(txtHours.Text) ? 0 : Convert.ToDouble(txtHours.Text);
+            double minutes = string.IsNullOrWhiteSpace(txtMinutes.Text) ? 0 : Convert.ToDouble(txtMinutes.Text);
+            double total_h_m = ((hours * 60) + minutes);
+            double m_price = Math.Round(total_water / total_h_m, 3);
+            double h_price = Math.Round(m_price * 60, 3);
+
+            txtWaterHourPrice.Text = h_price.ToString();
+            txtWaterMinutesPrice.Text = m_price.ToString();
+
+        }
     }
 }
 
