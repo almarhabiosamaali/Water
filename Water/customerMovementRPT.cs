@@ -36,10 +36,26 @@ namespace Water
         {
             string p = "";
 
+            if (!string.IsNullOrEmpty(txtCustNo.Text))
+            {
+                p += " and cus_part_no = '" + txtCustNo.Text + "'";
+            }
+            if (!string.IsNullOrEmpty(txtPeriodId.Text))
+            {
+                p += " and period_id = '" + txtPeriodId.Text + "'";
+            }
 
-
+            if (dtpFromDate.Value != null && dtpToDate.Value != null)
+            {
+                p += " and date between '"
+                    + dtpFromDate.Value.ToString("yyyy-MM-dd")
+                    + "' and '"
+                    + dtpToDate.Value.ToString("yyyy-MM-dd")
+                    + "'";
+            }
 
             return p;
         }
+
     }
 }
