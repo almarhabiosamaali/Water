@@ -60,11 +60,28 @@ namespace Water
                 if (txtPartnerID.Text != "")
                     p = p + " and partner_no = '" + txtPartnerID.Text + "'";
             }
-            else
+            if (!string.IsNullOrEmpty(txtPartnerID.Text))
+            {
+                p = p + " and partner_no = '" + txtPartnerID.Text + "'";
+            }
+            /*if (!string.IsNullOrEmpty(txtPeriodId.Text))
+            {
+                p += " and m.period_id = '" + txtPeriodId.Text + "'";
+            }*/
+
+            if (dtpFromDate.Value != null && dtpToDate.Value != null)
+            {
+                p += " and date between '"
+                    + dtpFromDate.Value.ToString("yyyy-MM-dd")
+                    + "' and '"
+                    + dtpToDate.Value.ToString("yyyy-MM-dd")
+                    + "'";
+            }
+            /*else
             {
                 if (txtPartnerID.Text != "")
                     p = p + " and m.partner_no = '" + txtPartnerID.Text + "'";
-            }
+            }*/
             
             
 
