@@ -53,13 +53,14 @@ namespace Water
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblPartnerCode
             // 
             this.lblPartnerCode.AutoSize = true;
             this.lblPartnerCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPartnerCode.Location = new System.Drawing.Point(26, 24);
+            this.lblPartnerCode.Location = new System.Drawing.Point(33, 108);
             this.lblPartnerCode.Name = "lblPartnerCode";
             this.lblPartnerCode.Size = new System.Drawing.Size(77, 20);
             this.lblPartnerCode.TabIndex = 0;
@@ -68,7 +69,7 @@ namespace Water
             // txtPartnerCode
             // 
             this.txtPartnerCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPartnerCode.Location = new System.Drawing.Point(155, 21);
+            this.txtPartnerCode.Location = new System.Drawing.Point(162, 105);
             this.txtPartnerCode.Name = "txtPartnerCode";
             this.txtPartnerCode.ReadOnly = true;
             this.txtPartnerCode.Size = new System.Drawing.Size(263, 26);
@@ -80,7 +81,7 @@ namespace Water
             // 
             this.lblPartnerName.AutoSize = true;
             this.lblPartnerName.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPartnerName.Location = new System.Drawing.Point(458, 24);
+            this.lblPartnerName.Location = new System.Drawing.Point(465, 108);
             this.lblPartnerName.Name = "lblPartnerName";
             this.lblPartnerName.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblPartnerName.Size = new System.Drawing.Size(77, 20);
@@ -90,7 +91,7 @@ namespace Water
             // txtPartnerName
             // 
             this.txtPartnerName.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPartnerName.Location = new System.Drawing.Point(583, 21);
+            this.txtPartnerName.Location = new System.Drawing.Point(590, 105);
             this.txtPartnerName.Name = "txtPartnerName";
             this.txtPartnerName.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtPartnerName.Size = new System.Drawing.Size(263, 26);
@@ -100,7 +101,7 @@ namespace Water
             // 
             this.lblAllocatedHours.AutoSize = true;
             this.lblAllocatedHours.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAllocatedHours.Location = new System.Drawing.Point(26, 72);
+            this.lblAllocatedHours.Location = new System.Drawing.Point(33, 156);
             this.lblAllocatedHours.Name = "lblAllocatedHours";
             this.lblAllocatedHours.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblAllocatedHours.Size = new System.Drawing.Size(123, 20);
@@ -110,7 +111,7 @@ namespace Water
             // txtAllocatedHours
             // 
             this.txtAllocatedHours.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtAllocatedHours.Location = new System.Drawing.Point(155, 69);
+            this.txtAllocatedHours.Location = new System.Drawing.Point(162, 153);
             this.txtAllocatedHours.Name = "txtAllocatedHours";
             this.txtAllocatedHours.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtAllocatedHours.Size = new System.Drawing.Size(263, 26);
@@ -122,7 +123,7 @@ namespace Water
             // 
             this.lblMinutes.AutoSize = true;
             this.lblMinutes.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMinutes.Location = new System.Drawing.Point(458, 72);
+            this.lblMinutes.Location = new System.Drawing.Point(465, 156);
             this.lblMinutes.Name = "lblMinutes";
             this.lblMinutes.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblMinutes.Size = new System.Drawing.Size(51, 20);
@@ -132,7 +133,7 @@ namespace Water
             // txtMinutes
             // 
             this.txtMinutes.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtMinutes.Location = new System.Drawing.Point(583, 69);
+            this.txtMinutes.Location = new System.Drawing.Point(590, 153);
             this.txtMinutes.Name = "txtMinutes";
             this.txtMinutes.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtMinutes.Size = new System.Drawing.Size(263, 26);
@@ -144,7 +145,7 @@ namespace Water
             // 
             this.lblAvalibleHours.AutoSize = true;
             this.lblAvalibleHours.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAvalibleHours.Location = new System.Drawing.Point(26, 120);
+            this.lblAvalibleHours.Location = new System.Drawing.Point(33, 204);
             this.lblAvalibleHours.Name = "lblAvalibleHours";
             this.lblAvalibleHours.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblAvalibleHours.Size = new System.Drawing.Size(103, 20);
@@ -154,7 +155,7 @@ namespace Water
             // txtAvalibleHours
             // 
             this.txtAvalibleHours.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtAvalibleHours.Location = new System.Drawing.Point(155, 117);
+            this.txtAvalibleHours.Location = new System.Drawing.Point(162, 201);
             this.txtAvalibleHours.Name = "txtAvalibleHours";
             this.txtAvalibleHours.ReadOnly = true;
             this.txtAvalibleHours.Size = new System.Drawing.Size(263, 26);
@@ -167,7 +168,7 @@ namespace Water
             // 
             this.lblAvalibleMinutes.AutoSize = true;
             this.lblAvalibleMinutes.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAvalibleMinutes.Location = new System.Drawing.Point(458, 120);
+            this.lblAvalibleMinutes.Location = new System.Drawing.Point(465, 204);
             this.lblAvalibleMinutes.Name = "lblAvalibleMinutes";
             this.lblAvalibleMinutes.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblAvalibleMinutes.Size = new System.Drawing.Size(94, 20);
@@ -177,7 +178,7 @@ namespace Water
             // txtAvalibleMinutes
             // 
             this.txtAvalibleMinutes.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtAvalibleMinutes.Location = new System.Drawing.Point(583, 117);
+            this.txtAvalibleMinutes.Location = new System.Drawing.Point(590, 201);
             this.txtAvalibleMinutes.Name = "txtAvalibleMinutes";
             this.txtAvalibleMinutes.ReadOnly = true;
             this.txtAvalibleMinutes.Size = new System.Drawing.Size(263, 26);
@@ -190,7 +191,7 @@ namespace Water
             // 
             this.lblPhone.AutoSize = true;
             this.lblPhone.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPhone.Location = new System.Drawing.Point(26, 168);
+            this.lblPhone.Location = new System.Drawing.Point(33, 252);
             this.lblPhone.Name = "lblPhone";
             this.lblPhone.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblPhone.Size = new System.Drawing.Size(50, 20);
@@ -200,7 +201,7 @@ namespace Water
             // txtPhone
             // 
             this.txtPhone.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPhone.Location = new System.Drawing.Point(155, 165);
+            this.txtPhone.Location = new System.Drawing.Point(162, 249);
             this.txtPhone.Name = "txtPhone";
             this.txtPhone.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtPhone.Size = new System.Drawing.Size(263, 26);
@@ -210,7 +211,7 @@ namespace Water
             // 
             this.lblAddress.AutoSize = true;
             this.lblAddress.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAddress.Location = new System.Drawing.Point(458, 168);
+            this.lblAddress.Location = new System.Drawing.Point(465, 252);
             this.lblAddress.Name = "lblAddress";
             this.lblAddress.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblAddress.Size = new System.Drawing.Size(53, 20);
@@ -220,7 +221,7 @@ namespace Water
             // txtAddress
             // 
             this.txtAddress.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtAddress.Location = new System.Drawing.Point(583, 165);
+            this.txtAddress.Location = new System.Drawing.Point(590, 249);
             this.txtAddress.Name = "txtAddress";
             this.txtAddress.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtAddress.Size = new System.Drawing.Size(263, 26);
@@ -230,7 +231,7 @@ namespace Water
             // 
             this.lblNotes.AutoSize = true;
             this.lblNotes.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNotes.Location = new System.Drawing.Point(26, 216);
+            this.lblNotes.Location = new System.Drawing.Point(33, 300);
             this.lblNotes.Name = "lblNotes";
             this.lblNotes.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblNotes.Size = new System.Drawing.Size(66, 20);
@@ -240,7 +241,7 @@ namespace Water
             // txtNotes
             // 
             this.txtNotes.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtNotes.Location = new System.Drawing.Point(155, 213);
+            this.txtNotes.Location = new System.Drawing.Point(162, 297);
             this.txtNotes.Multiline = true;
             this.txtNotes.Name = "txtNotes";
             this.txtNotes.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
@@ -251,7 +252,7 @@ namespace Water
             // 
             this.lblDate.AutoSize = true;
             this.lblDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDate.Location = new System.Drawing.Point(458, 311);
+            this.lblDate.Location = new System.Drawing.Point(465, 395);
             this.lblDate.Name = "lblDate";
             this.lblDate.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblDate.Size = new System.Drawing.Size(51, 20);
@@ -262,7 +263,7 @@ namespace Water
             // 
             this.dtpDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dtpDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpDate.Location = new System.Drawing.Point(583, 308);
+            this.dtpDate.Location = new System.Drawing.Point(590, 392);
             this.dtpDate.Name = "dtpDate";
             this.dtpDate.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.dtpDate.RightToLeftLayout = true;
@@ -271,66 +272,83 @@ namespace Water
             // 
             // btnView
             // 
+            this.btnView.BackColor = System.Drawing.Color.White;
             this.btnView.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnView.Location = new System.Drawing.Point(26, 360);
+            this.btnView.Image = global::Water.Properties.Resources.icons8_search_24_8;
+            this.btnView.Location = new System.Drawing.Point(338, 42);
             this.btnView.Name = "btnView";
             this.btnView.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.btnView.Size = new System.Drawing.Size(74, 40);
+            this.btnView.Size = new System.Drawing.Size(60, 40);
             this.btnView.TabIndex = 18;
-            this.btnView.Text = "عرض";
-            this.btnView.UseVisualStyleBackColor = true;
+            this.btnView.UseVisualStyleBackColor = false;
             // 
             // btnAdd
             // 
+            this.btnAdd.BackColor = System.Drawing.Color.White;
             this.btnAdd.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAdd.Location = new System.Drawing.Point(109, 360);
+            this.btnAdd.Image = global::Water.Properties.Resources.icons8_add_24;
+            this.btnAdd.Location = new System.Drawing.Point(406, 42);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.btnAdd.Size = new System.Drawing.Size(74, 40);
+            this.btnAdd.Size = new System.Drawing.Size(60, 40);
             this.btnAdd.TabIndex = 0;
-            this.btnAdd.Text = "إضافة";
-            this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.UseVisualStyleBackColor = false;
             // 
             // btnEdit
             // 
+            this.btnEdit.BackColor = System.Drawing.Color.White;
             this.btnEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEdit.Location = new System.Drawing.Point(192, 360);
+            this.btnEdit.Image = global::Water.Properties.Resources.icons8_edit_24_5;
+            this.btnEdit.Location = new System.Drawing.Point(472, 42);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.btnEdit.Size = new System.Drawing.Size(74, 40);
+            this.btnEdit.Size = new System.Drawing.Size(60, 40);
             this.btnEdit.TabIndex = 20;
             this.btnEdit.TabStop = false;
-            this.btnEdit.Text = "تعديل";
-            this.btnEdit.UseVisualStyleBackColor = true;
+            this.btnEdit.UseVisualStyleBackColor = false;
             // 
             // btnDelete
             // 
+            this.btnDelete.BackColor = System.Drawing.Color.White;
             this.btnDelete.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDelete.Location = new System.Drawing.Point(276, 360);
+            this.btnDelete.Image = global::Water.Properties.Resources.icons8_delete_24;
+            this.btnDelete.Location = new System.Drawing.Point(538, 42);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.btnDelete.Size = new System.Drawing.Size(74, 40);
+            this.btnDelete.Size = new System.Drawing.Size(60, 40);
             this.btnDelete.TabIndex = 21;
             this.btnDelete.TabStop = false;
-            this.btnDelete.Text = "حذف";
-            this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.UseVisualStyleBackColor = false;
             // 
             // btnSave
             // 
+            this.btnSave.BackColor = System.Drawing.Color.White;
             this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSave.Location = new System.Drawing.Point(359, 360);
+            this.btnSave.Image = global::Water.Properties.Resources.icons8_save_24_9;
+            this.btnSave.Location = new System.Drawing.Point(604, 42);
             this.btnSave.Name = "btnSave";
             this.btnSave.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.btnSave.Size = new System.Drawing.Size(74, 40);
+            this.btnSave.Size = new System.Drawing.Size(60, 40);
             this.btnSave.TabIndex = 8;
-            this.btnSave.Text = "حفظ";
-            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.UseVisualStyleBackColor = false;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(441, 9);
+            this.label1.Name = "label1";
+            this.label1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.label1.Size = new System.Drawing.Size(146, 20);
+            this.label1.TabIndex = 22;
+            this.label1.Text = "ادخال بيانات الشركاء";
             // 
             // PartnersForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(900, 420);
+            this.ClientSize = new System.Drawing.Size(965, 423);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.dtpDate);
             this.Controls.Add(this.lblDate);
             this.Controls.Add(this.btnSave);
@@ -396,6 +414,7 @@ namespace Water
         private System.Windows.Forms.Button btnEdit;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.Label label1;
     }
 }
 

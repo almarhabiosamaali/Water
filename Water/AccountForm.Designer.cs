@@ -39,13 +39,14 @@ namespace Water
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblAccountCode
             // 
             this.lblAccountCode.AutoSize = true;
             this.lblAccountCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAccountCode.Location = new System.Drawing.Point(26, 30);
+            this.lblAccountCode.Location = new System.Drawing.Point(60, 103);
             this.lblAccountCode.Name = "lblAccountCode";
             this.lblAccountCode.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblAccountCode.Size = new System.Drawing.Size(85, 20);
@@ -55,7 +56,7 @@ namespace Water
             // txtAccountCode
             // 
             this.txtAccountCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtAccountCode.Location = new System.Drawing.Point(131, 27);
+            this.txtAccountCode.Location = new System.Drawing.Point(176, 100);
             this.txtAccountCode.Name = "txtAccountCode";
             this.txtAccountCode.ReadOnly = true;
             this.txtAccountCode.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
@@ -67,7 +68,7 @@ namespace Water
             // 
             this.lblAccountName.AutoSize = true;
             this.lblAccountName.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAccountName.Location = new System.Drawing.Point(26, 70);
+            this.lblAccountName.Location = new System.Drawing.Point(65, 140);
             this.lblAccountName.Name = "lblAccountName";
             this.lblAccountName.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblAccountName.Size = new System.Drawing.Size(80, 20);
@@ -77,7 +78,7 @@ namespace Water
             // txtAccountName
             // 
             this.txtAccountName.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtAccountName.Location = new System.Drawing.Point(131, 67);
+            this.txtAccountName.Location = new System.Drawing.Point(176, 140);
             this.txtAccountName.Name = "txtAccountName";
             this.txtAccountName.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtAccountName.Size = new System.Drawing.Size(263, 26);
@@ -87,7 +88,7 @@ namespace Water
             // 
             this.lblNotes.AutoSize = true;
             this.lblNotes.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNotes.Location = new System.Drawing.Point(26, 110);
+            this.lblNotes.Location = new System.Drawing.Point(79, 194);
             this.lblNotes.Name = "lblNotes";
             this.lblNotes.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblNotes.Size = new System.Drawing.Size(66, 20);
@@ -97,74 +98,90 @@ namespace Water
             // txtNotes
             // 
             this.txtNotes.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtNotes.Location = new System.Drawing.Point(131, 107);
+            this.txtNotes.Location = new System.Drawing.Point(176, 180);
             this.txtNotes.Multiline = true;
             this.txtNotes.Name = "txtNotes";
             this.txtNotes.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.txtNotes.Size = new System.Drawing.Size(263, 120);
+            this.txtNotes.Size = new System.Drawing.Size(529, 120);
             this.txtNotes.TabIndex = 5;
             // 
             // btnView
             // 
+            this.btnView.BackColor = System.Drawing.Color.White;
             this.btnView.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnView.Location = new System.Drawing.Point(26, 250);
+            this.btnView.Image = global::Water.Properties.Resources.icons8_search_24_8;
+            this.btnView.Location = new System.Drawing.Point(210, 37);
             this.btnView.Name = "btnView";
             this.btnView.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.btnView.Size = new System.Drawing.Size(74, 40);
+            this.btnView.Size = new System.Drawing.Size(60, 40);
             this.btnView.TabIndex = 6;
-            this.btnView.Text = "عرض";
-            this.btnView.UseVisualStyleBackColor = true;
+            this.btnView.UseVisualStyleBackColor = false;
             // 
             // btnAdd
             // 
+            this.btnAdd.BackColor = System.Drawing.Color.White;
             this.btnAdd.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAdd.Location = new System.Drawing.Point(109, 250);
+            this.btnAdd.Image = global::Water.Properties.Resources.icons8_add_241;
+            this.btnAdd.Location = new System.Drawing.Point(276, 37);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.btnAdd.Size = new System.Drawing.Size(74, 40);
+            this.btnAdd.Size = new System.Drawing.Size(60, 40);
             this.btnAdd.TabIndex = 7;
-            this.btnAdd.Text = "إضافة";
-            this.btnAdd.UseVisualStyleBackColor = true;
-            
+            this.btnAdd.UseVisualStyleBackColor = false;
             // 
             // btnEdit
             // 
+            this.btnEdit.BackColor = System.Drawing.Color.White;
             this.btnEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEdit.Location = new System.Drawing.Point(192, 250);
+            this.btnEdit.Image = global::Water.Properties.Resources.icons8_edit_24_5;
+            this.btnEdit.Location = new System.Drawing.Point(342, 37);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.btnEdit.Size = new System.Drawing.Size(74, 40);
+            this.btnEdit.Size = new System.Drawing.Size(60, 40);
             this.btnEdit.TabIndex = 8;
-            this.btnEdit.Text = "تعديل";
-            this.btnEdit.UseVisualStyleBackColor = true;
+            this.btnEdit.UseVisualStyleBackColor = false;
             // 
             // btnDelete
             // 
+            this.btnDelete.BackColor = System.Drawing.Color.White;
             this.btnDelete.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDelete.Location = new System.Drawing.Point(276, 250);
+            this.btnDelete.Image = global::Water.Properties.Resources.icons8_delete_24;
+            this.btnDelete.Location = new System.Drawing.Point(408, 37);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.btnDelete.Size = new System.Drawing.Size(74, 40);
+            this.btnDelete.Size = new System.Drawing.Size(60, 40);
             this.btnDelete.TabIndex = 9;
-            this.btnDelete.Text = "حذف";
-            this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.UseVisualStyleBackColor = false;
             // 
             // btnSave
             // 
+            this.btnSave.BackColor = System.Drawing.Color.White;
             this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSave.Location = new System.Drawing.Point(359, 250);
+            this.btnSave.Image = global::Water.Properties.Resources.icons8_save_24_9;
+            this.btnSave.Location = new System.Drawing.Point(474, 37);
             this.btnSave.Name = "btnSave";
             this.btnSave.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.btnSave.Size = new System.Drawing.Size(74, 40);
+            this.btnSave.Size = new System.Drawing.Size(60, 40);
             this.btnSave.TabIndex = 10;
-            this.btnSave.Text = "حفظ";
-            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.UseVisualStyleBackColor = false;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(310, 3);
+            this.label1.Name = "label1";
+            this.label1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.label1.Size = new System.Drawing.Size(113, 20);
+            this.label1.TabIndex = 11;
+            this.label1.Text = "بيانات  الحساب ";
             // 
             // AccountForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(455, 310);
+            this.ClientSize = new System.Drawing.Size(803, 364);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnEdit);
@@ -202,6 +219,7 @@ namespace Water
         private System.Windows.Forms.Button btnEdit;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.Label label1;
     }
 }
 
