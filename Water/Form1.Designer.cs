@@ -32,17 +32,17 @@
             this.lblUser = new System.Windows.Forms.Label();
             this.lblTitle = new System.Windows.Forms.Label();
             this.pnlSidebar = new System.Windows.Forms.Panel();
-            this.pnlReports = new System.Windows.Forms.Panel();
-            this.treeViewReports = new System.Windows.Forms.TreeView();
-            this.lblReports = new System.Windows.Forms.Label();
             this.pnlSales = new System.Windows.Forms.Panel();
             this.lblSales = new System.Windows.Forms.Label();
+            this.treeViewReports = new System.Windows.Forms.TreeView();
             this.pnlCustomers = new System.Windows.Forms.Panel();
             this.lblCustomers = new System.Windows.Forms.Label();
             this.pnlPartners = new System.Windows.Forms.Panel();
             this.lblPartners = new System.Windows.Forms.Label();
             this.pnlDashboard = new System.Windows.Forms.Panel();
             this.lblDashboard = new System.Windows.Forms.Label();
+            this.pnlReports = new System.Windows.Forms.Panel();
+            this.lblReports = new System.Windows.Forms.Label();
             this.pnlMainContent = new System.Windows.Forms.Panel();
             this.pnlChart = new System.Windows.Forms.Panel();
             this.lblChartTitle = new System.Windows.Forms.Label();
@@ -61,14 +61,27 @@
             this.pnlPartnersCard = new System.Windows.Forms.Panel();
             this.lblPartnersCount = new System.Windows.Forms.Label();
             this.lblPartnersCard = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.pnlVoucher = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.pnlPeriod = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.pnlCostِAllocation = new System.Windows.Forms.Panel();
+            this.label3 = new System.Windows.Forms.Label();
+            this.pnlDownTime = new System.Windows.Forms.Panel();
+            this.label4 = new System.Windows.Forms.Label();
+            this.pnlAccount = new System.Windows.Forms.Panel();
+            this.label5 = new System.Windows.Forms.Label();
+            this.pnlPrice = new System.Windows.Forms.Panel();
+            this.label6 = new System.Windows.Forms.Label();
             this.pnlHeader.SuspendLayout();
             this.pnlSidebar.SuspendLayout();
-            this.pnlReports.SuspendLayout();
             this.pnlSales.SuspendLayout();
             this.pnlCustomers.SuspendLayout();
             this.pnlPartners.SuspendLayout();
             this.pnlDashboard.SuspendLayout();
+            this.pnlReports.SuspendLayout();
             this.pnlMainContent.SuspendLayout();
             this.pnlChart.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRecentTransactions)).BeginInit();
@@ -77,7 +90,14 @@
             this.pnlSalesCard.SuspendLayout();
             this.pnlCustomersCard.SuspendLayout();
             this.pnlPartnersCard.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            this.pnlVoucher.SuspendLayout();
+            this.pnlPeriod.SuspendLayout();
+            this.pnlCostِAllocation.SuspendLayout();
+            this.pnlDownTime.SuspendLayout();
+            this.pnlAccount.SuspendLayout();
+            this.pnlPrice.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnlHeader
@@ -93,6 +113,7 @@
             // 
             // lblUser
             // 
+            this.lblUser.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblUser.AutoSize = true;
             this.lblUser.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblUser.ForeColor = System.Drawing.Color.White;
@@ -116,6 +137,12 @@
             // pnlSidebar
             // 
             this.pnlSidebar.BackColor = System.Drawing.Color.White;
+            this.pnlSidebar.Controls.Add(this.pnlPrice);
+            this.pnlSidebar.Controls.Add(this.pnlAccount);
+            this.pnlSidebar.Controls.Add(this.pnlDownTime);
+            this.pnlSidebar.Controls.Add(this.pnlCostِAllocation);
+            this.pnlSidebar.Controls.Add(this.pnlPeriod);
+            this.pnlSidebar.Controls.Add(this.pnlVoucher);
             this.pnlSidebar.Controls.Add(this.pnlSales);
             this.pnlSidebar.Controls.Add(this.treeViewReports);
             this.pnlSidebar.Controls.Add(this.pnlCustomers);
@@ -127,45 +154,6 @@
             this.pnlSidebar.Name = "pnlSidebar";
             this.pnlSidebar.Size = new System.Drawing.Size(250, 746);
             this.pnlSidebar.TabIndex = 1;
-            // 
-            // pnlReports
-            // 
-            this.pnlReports.BackColor = System.Drawing.Color.White;
-            this.pnlReports.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pnlReports.Controls.Add(this.lblReports);
-            this.pnlReports.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pnlReports.Location = new System.Drawing.Point(3, 255);
-            this.pnlReports.Name = "pnlReports";
-            this.pnlReports.Size = new System.Drawing.Size(243, 41);
-            this.pnlReports.TabIndex = 4;
-            this.pnlReports.Click += new System.EventHandler(this.pnlReports_Click);
-            // 
-            // treeViewReports
-            // 
-            this.treeViewReports.BackColor = System.Drawing.Color.White;
-            this.treeViewReports.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.treeViewReports.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.treeViewReports.FullRowSelect = true;
-            this.treeViewReports.HideSelection = false;
-            this.treeViewReports.Location = new System.Drawing.Point(3, 303);
-            this.treeViewReports.Name = "treeViewReports";
-            this.treeViewReports.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.treeViewReports.RightToLeftLayout = true;
-            this.treeViewReports.Size = new System.Drawing.Size(243, 41);
-            this.treeViewReports.TabIndex = 6;
-            this.treeViewReports.Visible = false;
-            this.treeViewReports.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewReports_AfterSelect);
-            // 
-            // lblReports
-            // 
-            this.lblReports.AutoSize = true;
-            this.lblReports.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblReports.Location = new System.Drawing.Point(183, 0);
-            this.lblReports.Name = "lblReports";
-            this.lblReports.Size = new System.Drawing.Size(55, 24);
-            this.lblReports.TabIndex = 0;
-            this.lblReports.Text = "التقارير";
-            this.lblReports.Click += new System.EventHandler(this.pnlReports_Click);
             // 
             // pnlSales
             // 
@@ -188,6 +176,22 @@
             this.lblSales.TabIndex = 0;
             this.lblSales.Text = "المبيعات";
             this.lblSales.Click += new System.EventHandler(this.pnlSales_Click);
+            // 
+            // treeViewReports
+            // 
+            this.treeViewReports.BackColor = System.Drawing.Color.White;
+            this.treeViewReports.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.treeViewReports.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.treeViewReports.FullRowSelect = true;
+            this.treeViewReports.HideSelection = false;
+            this.treeViewReports.Location = new System.Drawing.Point(3, 303);
+            this.treeViewReports.Name = "treeViewReports";
+            this.treeViewReports.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.treeViewReports.RightToLeftLayout = true;
+            this.treeViewReports.Size = new System.Drawing.Size(243, 41);
+            this.treeViewReports.TabIndex = 6;
+            this.treeViewReports.Visible = false;
+            this.treeViewReports.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewReports_AfterSelect);
             // 
             // pnlCustomers
             // 
@@ -256,10 +260,34 @@
             this.lblDashboard.Text = "لوحة التحكم";
             this.lblDashboard.Click += new System.EventHandler(this.pnlDashboard_Click);
             // 
+            // pnlReports
+            // 
+            this.pnlReports.BackColor = System.Drawing.Color.White;
+            this.pnlReports.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.pnlReports.Controls.Add(this.lblReports);
+            this.pnlReports.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pnlReports.Location = new System.Drawing.Point(3, 255);
+            this.pnlReports.Name = "pnlReports";
+            this.pnlReports.Size = new System.Drawing.Size(243, 41);
+            this.pnlReports.TabIndex = 4;
+            this.pnlReports.Click += new System.EventHandler(this.pnlReports_Click);
+            // 
+            // lblReports
+            // 
+            this.lblReports.AutoSize = true;
+            this.lblReports.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblReports.Location = new System.Drawing.Point(183, 0);
+            this.lblReports.Name = "lblReports";
+            this.lblReports.Size = new System.Drawing.Size(55, 24);
+            this.lblReports.TabIndex = 0;
+            this.lblReports.Text = "التقارير";
+            this.lblReports.Click += new System.EventHandler(this.pnlReports_Click);
+            // 
             // pnlMainContent
             // 
+            this.pnlMainContent.AutoSize = true;
             this.pnlMainContent.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(250)))), ((int)(((byte)(251)))));
-            this.pnlMainContent.Controls.Add(this.pictureBox1);
+            this.pnlMainContent.Controls.Add(this.panel1);
             this.pnlMainContent.Controls.Add(this.pnlChart);
             this.pnlMainContent.Controls.Add(this.dgvRecentTransactions);
             this.pnlMainContent.Controls.Add(this.lblRecentTransactions);
@@ -273,6 +301,7 @@
             // 
             // pnlChart
             // 
+            this.pnlChart.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.pnlChart.BackColor = System.Drawing.Color.White;
             this.pnlChart.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlChart.Controls.Add(this.lblChartTitle);
@@ -295,6 +324,7 @@
             // 
             this.dgvRecentTransactions.AllowUserToAddRows = false;
             this.dgvRecentTransactions.AllowUserToDeleteRows = false;
+            this.dgvRecentTransactions.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.dgvRecentTransactions.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvRecentTransactions.BackgroundColor = System.Drawing.Color.White;
             this.dgvRecentTransactions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -309,6 +339,7 @@
             // 
             // lblRecentTransactions
             // 
+            this.lblRecentTransactions.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lblRecentTransactions.AutoSize = true;
             this.lblRecentTransactions.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblRecentTransactions.Location = new System.Drawing.Point(791, 311);
@@ -319,6 +350,7 @@
             // 
             // pnlKPICards
             // 
+            this.pnlKPICards.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.pnlKPICards.Controls.Add(this.pnlRevenueCard);
             this.pnlKPICards.Controls.Add(this.pnlSalesCard);
             this.pnlKPICards.Controls.Add(this.pnlCustomersCard);
@@ -466,15 +498,146 @@
             this.lblPartnersCard.TabIndex = 0;
             this.lblPartnersCard.Text = "الشركاء";
             // 
-            // pictureBox1
+            // panel1
             // 
-            this.pictureBox1.Image = global::Water.Properties.Resources.logoWell;
-            this.pictureBox1.Location = new System.Drawing.Point(250, 0);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(447, 189);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 4;
-            this.pictureBox1.TabStop = false;
+            this.panel1.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.panel1.AutoSize = true;
+            this.panel1.Controls.Add(this.pictureBox2);
+            this.panel1.Location = new System.Drawing.Point(299, 6);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(472, 177);
+            this.panel1.TabIndex = 5;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.pictureBox2.Image = global::Water.Properties.Resources.logoWell;
+            this.pictureBox2.Location = new System.Drawing.Point(4, 0);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(466, 174);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox2.TabIndex = 5;
+            this.pictureBox2.TabStop = false;
+            // 
+            // pnlVoucher
+            // 
+            this.pnlVoucher.BackColor = System.Drawing.Color.White;
+            this.pnlVoucher.Controls.Add(this.label1);
+            this.pnlVoucher.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pnlVoucher.Location = new System.Drawing.Point(2, 436);
+            this.pnlVoucher.Name = "pnlVoucher";
+            this.pnlVoucher.Size = new System.Drawing.Size(250, 50);
+            this.pnlVoucher.TabIndex = 2;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(190, 15);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(57, 24);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "السندات";
+            // 
+            // pnlPeriod
+            // 
+            this.pnlPeriod.BackColor = System.Drawing.Color.White;
+            this.pnlPeriod.Controls.Add(this.label2);
+            this.pnlPeriod.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pnlPeriod.Location = new System.Drawing.Point(5, 492);
+            this.pnlPeriod.Name = "pnlPeriod";
+            this.pnlPeriod.Size = new System.Drawing.Size(250, 50);
+            this.pnlPeriod.TabIndex = 3;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(190, 15);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(55, 24);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "الفترات";
+            // 
+            // pnlCostِAllocation
+            // 
+            this.pnlCostِAllocation.BackColor = System.Drawing.Color.White;
+            this.pnlCostِAllocation.Controls.Add(this.label3);
+            this.pnlCostِAllocation.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pnlCostِAllocation.Location = new System.Drawing.Point(5, 548);
+            this.pnlCostِAllocation.Name = "pnlCostِAllocation";
+            this.pnlCostِAllocation.Size = new System.Drawing.Size(250, 50);
+            this.pnlCostِAllocation.TabIndex = 4;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(137, 15);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(99, 24);
+            this.label3.TabIndex = 0;
+            this.label3.Text = "توزيع التكاليف";
+            // 
+            // pnlDownTime
+            // 
+            this.pnlDownTime.BackColor = System.Drawing.Color.White;
+            this.pnlDownTime.Controls.Add(this.label4);
+            this.pnlDownTime.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pnlDownTime.Location = new System.Drawing.Point(2, 604);
+            this.pnlDownTime.Name = "pnlDownTime";
+            this.pnlDownTime.Size = new System.Drawing.Size(250, 50);
+            this.pnlDownTime.TabIndex = 5;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(190, 15);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(59, 24);
+            this.label4.TabIndex = 0;
+            this.label4.Text = "التوقفات";
+            // 
+            // pnlAccount
+            // 
+            this.pnlAccount.BackColor = System.Drawing.Color.White;
+            this.pnlAccount.Controls.Add(this.label5);
+            this.pnlAccount.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pnlAccount.Location = new System.Drawing.Point(2, 660);
+            this.pnlAccount.Name = "pnlAccount";
+            this.pnlAccount.Size = new System.Drawing.Size(250, 36);
+            this.pnlAccount.TabIndex = 6;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(190, 7);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(65, 24);
+            this.label5.TabIndex = 0;
+            this.label5.Text = "الحسابات";
+            // 
+            // pnlPrice
+            // 
+            this.pnlPrice.BackColor = System.Drawing.Color.White;
+            this.pnlPrice.Controls.Add(this.label6);
+            this.pnlPrice.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pnlPrice.Location = new System.Drawing.Point(3, 698);
+            this.pnlPrice.Name = "pnlPrice";
+            this.pnlPrice.Size = new System.Drawing.Size(250, 36);
+            this.pnlPrice.TabIndex = 7;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(190, 7);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(59, 24);
+            this.label6.TabIndex = 0;
+            this.label6.Text = "ألتسعيرة";
             // 
             // Form1
             // 
@@ -490,11 +653,10 @@
             this.RightToLeftLayout = true;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "نظام إدارة المياه";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.pnlHeader.ResumeLayout(false);
             this.pnlHeader.PerformLayout();
             this.pnlSidebar.ResumeLayout(false);
-            this.pnlReports.ResumeLayout(false);
-            this.pnlReports.PerformLayout();
             this.pnlSales.ResumeLayout(false);
             this.pnlSales.PerformLayout();
             this.pnlCustomers.ResumeLayout(false);
@@ -503,6 +665,8 @@
             this.pnlPartners.PerformLayout();
             this.pnlDashboard.ResumeLayout(false);
             this.pnlDashboard.PerformLayout();
+            this.pnlReports.ResumeLayout(false);
+            this.pnlReports.PerformLayout();
             this.pnlMainContent.ResumeLayout(false);
             this.pnlMainContent.PerformLayout();
             this.pnlChart.ResumeLayout(false);
@@ -517,8 +681,22 @@
             this.pnlCustomersCard.PerformLayout();
             this.pnlPartnersCard.ResumeLayout(false);
             this.pnlPartnersCard.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            this.pnlVoucher.ResumeLayout(false);
+            this.pnlVoucher.PerformLayout();
+            this.pnlPeriod.ResumeLayout(false);
+            this.pnlPeriod.PerformLayout();
+            this.pnlCostِAllocation.ResumeLayout(false);
+            this.pnlCostِAllocation.PerformLayout();
+            this.pnlDownTime.ResumeLayout(false);
+            this.pnlDownTime.PerformLayout();
+            this.pnlAccount.ResumeLayout(false);
+            this.pnlAccount.PerformLayout();
+            this.pnlPrice.ResumeLayout(false);
+            this.pnlPrice.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -557,6 +735,19 @@
         private System.Windows.Forms.Panel pnlChart;
         private System.Windows.Forms.Label lblChartTitle;
         private System.Windows.Forms.TreeView treeViewReports;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel pnlCostِAllocation;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Panel pnlPeriod;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Panel pnlVoucher;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Panel pnlDownTime;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Panel pnlAccount;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Panel pnlPrice;
+        private System.Windows.Forms.Label label6;
     }
 }

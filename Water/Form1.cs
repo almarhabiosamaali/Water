@@ -17,6 +17,11 @@ namespace Water
         Clas.partners partners = new Clas.partners();
         Clas.customer customer = new Clas.customer();
         Clas.sales sales = new Clas.sales();
+        Clas.partner_cost_mst partner_cost_mst = new Clas.partner_cost_mst();
+        Clas.period period = new Clas.period();
+        Clas.downtime downtime = new Clas.downtime();
+        Clas.expense expense = new Clas.expense();
+        Clas.pricing pricing = new Clas.pricing();
 
         public Form1()
         {
