@@ -13,10 +13,14 @@ namespace Water
 {
     public partial class Form1 : Form
     {
-        private Panel currentActivePanel = null; // لتتبع العنصر النشط في القائمة
         Clas.partners partners = new Clas.partners();
         Clas.customer customer = new Clas.customer();
         Clas.sales sales = new Clas.sales();
+        Clas.partner_cost_mst partner_cost_mst = new Clas.partner_cost_mst();
+        Clas.period period = new Clas.period();
+        Clas.downtime downtime = new Clas.downtime();
+        Clas.expense expense = new Clas.expense();
+        Clas.pricing pricing = new Clas.pricing();
 
         // معلومات المستخدم المسجل دخوله
         public string LoggedInUserId { get; private set; }
@@ -59,7 +63,10 @@ namespace Water
 
                 // تحميل البيانات
                 LoadDashboardData();
-                InitializeReportsTree();
+                InitializeMainTree();
+                
+                // إضافة حدث للتحقق من الشاشات المفتوحة عند إغلاق أي شاشة
+                this.MdiChildActivate += Form1_MdiChildActivate;
             }
             else
             {
@@ -67,38 +74,91 @@ namespace Water
                 Application.Exit();
             }
         }
-
-        // تهيئة شجرة التقارير
-        private void InitializeReportsTree()
+        
+        // حدث يتم استدعاؤه عند تغيير الشاشة النشطة أو إغلاق شاشة
+        private void Form1_MdiChildActivate(object sender, EventArgs e)
         {
-            treeViewReports.Nodes.Clear();
+            // التحقق من عدم وجود شاشات مفتوحة
+            if (this.MdiChildren.Length == 0)
+            {
+                pnlMainContent.Visible = true;
+            }
+        }
+
+        // تهيئة الشجرة الرئيسية
+        private void InitializeMainTree()
+        {
+            treeViewMain.Nodes.Clear();
             
-            // إضافة عقدة رئيسية "التقارير"
-            TreeNode rootNode = new TreeNode("التقارير");
-            rootNode.Tag = "ROOT"; 
+            // عقدة التهيئة
+            TreeNode initNode = new TreeNode("التهيئة");
+            initNode.Tag = "INIT_ROOT";
             
-            // إضافة تقارير الشركاء
+            TreeNode periodNode = new TreeNode("الفترات");
+            periodNode.Tag = "PERIOD";
+            initNode.Nodes.Add(periodNode);
+            
+            TreeNode pricingNode = new TreeNode("التسعيرة");
+            pricingNode.Tag = "PRICING";
+            initNode.Nodes.Add(pricingNode);
+            
+            TreeNode partnersNode = new TreeNode("بيانات الشركاء");
+            partnersNode.Tag = "PARTNERS";
+            initNode.Nodes.Add(partnersNode);
+            
+            TreeNode customersNode = new TreeNode("بيانات العملاء");
+            customersNode.Tag = "CUSTOMERS";
+            initNode.Nodes.Add(customersNode);
+            
+            TreeNode accountsNode = new TreeNode("بيانات الحسابات");
+            accountsNode.Tag = "ACCOUNTS";
+            initNode.Nodes.Add(accountsNode);
+            
+            // عقدة العمليات
+            TreeNode operationsNode = new TreeNode("العمليات");
+            operationsNode.Tag = "OPERATIONS_ROOT";
+            
+            TreeNode salesInvoiceNode = new TreeNode("فاتورة المبيعات");
+            salesInvoiceNode.Tag = "SALES_INVOICE";
+            operationsNode.Nodes.Add(salesInvoiceNode);
+            
+            TreeNode voucherNode = new TreeNode("السندات");
+            voucherNode.Tag = "VOUCHER";
+            operationsNode.Nodes.Add(voucherNode);
+            
+            TreeNode downtimeNode = new TreeNode("التوقفات");
+            downtimeNode.Tag = "DOWNTIME";
+            operationsNode.Nodes.Add(downtimeNode);
+            
+            TreeNode costAllocationNode = new TreeNode("توزيع التكاليف");
+            costAllocationNode.Tag = "COST_ALLOCATION";
+            operationsNode.Nodes.Add(costAllocationNode);
+            
+            // عقدة التقارير
+            TreeNode reportsNode = new TreeNode("التقارير");
+            reportsNode.Tag = "REPORTS_ROOT";
+            
             TreeNode partnerReportNode = new TreeNode("تقارير الشركاء");
             partnerReportNode.Tag = "PARTNER_REPORT";
-            rootNode.Nodes.Add(partnerReportNode);
+            reportsNode.Nodes.Add(partnerReportNode);
             
-            // إضافة تقارير الحركة
-            TreeNode movementReportNode = new TreeNode("تقارير الحركة");
-            movementReportNode.Tag = "MOVEMENT_REPORT";
-            rootNode.Nodes.Add(movementReportNode);
-            
-            // إضافة تقارير العملاء
             TreeNode customerReportNode = new TreeNode("تقارير العملاء");
             customerReportNode.Tag = "CUSTOMER_REPORT";
-            rootNode.Nodes.Add(customerReportNode);
-
-            // إضافة تقارير المبيعات
-            TreeNode salesBillNode = new TreeNode("تقارير المبيعات");
-            salesBillNode.Tag = "SALES_REPORT";
-            rootNode.Nodes.Add(salesBillNode);
-
-            treeViewReports.Nodes.Add(rootNode);
-            rootNode.Expand(); // توسيع العقدة الرئيسية
+            reportsNode.Nodes.Add(customerReportNode);
+            
+            TreeNode movementReportNode = new TreeNode("تقارير الحركة");
+            movementReportNode.Tag = "MOVEMENT_REPORT";
+            reportsNode.Nodes.Add(movementReportNode);
+            
+            TreeNode salesReportNode = new TreeNode("تقارير المبيعات");
+            salesReportNode.Tag = "SALES_REPORT";
+            reportsNode.Nodes.Add(salesReportNode);
+            
+            // إضافة جميع العقد الرئيسية
+            treeViewMain.Nodes.Add(initNode);
+            treeViewMain.Nodes.Add(operationsNode);
+            treeViewMain.Nodes.Add(reportsNode);
+            
         }
 
         // تحميل بيانات Dashboard (حقيقية من قاعدة البيانات)
@@ -214,7 +274,6 @@ namespace Water
                     {
                         childForm.Activate();
                         childForm.BringToFront();
-                        SetActiveMenuItem(menuItem);
                         return;
                     }
                 }
@@ -228,12 +287,25 @@ namespace Water
                 form.StartPosition = FormStartPosition.Manual; // تغيير StartPosition
                 form.WindowState = FormWindowState.Maximized;
                 
+                // إضافة حدث FormClosed لإظهار Dashboard عند إغلاق الشاشة
+                form.FormClosed += (s, args) =>
+                {
+                    // استخدام BeginInvoke لتنفيذ الكود بعد إغلاق النموذج بالكامل
+                    this.BeginInvoke(new Action(() =>
+                    {
+                        // التحقق من عدم وجود شاشات أخرى مفتوحة
+                        if (this.MdiChildren.Length == 0)
+                        {
+                            pnlMainContent.Visible = true;
+                        }
+                    }));
+                };
+                
                 // إخفاء Dashboard عند فتح النموذج
                 pnlMainContent.Visible = false;
                 
                 form.Show();
                 form.BringToFront();
-                SetActiveMenuItem(menuItem);
             }
             catch (Exception ex)
             {
@@ -241,152 +313,136 @@ namespace Water
             }
         }
 
-        // تعيين العنصر النشط في القائمة
-        private void SetActiveMenuItem(Panel menuItem)
+        // حدث اختيار عقدة في الشجرة الرئيسية
+        private void treeViewMain_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            // إزالة التمييز من العنصر السابق
-            if (currentActivePanel != null)
-            {
-                currentActivePanel.BackColor = Color.White;
-                // تحديث لون النص للعنصر السابق
-                foreach (Control ctrl in currentActivePanel.Controls)
-                {
-                    if (ctrl is Label)
-                    {
-                        ctrl.ForeColor = Color.Black;
-                    }
-                }
-            }
-
-            // تمييز العنصر الجديد
-            if (menuItem != null)
-            {
-                menuItem.BackColor = Color.FromArgb(59, 130, 246); // أزرق
-                // تحديث لون النص للعنصر الجديد
-                foreach (Control ctrl in menuItem.Controls)
-                {
-                    if (ctrl is Label)
-                    {
-                        ctrl.ForeColor = Color.White;
-                    }
-                }
-                currentActivePanel = menuItem;
-            }
-        }
-
-        // أحداث القائمة
-        private void pnlDashboard_Click(object sender, EventArgs e)
-        {
-            // إغلاق جميع النماذج المفتوحة
-            foreach (Form childForm in this.MdiChildren)
-            {
-                childForm.Close();
-            }
-            // إظهار Dashboard
-            pnlMainContent.Visible = true;
-            SetActiveMenuItem(pnlDashboard);
-        }
-
-        private void pnlPartners_Click(object sender, EventArgs e)
-        {
-            PartnersForm form = new PartnersForm();
-            OpenFormAsMDI(form, pnlPartners);
-        }
-
-        private void pnlCustomers_Click(object sender, EventArgs e)
-        {
-            CustomerForm form = new CustomerForm();
-            OpenFormAsMDI(form, pnlCustomers);
-        }
-
-        private void pnlSales_Click(object sender, EventArgs e)
-        {
-            SalesForm form = new SalesForm();
-            OpenFormAsMDI(form, pnlSales);
-        }
-
-        private void pnlReports_Click(object sender, EventArgs e)
-        {
-            // إظهار/إخفاء شجرة التقارير
-            if (treeViewReports.Visible)
-            {
-                // إخفاء الشجرة
-                treeViewReports.Visible = false;
-                treeViewReports.Height = 0;
-                // نقل pnlSettings إلى موقعه الأصلي
-                //pnlSettings.Location = new Point(0, 300);
-            }
-            else
-            {
-                // إظهار الشجرة
-                treeViewReports.Visible = true;
-                // حساب ارتفاع الشجرة بناءً على عدد العقد
-                int treeHeight = treeViewReports.Nodes[0].GetNodeCount(true) * 25 + 20; // 25 بكسل لكل عقدة + 20 للهامش
-                treeViewReports.Height = treeHeight;
-                // نقل pnlSettings لأسفل
-              //  pnlSettings.Location = new Point(0, 300 + treeHeight);
-            }
-        }
-
-        // حدث اختيار عقدة في شجرة التقارير
-        private void treeViewReports_AfterSelect(object sender, TreeViewEventArgs e)
-        {
-            if (e.Node.Tag == null || e.Node.Tag.ToString() == "ROOT")
+            if (e.Node.Tag == null)
                 return;
 
-            string reportType = e.Node.Tag.ToString();
-            Form reportForm = null;
+            string nodeTag = e.Node.Tag.ToString();
+            
+            // تجاهل العقد الرئيسية (ROOT nodes)
+            if (nodeTag.Contains("_ROOT") || nodeTag == "INIT_ROOT" || nodeTag == "OPERATIONS_ROOT" || nodeTag == "REPORTS_ROOT")
+                return;
 
-            switch (reportType)
+            Form formToOpen = null;
+
+            switch (nodeTag)
             {
-                case "PARTNER_REPORT":
-                    reportForm = new partnerMovmentRPT();
+                // التهيئة
+                case "PERIOD":
+                    formToOpen = new PeriodForm();
                     break;
-                case "MOVEMENT_REPORT":
-                    reportForm = new allMovementRPT();
+                case "PRICING":
+                    formToOpen = new PricingForm();
+                    break;
+                case "PARTNERS":
+                    formToOpen = new PartnersForm();
+                    break;
+                case "CUSTOMERS":
+                    formToOpen = new CustomerForm();
+                    break;
+                case "ACCOUNTS":
+                    formToOpen = new AccountForm();
+                    break;
+                
+                // العمليات
+                case "SALES_INVOICE":
+                    formToOpen = new SalesForm();
+                    break;
+                case "VOUCHER":
+                    formToOpen = new ExpenseForm();
+                    break;
+                case "DOWNTIME":
+                    formToOpen = new DowntimeForm();
+                    break;
+                case "COST_ALLOCATION":
+                    formToOpen = new PartnerCostForm();
+                    break;
+                
+                // التقارير
+                case "PARTNER_REPORT":
+                    formToOpen = new partnerMovmentRPT();
                     break;
                 case "CUSTOMER_REPORT":
-                    reportForm = new customerMovementRPT();
+                    formToOpen = new customerMovementRPT();
+                    break;
+                case "MOVEMENT_REPORT":
+                    formToOpen = new allMovementRPT();
                     break;
                 case "SALES_REPORT":
-                    reportForm = new salesBillDTLRPT();
+                    formToOpen = new salesBillDTLRPT();
                     break;
             }
 
-            if (reportForm != null)
+            if (formToOpen != null)
             {
-                reportForm.MdiParent = this;
-                reportForm.FormBorderStyle = FormBorderStyle.Sizable;
-                reportForm.MaximizeBox = true;
-                reportForm.MinimizeBox = true;
-                reportForm.StartPosition = FormStartPosition.Manual;
-                reportForm.WindowState = FormWindowState.Maximized;
-                pnlMainContent.Visible = false;
-                reportForm.Show();
-                reportForm.BringToFront();
+                OpenFormAsMDI(formToOpen, null);
             }
-        }
-
-        private void pnlSettings_Click(object sender, EventArgs e)
-        {
-            // يمكن فتح نافذة الإعدادات
-            MessageBox.Show("الإعدادات", "الإعدادات", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         // أحداث إضافية للوصول السريع من KPI Cards
         private void pnlPartnersCard_Click(object sender, EventArgs e)
         {
-            pnlPartners_Click(sender, e);
+            // البحث عن عقدة الشركاء وفتحها
+            foreach (TreeNode node in treeViewMain.Nodes)
+            {
+                if (node.Tag != null && node.Tag.ToString() == "INIT_ROOT")
+                {
+                    foreach (TreeNode childNode in node.Nodes)
+                    {
+                        if (childNode.Tag != null && childNode.Tag.ToString() == "PARTNERS")
+                        {
+                            treeViewMain.SelectedNode = childNode;
+                            treeViewMain_AfterSelect(treeViewMain, new TreeViewEventArgs(childNode));
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
         }
 
         private void pnlCustomersCard_Click(object sender, EventArgs e)
         {
-            pnlCustomers_Click(sender, e);
+            // البحث عن عقدة العملاء وفتحها
+            foreach (TreeNode node in treeViewMain.Nodes)
+            {
+                if (node.Tag != null && node.Tag.ToString() == "INIT_ROOT")
+                {
+                    foreach (TreeNode childNode in node.Nodes)
+                    {
+                        if (childNode.Tag != null && childNode.Tag.ToString() == "CUSTOMERS")
+                        {
+                            treeViewMain.SelectedNode = childNode;
+                            treeViewMain_AfterSelect(treeViewMain, new TreeViewEventArgs(childNode));
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
         }
 
         private void pnlSalesCard_Click(object sender, EventArgs e)
         {
-            pnlSales_Click(sender, e);
+            // البحث عن عقدة فاتورة المبيعات وفتحها
+            foreach (TreeNode node in treeViewMain.Nodes)
+            {
+                if (node.Tag != null && node.Tag.ToString() == "OPERATIONS_ROOT")
+                {
+                    foreach (TreeNode childNode in node.Nodes)
+                    {
+                        if (childNode.Tag != null && childNode.Tag.ToString() == "SALES_INVOICE")
+                        {
+                            treeViewMain.SelectedNode = childNode;
+                            treeViewMain_AfterSelect(treeViewMain, new TreeViewEventArgs(childNode));
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
         }
     }
 }

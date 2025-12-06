@@ -32,18 +32,10 @@
             this.lblUser = new System.Windows.Forms.Label();
             this.lblTitle = new System.Windows.Forms.Label();
             this.pnlSidebar = new System.Windows.Forms.Panel();
-            this.pnlReports = new System.Windows.Forms.Panel();
-            this.treeViewReports = new System.Windows.Forms.TreeView();
-            this.lblReports = new System.Windows.Forms.Label();
-            this.pnlSales = new System.Windows.Forms.Panel();
-            this.lblSales = new System.Windows.Forms.Label();
-            this.pnlCustomers = new System.Windows.Forms.Panel();
-            this.lblCustomers = new System.Windows.Forms.Label();
-            this.pnlPartners = new System.Windows.Forms.Panel();
-            this.lblPartners = new System.Windows.Forms.Label();
-            this.pnlDashboard = new System.Windows.Forms.Panel();
-            this.lblDashboard = new System.Windows.Forms.Label();
+            this.treeViewMain = new System.Windows.Forms.TreeView();
             this.pnlMainContent = new System.Windows.Forms.Panel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pnlChart = new System.Windows.Forms.Panel();
             this.lblChartTitle = new System.Windows.Forms.Label();
             this.dgvRecentTransactions = new System.Windows.Forms.DataGridView();
@@ -61,16 +53,12 @@
             this.pnlPartnersCard = new System.Windows.Forms.Panel();
             this.lblPartnersCount = new System.Windows.Forms.Label();
             this.lblPartnersCard = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pnlLoginOverlay = new System.Windows.Forms.Panel();
             this.pnlHeader.SuspendLayout();
             this.pnlSidebar.SuspendLayout();
-            this.pnlReports.SuspendLayout();
-            this.pnlSales.SuspendLayout();
-            this.pnlCustomers.SuspendLayout();
-            this.pnlPartners.SuspendLayout();
-            this.pnlDashboard.SuspendLayout();
             this.pnlMainContent.SuspendLayout();
+            this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.pnlChart.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRecentTransactions)).BeginInit();
             this.pnlKPICards.SuspendLayout();
@@ -78,7 +66,6 @@
             this.pnlSalesCard.SuspendLayout();
             this.pnlCustomersCard.SuspendLayout();
             this.pnlPartnersCard.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // pnlHeader
@@ -94,6 +81,7 @@
             // 
             // lblUser
             // 
+            this.lblUser.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblUser.AutoSize = true;
             this.lblUser.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblUser.ForeColor = System.Drawing.Color.White;
@@ -117,150 +105,34 @@
             // pnlSidebar
             // 
             this.pnlSidebar.BackColor = System.Drawing.Color.White;
-            this.pnlSidebar.Controls.Add(this.pnlSales);
-            this.pnlSidebar.Controls.Add(this.treeViewReports);
-            this.pnlSidebar.Controls.Add(this.pnlCustomers);
-            this.pnlSidebar.Controls.Add(this.pnlPartners);
-            this.pnlSidebar.Controls.Add(this.pnlDashboard);
-            this.pnlSidebar.Controls.Add(this.pnlReports);
+            this.pnlSidebar.Controls.Add(this.treeViewMain);
             this.pnlSidebar.Dock = System.Windows.Forms.DockStyle.Left;
             this.pnlSidebar.Location = new System.Drawing.Point(0, 35);
             this.pnlSidebar.Name = "pnlSidebar";
             this.pnlSidebar.Size = new System.Drawing.Size(250, 746);
             this.pnlSidebar.TabIndex = 1;
             // 
-            // pnlReports
+            // treeViewMain
             // 
-            this.pnlReports.BackColor = System.Drawing.Color.White;
-            this.pnlReports.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pnlReports.Controls.Add(this.lblReports);
-            this.pnlReports.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pnlReports.Location = new System.Drawing.Point(3, 255);
-            this.pnlReports.Name = "pnlReports";
-            this.pnlReports.Size = new System.Drawing.Size(243, 41);
-            this.pnlReports.TabIndex = 4;
-            this.pnlReports.Click += new System.EventHandler(this.pnlReports_Click);
-            // 
-            // treeViewReports
-            // 
-            this.treeViewReports.BackColor = System.Drawing.Color.White;
-            this.treeViewReports.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.treeViewReports.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.treeViewReports.FullRowSelect = true;
-            this.treeViewReports.HideSelection = false;
-            this.treeViewReports.Location = new System.Drawing.Point(3, 303);
-            this.treeViewReports.Name = "treeViewReports";
-            this.treeViewReports.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.treeViewReports.RightToLeftLayout = true;
-            this.treeViewReports.Size = new System.Drawing.Size(243, 41);
-            this.treeViewReports.TabIndex = 6;
-            this.treeViewReports.Visible = false;
-            this.treeViewReports.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewReports_AfterSelect);
-            // 
-            // lblReports
-            // 
-            this.lblReports.AutoSize = true;
-            this.lblReports.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblReports.Location = new System.Drawing.Point(183, 0);
-            this.lblReports.Name = "lblReports";
-            this.lblReports.Size = new System.Drawing.Size(55, 24);
-            this.lblReports.TabIndex = 0;
-            this.lblReports.Text = "التقارير";
-            this.lblReports.Click += new System.EventHandler(this.pnlReports_Click);
-            // 
-            // pnlSales
-            // 
-            this.pnlSales.BackColor = System.Drawing.Color.White;
-            this.pnlSales.Controls.Add(this.lblSales);
-            this.pnlSales.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pnlSales.Location = new System.Drawing.Point(0, 200);
-            this.pnlSales.Name = "pnlSales";
-            this.pnlSales.Size = new System.Drawing.Size(250, 50);
-            this.pnlSales.TabIndex = 3;
-            this.pnlSales.Click += new System.EventHandler(this.pnlSales_Click);
-            // 
-            // lblSales
-            // 
-            this.lblSales.AutoSize = true;
-            this.lblSales.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSales.Location = new System.Drawing.Point(190, 15);
-            this.lblSales.Name = "lblSales";
-            this.lblSales.Size = new System.Drawing.Size(60, 24);
-            this.lblSales.TabIndex = 0;
-            this.lblSales.Text = "المبيعات";
-            this.lblSales.Click += new System.EventHandler(this.pnlSales_Click);
-            // 
-            // pnlCustomers
-            // 
-            this.pnlCustomers.BackColor = System.Drawing.Color.White;
-            this.pnlCustomers.Controls.Add(this.lblCustomers);
-            this.pnlCustomers.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pnlCustomers.Location = new System.Drawing.Point(0, 150);
-            this.pnlCustomers.Name = "pnlCustomers";
-            this.pnlCustomers.Size = new System.Drawing.Size(250, 50);
-            this.pnlCustomers.TabIndex = 2;
-            this.pnlCustomers.Click += new System.EventHandler(this.pnlCustomers_Click);
-            // 
-            // lblCustomers
-            // 
-            this.lblCustomers.AutoSize = true;
-            this.lblCustomers.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCustomers.Location = new System.Drawing.Point(190, 15);
-            this.lblCustomers.Name = "lblCustomers";
-            this.lblCustomers.Size = new System.Drawing.Size(51, 24);
-            this.lblCustomers.TabIndex = 0;
-            this.lblCustomers.Text = "العملاء";
-            this.lblCustomers.Click += new System.EventHandler(this.pnlCustomers_Click);
-            // 
-            // pnlPartners
-            // 
-            this.pnlPartners.BackColor = System.Drawing.Color.White;
-            this.pnlPartners.Controls.Add(this.lblPartners);
-            this.pnlPartners.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pnlPartners.Location = new System.Drawing.Point(0, 100);
-            this.pnlPartners.Name = "pnlPartners";
-            this.pnlPartners.Size = new System.Drawing.Size(250, 50);
-            this.pnlPartners.TabIndex = 1;
-            this.pnlPartners.Click += new System.EventHandler(this.pnlPartners_Click);
-            // 
-            // lblPartners
-            // 
-            this.lblPartners.AutoSize = true;
-            this.lblPartners.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPartners.Location = new System.Drawing.Point(190, 15);
-            this.lblPartners.Name = "lblPartners";
-            this.lblPartners.Size = new System.Drawing.Size(56, 24);
-            this.lblPartners.TabIndex = 0;
-            this.lblPartners.Text = "الشركاء";
-            this.lblPartners.Click += new System.EventHandler(this.pnlPartners_Click);
-            // 
-            // pnlDashboard
-            // 
-            this.pnlDashboard.BackColor = System.Drawing.Color.SteelBlue;
-            this.pnlDashboard.Controls.Add(this.lblDashboard);
-            this.pnlDashboard.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pnlDashboard.Location = new System.Drawing.Point(0, 50);
-            this.pnlDashboard.Name = "pnlDashboard";
-            this.pnlDashboard.Size = new System.Drawing.Size(250, 50);
-            this.pnlDashboard.TabIndex = 0;
-            this.pnlDashboard.Click += new System.EventHandler(this.pnlDashboard_Click);
-            // 
-            // lblDashboard
-            // 
-            this.lblDashboard.AutoSize = true;
-            this.lblDashboard.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDashboard.ForeColor = System.Drawing.Color.White;
-            this.lblDashboard.Location = new System.Drawing.Point(160, 15);
-            this.lblDashboard.Name = "lblDashboard";
-            this.lblDashboard.Size = new System.Drawing.Size(80, 24);
-            this.lblDashboard.TabIndex = 0;
-            this.lblDashboard.Text = "لوحة التحكم";
-            this.lblDashboard.Click += new System.EventHandler(this.pnlDashboard_Click);
+            this.treeViewMain.BackColor = System.Drawing.Color.White;
+            this.treeViewMain.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.treeViewMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeViewMain.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.treeViewMain.FullRowSelect = true;
+            this.treeViewMain.HideSelection = false;
+            this.treeViewMain.Location = new System.Drawing.Point(0, 0);
+            this.treeViewMain.Name = "treeViewMain";
+            this.treeViewMain.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.treeViewMain.RightToLeftLayout = true;
+            this.treeViewMain.Size = new System.Drawing.Size(250, 746);
+            this.treeViewMain.TabIndex = 0;
+            this.treeViewMain.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewMain_AfterSelect);
             // 
             // pnlMainContent
             // 
+            this.pnlMainContent.AutoSize = true;
             this.pnlMainContent.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(250)))), ((int)(((byte)(251)))));
-            this.pnlMainContent.Controls.Add(this.pictureBox1);
+            this.pnlMainContent.Controls.Add(this.panel1);
             this.pnlMainContent.Controls.Add(this.pnlChart);
             this.pnlMainContent.Controls.Add(this.dgvRecentTransactions);
             this.pnlMainContent.Controls.Add(this.lblRecentTransactions);
@@ -272,8 +144,30 @@
             this.pnlMainContent.Size = new System.Drawing.Size(992, 746);
             this.pnlMainContent.TabIndex = 2;
             // 
+            // panel1
+            // 
+            this.panel1.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.panel1.AutoSize = true;
+            this.panel1.Controls.Add(this.pictureBox2);
+            this.panel1.Location = new System.Drawing.Point(299, 6);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(472, 177);
+            this.panel1.TabIndex = 5;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.pictureBox2.Image = global::Water.Properties.Resources.logoWell;
+            this.pictureBox2.Location = new System.Drawing.Point(4, 0);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(466, 174);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox2.TabIndex = 5;
+            this.pictureBox2.TabStop = false;
+            // 
             // pnlChart
             // 
+            this.pnlChart.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.pnlChart.BackColor = System.Drawing.Color.White;
             this.pnlChart.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlChart.Controls.Add(this.lblChartTitle);
@@ -296,6 +190,7 @@
             // 
             this.dgvRecentTransactions.AllowUserToAddRows = false;
             this.dgvRecentTransactions.AllowUserToDeleteRows = false;
+            this.dgvRecentTransactions.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.dgvRecentTransactions.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvRecentTransactions.BackgroundColor = System.Drawing.Color.White;
             this.dgvRecentTransactions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -310,6 +205,7 @@
             // 
             // lblRecentTransactions
             // 
+            this.lblRecentTransactions.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lblRecentTransactions.AutoSize = true;
             this.lblRecentTransactions.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblRecentTransactions.Location = new System.Drawing.Point(791, 311);
@@ -320,6 +216,7 @@
             // 
             // pnlKPICards
             // 
+            this.pnlKPICards.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.pnlKPICards.Controls.Add(this.pnlRevenueCard);
             this.pnlKPICards.Controls.Add(this.pnlSalesCard);
             this.pnlKPICards.Controls.Add(this.pnlCustomersCard);
@@ -467,16 +364,6 @@
             this.lblPartnersCard.TabIndex = 0;
             this.lblPartnersCard.Text = "الشركاء";
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::Water.Properties.Resources.logoWell;
-            this.pictureBox1.Location = new System.Drawing.Point(250, 0);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(447, 189);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 4;
-            this.pictureBox1.TabStop = false;
-            // 
             // pnlLoginOverlay
             // 
             this.pnlLoginOverlay.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
@@ -502,21 +389,14 @@
             this.RightToLeftLayout = true;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "نظام إدارة المياه";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.pnlHeader.ResumeLayout(false);
             this.pnlHeader.PerformLayout();
             this.pnlSidebar.ResumeLayout(false);
-            this.pnlReports.ResumeLayout(false);
-            this.pnlReports.PerformLayout();
-            this.pnlSales.ResumeLayout(false);
-            this.pnlSales.PerformLayout();
-            this.pnlCustomers.ResumeLayout(false);
-            this.pnlCustomers.PerformLayout();
-            this.pnlPartners.ResumeLayout(false);
-            this.pnlPartners.PerformLayout();
-            this.pnlDashboard.ResumeLayout(false);
-            this.pnlDashboard.PerformLayout();
             this.pnlMainContent.ResumeLayout(false);
             this.pnlMainContent.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.pnlChart.ResumeLayout(false);
             this.pnlChart.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRecentTransactions)).EndInit();
@@ -529,8 +409,8 @@
             this.pnlCustomersCard.PerformLayout();
             this.pnlPartnersCard.ResumeLayout(false);
             this.pnlPartnersCard.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -540,16 +420,7 @@
         private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.Label lblUser;
         private System.Windows.Forms.Panel pnlSidebar;
-        private System.Windows.Forms.Panel pnlDashboard;
-        private System.Windows.Forms.Label lblDashboard;
-        private System.Windows.Forms.Panel pnlPartners;
-        private System.Windows.Forms.Label lblPartners;
-        private System.Windows.Forms.Panel pnlCustomers;
-        private System.Windows.Forms.Label lblCustomers;
-        private System.Windows.Forms.Panel pnlSales;
-        private System.Windows.Forms.Label lblSales;
-        private System.Windows.Forms.Panel pnlReports;
-        private System.Windows.Forms.Label lblReports;
+        private System.Windows.Forms.TreeView treeViewMain;
         private System.Windows.Forms.Panel pnlMainContent;
         private System.Windows.Forms.Panel pnlKPICards;
         private System.Windows.Forms.Panel pnlPartnersCard;
@@ -568,8 +439,8 @@
         private System.Windows.Forms.DataGridView dgvRecentTransactions;
         private System.Windows.Forms.Panel pnlChart;
         private System.Windows.Forms.Label lblChartTitle;
-        private System.Windows.Forms.TreeView treeViewReports;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel pnlLoginOverlay;
     }
 }
