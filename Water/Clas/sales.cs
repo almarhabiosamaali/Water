@@ -15,11 +15,11 @@ namespace Water.Clas
             double water_hour_price, double diesel_hour_price, double water_minutes_price, double diesel_minutes_price, 
             double dieselUsedInHour, double dieselUsedInMinute, double water_total, double diesel_total, 
             double total_amount, double due_amount, double paid_amount, double remaining_amount, 
-            string bill_type, string lvlPrice, DateTime created_date, string note)
+            string bill_type, string lvlPrice, DateTime created_date, string note, int isCalcFrmPayidAmt)
         {
             Clas.DataAccessLayer DAL = new Clas.DataAccessLayer();
             DAL.Open();
-            SqlParameter[] param = new SqlParameter[26];
+            SqlParameter[] param = new SqlParameter[27];
             
             // الترتيب يجب أن يطابق Stored Procedure بالضبط
             param[0] = new SqlParameter("@bill_no", SqlDbType.VarChar, 50);
@@ -99,6 +99,9 @@ namespace Water.Clas
 
             param[25] = new SqlParameter("@note", SqlDbType.VarChar, 50);
             param[25].Value = string.IsNullOrWhiteSpace(note) ? DBNull.Value : (object)note;
+
+            param[26] = new SqlParameter("@isCalcFrmPayidAmt", SqlDbType.Int);
+            param[26].Value = isCalcFrmPayidAmt;
 
             DAL.ExecuteCommand("sales_insert", param);
             DAL.Close();
@@ -132,11 +135,11 @@ namespace Water.Clas
             double water_hour_price, double diesel_hour_price, double water_minutes_price, double diesel_minutes_price, 
             double dieselUsedInHour, double dieselUsedInMinute, double water_total, double diesel_total, 
             double total_amount, double due_amount, double paid_amount, double remaining_amount, 
-            string bill_type, string lvlPrice, DateTime created_date, string note)
+            string bill_type, string lvlPrice, DateTime created_date, string note, int isCalcFrmPayidAmt)
         {
             Clas.DataAccessLayer DAL = new Clas.DataAccessLayer();
             DAL.Open();
-            SqlParameter[] param = new SqlParameter[26];
+            SqlParameter[] param = new SqlParameter[27];
             
             // الترتيب يجب أن يطابق Stored Procedure بالضبط
             param[0] = new SqlParameter("@bill_no", SqlDbType.VarChar, 50);
@@ -209,13 +212,16 @@ namespace Water.Clas
             param[22].Value = dieselUsedInMinute;
 
             param[23] = new SqlParameter("@lvlPrice", SqlDbType.VarChar, 50);
-            param[23].Value = string.IsNullOrWhiteSpace(lvlPrice) ? DBNull.Value : (object)lvlPrice;
+            param[23].Value = lvlPrice ;//!= null ? string.IsNullOrWhiteSpace(lvlPrice) ? DBNull.Value : (object)lvlPrice : DBNull.Value;
 
             param[24] = new SqlParameter("@created_date", SqlDbType.DateTime);
             param[24].Value = created_date;
 
             param[25] = new SqlParameter("@note", SqlDbType.VarChar, 50);
             param[25].Value = string.IsNullOrWhiteSpace(note) ? DBNull.Value : (object)note;
+
+            param[26] = new SqlParameter("@isCalcFrmPayidAmt", SqlDbType.Int);
+            param[26].Value = isCalcFrmPayidAmt;
 
             DAL.ExecuteCommand("sales_update", param);
             DAL.Close();

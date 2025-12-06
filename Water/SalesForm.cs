@@ -16,6 +16,7 @@ namespace Water
     {
         private bool isEditMode = false;
         private bool isLoadingCustomerFromList = false; // للتحكم في عدم فتح القائمة تلقائياً عند تحميل البيانات
+        private bool isLoadingPriceLevel = false; // للتحكم في عدم استدعاء الحدث تلقائياً عند تحميل بيانات التسعيرة
         Clas.sales sal = new Clas.sales();
         Clas.salePartnersHours partnersHours = new Clas.salePartnersHours();
         Clas.customer customer = new Clas.customer();
@@ -53,6 +54,10 @@ namespace Water
             // ربط أحداث رقم الفترة
            // txtPeriodId.KeyDown += txtPeriodId_KeyDown;
             txtPeriodId.Leave += txtPeriodId_Leave;
+
+            // ربط حدث تغيير مستوى التسعيرة
+            //txtPriceLevel.TextChanged += txtPriceLevel_TextChanged;
+            txtPriceLevel.Leave += txtPriceLevel_Leave;
 
             // تهيئة ComboBox نوع العميل
             if (cmbCustomerType != null)
@@ -563,6 +568,92 @@ namespace Water
             }
         }
 
+        private void txtPriceLevel_TextChanged(object sender, EventArgs e)
+        {
+            // تجنب استدعاء الحدث عند تحميل البيانات تلقائياً
+            if (isLoadingPriceLevel)
+                return;
+
+            // عند تغيير قيمة مستوى التسعيرة، تحميل بيانات التسعيرة تلقائياً
+            if (txtPriceLevel == null || string.IsNullOrWhiteSpace(txtPriceLevel.Text))
+            {
+                return;
+            }
+
+            try
+            {
+                string priceLevelId = txtPriceLevel.Text.Trim();
+                DataTable dt = pricing.GET_ALL_PRICINGS();
+                
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    // البحث عن مستوى التسعيرة المطابق
+                    DataRow[] foundRows = dt.Select($"PriceLevleId = '{priceLevelId}'");
+                    
+                    if (foundRows.Length > 0)
+                    {
+                        isLoadingPriceLevel = true;
+                        try
+                        {
+                            // تحميل بيانات التسعيرة
+                            LoadPriceingDataToBill(foundRows[0]);
+                            
+                            // إعادة حساب الإجماليات
+                            CalculateTotals_TextChanged(null, null);
+                        }
+                        finally
+                        {
+                            isLoadingPriceLevel = false;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // في حالة الخطأ، لا نفعل شيئاً (تجاهل الخطأ)
+                // MessageBox.Show("حدث خطأ أثناء تحميل بيانات التسعيرة: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void txtPriceLevel_Leave(object sender, EventArgs e)
+        {
+            // عند مغادرة حقل مستوى التسعيرة، التحقق من صحة القيمة
+            if (txtPriceLevel == null || string.IsNullOrWhiteSpace(txtPriceLevel.Text))
+            {
+                return;
+            }
+
+            try
+            {
+                string priceLevelId = txtPriceLevel.Text.Trim();
+                DataTable dt = pricing.GET_ALL_PRICINGS();
+                
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    // البحث عن مستوى التسعيرة المطابق
+                    DataRow[] foundRows = dt.Select($"PriceLevleId = '{priceLevelId}'");
+                    
+                    if (foundRows.Length == 0)
+                    {
+                        // مستوى التسعيرة غير موجود
+                        MessageBox.Show("مستوى التسعيرة المدخل غير موجود", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        txtPriceLevel.Focus();
+                        return;
+                    }
+                    
+                    // تحميل بيانات التسعيرة
+                    LoadPriceingDataToBill(foundRows[0]);
+                    
+                    // إعادة حساب الإجماليات
+                    CalculateTotals_TextChanged(null, null);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("حدث خطأ أثناء التحقق من مستوى التسعيرة: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
 
 
 
@@ -742,8 +833,10 @@ namespace Water
 
                 LoadSalesData(dt.Rows[0]);
                 isEditMode = true;
+                btnAdd.Enabled = false;
                 btnSave.Enabled = true;
-                //btnSave.Text = "تحديث";
+                btnView.Enabled = false;
+                btnDelete.Enabled = false;
             }
             catch (Exception ex)
             {
@@ -788,7 +881,9 @@ namespace Water
             {
                 // التحقق من أن جميع الحقول المطلوبة مملوءة
                 if (string.IsNullOrWhiteSpace(txtSalesId.Text) ||
+                    string.IsNullOrWhiteSpace(txtCustomerId.Text) ||
                     string.IsNullOrWhiteSpace(txtPeriodId.Text) ||
+                    string.IsNullOrWhiteSpace(txtPriceLevel.Text) ||
                     string.IsNullOrWhiteSpace(txtHours.Text) ||
                     string.IsNullOrWhiteSpace(txtMinutes.Text)
                     )
@@ -854,9 +949,11 @@ namespace Water
                         string.IsNullOrWhiteSpace(txtPaidAmount.Text) ? 0 : Convert.ToDouble(RemoveFormatting(txtPaidAmount.Text)),
                         string.IsNullOrWhiteSpace(txtRemainingAmount.Text) ? 0 : Convert.ToDouble(RemoveFormatting(txtRemainingAmount.Text)),
                         cmbBillType.SelectedItem != null ? cmbBillType.SelectedItem.ToString() : "",
-                        string.IsNullOrWhiteSpace(txtPriceLevel.Text) ? "" : txtPriceLevel.Text.Trim(),
+                        txtPriceLevel.Text.Trim(),
+                      //  string.IsNullOrWhiteSpace(txtPriceLevel.Text) ? "" : txtPriceLevel.Text.Trim(),
                         DateTime.Now,
-                        txtNote != null ? txtNote.Text.Trim() : "" // note
+                        txtNote != null ? txtNote.Text.Trim() : "", // note
+                        chkBxCalc != null && chkBxCalc.Checked ? 1 : 0 // isCalcFrmPayidAmt
                     );
                     AddPostFormSales();
 
@@ -894,9 +991,11 @@ namespace Water
                         string.IsNullOrWhiteSpace(txtPaidAmount.Text) ? 0 : Convert.ToDouble(RemoveFormatting(txtPaidAmount.Text)),
                         string.IsNullOrWhiteSpace(txtRemainingAmount.Text) ? 0 : Convert.ToDouble(RemoveFormatting(txtRemainingAmount.Text)),
                         cmbBillType.SelectedItem != null ? cmbBillType.SelectedItem.ToString() : "",
-                        string.IsNullOrWhiteSpace(txtPriceLevel.Text) ? "" : txtPriceLevel.Text.Trim(),
+                        txtPriceLevel.Text.Trim(),
+                        //string.IsNullOrWhiteSpace(txtPriceLevel.Text) ? "" : txtPriceLevel.Text.Trim(),
                         DateTime.Now,
-                        txtNote != null ? txtNote.Text.Trim() : "" // note
+                        txtNote != null ? txtNote.Text.Trim() : "", // note
+                        chkBxCalc != null && chkBxCalc.Checked ? 1 : 0 // isCalcFrmPayidAmt
                     );
                     AddPostFormSales();
                   //  MessageBox.Show("تم حفظ بيانات الفاتورة بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -908,7 +1007,8 @@ namespace Water
                 clear_SALES();
                 isEditMode = false;
                 btnSave.Enabled = false;
-                
+                btnView.Enabled = true;
+
             }
             catch (SqlException sqlEx)
             {
@@ -1163,6 +1263,20 @@ namespace Water
                 }
             }
 
+            // تحميل قيمة isCalcFrmPayidAmt
+            if (chkBxCalc != null)
+            {
+                if (row["isCalcFrmPayidAmt"] != DBNull.Value)
+                {
+                    int isCalc = Convert.ToInt32(row["isCalcFrmPayidAmt"]);
+                    chkBxCalc.Checked = (isCalc == 1);
+                }
+                else
+                {
+                    chkBxCalc.Checked = false;
+                }
+            }
+
             // تحميل بيانات الشركاء من قاعدة البيانات
             LoadPartnersHoursFromDatabase(txtSalesId.Text.Trim());
         }
@@ -1200,6 +1314,10 @@ namespace Water
             txtDueAmount.Clear();
             txtPaidAmount.Clear();
             txtRemainingAmount.Clear();
+            if (chkBxCalc != null)
+            {
+                chkBxCalc.Checked = false;
+            }
             txtTotalHoursFromGrid.Clear();
             txtTotalMinutesFromGrid.Clear();
             if (txtNote != null)
@@ -2696,7 +2814,18 @@ namespace Water
 
         private void chkBxCalc_CheckedChanged(object sender, EventArgs e)
         {
+            /*if(chkBxCalc.Checked)
+            {
+            btnDstAmount.Visible =true;
+            txtPriceLevel.Clear();
+            }*/
             btnDstAmount.Visible = chkBxCalc.Checked;
+            //txtPriceLevel.Clear();
+        }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

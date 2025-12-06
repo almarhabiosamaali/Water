@@ -133,6 +133,26 @@ namespace Water.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap icons8_exit_24 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-exit-24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icons8_exit_24_8 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-exit-24-8", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap icons8_save_24_9 {
             get {
                 object obj = ResourceManager.GetObject("icons8-save-24-9", resourceCulture);
