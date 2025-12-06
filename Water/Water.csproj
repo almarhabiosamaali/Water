@@ -49,6 +49,7 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Management" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="allMovementRPT.cs">
@@ -80,6 +81,9 @@
     <Compile Include="Clas\partner_cost_mst.cs" />
     <Compile Include="Clas\partner_cost_dtl.cs" />
     <Compile Include="Clas\user.cs" />
+    <Compile Include="Clas\HardwareInfo.cs" />
+    <Compile Include="Clas\CryptoHelper.cs" />
+    <Compile Include="Clas\LicenseManager.cs" />
     <Compile Include="customerMovementRPT.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -115,6 +119,18 @@
     </Compile>
     <Compile Include="LoginForm.Designer.cs">
       <DependentUpon>LoginForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HardwareInfoForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HardwareInfoForm.Designer.cs">
+      <DependentUpon>HardwareInfoForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LicenseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LicenseForm.Designer.cs">
+      <DependentUpon>LicenseForm.cs</DependentUpon>
     </Compile>
     <Compile Include="partnerMovmentRPT.cs">
       <SubType>Form</SubType>
@@ -249,6 +265,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HardwareInfoForm.resx">
+      <DependentUpon>HardwareInfoForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LicenseForm.resx">
+      <DependentUpon>LicenseForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="partnerMovmentRPT.resx">
       <DependentUpon>partnerMovmentRPT.cs</DependentUpon>
