@@ -31,9 +31,9 @@ namespace Water
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            // جعل Form1 باهت (معطل) قبل عرض شاشة تسجيل الدخول
-            this.Enabled = false;
-            this.Opacity = 0.5;
+            // إظهار Panel رمادي شفاف يغطي Form1 بالكامل
+            pnlLoginOverlay.Visible = true;
+            pnlLoginOverlay.BringToFront();
 
             // عرض شاشة تسجيل الدخول كـ modal popup في الوسط
             LoginForm loginForm = new LoginForm();
@@ -54,9 +54,8 @@ namespace Water
                     lblUser.Text = LoggedInUserName;
                 }
 
-                // تفعيل Form1
-                this.Enabled = true;
-                this.Opacity = 1.0;
+                // إخفاء Panel الرمادي
+                pnlLoginOverlay.Visible = false;
 
                 // تحميل البيانات
                 LoadDashboardData();

@@ -62,6 +62,7 @@
             this.lblPartnersCount = new System.Windows.Forms.Label();
             this.lblPartnersCard = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.pnlLoginOverlay = new System.Windows.Forms.Panel();
             this.pnlHeader.SuspendLayout();
             this.pnlSidebar.SuspendLayout();
             this.pnlReports.SuspendLayout();
@@ -476,11 +477,22 @@
             this.pictureBox1.TabIndex = 4;
             this.pictureBox1.TabStop = false;
             // 
+            // pnlLoginOverlay
+            // 
+            this.pnlLoginOverlay.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.pnlLoginOverlay.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlLoginOverlay.Location = new System.Drawing.Point(0, 0);
+            this.pnlLoginOverlay.Name = "pnlLoginOverlay";
+            this.pnlLoginOverlay.Size = new System.Drawing.Size(1242, 781);
+            this.pnlLoginOverlay.TabIndex = 5;
+            this.pnlLoginOverlay.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1242, 781);
+            this.Controls.Add(this.pnlLoginOverlay);
             this.Controls.Add(this.pnlMainContent);
             this.Controls.Add(this.pnlSidebar);
             this.Controls.Add(this.pnlHeader);
@@ -558,5 +570,6 @@
         private System.Windows.Forms.Label lblChartTitle;
         private System.Windows.Forms.TreeView treeViewReports;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Panel pnlLoginOverlay;
     }
 }
