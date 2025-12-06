@@ -35,7 +35,10 @@ namespace Water
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            // إظهار Panel رمادي شفاف يغطي Form1 بالكامل
+            // إخفاء محتوى Form1 وإظهار Panel رمادي يغطي Form1 بالكامل
+            pnlMainContent.Visible = false;
+            pnlSidebar.Visible = false;
+            pnlHeader.Visible = false;
             pnlLoginOverlay.Visible = true;
             pnlLoginOverlay.BringToFront();
 
@@ -58,8 +61,11 @@ namespace Water
                     lblUser.Text = LoggedInUserName;
                 }
 
-                // إخفاء Panel الرمادي
+                // إخفاء Panel الرمادي وإظهار محتوى Form1
                 pnlLoginOverlay.Visible = false;
+                pnlHeader.Visible = true;
+                pnlSidebar.Visible = true;
+                pnlMainContent.Visible = true;
 
                 // تحميل البيانات
                 LoadDashboardData();
