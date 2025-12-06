@@ -719,7 +719,7 @@ namespace Water
             {
                 txtSalesId.Text = "1";
             }
-            btnSave.Text = "حفظ";
+            btnSave.Enabled = true;
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
@@ -742,7 +742,8 @@ namespace Water
 
                 LoadSalesData(dt.Rows[0]);
                 isEditMode = true;
-                btnSave.Text = "تحديث";
+                btnSave.Enabled = true;
+                //btnSave.Text = "تحديث";
             }
             catch (Exception ex)
             {
@@ -906,8 +907,8 @@ namespace Water
 
                 clear_SALES();
                 isEditMode = false;
-               // txtSalesId.Enabled = true;
-                btnSave.Text = "حفظ";
+                btnSave.Enabled = false;
+                
             }
             catch (SqlException sqlEx)
             {
@@ -2691,6 +2692,11 @@ namespace Water
             txtWaterHourPrice.Text = h_price.ToString();
             txtWaterMinutesPrice.Text = m_price.ToString();
 
+        }
+
+        private void chkBxCalc_CheckedChanged(object sender, EventArgs e)
+        {
+            btnDstAmount.Visible = chkBxCalc.Checked;
         }
     }
 }
