@@ -18,11 +18,55 @@ namespace Water
         Clas.customer customer = new Clas.customer();
         Clas.sales sales = new Clas.sales();
 
+        // معلومات المستخدم المسجل دخوله
+        public string LoggedInUserId { get; private set; }
+        public string LoggedInUserName { get; private set; }
+        public string LoggedInUserType { get; private set; }
+
         public Form1()
         {
             InitializeComponent();
-            LoadDashboardData();
-            InitializeReportsTree();
+            this.Load += Form1_Load;
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            // جعل Form1 باهت (معطل) قبل عرض شاشة تسجيل الدخول
+            this.Enabled = false;
+            this.Opacity = 0.5;
+
+            // عرض شاشة تسجيل الدخول كـ modal popup في الوسط
+            LoginForm loginForm = new LoginForm();
+            loginForm.StartPosition = FormStartPosition.CenterParent;
+            
+            DialogResult result = loginForm.ShowDialog(this);
+
+            if (result == DialogResult.OK)
+            {
+                // تسجيل الدخول ناجح
+                LoggedInUserId = loginForm.LoggedInUserId;
+                LoggedInUserName = loginForm.LoggedInUserName;
+                LoggedInUserType = loginForm.LoggedInUserType;
+
+                // تحديث اسم المستخدم في الـ Header
+                if (!string.IsNullOrEmpty(LoggedInUserName))
+                {
+                    lblUser.Text = LoggedInUserName;
+                }
+
+                // تفعيل Form1
+                this.Enabled = true;
+                this.Opacity = 1.0;
+
+                // تحميل البيانات
+                LoadDashboardData();
+                InitializeReportsTree();
+            }
+            else
+            {
+                // تم الإلغاء أو فشل تسجيل الدخول - إغلاق التطبيق
+                Application.Exit();
+            }
         }
 
         // تهيئة شجرة التقارير
