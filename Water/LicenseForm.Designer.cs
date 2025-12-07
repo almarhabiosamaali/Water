@@ -43,6 +43,7 @@ namespace Water
             this.btnSelectLicenseFile = new System.Windows.Forms.Button();
             this.btnGenerateHardwareInfo = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
+            this.btnSetServer = new System.Windows.Forms.Button();
             this.pnlMain.SuspendLayout();
             this.pnlButtons.SuspendLayout();
             this.SuspendLayout();
@@ -63,93 +64,93 @@ namespace Water
             this.pnlMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlMain.Location = new System.Drawing.Point(0, 0);
             this.pnlMain.Name = "pnlMain";
-            this.pnlMain.Padding = new System.Windows.Forms.Padding(20);
-            this.pnlMain.Size = new System.Drawing.Size(600, 400);
+            this.pnlMain.Padding = new System.Windows.Forms.Padding(23, 20, 23, 20);
+            this.pnlMain.Size = new System.Drawing.Size(841, 400);
             this.pnlMain.TabIndex = 0;
             // 
             // txtIssueDate
             // 
             this.txtIssueDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtIssueDate.Location = new System.Drawing.Point(30, 320);
+            this.txtIssueDate.Location = new System.Drawing.Point(34, 320);
             this.txtIssueDate.Name = "txtIssueDate";
             this.txtIssueDate.ReadOnly = true;
             this.txtIssueDate.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.txtIssueDate.Size = new System.Drawing.Size(530, 26);
+            this.txtIssueDate.Size = new System.Drawing.Size(605, 26);
             this.txtIssueDate.TabIndex = 8;
             // 
             // lblIssueDate
             // 
             this.lblIssueDate.AutoSize = true;
             this.lblIssueDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblIssueDate.Location = new System.Drawing.Point(480, 295);
+            this.lblIssueDate.Location = new System.Drawing.Point(549, 295);
             this.lblIssueDate.Name = "lblIssueDate";
             this.lblIssueDate.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.lblIssueDate.Size = new System.Drawing.Size(80, 20);
+            this.lblIssueDate.Size = new System.Drawing.Size(93, 20);
             this.lblIssueDate.TabIndex = 7;
             this.lblIssueDate.Text = "تاريخ الإصدار:";
             // 
             // txtExpiryDate
             // 
             this.txtExpiryDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtExpiryDate.Location = new System.Drawing.Point(30, 260);
+            this.txtExpiryDate.Location = new System.Drawing.Point(34, 260);
             this.txtExpiryDate.Name = "txtExpiryDate";
             this.txtExpiryDate.ReadOnly = true;
             this.txtExpiryDate.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.txtExpiryDate.Size = new System.Drawing.Size(530, 26);
+            this.txtExpiryDate.Size = new System.Drawing.Size(605, 26);
             this.txtExpiryDate.TabIndex = 6;
             // 
             // lblExpiryDate
             // 
             this.lblExpiryDate.AutoSize = true;
             this.lblExpiryDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblExpiryDate.Location = new System.Drawing.Point(480, 235);
+            this.lblExpiryDate.Location = new System.Drawing.Point(549, 235);
             this.lblExpiryDate.Name = "lblExpiryDate";
             this.lblExpiryDate.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.lblExpiryDate.Size = new System.Drawing.Size(80, 20);
+            this.lblExpiryDate.Size = new System.Drawing.Size(87, 20);
             this.lblExpiryDate.TabIndex = 5;
             this.lblExpiryDate.Text = "تاريخ الانتهاء:";
             // 
             // txtHardwareID
             // 
             this.txtHardwareID.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtHardwareID.Location = new System.Drawing.Point(30, 200);
+            this.txtHardwareID.Location = new System.Drawing.Point(34, 200);
             this.txtHardwareID.Name = "txtHardwareID";
             this.txtHardwareID.ReadOnly = true;
             this.txtHardwareID.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.txtHardwareID.Size = new System.Drawing.Size(530, 26);
+            this.txtHardwareID.Size = new System.Drawing.Size(605, 26);
             this.txtHardwareID.TabIndex = 4;
             // 
             // lblHardwareID
             // 
             this.lblHardwareID.AutoSize = true;
             this.lblHardwareID.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHardwareID.Location = new System.Drawing.Point(480, 175);
+            this.lblHardwareID.Location = new System.Drawing.Point(549, 175);
             this.lblHardwareID.Name = "lblHardwareID";
             this.lblHardwareID.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.lblHardwareID.Size = new System.Drawing.Size(80, 20);
+            this.lblHardwareID.Size = new System.Drawing.Size(90, 20);
             this.lblHardwareID.TabIndex = 3;
             this.lblHardwareID.Text = "معرف الجهاز:";
             // 
             // txtMessage
             // 
             this.txtMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtMessage.Location = new System.Drawing.Point(30, 120);
+            this.txtMessage.Location = new System.Drawing.Point(34, 120);
             this.txtMessage.Multiline = true;
             this.txtMessage.Name = "txtMessage";
             this.txtMessage.ReadOnly = true;
             this.txtMessage.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtMessage.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtMessage.Size = new System.Drawing.Size(530, 40);
+            this.txtMessage.Size = new System.Drawing.Size(605, 40);
             this.txtMessage.TabIndex = 2;
             // 
             // lblMessage
             // 
             this.lblMessage.AutoSize = true;
             this.lblMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMessage.Location = new System.Drawing.Point(480, 95);
+            this.lblMessage.Location = new System.Drawing.Point(549, 95);
             this.lblMessage.Name = "lblMessage";
             this.lblMessage.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.lblMessage.Size = new System.Drawing.Size(80, 20);
+            this.lblMessage.Size = new System.Drawing.Size(52, 20);
             this.lblMessage.TabIndex = 1;
             this.lblMessage.Text = "الحالة:";
             // 
@@ -158,16 +159,17 @@ namespace Water
             this.lblTitle.AutoSize = true;
             this.lblTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitle.ForeColor = System.Drawing.Color.SteelBlue;
-            this.lblTitle.Location = new System.Drawing.Point(180, 30);
+            this.lblTitle.Location = new System.Drawing.Point(206, 30);
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.lblTitle.Size = new System.Drawing.Size(240, 31);
+            this.lblTitle.Size = new System.Drawing.Size(153, 31);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "حالة الترخيص";
             // 
             // pnlButtons
             // 
             this.pnlButtons.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+            this.pnlButtons.Controls.Add(this.btnSetServer);
             this.pnlButtons.Controls.Add(this.btnExit);
             this.pnlButtons.Controls.Add(this.btnSelectLicenseFile);
             this.pnlButtons.Controls.Add(this.btnGenerateHardwareInfo);
@@ -175,7 +177,7 @@ namespace Water
             this.pnlButtons.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.pnlButtons.Location = new System.Drawing.Point(0, 400);
             this.pnlButtons.Name = "pnlButtons";
-            this.pnlButtons.Size = new System.Drawing.Size(600, 60);
+            this.pnlButtons.Size = new System.Drawing.Size(841, 60);
             this.pnlButtons.TabIndex = 1;
             // 
             // btnExit
@@ -184,10 +186,10 @@ namespace Water
             this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExit.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnExit.ForeColor = System.Drawing.Color.White;
-            this.btnExit.Location = new System.Drawing.Point(30, 10);
+            this.btnExit.Location = new System.Drawing.Point(34, 10);
             this.btnExit.Name = "btnExit";
             this.btnExit.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.btnExit.Size = new System.Drawing.Size(100, 40);
+            this.btnExit.Size = new System.Drawing.Size(114, 40);
             this.btnExit.TabIndex = 3;
             this.btnExit.Text = "خروج";
             this.btnExit.UseVisualStyleBackColor = false;
@@ -199,10 +201,10 @@ namespace Water
             this.btnSelectLicenseFile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSelectLicenseFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSelectLicenseFile.ForeColor = System.Drawing.Color.White;
-            this.btnSelectLicenseFile.Location = new System.Drawing.Point(140, 10);
+            this.btnSelectLicenseFile.Location = new System.Drawing.Point(160, 10);
             this.btnSelectLicenseFile.Name = "btnSelectLicenseFile";
             this.btnSelectLicenseFile.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.btnSelectLicenseFile.Size = new System.Drawing.Size(140, 40);
+            this.btnSelectLicenseFile.Size = new System.Drawing.Size(160, 40);
             this.btnSelectLicenseFile.TabIndex = 2;
             this.btnSelectLicenseFile.Text = "اختر ملف الترخيص";
             this.btnSelectLicenseFile.UseVisualStyleBackColor = false;
@@ -214,10 +216,10 @@ namespace Water
             this.btnGenerateHardwareInfo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnGenerateHardwareInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnGenerateHardwareInfo.ForeColor = System.Drawing.Color.White;
-            this.btnGenerateHardwareInfo.Location = new System.Drawing.Point(290, 10);
+            this.btnGenerateHardwareInfo.Location = new System.Drawing.Point(331, 10);
             this.btnGenerateHardwareInfo.Name = "btnGenerateHardwareInfo";
             this.btnGenerateHardwareInfo.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.btnGenerateHardwareInfo.Size = new System.Drawing.Size(140, 40);
+            this.btnGenerateHardwareInfo.Size = new System.Drawing.Size(160, 40);
             this.btnGenerateHardwareInfo.TabIndex = 1;
             this.btnGenerateHardwareInfo.Text = "معلومات الجهاز";
             this.btnGenerateHardwareInfo.UseVisualStyleBackColor = false;
@@ -229,21 +231,36 @@ namespace Water
             this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnClose.ForeColor = System.Drawing.Color.White;
-            this.btnClose.Location = new System.Drawing.Point(440, 10);
+            this.btnClose.Location = new System.Drawing.Point(503, 10);
             this.btnClose.Name = "btnClose";
             this.btnClose.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.btnClose.Size = new System.Drawing.Size(120, 40);
+            this.btnClose.Size = new System.Drawing.Size(137, 40);
             this.btnClose.TabIndex = 0;
             this.btnClose.Text = "موافق";
             this.btnClose.UseVisualStyleBackColor = false;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
+            // btnSetServer
+            // 
+            this.btnSetServer.BackColor = System.Drawing.Color.SteelBlue;
+            this.btnSetServer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSetServer.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSetServer.ForeColor = System.Drawing.Color.White;
+            this.btnSetServer.Location = new System.Drawing.Point(665, 10);
+            this.btnSetServer.Name = "btnSetServer";
+            this.btnSetServer.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.btnSetServer.Size = new System.Drawing.Size(164, 40);
+            this.btnSetServer.TabIndex = 4;
+            this.btnSetServer.Text = "الاتصال";
+            this.btnSetServer.UseVisualStyleBackColor = false;
+            this.btnSetServer.Click += new System.EventHandler(this.btnSetServer_Click);
+            // 
             // LicenseForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.ClientSize = new System.Drawing.Size(600, 460);
+            this.ClientSize = new System.Drawing.Size(841, 460);
             this.Controls.Add(this.pnlMain);
             this.Controls.Add(this.pnlButtons);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -279,6 +296,7 @@ namespace Water
         private System.Windows.Forms.Button btnGenerateHardwareInfo;
         private System.Windows.Forms.Button btnSelectLicenseFile;
         private System.Windows.Forms.Button btnExit;
+        private System.Windows.Forms.Button btnSetServer;
     }
 }
 

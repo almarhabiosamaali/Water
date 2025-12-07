@@ -138,6 +138,12 @@ namespace Water
         {
             Application.Exit();
         }
+
+        private void btnSetServer_Click(object sender, EventArgs e)
+        {
+            SetServer ss = new SetServer();
+            ss.ShowDialog();
+        }
     }
 }
 
