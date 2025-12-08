@@ -114,6 +114,39 @@ namespace Water.Clas
         {
             return AutoNumberHelper.GetNextNumber("periods", "id");
         }
+
+        /// <summary>
+        /// تطبيق التوقف على الفترة الحالية وتعديل الفترات التالية
+        /// </summary>
+        /// <param name="period_id">معرف الفترة</param>
+        /// <param name="downtime_id">معرف التوقف (اختياري)</param>
+        /// <param name="added_days">عدد الأيام المضافة</param>
+        /// <param name="added_hours">عدد الساعات المضافة</param>
+        /// <param name="added_minutes">عدد الدقائق المضافة</param>
+        public void ApplyDowntimeToPeriod(string period_id, string downtime_id, int added_days, int added_hours, int added_minutes)
+        {
+            Clas.DataAccessLayer DAL = new Clas.DataAccessLayer();
+            DAL.Open();
+            SqlParameter[] param = new SqlParameter[5];
+            
+            param[0] = new SqlParameter("@period_id", SqlDbType.VarChar, 50);
+            param[0].Value = period_id;
+
+            param[1] = new SqlParameter("@downtime_id", SqlDbType.VarChar, 50);
+            param[1].Value = (object)downtime_id ?? DBNull.Value;
+
+            param[2] = new SqlParameter("@added_days", SqlDbType.Int);
+            param[2].Value = added_days;
+
+            param[3] = new SqlParameter("@added_hours", SqlDbType.Int);
+            param[3].Value = added_hours;
+
+            param[4] = new SqlParameter("@added_minutes", SqlDbType.Int);
+            param[4].Value = added_minutes;
+
+            DAL.ExecuteCommand("period_apply_downtime", param);
+            DAL.Close();
+        }
     }
 }
 

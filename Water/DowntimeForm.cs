@@ -14,6 +14,7 @@ namespace Water
     {
         private bool isEditMode = false;
         Clas.downtime dwn = new Clas.downtime();
+        Clas.period period = new Clas.period();
 
         public DowntimeForm()
         {
@@ -230,6 +231,39 @@ namespace Water
                     MessageBox.Show("تم حفظ بيانات التوقف بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
 
+                // تطبيق التوقف على الفترة إذا كان هناك period_id وأيام/ساعات/دقائق
+                if (!string.IsNullOrWhiteSpace(periodId))
+                {
+                    int days = int.TryParse(dayesCount, out int d) ? d : 0;
+                    int hrs = int.TryParse(hours, out int h) ? h : 0;
+                    int mins = int.TryParse(minutes, out int m) ? m : 0;
+                    
+                    // تطبيق التوقف على الفترة فقط إذا كان هناك قيمة فعلية
+                    if (days > 0 || hrs > 0 || mins > 0)
+                    {
+                        try
+                        {
+                            period.ApplyDowntimeToPeriod(
+                                periodId,
+                                txtDowntimeCode.Text.Trim(),
+                                days,
+                                hrs,
+                                mins
+                            );
+                        }
+                        catch (Exception periodEx)
+                        {
+                            // في حالة فشل تطبيق التوقف على الفترة، نعرض رسالة تحذيرية
+                            MessageBox.Show(
+                                "تم حفظ التوقف بنجاح، لكن حدث خطأ أثناء تطبيقه على الفترة:\n" + periodEx.Message,
+                                "تحذير",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Warning
+                            );
+                        }
+                    }
+                }
+
                 clear_DOWNTIME();
                 isEditMode = false;
                 txtDowntimeCode.Enabled = true;
@@ -397,19 +431,27 @@ namespace Water
                 // حساب الفرق بين وقت النهاية ووقت البداية
                 TimeSpan difference = dtpEndTime.Value - dtpStartTime.Value;
 
-                // حساب عدد الأيام (الفرق في الأيام)
-                int days = difference.Days;
-
                 // حساب إجمالي الساعات (الفرق في الساعات)
                 int totalHours = (int)difference.TotalHours;
+                int daysf = difference.Days;
+                // حساب عدد أيام العمل: قسمة إجمالي الساعات على 20 (يوم العمل = 20 ساعة)
+                int days = (totalHours -(daysf *4)) / 20;
 
-                // حساب الساعات المتبقية بعد الأيام الكاملة
-                int hours = totalHours % 24;
-
-                // حساب الدقائق
+                // حساب الساعات المتبقية بعد أيام العمل الكاملة
+                int hours = (totalHours % 20) - (days * 4);
                 int minutes = difference.Minutes;
 
-                // حساب ساعات العمل الفعلية: عدد الأيام × 20 ساعة
+                if (hours < 0)
+                {
+                     hours = 0;
+                    minutes = 0;
+                }
+                  
+
+                // حساب الدقائق
+                
+
+                // حساب ساعات العمل الفعلية: عدد أيام العمل × 20 ساعة
                 int workingHours = days * 20;
 
                 // تحديث الحقول
