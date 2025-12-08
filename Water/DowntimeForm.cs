@@ -134,7 +134,7 @@ namespace Water
             }
 
             DialogResult result = MessageBox.Show(
-                "هل أنت متأكد من حذف التوقف: " + txtDowntimeCode.Text + "؟",
+                "هل أنت متأكد من حذف التوقف: " + txtDowntimeCode.Text + "؟\nسيتم إلغاء التعديلات التي تمت على الفترة المرتبطة بهذا التوقف.",
                 "تأكيد الحذف",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question);
@@ -143,7 +143,71 @@ namespace Water
             {
                 try
                 {
-                    dwn.DELETE_DOWNTIME(txtDowntimeCode.Text.Trim());
+                    // قراءة بيانات التوقف قبل الحذف لإلغاء التعديلات من الفترة
+                    string downtimeId = txtDowntimeCode.Text.Trim();
+                    
+                    // قراءة بيانات التوقف من قاعدة البيانات
+                    DataTable dt = dwn.VIEW_DOWNTIME(downtimeId);
+                    
+                    if (dt.Rows.Count > 0)
+                    {
+                        DataRow row = dt.Rows[0];
+                        string periodId = row["period_id"] != DBNull.Value ? row["period_id"].ToString() : null;
+                        
+                        // إذا كان هناك period_id، نقرأ الأيام/الساعات/الدقائق ونلغي التعديلات
+                        if (!string.IsNullOrWhiteSpace(periodId))
+                        {
+                            int days = 0;
+                            int hrs = 0;
+                            int mins = 0;
+                            
+                            // قراءة الأيام
+                            if (row["dayesCount"] != DBNull.Value && !string.IsNullOrWhiteSpace(row["dayesCount"].ToString()))
+                            {
+                                int.TryParse(row["dayesCount"].ToString(), out days);
+                            }
+                            
+                            // قراءة الساعات
+                            if (row["hours"] != DBNull.Value && !string.IsNullOrWhiteSpace(row["hours"].ToString()))
+                            {
+                                int.TryParse(row["hours"].ToString(), out hrs);
+                            }
+                            
+                            // قراءة الدقائق
+                            if (row["minutes"] != DBNull.Value && !string.IsNullOrWhiteSpace(row["minutes"].ToString()))
+                            {
+                                int.TryParse(row["minutes"].ToString(), out mins);
+                            }
+                            
+                            // إلغاء التعديلات من الفترة فقط إذا كان هناك قيمة فعلية
+                            if (days > 0 || hrs > 0 || mins > 0)
+                            {
+                                try
+                                {
+                                    period.ReverseDowntimeFromPeriod(
+                                        periodId,
+                                        downtimeId,
+                                        days,
+                                        hrs,
+                                        mins
+                                    );
+                                }
+                                catch (Exception periodEx)
+                                {
+                                    // في حالة فشل إلغاء التعديلات، نعرض رسالة تحذيرية لكن نستمر في الحذف
+                                    MessageBox.Show(
+                                        "تم حذف التوقف، لكن حدث خطأ أثناء إلغاء التعديلات من الفترة:\n" + periodEx.Message,
+                                        "تحذير",
+                                        MessageBoxButtons.OK,
+                                        MessageBoxIcon.Warning
+                                    );
+                                }
+                            }
+                        }
+                    }
+                    
+                    // حذف التوقف
+                    dwn.DELETE_DOWNTIME(downtimeId);
                     MessageBox.Show("تم حذف التوقف بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     clear_DOWNTIME();
                 }

@@ -147,6 +147,39 @@ namespace Water.Clas
             DAL.ExecuteCommand("period_apply_downtime", param);
             DAL.Close();
         }
+
+        /// <summary>
+        /// إلغاء التعديلات التي تمت على الفترة بسبب التوقف
+        /// </summary>
+        /// <param name="period_id">معرف الفترة</param>
+        /// <param name="downtime_id">معرف التوقف</param>
+        /// <param name="removed_days">عدد الأيام المراد إزالتها</param>
+        /// <param name="removed_hours">عدد الساعات المراد إزالتها</param>
+        /// <param name="removed_minutes">عدد الدقائق المراد إزالتها</param>
+        public void ReverseDowntimeFromPeriod(string period_id, string downtime_id, int removed_days, int removed_hours, int removed_minutes)
+        {
+            Clas.DataAccessLayer DAL = new Clas.DataAccessLayer();
+            DAL.Open();
+            SqlParameter[] param = new SqlParameter[5];
+            
+            param[0] = new SqlParameter("@period_id", SqlDbType.VarChar, 50);
+            param[0].Value = period_id;
+
+            param[1] = new SqlParameter("@downtime_id", SqlDbType.VarChar, 50);
+            param[1].Value = (object)downtime_id ?? DBNull.Value;
+
+            param[2] = new SqlParameter("@removed_days", SqlDbType.Int);
+            param[2].Value = removed_days;
+
+            param[3] = new SqlParameter("@removed_hours", SqlDbType.Int);
+            param[3].Value = removed_hours;
+
+            param[4] = new SqlParameter("@removed_minutes", SqlDbType.Int);
+            param[4].Value = removed_minutes;
+
+            DAL.ExecuteCommand("period_reverse_downtime", param);
+            DAL.Close();
+        }
     }
 }
 
