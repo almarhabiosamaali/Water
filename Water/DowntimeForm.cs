@@ -92,7 +92,7 @@ namespace Water
             {
                 txtDowntimeCode.Text = "1";
             }
-            btnSave.Text = "حفظ";
+            btnSave.Text = "";
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
@@ -116,7 +116,7 @@ namespace Water
                 LoadDowntimeData(dt.Rows[0]);
                 isEditMode = true;
                 txtDowntimeCode.Enabled = false;
-                btnSave.Text = "تحديث";
+                btnSave.Text = "";
                 MessageBox.Show("يمكنك الآن تعديل بيانات التوقف", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
@@ -331,7 +331,7 @@ namespace Water
                 clear_DOWNTIME();
                 isEditMode = false;
                 txtDowntimeCode.Enabled = true;
-                btnSave.Text = "حفظ";
+                btnSave.Text = "";
             }
             catch (Exception ee)
             {

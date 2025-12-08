@@ -69,7 +69,7 @@ namespace Water
             // 
             this.lblDowntimeCode.AutoSize = true;
             this.lblDowntimeCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDowntimeCode.Location = new System.Drawing.Point(13, 126);
+            this.lblDowntimeCode.Location = new System.Drawing.Point(15, 126);
             this.lblDowntimeCode.Name = "lblDowntimeCode";
             this.lblDowntimeCode.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblDowntimeCode.Size = new System.Drawing.Size(43, 20);
@@ -79,11 +79,11 @@ namespace Water
             // txtDowntimeCode
             // 
             this.txtDowntimeCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtDowntimeCode.Location = new System.Drawing.Point(118, 123);
+            this.txtDowntimeCode.Location = new System.Drawing.Point(135, 123);
             this.txtDowntimeCode.Name = "txtDowntimeCode";
             this.txtDowntimeCode.ReadOnly = true;
             this.txtDowntimeCode.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.txtDowntimeCode.Size = new System.Drawing.Size(135, 26);
+            this.txtDowntimeCode.Size = new System.Drawing.Size(154, 26);
             this.txtDowntimeCode.TabIndex = 1;
             this.txtDowntimeCode.TabStop = false;
             this.txtDowntimeCode.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -92,7 +92,7 @@ namespace Water
             // 
             this.lblPeriodId.AutoSize = true;
             this.lblPeriodId.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPeriodId.Location = new System.Drawing.Point(307, 126);
+            this.lblPeriodId.Location = new System.Drawing.Point(351, 126);
             this.lblPeriodId.Name = "lblPeriodId";
             this.lblPeriodId.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblPeriodId.Size = new System.Drawing.Size(67, 20);
@@ -102,17 +102,17 @@ namespace Water
             // txtPeriodId
             // 
             this.txtPeriodId.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPeriodId.Location = new System.Drawing.Point(379, 123);
+            this.txtPeriodId.Location = new System.Drawing.Point(433, 123);
             this.txtPeriodId.Name = "txtPeriodId";
             this.txtPeriodId.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.txtPeriodId.Size = new System.Drawing.Size(72, 26);
+            this.txtPeriodId.Size = new System.Drawing.Size(82, 26);
             this.txtPeriodId.TabIndex = 1;
             // 
             // lblDate
             // 
             this.lblDate.AutoSize = true;
             this.lblDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDate.Location = new System.Drawing.Point(490, 125);
+            this.lblDate.Location = new System.Drawing.Point(560, 125);
             this.lblDate.Name = "lblDate";
             this.lblDate.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblDate.Size = new System.Drawing.Size(51, 20);
@@ -123,18 +123,18 @@ namespace Water
             // 
             this.dtpDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dtpDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpDate.Location = new System.Drawing.Point(558, 120);
+            this.dtpDate.Location = new System.Drawing.Point(638, 120);
             this.dtpDate.Name = "dtpDate";
             this.dtpDate.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.dtpDate.RightToLeftLayout = true;
-            this.dtpDate.Size = new System.Drawing.Size(193, 26);
+            this.dtpDate.Size = new System.Drawing.Size(220, 26);
             this.dtpDate.TabIndex = 2;
             // 
             // lblHours
             // 
             this.lblHours.AutoSize = true;
             this.lblHours.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHours.Location = new System.Drawing.Point(7, 261);
+            this.lblHours.Location = new System.Drawing.Point(8, 261);
             this.lblHours.Name = "lblHours";
             this.lblHours.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblHours.Size = new System.Drawing.Size(60, 20);
@@ -145,7 +145,7 @@ namespace Water
             // 
             this.lblDayesCount.AutoSize = true;
             this.lblDayesCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDayesCount.Location = new System.Drawing.Point(6, 231);
+            this.lblDayesCount.Location = new System.Drawing.Point(7, 231);
             this.lblDayesCount.Name = "lblDayesCount";
             this.lblDayesCount.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblDayesCount.Size = new System.Drawing.Size(67, 20);
@@ -156,7 +156,7 @@ namespace Water
             // 
             this.lblMinutes.AutoSize = true;
             this.lblMinutes.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMinutes.Location = new System.Drawing.Point(6, 306);
+            this.lblMinutes.Location = new System.Drawing.Point(7, 306);
             this.lblMinutes.Name = "lblMinutes";
             this.lblMinutes.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblMinutes.Size = new System.Drawing.Size(51, 20);
@@ -167,7 +167,7 @@ namespace Water
             // 
             this.lblStartTime.AutoSize = true;
             this.lblStartTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblStartTime.Location = new System.Drawing.Point(8, 187);
+            this.lblStartTime.Location = new System.Drawing.Point(9, 187);
             this.lblStartTime.Name = "lblStartTime";
             this.lblStartTime.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblStartTime.Size = new System.Drawing.Size(75, 20);
@@ -178,7 +178,7 @@ namespace Water
             // 
             this.lblEndTime.AutoSize = true;
             this.lblEndTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblEndTime.Location = new System.Drawing.Point(344, 193);
+            this.lblEndTime.Location = new System.Drawing.Point(393, 193);
             this.lblEndTime.Name = "lblEndTime";
             this.lblEndTime.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblEndTime.Size = new System.Drawing.Size(76, 20);
@@ -189,7 +189,7 @@ namespace Water
             // 
             this.lblAmount.AutoSize = true;
             this.lblAmount.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAmount.Location = new System.Drawing.Point(10, 349);
+            this.lblAmount.Location = new System.Drawing.Point(11, 349);
             this.lblAmount.Name = "lblAmount";
             this.lblAmount.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblAmount.Size = new System.Drawing.Size(45, 20);
@@ -200,7 +200,7 @@ namespace Water
             // 
             this.lblNote.AutoSize = true;
             this.lblNote.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNote.Location = new System.Drawing.Point(8, 388);
+            this.lblNote.Location = new System.Drawing.Point(9, 388);
             this.lblNote.Name = "lblNote";
             this.lblNote.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblNote.Size = new System.Drawing.Size(48, 20);
@@ -210,22 +210,22 @@ namespace Water
             // txtNote
             // 
             this.txtNote.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtNote.Location = new System.Drawing.Point(112, 388);
+            this.txtNote.Location = new System.Drawing.Point(128, 388);
             this.txtNote.MaxLength = 255;
             this.txtNote.Multiline = true;
             this.txtNote.Name = "txtNote";
             this.txtNote.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.txtNote.Size = new System.Drawing.Size(683, 29);
+            this.txtNote.Size = new System.Drawing.Size(780, 29);
             this.txtNote.TabIndex = 7;
             // 
             // btnView
             // 
             this.btnView.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnView.Image = global::Water.Properties.Resources.icons8_search_24_8;
-            this.btnView.Location = new System.Drawing.Point(244, 42);
+            this.btnView.Location = new System.Drawing.Point(279, 42);
             this.btnView.Name = "btnView";
             this.btnView.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.btnView.Size = new System.Drawing.Size(74, 40);
+            this.btnView.Size = new System.Drawing.Size(85, 40);
             this.btnView.TabIndex = 20;
             this.btnView.TabStop = false;
             this.btnView.UseVisualStyleBackColor = true;
@@ -234,10 +234,10 @@ namespace Water
             // 
             this.btnAdd.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAdd.Image = global::Water.Properties.Resources.icons8_add_241;
-            this.btnAdd.Location = new System.Drawing.Point(327, 42);
+            this.btnAdd.Location = new System.Drawing.Point(374, 42);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.btnAdd.Size = new System.Drawing.Size(74, 40);
+            this.btnAdd.Size = new System.Drawing.Size(85, 40);
             this.btnAdd.TabIndex = 0;
             this.btnAdd.UseVisualStyleBackColor = true;
             // 
@@ -245,22 +245,23 @@ namespace Water
             // 
             this.btnEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnEdit.Image = global::Water.Properties.Resources.icons8_edit_24_5;
-            this.btnEdit.Location = new System.Drawing.Point(410, 42);
+            this.btnEdit.Location = new System.Drawing.Point(469, 42);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.btnEdit.Size = new System.Drawing.Size(74, 40);
+            this.btnEdit.Size = new System.Drawing.Size(85, 40);
             this.btnEdit.TabIndex = 22;
             this.btnEdit.TabStop = false;
             this.btnEdit.UseVisualStyleBackColor = true;
+            this.btnEdit.Visible = false;
             // 
             // btnDelete
             // 
             this.btnDelete.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDelete.Image = global::Water.Properties.Resources.icons8_delete_24;
-            this.btnDelete.Location = new System.Drawing.Point(494, 42);
+            this.btnDelete.Location = new System.Drawing.Point(565, 42);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.btnDelete.Size = new System.Drawing.Size(74, 40);
+            this.btnDelete.Size = new System.Drawing.Size(85, 40);
             this.btnDelete.TabIndex = 23;
             this.btnDelete.TabStop = false;
             this.btnDelete.UseVisualStyleBackColor = true;
@@ -269,10 +270,10 @@ namespace Water
             // 
             this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSave.Image = global::Water.Properties.Resources.icons8_save_24_9;
-            this.btnSave.Location = new System.Drawing.Point(577, 42);
+            this.btnSave.Location = new System.Drawing.Point(659, 42);
             this.btnSave.Name = "btnSave";
             this.btnSave.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.btnSave.Size = new System.Drawing.Size(74, 40);
+            this.btnSave.Size = new System.Drawing.Size(85, 40);
             this.btnSave.TabIndex = 9;
             this.btnSave.UseVisualStyleBackColor = true;
             // 
@@ -280,30 +281,30 @@ namespace Water
             // 
             this.dtpStartTime.CustomFormat = "dd/MM/yyyy hh:mm tt";
             this.dtpStartTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpStartTime.Location = new System.Drawing.Point(112, 190);
+            this.dtpStartTime.Location = new System.Drawing.Point(128, 190);
             this.dtpStartTime.Name = "dtpStartTime";
             this.dtpStartTime.RightToLeftLayout = true;
-            this.dtpStartTime.Size = new System.Drawing.Size(184, 24);
+            this.dtpStartTime.Size = new System.Drawing.Size(210, 22);
             this.dtpStartTime.TabIndex = 3;
             // 
             // dtpEndTime
             // 
             this.dtpEndTime.CustomFormat = "dd/MM/yyyy hh:mm tt";
             this.dtpEndTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpEndTime.Location = new System.Drawing.Point(474, 189);
+            this.dtpEndTime.Location = new System.Drawing.Point(542, 189);
             this.dtpEndTime.Name = "dtpEndTime";
             this.dtpEndTime.RightToLeftLayout = true;
-            this.dtpEndTime.Size = new System.Drawing.Size(263, 24);
+            this.dtpEndTime.Size = new System.Drawing.Size(300, 22);
             this.dtpEndTime.TabIndex = 4;
             // 
             // txtHours
             // 
             this.txtHours.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtHours.Location = new System.Drawing.Point(112, 265);
+            this.txtHours.Location = new System.Drawing.Point(128, 265);
             this.txtHours.Name = "txtHours";
             this.txtHours.ReadOnly = true;
             this.txtHours.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.txtHours.Size = new System.Drawing.Size(100, 26);
+            this.txtHours.Size = new System.Drawing.Size(114, 26);
             this.txtHours.TabIndex = 27;
             this.txtHours.TabStop = false;
             this.txtHours.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -311,11 +312,11 @@ namespace Water
             // txtMinutes
             // 
             this.txtMinutes.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtMinutes.Location = new System.Drawing.Point(112, 305);
+            this.txtMinutes.Location = new System.Drawing.Point(128, 305);
             this.txtMinutes.Name = "txtMinutes";
             this.txtMinutes.ReadOnly = true;
             this.txtMinutes.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.txtMinutes.Size = new System.Drawing.Size(100, 26);
+            this.txtMinutes.Size = new System.Drawing.Size(114, 26);
             this.txtMinutes.TabIndex = 28;
             this.txtMinutes.TabStop = false;
             this.txtMinutes.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -323,30 +324,30 @@ namespace Water
             // txtDayesCount
             // 
             this.txtDayesCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtDayesCount.Location = new System.Drawing.Point(112, 231);
+            this.txtDayesCount.Location = new System.Drawing.Point(128, 231);
             this.txtDayesCount.Name = "txtDayesCount";
             this.txtDayesCount.ReadOnly = true;
             this.txtDayesCount.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.txtDayesCount.Size = new System.Drawing.Size(100, 26);
+            this.txtDayesCount.Size = new System.Drawing.Size(114, 26);
             this.txtDayesCount.TabIndex = 29;
             this.txtDayesCount.TabStop = false;
             this.txtDayesCount.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtAmount
             // 
-            this.txtAmount.Location = new System.Drawing.Point(112, 349);
+            this.txtAmount.Location = new System.Drawing.Point(128, 349);
             this.txtAmount.Name = "txtAmount";
-            this.txtAmount.Size = new System.Drawing.Size(184, 24);
+            this.txtAmount.Size = new System.Drawing.Size(210, 22);
             this.txtAmount.TabIndex = 5;
             // 
             // txtPeriodEndDate
             // 
             this.txtPeriodEndDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPeriodEndDate.Location = new System.Drawing.Point(780, 522);
+            this.txtPeriodEndDate.Location = new System.Drawing.Point(891, 522);
             this.txtPeriodEndDate.Name = "txtPeriodEndDate";
             this.txtPeriodEndDate.ReadOnly = true;
             this.txtPeriodEndDate.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.txtPeriodEndDate.Size = new System.Drawing.Size(156, 26);
+            this.txtPeriodEndDate.Size = new System.Drawing.Size(178, 26);
             this.txtPeriodEndDate.TabIndex = 34;
             this.txtPeriodEndDate.TabStop = false;
             this.txtPeriodEndDate.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -355,7 +356,7 @@ namespace Water
             // 
             this.lblPeriodEndDate.AutoSize = true;
             this.lblPeriodEndDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPeriodEndDate.Location = new System.Drawing.Point(737, 526);
+            this.lblPeriodEndDate.Location = new System.Drawing.Point(842, 526);
             this.lblPeriodEndDate.Name = "lblPeriodEndDate";
             this.lblPeriodEndDate.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblPeriodEndDate.Size = new System.Drawing.Size(37, 20);
@@ -365,11 +366,11 @@ namespace Water
             // txtPeriodStartDate
             // 
             this.txtPeriodStartDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPeriodStartDate.Location = new System.Drawing.Point(611, 522);
+            this.txtPeriodStartDate.Location = new System.Drawing.Point(698, 522);
             this.txtPeriodStartDate.Name = "txtPeriodStartDate";
             this.txtPeriodStartDate.ReadOnly = true;
             this.txtPeriodStartDate.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.txtPeriodStartDate.Size = new System.Drawing.Size(120, 26);
+            this.txtPeriodStartDate.Size = new System.Drawing.Size(137, 26);
             this.txtPeriodStartDate.TabIndex = 32;
             this.txtPeriodStartDate.TabStop = false;
             this.txtPeriodStartDate.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -378,7 +379,7 @@ namespace Water
             // 
             this.lblPeriodStartDate.AutoSize = true;
             this.lblPeriodStartDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPeriodStartDate.Location = new System.Drawing.Point(529, 527);
+            this.lblPeriodStartDate.Location = new System.Drawing.Point(605, 527);
             this.lblPeriodStartDate.Name = "lblPeriodStartDate";
             this.lblPeriodStartDate.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblPeriodStartDate.Size = new System.Drawing.Size(74, 20);
@@ -388,19 +389,19 @@ namespace Water
             // txtDescription
             // 
             this.txtDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtDescription.Location = new System.Drawing.Point(112, 423);
+            this.txtDescription.Location = new System.Drawing.Point(128, 423);
             this.txtDescription.MaxLength = 255;
             this.txtDescription.Multiline = true;
             this.txtDescription.Name = "txtDescription";
             this.txtDescription.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.txtDescription.Size = new System.Drawing.Size(683, 84);
+            this.txtDescription.Size = new System.Drawing.Size(780, 84);
             this.txtDescription.TabIndex = 8;
             // 
             // lblDesc
             // 
             this.lblDesc.AutoSize = true;
             this.lblDesc.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDesc.Location = new System.Drawing.Point(7, 447);
+            this.lblDesc.Location = new System.Drawing.Point(8, 447);
             this.lblDesc.Name = "lblDesc";
             this.lblDesc.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblDesc.Size = new System.Drawing.Size(66, 20);
@@ -412,7 +413,7 @@ namespace Water
             this.chkIsProcessed.AutoSize = true;
             this.chkIsProcessed.Enabled = false;
             this.chkIsProcessed.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chkIsProcessed.Location = new System.Drawing.Point(798, 120);
+            this.chkIsProcessed.Location = new System.Drawing.Point(912, 120);
             this.chkIsProcessed.Name = "chkIsProcessed";
             this.chkIsProcessed.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.chkIsProcessed.Size = new System.Drawing.Size(104, 24);
@@ -424,11 +425,11 @@ namespace Water
             // txtWorkingHours
             // 
             this.txtWorkingHours.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtWorkingHours.Location = new System.Drawing.Point(474, 239);
+            this.txtWorkingHours.Location = new System.Drawing.Point(542, 239);
             this.txtWorkingHours.Name = "txtWorkingHours";
             this.txtWorkingHours.ReadOnly = true;
             this.txtWorkingHours.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.txtWorkingHours.Size = new System.Drawing.Size(100, 26);
+            this.txtWorkingHours.Size = new System.Drawing.Size(114, 26);
             this.txtWorkingHours.TabIndex = 38;
             this.txtWorkingHours.TabStop = false;
             this.txtWorkingHours.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -437,7 +438,7 @@ namespace Water
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(343, 243);
+            this.label1.Location = new System.Drawing.Point(392, 243);
             this.label1.Name = "label1";
             this.label1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.label1.Size = new System.Drawing.Size(126, 20);
@@ -448,7 +449,7 @@ namespace Water
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(375, 9);
+            this.label2.Location = new System.Drawing.Point(429, 9);
             this.label2.Name = "label2";
             this.label2.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.label2.Size = new System.Drawing.Size(167, 20);
@@ -457,9 +458,9 @@ namespace Water
             // 
             // DowntimeForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(945, 644);
+            this.ClientSize = new System.Drawing.Size(1080, 644);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtWorkingHours);
