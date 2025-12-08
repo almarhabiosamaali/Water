@@ -614,7 +614,7 @@ namespace Water
                 // MessageBox.Show("حدث خطأ أثناء تحميل بيانات التسعيرة: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
+        int is_check = 0;
         private void txtPriceLevel_Leave(object sender, EventArgs e)
         {
             // عند مغادرة حقل مستوى التسعيرة، التحقق من صحة القيمة
@@ -646,6 +646,12 @@ namespace Water
                     
                     // إعادة حساب الإجماليات
                     CalculateTotals_TextChanged(null, null);
+                    if(chkBxCalc.Checked)
+                    {
+                        is_check = 1;
+                        chkBxCalc.Checked = false;
+                    }
+                    
                 }
             }
             catch (Exception ex)
@@ -2814,12 +2820,19 @@ namespace Water
 
         private void chkBxCalc_CheckedChanged(object sender, EventArgs e)
         {
-            /*if(chkBxCalc.Checked)
+            if (!chkBxCalc.Checked)
             {
-            btnDstAmount.Visible =true;
-            txtPriceLevel.Clear();
-            }*/
-            btnDstAmount.Visible = chkBxCalc.Checked;
+                if(is_check != 1)
+                    txtPriceLevel.Clear();
+                btnDstAmount.Visible = false;
+                
+                is_check = 0;
+            }
+            else
+            {
+                btnDstAmount.Visible = true;
+            }
+           // btnDstAmount.Visible = chkBxCalc.Checked;
             //txtPriceLevel.Clear();
         }
 
