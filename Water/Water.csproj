@@ -180,6 +180,12 @@
       <DependentUpon>movementsDTL.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="RPT\partnerMovementDTL.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>partnerMovementDTL.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="RPT\partnerMovements.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -304,6 +310,10 @@
     <EmbeddedResource Include="RPT\movementsDTL.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>movementsDTL.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RPT\partnerMovementDTL.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>partnerMovementDTL.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="RPT\partnerMovements.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
