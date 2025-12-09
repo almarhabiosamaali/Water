@@ -90,7 +90,6 @@ namespace Water
                 txtPeriodCode.Text = "1";
             }
             txtPeriodCode.Enabled = false;
-            btnSave.Text = "حفظ";
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
@@ -114,7 +113,6 @@ namespace Water
                 LoadPeriodData(dt.Rows[0]);
                 isEditMode = true;
                 txtPeriodCode.Enabled = false;
-                btnSave.Text = "تحديث";
                 MessageBox.Show("يمكنك الآن تعديل بيانات الفترة", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
@@ -229,7 +227,6 @@ namespace Water
 
                 clear_PERIOD();
                 isEditMode = false;
-                btnSave.Text = "حفظ";
             }
             catch (SqlException sqlEx)
             {
@@ -340,6 +337,11 @@ namespace Water
                 // في حالة حدوث خطأ، لا نفعل شيئاً لتجنب تعطيل المستخدم
                 // يمكن إضافة تسجيل الخطأ هنا إذا لزم الأمر
             }
+        }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

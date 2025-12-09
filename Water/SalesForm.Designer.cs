@@ -98,12 +98,12 @@ namespace Water
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.label4 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.btnExit = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnView = new System.Windows.Forms.Button();
+            this.btnExit = new System.Windows.Forms.Button();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tabPage1.SuspendLayout();
@@ -874,17 +874,6 @@ namespace Water
             this.label4.TabIndex = 88;
             this.label4.Text = "فاتورة المبيعات";
             // 
-            // btnExit
-            // 
-            this.btnExit.BackColor = System.Drawing.Color.White;
-            this.btnExit.Image = global::Water.Properties.Resources.icons8_exit_24;
-            this.btnExit.Location = new System.Drawing.Point(378, 5);
-            this.btnExit.Name = "btnExit";
-            this.btnExit.Size = new System.Drawing.Size(70, 40);
-            this.btnExit.TabIndex = 89;
-            this.btnExit.UseVisualStyleBackColor = false;
-            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
-            // 
             // btnSave
             // 
             this.btnSave.BackColor = System.Drawing.Color.White;
@@ -956,6 +945,18 @@ namespace Water
             this.btnView.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.toolTip1.SetToolTip(this.btnView, "عرض");
             this.btnView.UseVisualStyleBackColor = false;
+            // 
+            // btnExit
+            // 
+            this.btnExit.BackColor = System.Drawing.Color.White;
+            this.btnExit.Image = global::Water.Properties.Resources.icons8_exit_24;
+            this.btnExit.Location = new System.Drawing.Point(378, 5);
+            this.btnExit.Name = "btnExit";
+            this.btnExit.Size = new System.Drawing.Size(70, 40);
+            this.btnExit.TabIndex = 89;
+            this.toolTip1.SetToolTip(this.btnExit, "خروج");
+            this.btnExit.UseVisualStyleBackColor = false;
+            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
             // SalesForm
             // 

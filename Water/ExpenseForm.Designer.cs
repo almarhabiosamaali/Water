@@ -28,6 +28,7 @@ namespace Water
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.lblExpenseCode = new System.Windows.Forms.Label();
             this.txtExpenseCode = new System.Windows.Forms.TextBox();
             this.lblDate = new System.Windows.Forms.Label();
@@ -58,6 +59,8 @@ namespace Water
             this.btnSave = new System.Windows.Forms.Button();
             this.txtAmount = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.btnExit = new System.Windows.Forms.Button();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // lblExpenseCode
@@ -324,12 +327,13 @@ namespace Water
             this.btnView.BackColor = System.Drawing.Color.White;
             this.btnView.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnView.Image = global::Water.Properties.Resources.icons8_search_24_8;
-            this.btnView.Location = new System.Drawing.Point(395, 35);
+            this.btnView.Location = new System.Drawing.Point(375, 35);
             this.btnView.Name = "btnView";
             this.btnView.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.btnView.Size = new System.Drawing.Size(60, 40);
+            this.btnView.Size = new System.Drawing.Size(70, 40);
             this.btnView.TabIndex = 20;
             this.btnView.TabStop = false;
+            this.toolTip1.SetToolTip(this.btnView, "عرض");
             this.btnView.UseVisualStyleBackColor = false;
             // 
             // btnAdd
@@ -337,11 +341,12 @@ namespace Water
             this.btnAdd.BackColor = System.Drawing.Color.White;
             this.btnAdd.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAdd.Image = global::Water.Properties.Resources.icons8_add_24;
-            this.btnAdd.Location = new System.Drawing.Point(459, 35);
+            this.btnAdd.Location = new System.Drawing.Point(445, 35);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.btnAdd.Size = new System.Drawing.Size(60, 40);
+            this.btnAdd.Size = new System.Drawing.Size(70, 40);
             this.btnAdd.TabIndex = 1;
+            this.toolTip1.SetToolTip(this.btnAdd, "إضافة");
             this.btnAdd.UseVisualStyleBackColor = false;
             // 
             // btnEdit
@@ -349,12 +354,13 @@ namespace Water
             this.btnEdit.BackColor = System.Drawing.Color.White;
             this.btnEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnEdit.Image = global::Water.Properties.Resources.icons8_edit_24_5;
-            this.btnEdit.Location = new System.Drawing.Point(526, 35);
+            this.btnEdit.Location = new System.Drawing.Point(514, 35);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.btnEdit.Size = new System.Drawing.Size(60, 40);
+            this.btnEdit.Size = new System.Drawing.Size(70, 40);
             this.btnEdit.TabIndex = 22;
             this.btnEdit.TabStop = false;
+            this.toolTip1.SetToolTip(this.btnEdit, "تعديل");
             this.btnEdit.UseVisualStyleBackColor = false;
             // 
             // btnDelete
@@ -362,13 +368,14 @@ namespace Water
             this.btnDelete.BackColor = System.Drawing.Color.White;
             this.btnDelete.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDelete.Image = global::Water.Properties.Resources.icons8_delete_24;
-            this.btnDelete.Location = new System.Drawing.Point(590, 35);
+            this.btnDelete.Location = new System.Drawing.Point(586, 35);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.btnDelete.Size = new System.Drawing.Size(60, 40);
+            this.btnDelete.Size = new System.Drawing.Size(70, 40);
             this.btnDelete.TabIndex = 23;
             this.btnDelete.TabStop = false;
             this.btnDelete.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            this.toolTip1.SetToolTip(this.btnDelete, "حذف");
             this.btnDelete.UseVisualStyleBackColor = false;
             // 
             // btnSave
@@ -376,11 +383,12 @@ namespace Water
             this.btnSave.BackColor = System.Drawing.Color.White;
             this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSave.Image = global::Water.Properties.Resources.icons8_save_24_9;
-            this.btnSave.Location = new System.Drawing.Point(652, 35);
+            this.btnSave.Location = new System.Drawing.Point(658, 35);
             this.btnSave.Name = "btnSave";
             this.btnSave.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.btnSave.Size = new System.Drawing.Size(60, 40);
+            this.btnSave.Size = new System.Drawing.Size(70, 40);
             this.btnSave.TabIndex = 12;
+            this.toolTip1.SetToolTip(this.btnSave, "حفظ");
             this.btnSave.UseVisualStyleBackColor = false;
             // 
             // txtAmount
@@ -395,19 +403,35 @@ namespace Water
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(484, 7);
             this.label1.Name = "label1";
             this.label1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.label1.Size = new System.Drawing.Size(139, 20);
+            this.label1.Size = new System.Drawing.Size(172, 24);
             this.label1.TabIndex = 30;
             this.label1.Text = "سندات القبض والصرف";
+            // 
+            // btnExit
+            // 
+            this.btnExit.BackColor = System.Drawing.Color.White;
+            this.btnExit.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnExit.Image = global::Water.Properties.Resources.icons8_exit_24;
+            this.btnExit.Location = new System.Drawing.Point(728, 35);
+            this.btnExit.Name = "btnExit";
+            this.btnExit.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.btnExit.Size = new System.Drawing.Size(70, 40);
+            this.btnExit.TabIndex = 37;
+            this.btnExit.TabStop = false;
+            this.toolTip1.SetToolTip(this.btnExit, "خروج");
+            this.btnExit.UseVisualStyleBackColor = false;
+            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
             // ExpenseForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1084, 536);
+            this.Controls.Add(this.btnExit);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtAmount);
             this.Controls.Add(this.btnSave);
@@ -483,6 +507,8 @@ namespace Water
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.TextBox txtAmount;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnExit;
+        private System.Windows.Forms.ToolTip toolTip1;
         //private AmountTextBox amountTextBox;
     }
 }

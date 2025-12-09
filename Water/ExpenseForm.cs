@@ -96,7 +96,6 @@ namespace Water
             }
             
             txtExpenseCode.Enabled = false;
-            btnSave.Text = "حفظ";
          //   MessageBox.Show("يمكنك الآن إدخال بيانات قيد جديد", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
@@ -121,7 +120,7 @@ namespace Water
                 LoadExpenseData(dt.Rows[0]);
                 isEditMode = true;
                 txtExpenseCode.Enabled = false;
-                btnSave.Text = "تحديث";
+                
                // MessageBox.Show("يمكنك الآن تعديل بيانات القيد", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
@@ -304,7 +303,6 @@ namespace Water
                 clear_EXPENSE();
                 isEditMode = false;
                 txtExpenseCode.Enabled = true;
-                btnSave.Text = "حفظ";
             }
             
                 catch (System.Data.SqlClient.SqlException sqlEx)
@@ -520,6 +518,10 @@ namespace Water
             }
         }
 
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }
 

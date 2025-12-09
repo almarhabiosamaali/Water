@@ -28,6 +28,7 @@ namespace Water
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.lblCostId = new System.Windows.Forms.Label();
             this.txtCostId = new System.Windows.Forms.TextBox();
             this.lblDocType = new System.Windows.Forms.Label();
@@ -65,6 +66,8 @@ namespace Water
             this.txtPeriodStartDate = new System.Windows.Forms.TextBox();
             this.lblPeriodStartDate = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.btnExit = new System.Windows.Forms.Button();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dgvPartners)).BeginInit();
             this.SuspendLayout();
             // 
@@ -357,6 +360,7 @@ namespace Water
             this.btnView.Size = new System.Drawing.Size(60, 40);
             this.btnView.TabIndex = 0;
             this.btnView.TabStop = false;
+            this.toolTip1.SetToolTip(this.btnView, "عرض");
             this.btnView.UseVisualStyleBackColor = false;
             // 
             // btnAdd
@@ -369,6 +373,7 @@ namespace Water
             this.btnAdd.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnAdd.Size = new System.Drawing.Size(60, 40);
             this.btnAdd.TabIndex = 1;
+            this.toolTip1.SetToolTip(this.btnAdd, "إضافة");
             this.btnAdd.UseVisualStyleBackColor = false;
             // 
             // btnEdit
@@ -382,6 +387,7 @@ namespace Water
             this.btnEdit.Size = new System.Drawing.Size(60, 40);
             this.btnEdit.TabIndex = 0;
             this.btnEdit.TabStop = false;
+            this.toolTip1.SetToolTip(this.btnEdit, "تعديل");
             this.btnEdit.UseVisualStyleBackColor = false;
             // 
             // btnDelete
@@ -395,6 +401,7 @@ namespace Water
             this.btnDelete.Size = new System.Drawing.Size(60, 40);
             this.btnDelete.TabIndex = 0;
             this.btnDelete.TabStop = false;
+            this.toolTip1.SetToolTip(this.btnDelete, "حذف");
             this.btnDelete.UseVisualStyleBackColor = false;
             // 
             // btnSave
@@ -407,6 +414,7 @@ namespace Water
             this.btnSave.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnSave.Size = new System.Drawing.Size(60, 40);
             this.btnSave.TabIndex = 7;
+            this.toolTip1.SetToolTip(this.btnSave, "حفظ");
             this.btnSave.UseVisualStyleBackColor = false;
             // 
             // dgvPartners
@@ -497,11 +505,26 @@ namespace Water
             this.label1.TabIndex = 91;
             this.label1.Text = "توزيع التكاليف بين الشركاء";
             // 
+            // btnExit
+            // 
+            this.btnExit.BackColor = System.Drawing.Color.White;
+            this.btnExit.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnExit.Image = global::Water.Properties.Resources.icons8_exit_24;
+            this.btnExit.Location = new System.Drawing.Point(747, 36);
+            this.btnExit.Name = "btnExit";
+            this.btnExit.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.btnExit.Size = new System.Drawing.Size(60, 40);
+            this.btnExit.TabIndex = 92;
+            this.toolTip1.SetToolTip(this.btnExit, "خروج");
+            this.btnExit.UseVisualStyleBackColor = false;
+            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
+            // 
             // PartnerCostForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1196, 780);
+            this.Controls.Add(this.btnExit);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtPeriodEndDate);
             this.Controls.Add(this.lblPeriodEndDate);
@@ -592,6 +615,8 @@ namespace Water
         private System.Windows.Forms.TextBox txtPeriodStartDate;
         private System.Windows.Forms.Label lblPeriodStartDate;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnExit;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
 

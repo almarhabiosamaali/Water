@@ -28,6 +28,7 @@ namespace Water
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.lblAccountCode = new System.Windows.Forms.Label();
             this.txtAccountCode = new System.Windows.Forms.TextBox();
             this.lblAccountName = new System.Windows.Forms.Label();
@@ -40,6 +41,8 @@ namespace Water
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.btnExit = new System.Windows.Forms.Button();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // lblAccountCode
@@ -58,7 +61,6 @@ namespace Water
             this.txtAccountCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtAccountCode.Location = new System.Drawing.Point(176, 100);
             this.txtAccountCode.Name = "txtAccountCode";
-            this.txtAccountCode.ReadOnly = true;
             this.txtAccountCode.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtAccountCode.Size = new System.Drawing.Size(263, 26);
             this.txtAccountCode.TabIndex = 1;
@@ -91,9 +93,9 @@ namespace Water
             this.lblNotes.Location = new System.Drawing.Point(79, 194);
             this.lblNotes.Name = "lblNotes";
             this.lblNotes.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.lblNotes.Size = new System.Drawing.Size(66, 20);
+            this.lblNotes.Size = new System.Drawing.Size(51, 20);
             this.lblNotes.TabIndex = 4;
-            this.lblNotes.Text = "ملاحظات:";
+            this.lblNotes.Text = "ملاحظة";
             // 
             // txtNotes
             // 
@@ -115,6 +117,8 @@ namespace Water
             this.btnView.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnView.Size = new System.Drawing.Size(60, 40);
             this.btnView.TabIndex = 6;
+            this.btnView.TabStop = false;
+            this.toolTip1.SetToolTip(this.btnView, "عرض");
             this.btnView.UseVisualStyleBackColor = false;
             // 
             // btnAdd
@@ -126,7 +130,8 @@ namespace Water
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnAdd.Size = new System.Drawing.Size(60, 40);
-            this.btnAdd.TabIndex = 7;
+            this.btnAdd.TabIndex = 1;
+            this.toolTip1.SetToolTip(this.btnAdd, "إضافة");
             this.btnAdd.UseVisualStyleBackColor = false;
             // 
             // btnEdit
@@ -139,6 +144,8 @@ namespace Water
             this.btnEdit.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnEdit.Size = new System.Drawing.Size(60, 40);
             this.btnEdit.TabIndex = 8;
+            this.btnEdit.TabStop = false;
+            this.toolTip1.SetToolTip(this.btnEdit, "تعديل");
             this.btnEdit.UseVisualStyleBackColor = false;
             // 
             // btnDelete
@@ -151,6 +158,8 @@ namespace Water
             this.btnDelete.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnDelete.Size = new System.Drawing.Size(60, 40);
             this.btnDelete.TabIndex = 9;
+            this.btnDelete.TabStop = false;
+            this.toolTip1.SetToolTip(this.btnDelete, "حذف");
             this.btnDelete.UseVisualStyleBackColor = false;
             // 
             // btnSave
@@ -163,24 +172,40 @@ namespace Water
             this.btnSave.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnSave.Size = new System.Drawing.Size(60, 40);
             this.btnSave.TabIndex = 10;
+            this.toolTip1.SetToolTip(this.btnSave, "حفظ");
             this.btnSave.UseVisualStyleBackColor = false;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(310, 3);
             this.label1.Name = "label1";
             this.label1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.label1.Size = new System.Drawing.Size(113, 20);
+            this.label1.Size = new System.Drawing.Size(136, 25);
             this.label1.TabIndex = 11;
-            this.label1.Text = "بيانات  الحساب ";
+            this.label1.Text = "بيانات  الحسابات";
+            // 
+            // btnExit
+            // 
+            this.btnExit.BackColor = System.Drawing.Color.White;
+            this.btnExit.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnExit.Image = global::Water.Properties.Resources.icons8_exit_24;
+            this.btnExit.Location = new System.Drawing.Point(540, 37);
+            this.btnExit.Name = "btnExit";
+            this.btnExit.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.btnExit.Size = new System.Drawing.Size(60, 40);
+            this.btnExit.TabIndex = 12;
+            this.toolTip1.SetToolTip(this.btnExit, "خروج");
+            this.btnExit.UseVisualStyleBackColor = false;
+            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
             // AccountForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(803, 364);
+            this.Controls.Add(this.btnExit);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnDelete);
@@ -220,6 +245,8 @@ namespace Water
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnExit;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
 

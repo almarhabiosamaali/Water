@@ -95,8 +95,6 @@ namespace Water
             {
                 txtPartnerCode.Text = "1";
             }
-            //txtPartnerCode.Enabled = false;
-            btnSave.Text = "حفظ";
            // MessageBox.Show("يمكنك الآن إدخال بيانات شريك جديد", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
@@ -122,7 +120,6 @@ namespace Water
                 isEditMode = true;
                 //txtPartnerCode.Enabled = false;
                 //btnSave.Enabled = true;
-                btnSave.Text = "تحديث";
               //  MessageBox.Show("يمكنك الآن تعديل بيانات الشريك", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
@@ -212,7 +209,6 @@ namespace Water
                 clear_PARTNER();
                 isEditMode = false;
                 txtPartnerCode.Enabled = true;
-                btnSave.Text = "حفظ";
             }
             catch (Exception ee)
             {
@@ -325,6 +321,10 @@ namespace Water
             }
         }
 
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }
 

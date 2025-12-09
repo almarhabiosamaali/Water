@@ -530,7 +530,11 @@ namespace Water
                 // يمكن إضافة تسجيل الخطأ هنا إذا لزم الأمر
             }
         }
-      
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }
 

@@ -330,7 +330,6 @@ namespace Water
             {
                 txtCostId.Text = "1";
             }
-            btnSave.Text = "حفظ";
             txtDownTimeId.Enabled = true;
             cmpDocType.Enabled = true;
            // btnDistributeAmount.Enabled = true;
@@ -362,7 +361,6 @@ namespace Water
                 btnDistributeAmount.Enabled = true;
                 txtDownTimeId.Enabled = true;
                 cmpDocType.Enabled = true;
-                btnSave.Text = "تحديث";
             }
             catch (Exception ex)
             {
@@ -548,7 +546,6 @@ namespace Water
                 clear_PARTNER_COST();
                 isEditMode = false;
                 txtCostId.Enabled = true;
-                btnSave.Text = "حفظ";
             }
             catch (FormatException)
             {
@@ -994,7 +991,10 @@ namespace Water
             }
         }
 
-      
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }
 

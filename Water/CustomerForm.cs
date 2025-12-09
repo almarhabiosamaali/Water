@@ -22,6 +22,12 @@ namespace Water
             btnAdd.Click += btnAdd_Click;
             btnEdit.Click += btnEdit_Click;
             btnDelete.Click += btnDelete_Click;
+            btnSave.Click += btnSave_Click;
+            cmbType.SelectedIndex=0;
+            /*if (cmbType == null)
+            {
+                cmbType.SelectedIndex = 0; 
+            }*/
         }
 
         private void btnView_Click(object sender, EventArgs e)
@@ -84,7 +90,6 @@ namespace Water
                 txtCustomerCode.Text = "1";
             }
             txtCustomerCode.Enabled = false;
-            btnSave.Text = "حفظ";
            // MessageBox.Show("يمكنك الآن إدخال بيانات عميل جديد", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
@@ -109,7 +114,6 @@ namespace Water
                 LoadCustomerData(dt.Rows[0]);
                 isEditMode = true;
                 txtCustomerCode.Enabled = false;
-                btnSave.Text = "تحديث";
               //  MessageBox.Show("يمكنك الآن تعديل بيانات العميل", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
@@ -154,7 +158,7 @@ namespace Water
                 // التحقق من أن جميع الحقول المطلوبة مملوءة
                 if (string.IsNullOrWhiteSpace(txtCustomerCode.Text) ||
                     string.IsNullOrWhiteSpace(txtCustomerName.Text) 
-                   // cmbType.SelectedIndex == -1
+                 //  cmbType.SelectedIndex == -1
                     )
                 {
                     MessageBox.Show("الرجاء إدخال كود العميل واسم العميل ونوع العميل على الأقل", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -195,7 +199,6 @@ namespace Water
                 clear_CUSTOMER();
                 isEditMode = false;
                 txtCustomerCode.Enabled = true;
-                btnSave.Text = "حفظ";
             }
             catch (Exception ee)
             {
@@ -232,15 +235,17 @@ namespace Water
         {
             txtCustomerCode.Clear();
             txtCustomerName.Clear();
-            cmbType.SelectedIndex = -1;
+            //cmbType.SelectedIndex =-1 ;
             txtPhone.Clear();
             txtAddress.Clear();
             txtNotes.Clear();
             dtpCreatedDate.Value = DateTime.Now;
         }
 
-   
-
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }
 

@@ -85,7 +85,6 @@ namespace Water
                 txtAccountCode.Text = "1";
             }
             txtAccountCode.Enabled = false;
-            btnSave.Text = "حفظ";
            // MessageBox.Show("يمكنك الآن إدخال بيانات حساب جديد", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
@@ -110,7 +109,6 @@ namespace Water
                 LoadAccountData(dt.Rows[0]);
                 isEditMode = true;
                 txtAccountCode.Enabled = false;
-                btnSave.Text = "تحديث";
                 MessageBox.Show("يمكنك الآن تعديل بيانات الحساب", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
@@ -187,7 +185,6 @@ namespace Water
                 clear_ACCOUNT();
                 isEditMode = false;
                 txtAccountCode.Enabled = true;
-                btnSave.Text = "حفظ";
             }
             catch (Exception ee)
             {
@@ -209,6 +206,10 @@ namespace Water
             txtNotes.Clear();
         }
 
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }
 

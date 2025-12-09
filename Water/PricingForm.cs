@@ -77,6 +77,55 @@ namespace Water
             }
         }
 
+        /*
+          private void btnView_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DataTable dt = pricing.GET_ALL_PRICINGS();
+
+                if (dt.Rows.Count == 0)
+                {
+                    MessageBox.Show("لا توجد بيانات للعرض", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                Form viewForm = new Form();
+                viewForm.Text = "عرض مستويات الأسعار";
+                viewForm.RightToLeft = RightToLeft.Yes;
+                viewForm.RightToLeftLayout = true;
+                viewForm.Size = new Size(1400, 600);
+                viewForm.StartPosition = FormStartPosition.CenterScreen;
+
+                DataGridView dgv = new DataGridView();
+                dgv.Dock = DockStyle.Fill;
+                dgv.DataSource = dt;
+                dgv.ReadOnly = true;
+                dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+                dgv.MultiSelect = false;
+                dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                dgv.RightToLeft = RightToLeft.Yes;
+
+                dgv.CellDoubleClick += (s, args) =>
+                {
+                    if (args.RowIndex >= 0)
+                    {
+                        DataRow row = dt.Rows[args.RowIndex];
+                        LoadPricingData(row);
+                        viewForm.Close();
+                    }
+                };
+
+                viewForm.Controls.Add(dgv);
+                viewForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("حدث خطأ أثناء عرض البيانات: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+             */
         private void btnAdd_Click(object sender, EventArgs e)
         {
             isEditMode = false;
@@ -90,7 +139,6 @@ namespace Water
                 txtPriceLevelId.Text = "1";
             }
             txtPriceLevelId.Enabled = false;
-            btnSave.Text = "حفظ";
           //  MessageBox.Show("يمكنك الآن إدخال بيانات مستوى سعر جديد", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
@@ -115,7 +163,6 @@ namespace Water
                 LoadPricingData(dt.Rows[0]);
                 isEditMode = true;
                 txtPriceLevelId.Enabled = false;
-                btnSave.Text = "تحديث";
                 MessageBox.Show("يمكنك الآن تعديل بيانات مستوى السعر", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
@@ -213,7 +260,6 @@ namespace Water
                 clear_PRICING();
                 isEditMode = false;
                 txtPriceLevelId.Enabled = true;
-                btnSave.Text = "حفظ";
             }
             catch (FormatException)
             {
@@ -344,7 +390,11 @@ namespace Water
                 // في حالة الخطأ، لا نفعل شيئاً
             }
         }
-     
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }
 
