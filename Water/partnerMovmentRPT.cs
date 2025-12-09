@@ -24,7 +24,7 @@ namespace Water
                 DataTable dTt = new DataTable();
                 Clas.partnersReport pTp = new Clas.partnersReport();
                 dTt = pTp.PRINT_ALL_PARTNER_MOVEMENT(p_where().ToString());
-                RPT.movementsDTL myRept = new RPT.movementsDTL();
+                RPT.partnerMovementDTL myRept = new RPT.partnerMovementDTL();
                 myRept.DataSourceConnections[0].IntegratedSecurity = false;
                 myRept.DataSourceConnections[0].SetConnection(Properties.Settings.Default.Server, Properties.Settings.Default.Database, Properties.Settings.Default.ID, Properties.Settings.Default.Password);
                 myRept.SetDataSource(dTt);
@@ -59,15 +59,20 @@ namespace Water
                 p = p + " and movement_type not in ('CUSTOMER_MOVEMENT','FROM_OWN_BALANCE','RECEIVED_FROM_OTHERS')";
                 if (txtPartnerID.Text != "")
                     p = p + " and partner_no = '" + txtPartnerID.Text + "'";
+                if (!string.IsNullOrEmpty(txtPeriodId.Text))
+                {
+                    p += " and period_id = '" + txtPeriodId.Text + "'";
+                }
+
             }
             if (!string.IsNullOrEmpty(txtPartnerID.Text))
             {
                 p = p + " and partner_no = '" + txtPartnerID.Text + "'";
             }
-            /*if (!string.IsNullOrEmpty(txtPeriodId.Text))
+            if (!string.IsNullOrEmpty(txtPeriodId.Text) && !anly.Checked)
             {
                 p += " and m.period_id = '" + txtPeriodId.Text + "'";
-            }*/
+            }
 
             if (dtpFromDate.Value != null && dtpToDate.Value != null)
             {
