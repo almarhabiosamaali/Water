@@ -81,6 +81,8 @@ namespace Water
         {
             isEditMode = false;
             clear_PERIOD();
+            txtDownDays.Text = "0";
+            txtDowntimeHours.Text = "0";
             try
             {
                 txtPeriodCode.Text = per.GET_NEXT_PERIOD_CODE();

@@ -151,6 +151,7 @@ namespace Water
             this.txtTotalHoursFromGrid.ReadOnly = true;
             this.txtTotalHoursFromGrid.Size = new System.Drawing.Size(100, 24);
             this.txtTotalHoursFromGrid.TabIndex = 2;
+            this.txtTotalHoursFromGrid.TabStop = false;
             this.txtTotalHoursFromGrid.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // lblTotalHoursFromGrid
@@ -862,7 +863,7 @@ namespace Water
             this.tabControl1.RightToLeftLayout = true;
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(1312, 489);
-            this.tabControl1.TabIndex = 2;
+            this.tabControl1.TabIndex = 1;
             // 
             // label4
             // 
@@ -954,6 +955,7 @@ namespace Water
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(70, 40);
             this.btnExit.TabIndex = 89;
+            this.btnExit.TabStop = false;
             this.toolTip1.SetToolTip(this.btnExit, "خروج");
             this.btnExit.UseVisualStyleBackColor = false;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);

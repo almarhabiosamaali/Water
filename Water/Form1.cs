@@ -30,7 +30,9 @@ namespace Water
         public Form1()
         {
             InitializeComponent();
-            this.Load += Form1_Load;
+            InitializeMainTree();
+            this.MdiChildActivate += Form1_MdiChildActivate;
+           // this.Load += Form1_Load;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -54,7 +56,7 @@ namespace Water
                 LoggedInUserId = loginForm.LoggedInUserId;
                 LoggedInUserName = loginForm.LoggedInUserName;
                 LoggedInUserType = loginForm.LoggedInUserType;
-
+                
                 // تحديث اسم المستخدم في الـ Header
                 if (!string.IsNullOrEmpty(LoggedInUserName))
                 {
@@ -449,6 +451,11 @@ namespace Water
                     break;
                 }
             }
+        }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

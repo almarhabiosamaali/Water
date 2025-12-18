@@ -119,6 +119,7 @@ namespace Water
             this.txtAllocatedHours.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtAllocatedHours.Size = new System.Drawing.Size(263, 26);
             this.txtAllocatedHours.TabIndex = 2;
+            this.txtAllocatedHours.Text = "0";
             this.txtAllocatedHours.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtAllocatedHours.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtAllocatedHours_KeyPress);
             // 
@@ -141,6 +142,7 @@ namespace Water
             this.txtMinutes.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtMinutes.Size = new System.Drawing.Size(263, 26);
             this.txtMinutes.TabIndex = 3;
+            this.txtMinutes.Text = "0";
             this.txtMinutes.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtMinutes.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtMinutes_KeyPress);
             // 

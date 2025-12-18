@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.btnShow = new System.Windows.Forms.Button();
             this.dtpFromDate = new System.Windows.Forms.DateTimePicker();
             this.dtpToDate = new System.Windows.Forms.DateTimePicker();
@@ -37,13 +38,15 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.txtPeriodId = new System.Windows.Forms.TextBox();
+            this.btnExit = new System.Windows.Forms.Button();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // btnShow
             // 
             this.btnShow.Location = new System.Drawing.Point(285, 12);
             this.btnShow.Name = "btnShow";
-            this.btnShow.Size = new System.Drawing.Size(99, 41);
+            this.btnShow.Size = new System.Drawing.Size(70, 40);
             this.btnShow.TabIndex = 0;
             this.btnShow.Text = "طباعة";
             this.btnShow.UseVisualStyleBackColor = true;
@@ -120,11 +123,26 @@
             this.txtPeriodId.Size = new System.Drawing.Size(200, 24);
             this.txtPeriodId.TabIndex = 2;
             // 
+            // btnExit
+            // 
+            this.btnExit.BackColor = System.Drawing.Color.White;
+            this.btnExit.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnExit.Image = global::Water.Properties.Resources.icons8_exit_24;
+            this.btnExit.Location = new System.Drawing.Point(209, 13);
+            this.btnExit.Name = "btnExit";
+            this.btnExit.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.btnExit.Size = new System.Drawing.Size(70, 40);
+            this.btnExit.TabIndex = 25;
+            this.toolTip1.SetToolTip(this.btnExit, "خروج");
+            this.btnExit.UseVisualStyleBackColor = false;
+            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
+            // 
             // customerMovementRPT
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(663, 381);
+            this.Controls.Add(this.btnExit);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.txtPeriodId);
             this.Controls.Add(this.label3);
@@ -152,5 +170,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtPeriodId;
+        private System.Windows.Forms.Button btnExit;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }

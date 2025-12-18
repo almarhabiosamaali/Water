@@ -152,6 +152,7 @@ namespace Water
             this.txtDowntimeHours.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtDowntimeHours.Size = new System.Drawing.Size(263, 26);
             this.txtDowntimeHours.TabIndex = 9;
+            this.txtDowntimeHours.Text = "0";
             // 
             // lblExtendedDays
             // 
@@ -261,6 +262,7 @@ namespace Water
             this.txtDownDays.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtDownDays.Size = new System.Drawing.Size(262, 26);
             this.txtDownDays.TabIndex = 11;
+            this.txtDownDays.Text = "0";
             this.txtDownDays.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtTotalHours

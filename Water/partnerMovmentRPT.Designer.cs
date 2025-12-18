@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.txtPartnerID = new System.Windows.Forms.TextBox();
             this.btnShowRPT = new System.Windows.Forms.Button();
             this.anly = new System.Windows.Forms.CheckBox();
@@ -38,6 +39,8 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
+            this.btnExit = new System.Windows.Forms.Button();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // txtPartnerID
@@ -49,18 +52,19 @@
             // 
             // btnShowRPT
             // 
-            this.btnShowRPT.Location = new System.Drawing.Point(361, 12);
+            this.btnShowRPT.Location = new System.Drawing.Point(349, 13);
             this.btnShowRPT.Name = "btnShowRPT";
-            this.btnShowRPT.Size = new System.Drawing.Size(102, 34);
+            this.btnShowRPT.Size = new System.Drawing.Size(70, 40);
             this.btnShowRPT.TabIndex = 1;
             this.btnShowRPT.Text = "طباعة";
+            this.toolTip1.SetToolTip(this.btnShowRPT, "طباعة");
             this.btnShowRPT.UseVisualStyleBackColor = true;
             this.btnShowRPT.Click += new System.EventHandler(this.btnShowRPT_Click);
             // 
             // anly
             // 
             this.anly.AutoSize = true;
-            this.anly.Location = new System.Drawing.Point(199, 25);
+            this.anly.Location = new System.Drawing.Point(36, 73);
             this.anly.Name = "anly";
             this.anly.Size = new System.Drawing.Size(73, 21);
             this.anly.TabIndex = 2;
@@ -131,11 +135,26 @@
             this.label7.TabIndex = 12;
             this.label7.Text = "رقم الفترة :";
             // 
+            // btnExit
+            // 
+            this.btnExit.BackColor = System.Drawing.Color.White;
+            this.btnExit.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnExit.Image = global::Water.Properties.Resources.icons8_exit_24;
+            this.btnExit.Location = new System.Drawing.Point(273, 12);
+            this.btnExit.Name = "btnExit";
+            this.btnExit.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.btnExit.Size = new System.Drawing.Size(70, 40);
+            this.btnExit.TabIndex = 25;
+            this.toolTip1.SetToolTip(this.btnExit, "خروج");
+            this.btnExit.UseVisualStyleBackColor = false;
+            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
+            // 
             // partnerMovmentRPT
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(783, 342);
+            this.Controls.Add(this.btnExit);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
@@ -165,5 +184,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Button btnExit;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }

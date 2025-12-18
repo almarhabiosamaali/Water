@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Water", "Water\Water.csproj", "{4071DB4C-6D49-4049-99FF-753FA47F6980}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "WaterSystem", "WaterSystem\WaterSystem.vdproj", "{22F87A2E-011E-4F91-B3AC-A2047CE1D680}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup1", "Setup1\Setup1.vdproj", "{6E8F45C3-54E9-4445-A6D8-A55A867F1359}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,9 +17,8 @@ Global
 		{4071DB4C-6D49-4049-99FF-753FA47F6980}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4071DB4C-6D49-4049-99FF-753FA47F6980}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4071DB4C-6D49-4049-99FF-753FA47F6980}.Release|Any CPU.Build.0 = Release|Any CPU
-		{22F87A2E-011E-4F91-B3AC-A2047CE1D680}.Debug|Any CPU.ActiveCfg = Debug
-		{22F87A2E-011E-4F91-B3AC-A2047CE1D680}.Release|Any CPU.ActiveCfg = Release
-		{22F87A2E-011E-4F91-B3AC-A2047CE1D680}.Release|Any CPU.Build.0 = Release
+		{6E8F45C3-54E9-4445-A6D8-A55A867F1359}.Debug|Any CPU.ActiveCfg = Debug
+		{6E8F45C3-54E9-4445-A6D8-A55A867F1359}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

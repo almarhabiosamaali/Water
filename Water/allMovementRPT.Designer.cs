@@ -37,18 +37,19 @@
             this.dtpToDate = new System.Windows.Forms.DateTimePicker();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.btnExit = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txtCustNo
             // 
-            this.txtCustNo.Location = new System.Drawing.Point(310, 47);
+            this.txtCustNo.Location = new System.Drawing.Point(310, 68);
             this.txtCustNo.Name = "txtCustNo";
             this.txtCustNo.Size = new System.Drawing.Size(142, 24);
             this.txtCustNo.TabIndex = 1;
             // 
             // btnShow
             // 
-            this.btnShow.Location = new System.Drawing.Point(226, 2);
+            this.btnShow.Location = new System.Drawing.Point(226, 7);
             this.btnShow.Name = "btnShow";
             this.btnShow.Size = new System.Drawing.Size(87, 28);
             this.btnShow.TabIndex = 1;
@@ -58,7 +59,7 @@
             // 
             // txtPeriodId
             // 
-            this.txtPeriodId.Location = new System.Drawing.Point(12, 47);
+            this.txtPeriodId.Location = new System.Drawing.Point(12, 68);
             this.txtPeriodId.Name = "txtPeriodId";
             this.txtPeriodId.Size = new System.Drawing.Size(142, 24);
             this.txtPeriodId.TabIndex = 2;
@@ -66,7 +67,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(469, 47);
+            this.label1.Location = new System.Drawing.Point(469, 68);
             this.label1.Name = "label1";
             this.label1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.label1.Size = new System.Drawing.Size(132, 17);
@@ -76,7 +77,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(160, 47);
+            this.label2.Location = new System.Drawing.Point(160, 68);
             this.label2.Name = "label2";
             this.label2.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.label2.Size = new System.Drawing.Size(74, 17);
@@ -86,7 +87,7 @@
             // dtpFromDate
             // 
             this.dtpFromDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpFromDate.Location = new System.Drawing.Point(310, 116);
+            this.dtpFromDate.Location = new System.Drawing.Point(310, 137);
             this.dtpFromDate.Name = "dtpFromDate";
             this.dtpFromDate.Size = new System.Drawing.Size(142, 24);
             this.dtpFromDate.TabIndex = 3;
@@ -95,7 +96,7 @@
             // dtpToDate
             // 
             this.dtpToDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpToDate.Location = new System.Drawing.Point(12, 116);
+            this.dtpToDate.Location = new System.Drawing.Point(12, 137);
             this.dtpToDate.Name = "dtpToDate";
             this.dtpToDate.Size = new System.Drawing.Size(142, 24);
             this.dtpToDate.TabIndex = 4;
@@ -103,7 +104,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(160, 119);
+            this.label3.Location = new System.Drawing.Point(160, 140);
             this.label3.Name = "label3";
             this.label3.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.label3.Size = new System.Drawing.Size(38, 17);
@@ -113,18 +114,32 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(469, 116);
+            this.label4.Location = new System.Drawing.Point(469, 137);
             this.label4.Name = "label4";
             this.label4.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.label4.Size = new System.Drawing.Size(74, 17);
             this.label4.TabIndex = 7;
             this.label4.Text = "التاريخ من :";
             // 
+            // btnExit
+            // 
+            this.btnExit.BackColor = System.Drawing.Color.White;
+            this.btnExit.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnExit.Image = global::Water.Properties.Resources.icons8_exit_24;
+            this.btnExit.Location = new System.Drawing.Point(137, 6);
+            this.btnExit.Name = "btnExit";
+            this.btnExit.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.btnExit.Size = new System.Drawing.Size(70, 40);
+            this.btnExit.TabIndex = 25;
+            this.btnExit.UseVisualStyleBackColor = false;
+            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
+            // 
             // allMovementRPT
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(608, 201);
+            this.ClientSize = new System.Drawing.Size(608, 253);
+            this.Controls.Add(this.btnExit);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.dtpToDate);
@@ -153,5 +168,6 @@
         private System.Windows.Forms.DateTimePicker dtpToDate;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button btnExit;
     }
 }

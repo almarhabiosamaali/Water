@@ -797,6 +797,13 @@ namespace Water
                 viewForm.Controls.Add(dgv);
                 viewForm.Controls.Add(searchPanel);
                 viewForm.ShowDialog();
+
+                btnView.Enabled = true;
+                btnAdd.Enabled = true;
+                btnEdit.Enabled = true;
+                btnDelete.Enabled = true;
+               
+                
             }
             catch (Exception ex)
             {
@@ -817,6 +824,11 @@ namespace Water
                 txtSalesId.Text = "1";
             }
             btnSave.Enabled = true;
+            btnView.Enabled = false; 
+            btnEdit.Enabled = false;
+            btnDelete.Enabled = false;
+            btnAdd.Enabled = false;
+            cmbBillType.Focus();
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
@@ -843,6 +855,7 @@ namespace Water
                 btnSave.Enabled = true;
                 btnView.Enabled = false;
                 btnDelete.Enabled = false;
+                btnEdit.Enabled = false;
             }
             catch (Exception ex)
             {
@@ -1014,6 +1027,10 @@ namespace Water
                 isEditMode = false;
                 btnSave.Enabled = false;
                 btnView.Enabled = true;
+                btnAdd.Enabled = true;
+                btnDelete.Enabled = false;
+                btnEdit.Enabled = false;
+                tabControl1.SelectedIndex = 0;               
 
             }
             catch (SqlException sqlEx)
@@ -1036,8 +1053,10 @@ namespace Water
                 if (ee.Message.Contains("يجب إدخال تفاصيل الساعات"))
                 {
                     // رسالة واضحة للتحقق من البيانات
+                    tabControl1.SelectedIndex = 1;
+                   dataGridView1.CurrentCell = dataGridView1.Rows[0].Cells[1];
                     MessageBox.Show("يجب إدخال تفاصيل الساعات للشركاء", "تنبيه", 
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);                    
                 }
                 else
                 {
@@ -1426,6 +1445,7 @@ namespace Water
             if (dgv == null)
             {
                 throw new Exception("يجب إدخال تفاصيل الساعات للشركاء");
+                
             }
             
             // التحقق من وجود بيانات صحيحة في DataGridView
@@ -1459,7 +1479,7 @@ namespace Water
             }
             
             if (!hasValidPartnerData)
-            {
+            {                
                 throw new Exception("يجب إدخال تفاصيل الساعات للشركاء");
             }
             
@@ -2839,6 +2859,11 @@ namespace Water
         private void btnExit_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            tabControl1.SelectedIndex = 0;
         }
     }
 }

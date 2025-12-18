@@ -42,70 +42,71 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(532, 60);
+            this.label1.Location = new System.Drawing.Point(466, 60);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(67, 17);
+            this.label1.Size = new System.Drawing.Size(89, 17);
             this.label1.TabIndex = 8;
             this.label1.Text = "اسم السيرفر:";
             this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // txtServer
             // 
-            this.txtServer.Location = new System.Drawing.Point(115, 57);
+            this.txtServer.Location = new System.Drawing.Point(101, 57);
             this.txtServer.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtServer.Name = "txtServer";
-            this.txtServer.Size = new System.Drawing.Size(352, 22);
+            this.txtServer.Size = new System.Drawing.Size(308, 24);
             this.txtServer.TabIndex = 7;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(533, 154);
+            this.label4.Location = new System.Drawing.Point(466, 154);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(67, 17);
+            this.label4.Size = new System.Drawing.Size(74, 17);
             this.label4.TabIndex = 19;
             this.label4.Text = "رمز الدخول:";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(527, 113);
+            this.label3.Location = new System.Drawing.Point(461, 113);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(72, 17);
+            this.label3.Size = new System.Drawing.Size(106, 17);
             this.label3.TabIndex = 18;
             this.label3.Text = "اسم المستخدم:";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(531, 194);
+            this.label2.Location = new System.Drawing.Point(465, 194);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(71, 17);
+            this.label2.Size = new System.Drawing.Size(90, 17);
             this.label2.TabIndex = 17;
             this.label2.Text = "قاعدة البيانات:";
             // 
             // txtDatabase
             // 
-            this.txtDatabase.Location = new System.Drawing.Point(115, 190);
+            this.txtDatabase.Location = new System.Drawing.Point(101, 190);
             this.txtDatabase.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtDatabase.Name = "txtDatabase";
-            this.txtDatabase.Size = new System.Drawing.Size(352, 22);
+            this.txtDatabase.Size = new System.Drawing.Size(308, 24);
             this.txtDatabase.TabIndex = 16;
             // 
             // txtPWD
             // 
-            this.txtPWD.Location = new System.Drawing.Point(115, 149);
+            this.txtPWD.Location = new System.Drawing.Point(101, 149);
             this.txtPWD.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtPWD.Name = "txtPWD";
-            this.txtPWD.Size = new System.Drawing.Size(352, 22);
+            this.txtPWD.PasswordChar = '*';
+            this.txtPWD.Size = new System.Drawing.Size(308, 24);
             this.txtPWD.TabIndex = 15;
             // 
             // txtID
             // 
-            this.txtID.Location = new System.Drawing.Point(115, 108);
+            this.txtID.Location = new System.Drawing.Point(101, 108);
             this.txtID.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtID.Name = "txtID";
-            this.txtID.Size = new System.Drawing.Size(352, 22);
+            this.txtID.Size = new System.Drawing.Size(308, 24);
             this.txtID.TabIndex = 14;
             // 
             // button1
@@ -113,10 +114,10 @@
             this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.button1.Font = new System.Drawing.Font("Tahoma", 8F, System.Drawing.FontStyle.Bold);
             this.button1.ForeColor = System.Drawing.Color.ForestGreen;
-            this.button1.Location = new System.Drawing.Point(177, 290);
+            this.button1.Location = new System.Drawing.Point(155, 290);
             this.button1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(352, 28);
+            this.button1.Size = new System.Drawing.Size(308, 28);
             this.button1.TabIndex = 20;
             this.button1.Text = "حفظ الإعدادات";
             this.button1.UseVisualStyleBackColor = false;
@@ -124,9 +125,9 @@
             // 
             // SetServer
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(658, 362);
+            this.ClientSize = new System.Drawing.Size(576, 362);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
