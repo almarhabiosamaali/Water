@@ -65,6 +65,7 @@ namespace Water
 
                 viewForm.Controls.Add(dgv);
                 viewForm.ShowDialog();
+                SetViewMode();
                 /*txtPartnerName.Enabled = false;
                 txtAllocatedHours.Enabled = false;
                 txtMinutes.Enabled = false;
@@ -95,7 +96,7 @@ namespace Water
             {
                 txtPartnerCode.Text = "1";
             }
-           // MessageBox.Show("يمكنك الآن إدخال بيانات شريك جديد", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            SetAddMode();
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
@@ -118,10 +119,8 @@ namespace Water
 
                 LoadPartnerData(dt.Rows[0]);
                 isEditMode = true;
-                //txtPartnerCode.Enabled = false;
-                //btnSave.Enabled = true;
-              //  MessageBox.Show("يمكنك الآن تعديل بيانات الشريك", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+                SetEditMode();
+               }
             catch (Exception ex)
             {
                 MessageBox.Show("حدث خطأ أثناء تحميل البيانات: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -149,6 +148,7 @@ namespace Water
                     partner.DELETE_PARTNER(txtPartnerCode.Text.Trim());
                     MessageBox.Show("تم حذف الشريك بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     clear_PARTNER();
+                    SetDeleteMode();
                 }
                 catch (Exception ex)
                 {
@@ -209,6 +209,7 @@ namespace Water
                 clear_PARTNER();
                 isEditMode = false;
                 txtPartnerCode.Enabled = true;
+                SetAfterSaveMode();
             }
             catch (Exception ee)
             {
@@ -324,6 +325,49 @@ namespace Water
         private void btnExit_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void SetViewMode()
+        {
+            btnView.Enabled = true;
+            btnAdd.Enabled = true;
+            btnEdit.Enabled = true;
+            btnDelete.Enabled = true;
+            btnSave.Enabled = false;
+        }
+
+        private void SetAddMode()
+        {
+            btnSave.Enabled = true;
+            btnView.Enabled = false;
+            btnEdit.Enabled = false;
+            btnDelete.Enabled = false;
+            btnAdd.Enabled = false;
+            txtAllocatedHours.Text = "0";
+            txtMinutes.Text = "0";
+        }
+
+        private void SetEditMode()
+        {
+            btnAdd.Enabled = false;
+            btnSave.Enabled = true;
+            btnView.Enabled = false;
+            btnDelete.Enabled = false;
+            btnEdit.Enabled = false;
+        }
+        private void SetDeleteMode()
+        {                                   
+            btnDelete.Enabled = false;
+            btnEdit.Enabled = false;
+        }
+
+        private void SetAfterSaveMode()
+        {
+            btnSave.Enabled = false;
+            btnView.Enabled = true;
+            btnAdd.Enabled = true;
+            btnDelete.Enabled = false;
+            btnEdit.Enabled = false;
         }
     }
 }
