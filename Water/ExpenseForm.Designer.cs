@@ -106,7 +106,7 @@ namespace Water
             this.dtpDate.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.dtpDate.RightToLeftLayout = true;
             this.dtpDate.Size = new System.Drawing.Size(173, 26);
-            this.dtpDate.TabIndex = 3;
+            this.dtpDate.TabIndex = 4;
             // 
             // lblType
             // 
@@ -132,7 +132,6 @@ namespace Water
             this.cmbType.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.cmbType.Size = new System.Drawing.Size(263, 28);
             this.cmbType.TabIndex = 3;
-            this.cmbType.TabStop = false;
             // 
             // lblAccountType
             // 
@@ -159,7 +158,6 @@ namespace Water
             this.cmbAccountType.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.cmbAccountType.Size = new System.Drawing.Size(263, 28);
             this.cmbAccountType.TabIndex = 5;
-            this.cmbAccountType.TabStop = false;
             // 
             // lblAccountId
             // 
@@ -179,7 +177,8 @@ namespace Water
             this.txtAccountId.Name = "txtAccountId";
             this.txtAccountId.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtAccountId.Size = new System.Drawing.Size(263, 26);
-            this.txtAccountId.TabIndex = 4;
+            this.txtAccountId.TabIndex = 6;
+            this.txtAccountId.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtAccountId_KeyDown);
             // 
             // lblAccountName
             // 
@@ -233,6 +232,8 @@ namespace Water
             this.txtPeriodId.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtPeriodId.Size = new System.Drawing.Size(74, 26);
             this.txtPeriodId.TabIndex = 2;
+            this.txtPeriodId.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPeriodId_KeyDown);
+            this.txtPeriodId.Leave += new System.EventHandler(this.txtPeriodId_Leave);
             // 
             // lblPeriodStartDate
             // 
@@ -352,6 +353,7 @@ namespace Water
             // btnEdit
             // 
             this.btnEdit.BackColor = System.Drawing.Color.White;
+            this.btnEdit.Enabled = false;
             this.btnEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnEdit.Image = global::Water.Properties.Resources.icons8_edit_24_5;
             this.btnEdit.Location = new System.Drawing.Point(514, 35);
@@ -366,6 +368,7 @@ namespace Water
             // btnDelete
             // 
             this.btnDelete.BackColor = System.Drawing.Color.White;
+            this.btnDelete.Enabled = false;
             this.btnDelete.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDelete.Image = global::Water.Properties.Resources.icons8_delete_24;
             this.btnDelete.Location = new System.Drawing.Point(586, 35);
@@ -381,6 +384,7 @@ namespace Water
             // btnSave
             // 
             this.btnSave.BackColor = System.Drawing.Color.White;
+            this.btnSave.Enabled = false;
             this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSave.Image = global::Water.Properties.Resources.icons8_save_24_9;
             this.btnSave.Location = new System.Drawing.Point(658, 35);
@@ -396,7 +400,7 @@ namespace Water
             this.txtAmount.Location = new System.Drawing.Point(117, 318);
             this.txtAmount.Name = "txtAmount";
             this.txtAmount.Size = new System.Drawing.Size(263, 24);
-            this.txtAmount.TabIndex = 6;
+            this.txtAmount.TabIndex = 7;
             this.txtAmount.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtAmount_KeyPress);
             this.txtAmount.Leave += new System.EventHandler(this.txtAmount_Leave);
             // 

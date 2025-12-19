@@ -31,6 +31,7 @@ namespace Water
             // ربط أحداث رقم التوقف
             txtDownTimeId.KeyDown += txtDownTimeId_KeyDown;
             txtDownTimeId.Leave += txtDownTimeId_Leave;
+            txtPeriodId.Leave += txtPeriodId_Leave;
 
             // ربط أحداث حساب الساعات والدقائق تلقائياً
             dtpStartTime.ValueChanged += DateTimePicker_ValueChanged;
@@ -307,10 +308,9 @@ namespace Water
                         viewForm.Close();
                     }
                 };
-                btnSave.Enabled = false;
-               // btnDistributeAmount.Enabled = false;
                 viewForm.Controls.Add(dgv);
                 viewForm.ShowDialog();
+                SetViewMode();
             }
             catch (Exception ex)
             {
@@ -333,7 +333,7 @@ namespace Water
             txtDownTimeId.Enabled = true;
             cmpDocType.Enabled = true;
            // btnDistributeAmount.Enabled = true;
-            btnSave.Enabled = false;
+            SetAddMode();
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
@@ -356,11 +356,11 @@ namespace Water
                 }
 
                 LoadPartnerCostData(dt.Rows[0]);
-                isEditMode = true;
-                btnSave.Enabled = true;
+                isEditMode = true;                
                 btnDistributeAmount.Enabled = true;
                 txtDownTimeId.Enabled = true;
                 cmpDocType.Enabled = true;
+                SetEditMode();
             }
             catch (Exception ex)
             {
@@ -408,6 +408,7 @@ namespace Water
                     
                     MessageBox.Show("تم حذف التكلفة بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     clear_PARTNER_COST();
+                    SetDeleteMode();
                 }
                 catch (Exception ex)
                 {
@@ -420,12 +421,6 @@ namespace Water
         {
             try
             {
-                // التحقق من أن جميع الحقول المطلوبة مملوءة
-                /*  if (string.IsNullOrWhiteSpace(txtCostId.Text))
-                 {
-                     MessageBox.Show("الرجاء إدخال رقم التكلفة", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                     return;
-                 } */
                 string downTimeId = txtDownTimeId.Text.Trim();
                 if (string.IsNullOrWhiteSpace(downTimeId))
                 {
@@ -546,6 +541,7 @@ namespace Water
                 clear_PARTNER_COST();
                 isEditMode = false;
                 txtCostId.Enabled = true;
+                SetAfterSaveMode();
             }
             catch (FormatException)
             {
@@ -598,13 +594,40 @@ namespace Water
                 txtDownTimeNote.Clear();
             }
 
-            if (row["period_id"] != DBNull.Value)
+           /*  if (row["period_id"] != DBNull.Value)
             {
                 txtPeriodId.Text = row["period_id"].ToString();
             }
             else
             {
                 txtPeriodId.Clear();
+            } */
+             if (row["period_id"] != DBNull.Value)
+            {
+                string periodId = row["period_id"].ToString();
+                txtPeriodId.Text = periodId;
+                
+                // تحميل بيانات الفترة وعرضها
+                try
+                {
+                    DataTable periodDt = period.VIEW_PERIOD(periodId);
+                    if (periodDt != null && periodDt.Rows.Count > 0)
+                    {
+                        LoadPeriodDataToPartnerCost(periodDt.Rows[0]);
+                    }
+                }
+                catch
+                {
+                    // في حالة الخطأ، لا نفعل شيئاً
+                }
+            }
+            else
+            {
+                txtPeriodId.Clear();
+                if (txtPeriodStartDate != null)
+                    txtPeriodStartDate.Clear();
+                if (txtPeriodEndDate != null)
+                    txtPeriodEndDate.Clear();
             }
 
             if (row["dayesCount"] != DBNull.Value)
@@ -696,6 +719,8 @@ namespace Water
             txtAmount.Clear();
             txtNote.Clear();
             dgvPartners.Rows.Clear();
+            txtPeriodStartDate.Clear();
+            txtPeriodEndDate.Clear();
         }
 
         private void txtNumeric_KeyPress(object sender, KeyPressEventArgs e)
@@ -842,6 +867,7 @@ namespace Water
                 txtDownTimeId.Enabled = false;
                 cmpDocType.Enabled = false;
                 btnSave.Enabled = true;
+                //SetAddMode();
                 MessageBox.Show("تم توزيع المبلغ بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
@@ -991,9 +1017,127 @@ namespace Water
             }
         }
 
+        private void LoadPeriodDataToPartnerCost(DataRow row)
+        {
+            try
+            {
+                // عرض بداية الفترة
+                if (txtPeriodStartDate != null)
+                {
+                    if (row["start_date"] != DBNull.Value)
+                    {
+                        txtPeriodStartDate.Text = Convert.ToDateTime(row["start_date"]).ToString("dd/MM/yyyy");
+                    }
+                    else
+                    {
+                        txtPeriodStartDate.Clear();
+                    }
+                }
+
+                // عرض نهاية الفترة
+                if (txtPeriodEndDate != null)
+                {
+                    if (row["end_date"] != DBNull.Value)
+                    {
+                        txtPeriodEndDate.Text = Convert.ToDateTime(row["end_date"]).ToString("dd/MM/yyyy");
+                    }
+                    else
+                    {
+                        txtPeriodEndDate.Clear();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("حدث خطأ أثناء تحميل بيانات الفترة: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         private void btnExit_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void txtPeriodId_Leave(object sender, EventArgs e)
+        {
+         if (txtPeriodId == null || string.IsNullOrWhiteSpace(txtPeriodId.Text))
+            {
+                // مسح حقول الفترة إذا كان الحقل فارغاً
+                if (txtPeriodStartDate != null)
+                    txtPeriodStartDate.Clear();
+                if (txtPeriodEndDate != null)
+                    txtPeriodEndDate.Clear();
+                return;
+            }
+
+            try
+            {
+                string periodId = txtPeriodId.Text.Trim();
+
+                // التحقق من وجود الفترة في قاعدة البيانات
+                DataTable dt = period.VIEW_PERIOD(periodId);
+
+                if (dt == null || dt.Rows.Count == 0)
+                {
+                    MessageBox.Show("رقم الفترة غير موجود", "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    txtPeriodId.Focus();
+                    // مسح حقول الفترة
+                    if (txtPeriodStartDate != null)
+                        txtPeriodStartDate.Clear();
+                    if (txtPeriodEndDate != null)
+                        txtPeriodEndDate.Clear();
+                    return;
+                }
+
+                // تحميل بيانات الفترة وعرضها في الحقول
+                LoadPeriodDataToPartnerCost(dt.Rows[0]);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("حدث خطأ أثناء التحقق من رقم الفترة: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                txtPeriodId.Focus();
+            }
+        }
+    
+         private void SetViewMode()
+        {
+            btnView.Enabled = true;
+            btnAdd.Enabled = true;
+            btnEdit.Enabled = true;
+            btnDelete.Enabled = true;
+            btnSave.Enabled = false;
+        }
+
+        private void SetAddMode()
+        {
+            //btnSave.Enabled = true;
+            btnView.Enabled = false;
+            btnEdit.Enabled = false;
+            btnDelete.Enabled = false;
+            btnAdd.Enabled = false;
+        }
+
+        private void SetEditMode()
+        {
+            btnAdd.Enabled = false;
+            btnSave.Enabled = true;
+            btnView.Enabled = false;
+            btnDelete.Enabled = false;
+            btnEdit.Enabled = false;
+        }
+        private void SetDeleteMode()
+        {                                   
+            btnDelete.Enabled = false;
+            btnEdit.Enabled = false;
+        }
+
+        private void SetAfterSaveMode()
+        {
+            btnSave.Enabled = false;
+            btnView.Enabled = true;
+            btnAdd.Enabled = true;
+            btnDelete.Enabled = false;
+            btnEdit.Enabled = false;
         }
     }
 }

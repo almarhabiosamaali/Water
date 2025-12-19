@@ -30,9 +30,7 @@ namespace Water
         public Form1()
         {
             InitializeComponent();
-            InitializeMainTree();
-            this.MdiChildActivate += Form1_MdiChildActivate;
-           // this.Load += Form1_Load;
+            this.Load += Form1_Load;
         }
 
         private void Form1_Load(object sender, EventArgs e)

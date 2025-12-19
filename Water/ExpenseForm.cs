@@ -18,6 +18,7 @@ namespace Water
         Clas.customer customer = new Clas.customer();
         Clas.partners partners = new Clas.partners();
         Clas.account account = new Clas.account();
+        Clas.period period = new Clas.period();
 
         public ExpenseForm()
         {
@@ -29,10 +30,12 @@ namespace Water
             btnSave.Click += btnSave_Click;
             
             // ربط أحداث F2 و Enter على حقل رقم الفترة لعرض قائمة الفترات
-            txtPeriodId.KeyDown += txtPeriodId_KeyDown;
+            //txtPeriodId.KeyDown += txtPeriodId_KeyDown;
+            txtPeriodId.Leave += txtPeriodId_Leave;
             
             // ربط أحداث F2 و Enter على حقل رقم الحساب لعرض قائمة الحسابات/العملاء/الشركاء
-            txtAccountId.KeyDown += txtAccountId_KeyDown;
+            //txtAccountId.KeyDown += txtAccountId_KeyDown;
+            txtAccountId.Leave += txtAccountId_Leave;
         }
 
         private void btnView_Click(object sender, EventArgs e)
@@ -75,6 +78,8 @@ namespace Water
 
                 viewForm.Controls.Add(dgv);
                 viewForm.ShowDialog();
+
+                SetViewMode();
             }
             catch (Exception ex)
             {
@@ -94,6 +99,7 @@ namespace Water
             {
                 txtExpenseCode.Text = "1";
             }
+            SetAddMode();
             
             txtExpenseCode.Enabled = false;
          //   MessageBox.Show("يمكنك الآن إدخال بيانات قيد جديد", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -120,6 +126,7 @@ namespace Water
                 LoadExpenseData(dt.Rows[0]);
                 isEditMode = true;
                 txtExpenseCode.Enabled = false;
+                SetEditMode();
                 
                // MessageBox.Show("يمكنك الآن تعديل بيانات القيد", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -151,6 +158,7 @@ namespace Water
                     exp.DELETE_EXPENSE(txtExpenseCode.Text.Trim());
                     MessageBox.Show("تم حذف القيد بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     clear_EXPENSE();
+                    SetDeleteMode();
                 }
                 catch (Exception ex)
                 {
@@ -303,6 +311,7 @@ namespace Water
                 clear_EXPENSE();
                 isEditMode = false;
                 txtExpenseCode.Enabled = true;
+                SetAfterSaveMode();
             }
             
                 catch (System.Data.SqlClient.SqlException sqlEx)
@@ -354,7 +363,34 @@ namespace Water
                 txtAmount.Text = row["amount"].ToString();
             }
 
-            txtPeriodId.Text = row["period_id"].ToString();
+            if (row["period_id"] != DBNull.Value)
+            {
+                string periodId = row["period_id"].ToString();
+                txtPeriodId.Text = periodId;
+                
+                // تحميل بيانات الفترة وعرضها
+                try
+                {
+                    DataTable periodDt = period.VIEW_PERIOD(periodId);
+                    if (periodDt != null && periodDt.Rows.Count > 0)
+                    {
+                        LoadPeriodDataToExpenses(periodDt.Rows[0]);
+                    }
+                }
+                catch
+                {
+                    // في حالة الخطأ، لا نفعل شيئاً
+                }
+            }
+            else
+            {
+                txtPeriodId.Clear();
+                if (txtPeriodStartDate != null)
+                    txtPeriodStartDate.Clear();
+                if (txtPeriodEndDate != null)
+                    txtPeriodEndDate.Clear();
+            }
+
             txtDescription.Text = row["description"].ToString();
             txtNotes.Text = row["notes"].ToString();
         }
@@ -373,6 +409,8 @@ namespace Water
             txtPeriodEndDate.Clear();
             txtDescription.Clear();
             txtNotes.Clear();
+            txtPeriodStartDate.Clear();
+            txtPeriodEndDate.Clear();
         }
 
         private void GoFocus(object sender, EventArgs e)
@@ -522,6 +560,191 @@ namespace Water
         {
             this.Close();
         }
+        private void SetViewMode()
+        {
+            btnView.Enabled = true;
+            btnAdd.Enabled = true;
+            btnEdit.Enabled = true;
+            btnDelete.Enabled = true;
+            btnSave.Enabled = false;
+        }
+
+        private void SetAddMode()
+        {
+            btnSave.Enabled = true;
+            btnView.Enabled = false;
+            btnEdit.Enabled = false;
+            btnDelete.Enabled = false;
+            btnAdd.Enabled = false;
+        }
+
+        private void SetEditMode()
+        {
+            btnAdd.Enabled = false;
+            btnSave.Enabled = true;
+            btnView.Enabled = false;
+            btnDelete.Enabled = false;
+            btnEdit.Enabled = false;
+        }
+        private void SetDeleteMode()
+        {                                   
+            btnDelete.Enabled = false;
+            btnEdit.Enabled = false;
+        }
+
+        private void SetAfterSaveMode()
+        {
+            btnSave.Enabled = false;
+            btnView.Enabled = true;
+            btnAdd.Enabled = true;
+            btnDelete.Enabled = false;
+            btnEdit.Enabled = false;
+        }
+
+        private void txtPeriodId_Leave(object sender, EventArgs e)
+        {        
+            // التحقق من وجود رقم الفترة عند الانتقال من الحقل
+            if (txtPeriodId == null || string.IsNullOrWhiteSpace(txtPeriodId.Text))
+            {
+                // مسح حقول الفترة إذا كان الحقل فارغاً
+                if (txtPeriodStartDate != null)
+                    txtPeriodStartDate.Clear();
+                if (txtPeriodEndDate != null)
+                    txtPeriodEndDate.Clear();
+                return;
+            }
+
+            try
+            {
+                string periodId = txtPeriodId.Text.Trim();
+
+                // التحقق من وجود الفترة في قاعدة البيانات
+                DataTable dt = period.VIEW_PERIOD(periodId);
+
+                if (dt == null || dt.Rows.Count == 0)
+                {
+                    MessageBox.Show("رقم الفترة غير موجود", "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    txtPeriodId.Focus();
+                    // مسح حقول الفترة
+                    if (txtPeriodStartDate != null)
+                        txtPeriodStartDate.Clear();
+                    if (txtPeriodEndDate != null)
+                        txtPeriodEndDate.Clear();
+                    return;
+                }
+
+                // تحميل بيانات الفترة وعرضها في الحقول
+                LoadPeriodDataToExpenses(dt.Rows[0]);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("حدث خطأ أثناء التحقق من رقم الفترة: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                txtPeriodId.Focus();
+            }
+        }
+        private void LoadPeriodDataToExpenses(DataRow row)
+        {
+            try
+            {
+                // عرض بداية الفترة
+                if (txtPeriodStartDate != null)
+                {
+                    if (row["start_date"] != DBNull.Value)
+                    {
+                        txtPeriodStartDate.Text = Convert.ToDateTime(row["start_date"]).ToString("dd/MM/yyyy");
+                    }
+                    else
+                    {
+                        txtPeriodStartDate.Clear();
+                    }
+                }
+
+                // عرض نهاية الفترة
+                if (txtPeriodEndDate != null)
+                {
+                    if (row["end_date"] != DBNull.Value)
+                    {
+                        txtPeriodEndDate.Text = Convert.ToDateTime(row["end_date"]).ToString("dd/MM/yyyy");
+                    }
+                    else
+                    {
+                        txtPeriodEndDate.Clear();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("حدث خطأ أثناء تحميل بيانات الفترة: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void txtAccountId_Leave(object sender, EventArgs e)
+        {
+            // التحقق من وجود رقم الحساب/العميل/الشريك عند الانتقال من الحقل
+            if (txtAccountId == null || string.IsNullOrWhiteSpace(txtAccountId.Text))
+            {
+                // مسح اسم الحساب إذا كان الحقل فارغاً
+                if (txtAccountName != null)
+                    txtAccountName.Clear();
+                return;
+            }
+
+            // التحقق من اختيار نوع الحساب
+            if (cmbAccountType == null || cmbAccountType.SelectedIndex == -1)
+            {
+                MessageBox.Show("الرجاء اختيار نوع الحساب أولاً", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtAccountId.Focus();
+                return;
+            }
+
+            try
+            {
+                string accountId = txtAccountId.Text.Trim();
+                string accountType = cmbAccountType.SelectedItem.ToString();
+                DataTable dt = null;
+
+                // تحديد نوع البيانات بناءً على اختيار نوع الحساب
+                if (accountType == "عميل")
+                {
+                    dt = customer.VIEW_CUSTOMER(accountId);
+                }
+                else if (accountType == "شريك")
+                {
+                    dt = partners.VIEW_PARTNER(accountId);
+                }
+                else if (accountType == "حساب")
+                {
+                    dt = account.VIEW_ACCOUNT(accountId);
+                }
+                else
+                {
+                    MessageBox.Show("نوع الحساب غير معروف", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtAccountId.Focus();
+                    return;
+                }
+
+                // التحقق من وجود البيانات
+                if (dt == null || dt.Rows.Count == 0)
+                {
+                    MessageBox.Show($"رقم {accountType} غير موجود", "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    txtAccountId.Focus();
+                    // مسح اسم الحساب
+                    if (txtAccountName != null)
+                        txtAccountName.Clear();
+                    return;
+                }
+
+                // تحميل بيانات الحساب/العميل/الشريك
+                LoadAccountData(dt.Rows[0]);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("حدث خطأ أثناء التحقق من رقم الحساب: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                txtAccountId.Focus();
+            }
+        }
+
+        
     }
 }
 

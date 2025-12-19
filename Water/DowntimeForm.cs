@@ -25,8 +25,8 @@ namespace Water
             btnDelete.Click += btnDelete_Click;
             btnSave.Click += btnSave_Click;
             
-            // ربط أحداث F2 و Enter على حقل رقم الفترة لعرض قائمة الفترات
-            txtPeriodId.KeyDown += txtPeriodId_KeyDown;
+            // ربط أحداث F2 و Enter على حقل رقم الفترة لعرض قائمة الفترات            
+            txtPeriodId.Leave += txtPeriodId_Leave;
             
             // ربط أحداث حساب الأيام والساعات تلقائياً
             dtpStartTime.ValueChanged += CalculateDaysAndHours;
@@ -73,6 +73,7 @@ namespace Water
 
                 viewForm.Controls.Add(dgv);
                 viewForm.ShowDialog();
+                SetViewMode();
             }
             catch (Exception ex)
             {
@@ -92,7 +93,8 @@ namespace Water
             {
                 txtDowntimeCode.Text = "1";
             }
-            btnSave.Text = "";
+           // btnSave.Text = "";
+            SetAddMode();
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
@@ -116,7 +118,8 @@ namespace Water
                 LoadDowntimeData(dt.Rows[0]);
                 isEditMode = true;
                 txtDowntimeCode.Enabled = false;
-                btnSave.Text = "";
+                //btnSave.Text = "";
+                SetEditMode();
                 MessageBox.Show("يمكنك الآن تعديل بيانات التوقف", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
@@ -210,6 +213,7 @@ namespace Water
                     dwn.DELETE_DOWNTIME(downtimeId);
                     MessageBox.Show("تم حذف التوقف بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     clear_DOWNTIME();
+                    SetDeleteMode();
                 }
                 catch (Exception ex)
                 {
@@ -331,7 +335,8 @@ namespace Water
                 clear_DOWNTIME();
                 isEditMode = false;
                 txtDowntimeCode.Enabled = true;
-                btnSave.Text = "";
+                //btnSave.Text = "";
+                SetAfterSaveMode();
             }
             catch (Exception ee)
             {
@@ -343,13 +348,33 @@ namespace Water
         {
             txtDowntimeCode.Text = row["id"].ToString();
             
-            if (row["period_id"] != DBNull.Value)
+           
+               if (row["period_id"] != DBNull.Value)
             {
-                txtPeriodId.Text = row["period_id"].ToString();
+                string periodId = row["period_id"].ToString();
+                txtPeriodId.Text = periodId;
+                
+                // تحميل بيانات الفترة وعرضها
+                try
+                {
+                    DataTable periodDt = period.VIEW_PERIOD(periodId);
+                    if (periodDt != null && periodDt.Rows.Count > 0)
+                    {
+                        LoadPeriodDataToDowntime(periodDt.Rows[0]);
+                    }
+                }
+                catch
+                {
+                    // في حالة الخطأ، لا نفعل شيئاً
+                }
             }
             else
             {
                 txtPeriodId.Clear();
+                if (txtPeriodStartDate != null)
+                    txtPeriodStartDate.Clear();
+                if (txtPeriodEndDate != null)
+                    txtPeriodEndDate.Clear();
             }
             
             if (row["date"] != DBNull.Value)
@@ -457,6 +482,8 @@ namespace Water
             txtDescription.Clear();
             chkIsProcessed.Checked = false;
             txtWorkingHours.Clear();
+            txtPeriodStartDate.Clear();
+            txtPeriodEndDate.Clear();
         }
 
         private void txtPeriodId_KeyDown(object sender, KeyEventArgs e)
@@ -468,6 +495,42 @@ namespace Water
                 // استخدام الكلاس المساعد الموحد (لا توجد حقول بداية ونهاية الفترة في هذه الشاشة)
               //  Clas.PeriodHelper.ShowPeriodsList(txtPeriodId, null, null);
                 Clas.PeriodHelper.ShowPeriodsList(txtPeriodId, txtPeriodStartDate, txtPeriodEndDate);
+            }
+        }
+
+        private void LoadPeriodDataToDowntime(DataRow row)
+        {
+            try
+            {
+                // عرض بداية الفترة
+                if (txtPeriodStartDate != null)
+                {
+                    if (row["start_date"] != DBNull.Value)
+                    {
+                        txtPeriodStartDate.Text = Convert.ToDateTime(row["start_date"]).ToString("dd/MM/yyyy");
+                    }
+                    else
+                    {
+                        txtPeriodStartDate.Clear();
+                    }
+                }
+
+                // عرض نهاية الفترة
+                if (txtPeriodEndDate != null)
+                {
+                    if (row["end_date"] != DBNull.Value)
+                    {
+                        txtPeriodEndDate.Text = Convert.ToDateTime(row["end_date"]).ToString("dd/MM/yyyy");
+                    }
+                    else
+                    {
+                        txtPeriodEndDate.Clear();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("حدث خطأ أثناء تحميل بيانات الفترة: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -535,6 +598,90 @@ namespace Water
         {
             this.Close();
         }
+
+         private void SetViewMode()
+        {
+            btnView.Enabled = true;
+            btnAdd.Enabled = true;
+            btnEdit.Enabled = true;
+            btnDelete.Enabled = true;
+            btnSave.Enabled = false;
+        }
+
+        private void SetAddMode()
+        {
+            btnSave.Enabled = true;
+            btnView.Enabled = false;
+            btnEdit.Enabled = false;
+            btnDelete.Enabled = false;
+            btnAdd.Enabled = false;
+        }
+
+        private void SetEditMode()
+        {
+            btnAdd.Enabled = false;
+            btnSave.Enabled = true;
+            btnView.Enabled = false;
+            btnDelete.Enabled = false;
+            btnEdit.Enabled = false;
+        }
+        private void SetDeleteMode()
+        {                                   
+            btnDelete.Enabled = false;
+            btnEdit.Enabled = false;
+        }
+
+        private void SetAfterSaveMode()
+        {
+            btnSave.Enabled = false;
+            btnView.Enabled = true;
+            btnAdd.Enabled = true;
+            btnDelete.Enabled = false;
+            btnEdit.Enabled = false;
+        }
+
+        private void txtPeriodId_Leave(object sender, EventArgs e)
+        {
+            if (txtPeriodId == null || string.IsNullOrWhiteSpace(txtPeriodId.Text))
+            {
+                // مسح حقول الفترة إذا كان الحقل فارغاً
+                if (txtPeriodStartDate != null)
+                    txtPeriodStartDate.Clear();
+                if (txtPeriodEndDate != null)
+                    txtPeriodEndDate.Clear();
+                return;
+            }
+
+            try
+            {
+                string periodId = txtPeriodId.Text.Trim();
+
+                // التحقق من وجود الفترة في قاعدة البيانات
+                DataTable dt = period.VIEW_PERIOD(periodId);
+
+                if (dt == null || dt.Rows.Count == 0)
+                {
+                    MessageBox.Show("رقم الفترة غير موجود", "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    txtPeriodId.Focus();
+                    // مسح حقول الفترة
+                    if (txtPeriodStartDate != null)
+                        txtPeriodStartDate.Clear();
+                    if (txtPeriodEndDate != null)
+                        txtPeriodEndDate.Clear();
+                    return;
+                }
+
+                // تحميل بيانات الفترة وعرضها في الحقول
+                LoadPeriodDataToDowntime(dt.Rows[0]);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("حدث خطأ أثناء التحقق من رقم الفترة: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                txtPeriodId.Focus();
+            }
+        }
     }
+
+
 }
 

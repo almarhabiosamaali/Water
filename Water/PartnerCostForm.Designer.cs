@@ -195,6 +195,7 @@ namespace Water
             this.txtPeriodId.TabIndex = 0;
             this.txtPeriodId.TabStop = false;
             this.txtPeriodId.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNumeric_KeyPress);
+            this.txtPeriodId.Leave += new System.EventHandler(this.txtPeriodId_Leave);
             // 
             // lblDayesCount
             // 
@@ -347,7 +348,7 @@ namespace Water
             this.txtNote.Name = "txtNote";
             this.txtNote.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtNote.Size = new System.Drawing.Size(785, 60);
-            this.txtNote.TabIndex = 25;
+            this.txtNote.TabIndex = 5;
             // 
             // btnView
             // 
@@ -379,6 +380,7 @@ namespace Water
             // btnEdit
             // 
             this.btnEdit.BackColor = System.Drawing.Color.White;
+            this.btnEdit.Enabled = false;
             this.btnEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnEdit.Image = global::Water.Properties.Resources.icons8_edit_24_5;
             this.btnEdit.Location = new System.Drawing.Point(552, 36);
@@ -393,6 +395,7 @@ namespace Water
             // btnDelete
             // 
             this.btnDelete.BackColor = System.Drawing.Color.White;
+            this.btnDelete.Enabled = false;
             this.btnDelete.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDelete.Image = global::Water.Properties.Resources.icons8_delete_24;
             this.btnDelete.Location = new System.Drawing.Point(615, 36);
@@ -407,6 +410,7 @@ namespace Water
             // btnSave
             // 
             this.btnSave.BackColor = System.Drawing.Color.White;
+            this.btnSave.Enabled = false;
             this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSave.Image = global::Water.Properties.Resources.icons8_save_24_9;
             this.btnSave.Location = new System.Drawing.Point(681, 36);

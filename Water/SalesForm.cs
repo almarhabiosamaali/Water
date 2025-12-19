@@ -51,18 +51,16 @@ namespace Water
             txtPaidAmount.TextChanged += CalculateRemainingAmount_TextChanged;
             txtDueAmount.TextChanged += CalculateRemainingAmount_TextChanged;
 
-            // ربط أحداث رقم الفترة
-           // txtPeriodId.KeyDown += txtPeriodId_KeyDown;
+            // ربط أحداث رقم الفترة           
             txtPeriodId.Leave += txtPeriodId_Leave;
 
-            // ربط حدث تغيير مستوى التسعيرة
-            //txtPriceLevel.TextChanged += txtPriceLevel_TextChanged;
+            // ربط حدث تغيير مستوى التسعيرة        
             txtPriceLevel.Leave += txtPriceLevel_Leave;
 
             // تهيئة ComboBox نوع العميل
             if (cmbCustomerType != null)
             {
-                cmbCustomerType.SelectedIndex = 0; // افتراضياً "عميل"
+                cmbCustomerType.SelectedIndex = 0; 
             }
         }
 
@@ -170,6 +168,116 @@ namespace Water
                     e.Handled = true;
                     ShowPartnersList();
                 }
+            }
+        }
+
+        private void DataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            // التحقق من أن التحرير كان في عمود PartenerId
+            if (e.RowIndex < 0 || e.ColumnIndex < 0)
+                return;
+
+            DataGridViewColumn column = this.dataGridView1.Columns[e.ColumnIndex];
+            if (column == null || column.Name != "PartenerId")
+                return;
+
+            // الحصول على الصف الحالي
+            DataGridViewRow row = this.dataGridView1.Rows[e.RowIndex];
+            if (row == null || row.IsNewRow)
+                return;
+
+            // الحصول على رقم الشريك المدخل
+            if (row.Cells["PartenerId"] == null || row.Cells["PartenerId"].Value == null)
+                return;
+
+            string partnerId = row.Cells["PartenerId"].Value.ToString().Trim();
+            if (string.IsNullOrWhiteSpace(partnerId))
+            {
+                // إذا كان الحقل فارغاً، مسح اسم الشريك
+                if (row.Cells["PartenerName"] != null)
+                {
+                    row.Cells["PartenerName"].Value = "";
+                }
+                return;
+            }
+
+            try
+            {
+                // التحقق من عدم تكرار رقم الشريك
+                foreach (DataGridViewRow otherRow in this.dataGridView1.Rows)
+                {
+                    // تخطي الصف الحالي والصف الجديد
+                    if (otherRow.Index == e.RowIndex || otherRow.IsNewRow)
+                        continue;
+
+                    // قراءة رقم الشريك من الصف الآخر
+                    if (otherRow.Cells["PartenerId"] != null && otherRow.Cells["PartenerId"].Value != null)
+                    {
+                        string otherPartnerId = otherRow.Cells["PartenerId"].Value.ToString().Trim();
+                        
+                        // إذا كان نفس رقم الشريك، عرض رسالة خطأ
+                        if (otherPartnerId == partnerId)
+                        {
+                            MessageBox.Show("تم إدخال هذا الشريك مسبقاً. لا يمكن تكرار نفس الشريك", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            
+                            // مسح رقم الشريك واسمه
+                            row.Cells["PartenerId"].Value = "";
+                            if (row.Cells["PartenerName"] != null)
+                            {
+                                row.Cells["PartenerName"].Value = "";
+                            }
+                            
+                            // إعادة التركيز على خلية PartenerId
+                            this.dataGridView1.CurrentCell = row.Cells["PartenerId"];
+                            return;
+                        }
+                    }
+                }
+
+                // البحث عن الشريك في قاعدة البيانات
+                DataTable dt = partners.VIEW_PARTNER(partnerId);
+
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    // تحميل اسم الشريك
+                    DataRow partnerRow = dt.Rows[0];
+                    string partnerName = partnerRow["name"] != DBNull.Value ? partnerRow["name"].ToString() : "";
+
+                    // تعبئة اسم الشريك في العمود
+                    if (row.Cells["PartenerName"] != null)
+                    {
+                        row.Cells["PartenerName"].Value = partnerName;
+                    }
+
+                    // تعبئة الساعات المتاحة إذا كانت موجودة
+                    if (row.Cells["HoursAvalible"] != null && partnerRow["avalibleHours"] != DBNull.Value)
+                    {
+                        row.Cells["HoursAvalible"].Value = partnerRow["avalibleHours"].ToString();
+                    }
+
+                    if (row.Cells["MinutesAvalible"] != null && partnerRow["avalibleMinutes"] != DBNull.Value)
+                    {
+                        row.Cells["MinutesAvalible"].Value = partnerRow["avalibleMinutes"].ToString();
+                    }
+                }
+                else
+                {
+                    // الشريك غير موجود
+                    MessageBox.Show("رقم الشريك غير موجود", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    
+                    // مسح اسم الشريك
+                    if (row.Cells["PartenerName"] != null)
+                    {
+                        row.Cells["PartenerName"].Value = "";
+                    }
+
+                    // إعادة التركيز على خلية PartenerId
+                    this.dataGridView1.CurrentCell = row.Cells["PartenerId"];
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("حدث خطأ أثناء البحث عن الشريك: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -797,11 +905,8 @@ namespace Water
                 viewForm.Controls.Add(dgv);
                 viewForm.Controls.Add(searchPanel);
                 viewForm.ShowDialog();
-
-                btnView.Enabled = true;
-                btnAdd.Enabled = true;
-                btnEdit.Enabled = true;
-                btnDelete.Enabled = true;
+                
+                SetViewMode();
                
                 
             }
@@ -822,13 +927,11 @@ namespace Water
             catch
             {
                 txtSalesId.Text = "1";
-            }
-            btnSave.Enabled = true;
-            btnView.Enabled = false; 
-            btnEdit.Enabled = false;
-            btnDelete.Enabled = false;
-            btnAdd.Enabled = false;
-            cmbBillType.Focus();
+            }          
+            SetAddMode();
+            txtCustomerId.Enabled = true;
+            txtPeriodId.Enabled = true;
+            txtSalesId.Focus();
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
@@ -851,11 +954,7 @@ namespace Water
 
                 LoadSalesData(dt.Rows[0]);
                 isEditMode = true;
-                btnAdd.Enabled = false;
-                btnSave.Enabled = true;
-                btnView.Enabled = false;
-                btnDelete.Enabled = false;
-                btnEdit.Enabled = false;
+                SetEditMode();
             }
             catch (Exception ex)
             {
@@ -884,6 +983,8 @@ namespace Water
                     sal.DELETE_SALES(txtSalesId.Text.Trim());
                     sal.DELETE_POST("delete", "1", txtSalesId.Text.Trim());
                     sal.DELETE_POST("delete", "4", txtSalesId.Text.Trim());
+                    btnEdit.Enabled = false;
+                    btnDelete.Enabled = false;
                     MessageBox.Show("تم حذف الفاتورة بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     clear_SALES();
                 }
@@ -1025,11 +1126,7 @@ namespace Water
 
                 clear_SALES();
                 isEditMode = false;
-                btnSave.Enabled = false;
-                btnView.Enabled = true;
-                btnAdd.Enabled = true;
-                btnDelete.Enabled = false;
-                btnEdit.Enabled = false;
+                SetAfterSaveMode();              
                 tabControl1.SelectedIndex = 0;               
 
             }
@@ -2326,70 +2423,7 @@ namespace Water
                 // في حالة الخطأ، نترك الحقل فارغاً
             }
         }
-
-        private void DataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
-        {
-            try
-            {
-                // التحقق من أن التغيير في عمود PartenerId
-                if (e.RowIndex < 0 || e.ColumnIndex < 0)
-                    return;
-
-                DataGridViewColumn column = this.dataGridView1.Columns[e.ColumnIndex];
-                if (column == null || column.Name != "PartenerId")
-                    return;
-
-                DataGridViewRow currentRow = this.dataGridView1.Rows[e.RowIndex];
-                if (currentRow.IsNewRow)
-                    return;
-
-                // قراءة رقم الشريك من الصف الحالي
-                string currentPartnerId = "";
-                if (currentRow.Cells["PartenerId"] != null && currentRow.Cells["PartenerId"].Value != null)
-                {
-                    currentPartnerId = currentRow.Cells["PartenerId"].Value.ToString().Trim();
-                }
-
-                // إذا كان رقم الشريك فارغاً، لا نتحقق
-                if (string.IsNullOrWhiteSpace(currentPartnerId))
-                    return;
-
-                // التحقق من عدم تكرار رقم الشريك في الصفوف الأخرى
-                foreach (DataGridViewRow row in this.dataGridView1.Rows)
-                {
-                    // تخطي الصف الحالي والصف الجديد
-                    if (row.Index == e.RowIndex || row.IsNewRow)
-                        continue;
-
-                    // قراءة رقم الشريك من الصف الآخر
-                    if (row.Cells["PartenerId"] != null && row.Cells["PartenerId"].Value != null)
-                    {
-                        string otherPartnerId = row.Cells["PartenerId"].Value.ToString().Trim();
-                        
-                        // إذا كان نفس رقم الشريك، عرض رسالة خطأ ومسح الحقل
-                        if (!string.IsNullOrWhiteSpace(otherPartnerId) && otherPartnerId == currentPartnerId)
-                        {
-                            MessageBox.Show("تم إدخال هذا الشريك مسبقاً. لا يمكن تكرار نفس الشريك", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            
-                            // مسح رقم الشريك واسم الشريك من الصف الحالي
-                            if (currentRow.Cells["PartenerId"] != null)
-                                currentRow.Cells["PartenerId"].Value = "";
-                            if (currentRow.Cells["PartenerName"] != null)
-                                currentRow.Cells["PartenerName"].Value = "";
-                            
-                            // إعادة التركيز على خلية رقم الشريك
-                            this.dataGridView1.CurrentCell = currentRow.Cells["PartenerId"];
-                            this.dataGridView1.BeginEdit(true);
-                            return;
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("حدث خطأ أثناء التحقق من رقم الشريك: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
+        
 
         private void DataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
@@ -2861,10 +2895,42 @@ namespace Water
             this.Close();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void SetViewMode()
         {
-            tabControl1.SelectedIndex = 0;
+            btnView.Enabled = true;
+            btnAdd.Enabled = true;
+            btnEdit.Enabled = true;
+            btnDelete.Enabled = true;
+            btnSave.Enabled = false;
         }
+
+        private void SetAddMode()
+        {
+            btnSave.Enabled = true;
+            btnView.Enabled = false;
+            btnEdit.Enabled = false;
+            btnDelete.Enabled = false;
+            btnAdd.Enabled = false;
+        }
+
+        private void SetEditMode()
+        {
+            btnAdd.Enabled = false;
+            btnSave.Enabled = true;
+            btnView.Enabled = false;
+            btnDelete.Enabled = false;
+            btnEdit.Enabled = false;
+        }
+
+        private void SetAfterSaveMode()
+        {
+            btnSave.Enabled = false;
+            btnView.Enabled = true;
+            btnAdd.Enabled = true;
+            btnDelete.Enabled = false;
+            btnEdit.Enabled = false;
+        }
+
     }
 }
 
