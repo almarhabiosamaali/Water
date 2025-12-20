@@ -152,6 +152,7 @@ namespace Water
             this.txtDowntimeHours.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtDowntimeHours.Size = new System.Drawing.Size(263, 26);
             this.txtDowntimeHours.TabIndex = 9;
+            this.txtDowntimeHours.TabStop = false;
             this.txtDowntimeHours.Text = "0";
             // 
             // lblExtendedDays
@@ -240,7 +241,7 @@ namespace Water
             this.btnSave.Name = "btnSave";
             this.btnSave.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnSave.Size = new System.Drawing.Size(70, 40);
-            this.btnSave.TabIndex = 10;
+            this.btnSave.TabIndex = 7;
             this.toolTip1.SetToolTip(this.btnSave, "حفظ");
             this.btnSave.UseVisualStyleBackColor = false;
             // 
@@ -252,6 +253,7 @@ namespace Water
             this.txtBaseDays.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtBaseDays.Size = new System.Drawing.Size(262, 26);
             this.txtBaseDays.TabIndex = 7;
+            this.txtBaseDays.TabStop = false;
             this.txtBaseDays.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtDownDays
@@ -262,6 +264,7 @@ namespace Water
             this.txtDownDays.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtDownDays.Size = new System.Drawing.Size(262, 26);
             this.txtDownDays.TabIndex = 11;
+            this.txtDownDays.TabStop = false;
             this.txtDownDays.Text = "0";
             this.txtDownDays.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -273,6 +276,7 @@ namespace Water
             this.txtTotalHours.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtTotalHours.Size = new System.Drawing.Size(262, 26);
             this.txtTotalHours.TabIndex = 13;
+            this.txtTotalHours.TabStop = false;
             this.txtTotalHours.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtWorkingHours
@@ -318,7 +322,7 @@ namespace Water
             this.btnExit.Name = "btnExit";
             this.btnExit.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnExit.Size = new System.Drawing.Size(70, 40);
-            this.btnExit.TabIndex = 24;
+            this.btnExit.TabIndex = 9;
             this.toolTip1.SetToolTip(this.btnExit, "خروج");
             this.btnExit.UseVisualStyleBackColor = false;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);

@@ -70,6 +70,7 @@ namespace Water
 
                 viewForm.Controls.Add(dgv);
                 viewForm.ShowDialog();
+                SetViewMode();
             }
             catch (Exception ex)
             {
@@ -89,8 +90,7 @@ namespace Water
             {
                 txtCustomerCode.Text = "1";
             }
-            txtCustomerCode.Enabled = false;
-           // MessageBox.Show("يمكنك الآن إدخال بيانات عميل جديد", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            SetAddMode();           
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
@@ -114,7 +114,7 @@ namespace Water
                 LoadCustomerData(dt.Rows[0]);
                 isEditMode = true;
                 txtCustomerCode.Enabled = false;
-              //  MessageBox.Show("يمكنك الآن تعديل بيانات العميل", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                SetEditMode();              
             }
             catch (Exception ex)
             {
@@ -143,6 +143,7 @@ namespace Water
                     cus.DELETE_CUSTOMER(txtCustomerCode.Text.Trim());
                     MessageBox.Show("تم حذف العميل بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     clear_CUSTOMER();
+                    SetDeleteMode();
                 }
                 catch (Exception ex)
                 {
@@ -199,6 +200,7 @@ namespace Water
                 clear_CUSTOMER();
                 isEditMode = false;
                 txtCustomerCode.Enabled = true;
+                SetAfterSaveMode();
             }
             catch (Exception ee)
             {
@@ -245,6 +247,47 @@ namespace Water
         private void btnExit_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+         private void SetViewMode()
+        {
+            btnView.Enabled = true;
+            btnAdd.Enabled = true;
+            btnEdit.Enabled = true;
+            btnDelete.Enabled = true;
+            btnSave.Enabled = false;
+        }
+
+        private void SetAddMode()
+        {
+            btnSave.Enabled = true;
+            btnView.Enabled = false;
+            btnEdit.Enabled = false;
+            btnDelete.Enabled = false;
+            btnAdd.Enabled = false;
+        }
+
+        private void SetEditMode()
+        {
+            btnAdd.Enabled = false;
+            btnSave.Enabled = true;
+            btnView.Enabled = false;
+            btnDelete.Enabled = false;
+            btnEdit.Enabled = false;
+        }
+        private void SetDeleteMode()
+        {                                   
+            btnDelete.Enabled = false;
+            btnEdit.Enabled = false;
+        }
+
+        private void SetAfterSaveMode()
+        {
+            btnSave.Enabled = false;
+            btnView.Enabled = true;
+            btnAdd.Enabled = true;
+            btnDelete.Enabled = false;
+            btnEdit.Enabled = false;
         }
     }
 }

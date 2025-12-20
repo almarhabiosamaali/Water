@@ -865,7 +865,7 @@ namespace Water
             this.tabControl1.RightToLeftLayout = true;
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(1312, 489);
-            this.tabControl1.TabIndex = 1;            
+            this.tabControl1.TabIndex = 1;
             // 
             // label4
             // 
@@ -894,6 +894,7 @@ namespace Water
             // btnDelete
             // 
             this.btnDelete.BackColor = System.Drawing.Color.White;
+            this.btnDelete.Enabled = false;
             this.btnDelete.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDelete.Image = global::Water.Properties.Resources.icons8_delete_24;
             this.btnDelete.Location = new System.Drawing.Point(244, 4);
@@ -921,6 +922,7 @@ namespace Water
             // btnEdit
             // 
             this.btnEdit.BackColor = System.Drawing.Color.White;
+            this.btnEdit.Enabled = false;
             this.btnEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnEdit.Image = global::Water.Properties.Resources.icons8_edit_24_5;
             this.btnEdit.Location = new System.Drawing.Point(179, 4);
@@ -987,7 +989,7 @@ namespace Water
             this.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.RightToLeftLayout = true;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "فاتورة المبيعات";            
+            this.Text = "فاتورة المبيعات";
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();

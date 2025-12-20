@@ -70,62 +70,14 @@ namespace Water
 
                 viewForm.Controls.Add(dgv);
                 viewForm.ShowDialog();
+                SetViewMode();
             }
             catch (Exception ex)
             {
                 MessageBox.Show("حدث خطأ أثناء عرض البيانات: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
-        /*
-          private void btnView_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                DataTable dt = pricing.GET_ALL_PRICINGS();
-
-                if (dt.Rows.Count == 0)
-                {
-                    MessageBox.Show("لا توجد بيانات للعرض", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
-                }
-
-                Form viewForm = new Form();
-                viewForm.Text = "عرض مستويات الأسعار";
-                viewForm.RightToLeft = RightToLeft.Yes;
-                viewForm.RightToLeftLayout = true;
-                viewForm.Size = new Size(1400, 600);
-                viewForm.StartPosition = FormStartPosition.CenterScreen;
-
-                DataGridView dgv = new DataGridView();
-                dgv.Dock = DockStyle.Fill;
-                dgv.DataSource = dt;
-                dgv.ReadOnly = true;
-                dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-                dgv.MultiSelect = false;
-                dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-                dgv.RightToLeft = RightToLeft.Yes;
-
-                dgv.CellDoubleClick += (s, args) =>
-                {
-                    if (args.RowIndex >= 0)
-                    {
-                        DataRow row = dt.Rows[args.RowIndex];
-                        LoadPricingData(row);
-                        viewForm.Close();
-                    }
-                };
-
-                viewForm.Controls.Add(dgv);
-                viewForm.ShowDialog();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("حدث خطأ أثناء عرض البيانات: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-             */
+        
         private void btnAdd_Click(object sender, EventArgs e)
         {
             isEditMode = false;
@@ -137,9 +89,8 @@ namespace Water
             catch
             {
                 txtPriceLevelId.Text = "1";
-            }
-            txtPriceLevelId.Enabled = false;
-          //  MessageBox.Show("يمكنك الآن إدخال بيانات مستوى سعر جديد", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }           
+            SetAddMode();
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
@@ -161,9 +112,8 @@ namespace Water
                 }
 
                 LoadPricingData(dt.Rows[0]);
-                isEditMode = true;
-                txtPriceLevelId.Enabled = false;
-                MessageBox.Show("يمكنك الآن تعديل بيانات مستوى السعر", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                isEditMode = true;                
+                SetEditMode();
             }
             catch (Exception ex)
             {
@@ -192,6 +142,7 @@ namespace Water
                     pricing.DELETE_PRICING(txtPriceLevelId.Text.Trim());
                     MessageBox.Show("تم حذف مستوى السعر بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     clear_PRICING();
+                    SetDeleteMode();
                 }
                 catch (Exception ex)
                 {
@@ -258,8 +209,8 @@ namespace Water
                 }
 
                 clear_PRICING();
-                isEditMode = false;
-                txtPriceLevelId.Enabled = true;
+                isEditMode = false;                
+                SetAfterSaveMode();
             }
             catch (FormatException)
             {
@@ -394,6 +345,46 @@ namespace Water
         private void btnExit_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+         private void SetViewMode()
+        {
+            btnView.Enabled = true;
+            btnAdd.Enabled = true;
+            btnEdit.Enabled = true;
+            btnDelete.Enabled = true;
+            btnSave.Enabled = false;
+        }
+
+        private void SetAddMode()
+        {
+            btnSave.Enabled = true;
+            btnView.Enabled = false;
+            btnEdit.Enabled = false;
+            btnDelete.Enabled = false;
+            btnAdd.Enabled = false;
+        }
+
+        private void SetEditMode()
+        {
+            btnAdd.Enabled = false;
+            btnSave.Enabled = true;
+            btnView.Enabled = false;
+            btnDelete.Enabled = false;
+            btnEdit.Enabled = false;
+        }
+        private void SetDeleteMode()
+        {                                   
+            btnDelete.Enabled = false;
+            btnEdit.Enabled = false;
+        }
+
+        private void SetAfterSaveMode()
+        {
+            btnSave.Enabled = false;
+            btnView.Enabled = true;
+            btnAdd.Enabled = true;
+            btnDelete.Enabled = false;
+            btnEdit.Enabled = false;
         }
     }
 }

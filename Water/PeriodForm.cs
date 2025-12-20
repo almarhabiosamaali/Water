@@ -70,6 +70,7 @@ namespace Water
 
                 viewForm.Controls.Add(dgv);
                 viewForm.ShowDialog();
+                SetViewMode();
             }
             catch (Exception ex)
             {
@@ -91,7 +92,7 @@ namespace Water
             {
                 txtPeriodCode.Text = "1";
             }
-            txtPeriodCode.Enabled = false;
+            SetAddMode();
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
@@ -114,8 +115,7 @@ namespace Water
 
                 LoadPeriodData(dt.Rows[0]);
                 isEditMode = true;
-                txtPeriodCode.Enabled = false;
-                MessageBox.Show("يمكنك الآن تعديل بيانات الفترة", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                SetEditMode();
             }
             catch (Exception ex)
             {
@@ -144,6 +144,7 @@ namespace Water
                     per.DELETE_PERIOD(txtPeriodCode.Text.Trim());
                     MessageBox.Show("تم حذف الفترة بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     clear_PERIOD();
+                    SetDeleteMode();
                 }
                 catch (Exception ex)
                 {
@@ -229,6 +230,7 @@ namespace Water
 
                 clear_PERIOD();
                 isEditMode = false;
+                SetAfterSaveMode();
             }
             catch (SqlException sqlEx)
             {
@@ -344,6 +346,46 @@ namespace Water
         private void btnExit_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+        private void SetViewMode()
+        {
+            btnView.Enabled = true;
+            btnAdd.Enabled = true;
+            btnEdit.Enabled = true;
+            btnDelete.Enabled = true;
+            btnSave.Enabled = false;
+        }
+
+        private void SetAddMode()
+        {
+            btnSave.Enabled = true;
+            btnView.Enabled = false;
+            btnEdit.Enabled = false;
+            btnDelete.Enabled = false;
+            btnAdd.Enabled = false;
+        }
+
+        private void SetEditMode()
+        {
+            btnAdd.Enabled = false;
+            btnSave.Enabled = true;
+            btnView.Enabled = false;
+            btnDelete.Enabled = false;
+            btnEdit.Enabled = false;
+        }
+        private void SetDeleteMode()
+        {                                   
+            btnDelete.Enabled = false;
+            btnEdit.Enabled = false;
+        }
+
+        private void SetAfterSaveMode()
+        {
+            btnSave.Enabled = false;
+            btnView.Enabled = true;
+            btnAdd.Enabled = true;
+            btnDelete.Enabled = false;
+            btnEdit.Enabled = false;
         }
     }
 }

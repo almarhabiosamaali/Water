@@ -983,10 +983,9 @@ namespace Water
                     sal.DELETE_SALES(txtSalesId.Text.Trim());
                     sal.DELETE_POST("delete", "1", txtSalesId.Text.Trim());
                     sal.DELETE_POST("delete", "4", txtSalesId.Text.Trim());
-                    btnEdit.Enabled = false;
-                    btnDelete.Enabled = false;
                     MessageBox.Show("تم حذف الفاتورة بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     clear_SALES();
+                    SetDeleteMode();
                 }
                 catch (Exception ex)
                 {
@@ -1118,9 +1117,6 @@ namespace Water
                         chkBxCalc != null && chkBxCalc.Checked ? 1 : 0 // isCalcFrmPayidAmt
                     );
                     AddPostFormSales();
-                  //  MessageBox.Show("تم حفظ بيانات الفاتورة بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                    // حفظ بيانات الشركاء من DataGridView
                     SavePartnersHoursFromGrid();
                 }
 
@@ -2927,6 +2923,11 @@ namespace Water
             btnSave.Enabled = false;
             btnView.Enabled = true;
             btnAdd.Enabled = true;
+            btnDelete.Enabled = false;
+            btnEdit.Enabled = false;
+        }
+          private void SetDeleteMode()
+        {                                   
             btnDelete.Enabled = false;
             btnEdit.Enabled = false;
         }

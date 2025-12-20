@@ -224,6 +224,7 @@ namespace Water
             // btnSave
             // 
             this.btnSave.BackColor = System.Drawing.Color.White;
+            this.btnSave.Enabled = false;
             this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSave.Image = global::Water.Properties.Resources.icons8_save_24_9;
             this.btnSave.Location = new System.Drawing.Point(537, 48);
@@ -237,6 +238,7 @@ namespace Water
             // btnDelete
             // 
             this.btnDelete.BackColor = System.Drawing.Color.White;
+            this.btnDelete.Enabled = false;
             this.btnDelete.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDelete.Image = global::Water.Properties.Resources.icons8_delete_24;
             this.btnDelete.Location = new System.Drawing.Point(461, 48);
@@ -251,6 +253,7 @@ namespace Water
             // btnEdit
             // 
             this.btnEdit.BackColor = System.Drawing.Color.White;
+            this.btnEdit.Enabled = false;
             this.btnEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnEdit.Image = global::Water.Properties.Resources.icons8_edit_24_5;
             this.btnEdit.Location = new System.Drawing.Point(385, 48);

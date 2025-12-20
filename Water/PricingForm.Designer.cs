@@ -100,7 +100,7 @@ namespace Water
             this.txtLevelName.Name = "txtLevelName";
             this.txtLevelName.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtLevelName.Size = new System.Drawing.Size(222, 26);
-            this.txtLevelName.TabIndex = 1;
+            this.txtLevelName.TabIndex = 2;
             // 
             // lblPricingDate
             // 
@@ -123,6 +123,7 @@ namespace Water
             this.dtpPricingDate.RightToLeftLayout = true;
             this.dtpPricingDate.Size = new System.Drawing.Size(263, 26);
             this.dtpPricingDate.TabIndex = 2;
+            this.dtpPricingDate.TabStop = false;
             // 
             // lblDieselHourPrice
             // 
@@ -286,7 +287,7 @@ namespace Water
             this.btnExit.Name = "btnExit";
             this.btnExit.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnExit.Size = new System.Drawing.Size(70, 40);
-            this.btnExit.TabIndex = 30;
+            this.btnExit.TabIndex = 9;
             this.toolTip1.SetToolTip(this.btnExit, "خروج");
             this.btnExit.UseVisualStyleBackColor = false;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
@@ -294,19 +295,21 @@ namespace Water
             // btnSave
             // 
             this.btnSave.BackColor = System.Drawing.Color.White;
+            this.btnSave.Enabled = false;
             this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSave.Image = global::Water.Properties.Resources.icons8_save_24_9;
             this.btnSave.Location = new System.Drawing.Point(561, 40);
             this.btnSave.Name = "btnSave";
             this.btnSave.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnSave.Size = new System.Drawing.Size(70, 40);
-            this.btnSave.TabIndex = 29;
+            this.btnSave.TabIndex = 7;
             this.toolTip1.SetToolTip(this.btnSave, "حفظ");
             this.btnSave.UseVisualStyleBackColor = false;
             // 
             // btnDelete
             // 
             this.btnDelete.BackColor = System.Drawing.Color.White;
+            this.btnDelete.Enabled = false;
             this.btnDelete.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDelete.Image = global::Water.Properties.Resources.icons8_delete_24;
             this.btnDelete.Location = new System.Drawing.Point(485, 40);
@@ -314,12 +317,14 @@ namespace Water
             this.btnDelete.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnDelete.Size = new System.Drawing.Size(70, 40);
             this.btnDelete.TabIndex = 28;
+            this.btnDelete.TabStop = false;
             this.toolTip1.SetToolTip(this.btnDelete, "حذف");
             this.btnDelete.UseVisualStyleBackColor = false;
             // 
             // btnEdit
             // 
             this.btnEdit.BackColor = System.Drawing.Color.White;
+            this.btnEdit.Enabled = false;
             this.btnEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnEdit.Image = global::Water.Properties.Resources.icons8_edit_24_5;
             this.btnEdit.Location = new System.Drawing.Point(409, 40);
@@ -327,6 +332,7 @@ namespace Water
             this.btnEdit.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnEdit.Size = new System.Drawing.Size(70, 40);
             this.btnEdit.TabIndex = 27;
+            this.btnEdit.TabStop = false;
             this.toolTip1.SetToolTip(this.btnEdit, "تعديل");
             this.btnEdit.UseVisualStyleBackColor = false;
             // 
@@ -339,7 +345,7 @@ namespace Water
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnAdd.Size = new System.Drawing.Size(70, 40);
-            this.btnAdd.TabIndex = 26;
+            this.btnAdd.TabIndex = 1;
             this.toolTip1.SetToolTip(this.btnAdd, "إضافة");
             this.btnAdd.UseVisualStyleBackColor = false;
             // 
@@ -353,6 +359,7 @@ namespace Water
             this.btnView.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnView.Size = new System.Drawing.Size(70, 40);
             this.btnView.TabIndex = 25;
+            this.btnView.TabStop = false;
             this.toolTip1.SetToolTip(this.btnView, "عرض");
             this.btnView.UseVisualStyleBackColor = false;
             // 
