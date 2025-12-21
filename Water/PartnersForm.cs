@@ -208,7 +208,6 @@ namespace Water
 
                 clear_PARTNER();
                 isEditMode = false;
-                txtPartnerCode.Enabled = true;
                 SetAfterSaveMode();
             }
             catch (Exception ee)
@@ -323,8 +322,31 @@ namespace Water
         }
 
         private void btnExit_Click(object sender, EventArgs e)
+        {            
+            if (btnSave.Enabled)
+            {
+                DialogResult result = MessageBox.Show($"هل تريد الرجوع وعدم حفظ البيانات ؟", "تأكيد الإلغاء", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    clear_PARTNER();
+                    isEditMode = false;
+                    
+                    SetNormalMode();
+                }
+                // إذا اختار "لا"، لا نفعل شيئاً ونبقى في الشاشة
+            }
+            else
+            {                
+                this.Close();
+            }
+        }
+          private void SetNormalMode()
         {
-            this.Close();
+            btnSave.Enabled = false;
+            btnView.Enabled = true;
+            btnAdd.Enabled = true;
+            btnEdit.Enabled = false;
+            btnDelete.Enabled = false;
         }
 
         private void SetViewMode()

@@ -38,14 +38,14 @@
             // 
             // txtBillNO
             // 
-            this.txtBillNO.Location = new System.Drawing.Point(194, 121);
+            this.txtBillNO.Location = new System.Drawing.Point(228, 118);
             this.txtBillNO.Name = "txtBillNO";
             this.txtBillNO.Size = new System.Drawing.Size(170, 24);
             this.txtBillNO.TabIndex = 0;
             // 
             // btnShow
             // 
-            this.btnShow.Location = new System.Drawing.Point(294, 9);
+            this.btnShow.Location = new System.Drawing.Point(228, 10);
             this.btnShow.Name = "btnShow";
             this.btnShow.Size = new System.Drawing.Size(70, 40);
             this.btnShow.TabIndex = 1;
@@ -59,7 +59,7 @@
             this.btnExit.BackColor = System.Drawing.Color.White;
             this.btnExit.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnExit.Image = global::Water.Properties.Resources.icons8_exit_24;
-            this.btnExit.Location = new System.Drawing.Point(217, 9);
+            this.btnExit.Location = new System.Drawing.Point(316, 10);
             this.btnExit.Name = "btnExit";
             this.btnExit.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnExit.Size = new System.Drawing.Size(70, 40);
@@ -71,7 +71,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(380, 124);
+            this.label1.Location = new System.Drawing.Point(124, 118);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(73, 17);
             this.label1.TabIndex = 26;
@@ -87,6 +87,8 @@
             this.Controls.Add(this.btnShow);
             this.Controls.Add(this.txtBillNO);
             this.Name = "salesBillDTLRPT";
+            this.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.RightToLeftLayout = true;
             this.Text = "salesBillDTLRPT";
             this.ResumeLayout(false);
             this.PerformLayout();

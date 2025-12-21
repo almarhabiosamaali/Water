@@ -30,9 +30,9 @@ namespace Water
         public Form1()
         {
             InitializeComponent();
-            InitializeMainTree();
-            this.Load += Form1_MdiChildActivate;
-            //this.Load += Form1_Load;
+            //InitializeMainTree();
+            //this.Load += Form1_MdiChildActivate;
+            this.Load += Form1_Load;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -149,7 +149,11 @@ namespace Water
             TreeNode partnerReportNode = new TreeNode("تقارير الشركاء");
             partnerReportNode.Tag = "PARTNER_REPORT";
             reportsNode.Nodes.Add(partnerReportNode);
-            
+
+            TreeNode partnerReportNode1 = new TreeNode("تقارير الشركاء2");
+            partnerReportNode1.Tag = "PARTNER_REPORT1";
+            reportsNode.Nodes.Add(partnerReportNode1);
+
             TreeNode customerReportNode = new TreeNode("تقارير العملاء");
             customerReportNode.Tag = "CUSTOMER_REPORT";
             reportsNode.Nodes.Add(customerReportNode);
@@ -371,6 +375,9 @@ namespace Water
                 // التقارير
                 case "PARTNER_REPORT":
                     formToOpen = new partnerMovmentRPT();
+                    break;
+                case "PARTNER_REPORT1":
+                    formToOpen = new partnerMovmentRPTDtl1();
                     break;
                 case "CUSTOMER_REPORT":
                     formToOpen = new customerMovementRPT();

@@ -71,6 +71,7 @@ namespace Water
             // 
             // txtPartnerCode
             // 
+            this.txtPartnerCode.Enabled = false;
             this.txtPartnerCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtPartnerCode.Location = new System.Drawing.Point(162, 105);
             this.txtPartnerCode.Name = "txtPartnerCode";

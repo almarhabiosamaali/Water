@@ -523,6 +523,15 @@ namespace Water
                         viewForm.Close();
                     }
                 };
+                dgv.KeyDown += (s, args) =>
+                {
+                    if (args.KeyCode == Keys.Enter && dgv.CurrentRow != null && dgv.CurrentRow.Index >= 0)
+                    {
+                        DataRow row = dt.Rows[dgv.CurrentRow.Index];
+                        LoadAccountData(row);
+                        viewForm.Close();
+                    }
+                };
 
                 viewForm.Controls.Add(dgv);
                 viewForm.ShowDialog();
@@ -558,7 +567,22 @@ namespace Water
 
         private void btnExit_Click(object sender, EventArgs e)
         {
-            this.Close();
+         if (btnSave.Enabled)
+            {
+                DialogResult result = MessageBox.Show($"هل تريد الرجوع وعدم حفظ البيانات ؟", "تأكيد الإلغاء", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    clear_EXPENSE();
+                    isEditMode = false;
+                    
+                    SetNormalMode();
+                }
+                // إذا اختار "لا"، لا نفعل شيئاً ونبقى في الشاشة
+            }
+            else
+            {                
+                this.Close();
+            }
         }
         
 
@@ -703,6 +727,14 @@ namespace Water
                 MessageBox.Show("حدث خطأ أثناء التحقق من رقم الحساب: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 txtAccountId.Focus();
             }
+        }
+        private void SetNormalMode()
+        {
+            btnSave.Enabled = false;
+            btnView.Enabled = true;
+            btnAdd.Enabled = true;
+            btnEdit.Enabled = false;
+            btnDelete.Enabled = false;
         }
 
         private void SetViewMode()

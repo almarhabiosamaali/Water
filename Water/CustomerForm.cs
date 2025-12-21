@@ -246,7 +246,31 @@ namespace Water
 
         private void btnExit_Click(object sender, EventArgs e)
         {
-            this.Close();
+           
+             if (btnSave.Enabled)
+            {
+                DialogResult result = MessageBox.Show($"هل تريد الرجوع وعدم حفظ البيانات ؟", "تأكيد الإلغاء", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    clear_CUSTOMER();
+                    isEditMode = false;
+                    
+                    SetNormalMode();
+                }
+                // إذا اختار "لا"، لا نفعل شيئاً ونبقى في الشاشة
+            }
+            else
+            {                
+                this.Close();
+            }
+        }
+          private void SetNormalMode()
+        {
+            btnSave.Enabled = false;
+            btnView.Enabled = true;
+            btnAdd.Enabled = true;
+            btnEdit.Enabled = false;
+            btnDelete.Enabled = false;
         }
 
          private void SetViewMode()

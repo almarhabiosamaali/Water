@@ -110,6 +110,7 @@ namespace Water
             this.txtPeriodId.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtPeriodId.Size = new System.Drawing.Size(72, 26);
             this.txtPeriodId.TabIndex = 1;
+            this.txtPeriodId.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPeriodId_KeyDown);
             this.txtPeriodId.Leave += new System.EventHandler(this.txtPeriodId_Leave);
             // 
             // lblDate

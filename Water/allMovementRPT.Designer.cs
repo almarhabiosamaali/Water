@@ -42,16 +42,16 @@
             // 
             // txtCustNo
             // 
-            this.txtCustNo.Location = new System.Drawing.Point(310, 68);
+            this.txtCustNo.Location = new System.Drawing.Point(159, 93);
             this.txtCustNo.Name = "txtCustNo";
             this.txtCustNo.Size = new System.Drawing.Size(142, 24);
             this.txtCustNo.TabIndex = 1;
             // 
             // btnShow
             // 
-            this.btnShow.Location = new System.Drawing.Point(226, 7);
+            this.btnShow.Location = new System.Drawing.Point(282, 6);
             this.btnShow.Name = "btnShow";
-            this.btnShow.Size = new System.Drawing.Size(87, 28);
+            this.btnShow.Size = new System.Drawing.Size(70, 40);
             this.btnShow.TabIndex = 1;
             this.btnShow.Text = "طباعة ";
             this.btnShow.UseVisualStyleBackColor = true;
@@ -59,7 +59,7 @@
             // 
             // txtPeriodId
             // 
-            this.txtPeriodId.Location = new System.Drawing.Point(12, 68);
+            this.txtPeriodId.Location = new System.Drawing.Point(425, 100);
             this.txtPeriodId.Name = "txtPeriodId";
             this.txtPeriodId.Size = new System.Drawing.Size(142, 24);
             this.txtPeriodId.TabIndex = 2;
@@ -67,7 +67,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(469, 68);
+            this.label1.Location = new System.Drawing.Point(12, 96);
             this.label1.Name = "label1";
             this.label1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.label1.Size = new System.Drawing.Size(132, 17);
@@ -77,7 +77,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(160, 68);
+            this.label2.Location = new System.Drawing.Point(345, 100);
             this.label2.Name = "label2";
             this.label2.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.label2.Size = new System.Drawing.Size(74, 17);
@@ -87,8 +87,9 @@
             // dtpFromDate
             // 
             this.dtpFromDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpFromDate.Location = new System.Drawing.Point(310, 137);
+            this.dtpFromDate.Location = new System.Drawing.Point(159, 163);
             this.dtpFromDate.Name = "dtpFromDate";
+            this.dtpFromDate.RightToLeftLayout = true;
             this.dtpFromDate.Size = new System.Drawing.Size(142, 24);
             this.dtpFromDate.TabIndex = 3;
             this.dtpFromDate.Value = new System.DateTime(2025, 1, 1, 0, 0, 0, 0);
@@ -96,15 +97,16 @@
             // dtpToDate
             // 
             this.dtpToDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpToDate.Location = new System.Drawing.Point(12, 137);
+            this.dtpToDate.Location = new System.Drawing.Point(425, 157);
             this.dtpToDate.Name = "dtpToDate";
+            this.dtpToDate.RightToLeftLayout = true;
             this.dtpToDate.Size = new System.Drawing.Size(142, 24);
             this.dtpToDate.TabIndex = 4;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(160, 140);
+            this.label3.Location = new System.Drawing.Point(381, 163);
             this.label3.Name = "label3";
             this.label3.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.label3.Size = new System.Drawing.Size(38, 17);
@@ -114,7 +116,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(469, 137);
+            this.label4.Location = new System.Drawing.Point(70, 169);
             this.label4.Name = "label4";
             this.label4.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.label4.Size = new System.Drawing.Size(74, 17);
@@ -126,7 +128,7 @@
             this.btnExit.BackColor = System.Drawing.Color.White;
             this.btnExit.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnExit.Image = global::Water.Properties.Resources.icons8_exit_24;
-            this.btnExit.Location = new System.Drawing.Point(137, 6);
+            this.btnExit.Location = new System.Drawing.Point(358, 6);
             this.btnExit.Name = "btnExit";
             this.btnExit.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnExit.Size = new System.Drawing.Size(70, 40);
@@ -138,7 +140,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(608, 253);
+            this.ClientSize = new System.Drawing.Size(807, 422);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label4);
@@ -151,6 +153,8 @@
             this.Controls.Add(this.txtCustNo);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "allMovementRPT";
+            this.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.RightToLeftLayout = true;
             this.Text = "allMovementRPT";
             this.ResumeLayout(false);
             this.PerformLayout();

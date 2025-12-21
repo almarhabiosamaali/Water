@@ -118,11 +118,20 @@ namespace Water
                 dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
                 dgv.RightToLeft = RightToLeft.Yes;
 
-                dgv.CellClick += (s, args) =>
+                dgv.CellDoubleClick += (s, args) =>
                 {
                     if (args.RowIndex >= 0)
                     {
                         DataRow row = dt.Rows[args.RowIndex];
+                        LoadDownTimeDataToForm(row);
+                        viewForm.Close();
+                    }
+                };
+                 dgv.KeyDown += (s, args) =>
+                {
+                    if (args.KeyCode == Keys.Enter && dgv.CurrentRow != null && dgv.CurrentRow.Index >= 0)
+                    {
+                        DataRow row = dt.Rows[dgv.CurrentRow.Index];
                         LoadDownTimeDataToForm(row);
                         viewForm.Close();
                     }
@@ -469,7 +478,7 @@ namespace Water
                      "توقف", 
                      txtPeriodId.Text.Trim(),
                       "3",
-                       "100011",
+                       "30001",
                         "حساب التوقف",
                            string.IsNullOrWhiteSpace(txtAmount.Text)
                                 ? 0: (int)Convert.ToDouble(txtAmount.Text), 
@@ -1055,7 +1064,31 @@ namespace Water
 
         private void btnExit_Click(object sender, EventArgs e)
         {
-            this.Close();
+          
+             if (btnSave.Enabled)
+            {
+                DialogResult result = MessageBox.Show($"هل تريد الرجوع وعدم حفظ البيانات ؟", "تأكيد الإلغاء", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    clear_PARTNER_COST();
+                    isEditMode = false;
+                    
+                    SetNormalMode();
+                }
+                // إذا اختار "لا"، لا نفعل شيئاً ونبقى في الشاشة
+            }
+            else
+            {                
+                this.Close();
+            }
+        }
+          private void SetNormalMode()
+        {
+            btnSave.Enabled = false;
+            btnView.Enabled = true;
+            btnAdd.Enabled = true;
+            btnEdit.Enabled = false;
+            btnDelete.Enabled = false;
         }
 
         private void txtPeriodId_Leave(object sender, EventArgs e)

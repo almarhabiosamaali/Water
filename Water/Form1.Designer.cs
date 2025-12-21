@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.pnlHeader = new System.Windows.Forms.Panel();
+            this.btnExit = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.lblUser = new System.Windows.Forms.Label();
             this.lblTitle = new System.Windows.Forms.Label();
@@ -56,7 +57,6 @@
             this.lblPartnersCount = new System.Windows.Forms.Label();
             this.lblPartnersCard = new System.Windows.Forms.Label();
             this.pnlLoginOverlay = new System.Windows.Forms.Panel();
-            this.btnExit = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.pnlHeader.SuspendLayout();
             this.pnlSidebar.SuspendLayout();
@@ -84,6 +84,17 @@
             this.pnlHeader.Name = "pnlHeader";
             this.pnlHeader.Size = new System.Drawing.Size(1242, 35);
             this.pnlHeader.TabIndex = 0;
+            // 
+            // btnExit
+            // 
+            this.btnExit.Image = global::Water.Properties.Resources.icons8_exit_24;
+            this.btnExit.Location = new System.Drawing.Point(169, 0);
+            this.btnExit.Name = "btnExit";
+            this.btnExit.Size = new System.Drawing.Size(47, 35);
+            this.btnExit.TabIndex = 3;
+            this.toolTip1.SetToolTip(this.btnExit, "خروج");
+            this.btnExit.UseVisualStyleBackColor = true;
+            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
             // label1
             // 
@@ -386,22 +397,11 @@
             // 
             this.pnlLoginOverlay.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.pnlLoginOverlay.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlLoginOverlay.Location = new System.Drawing.Point(250, 35);
+            this.pnlLoginOverlay.Location = new System.Drawing.Point(0, 35);
             this.pnlLoginOverlay.Name = "pnlLoginOverlay";
-            this.pnlLoginOverlay.Size = new System.Drawing.Size(992, 746);
+            this.pnlLoginOverlay.Size = new System.Drawing.Size(1242, 746);
             this.pnlLoginOverlay.TabIndex = 5;
             this.pnlLoginOverlay.Visible = false;
-            // 
-            // btnExit
-            // 
-            this.btnExit.Image = global::Water.Properties.Resources.icons8_exit_24;
-            this.btnExit.Location = new System.Drawing.Point(169, 0);
-            this.btnExit.Name = "btnExit";
-            this.btnExit.Size = new System.Drawing.Size(47, 35);
-            this.btnExit.TabIndex = 3;
-            this.toolTip1.SetToolTip(this.btnExit, "خروج");
-            this.btnExit.UseVisualStyleBackColor = true;
-            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
             // Form1
             // 
@@ -409,8 +409,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1242, 781);
             this.Controls.Add(this.pnlMainContent);
-            this.Controls.Add(this.pnlLoginOverlay);
             this.Controls.Add(this.pnlSidebar);
+            this.Controls.Add(this.pnlLoginOverlay);
             this.Controls.Add(this.pnlHeader);
             this.IsMdiContainer = true;
             this.Name = "Form1";

@@ -1,6 +1,6 @@
 ﻿namespace Water
 {
-    partial class partnerMovmentRPT
+    partial class partnerMovmentRPTDtl1
     {
         /// <summary>
         /// Required designer variable.
@@ -168,10 +168,10 @@
             this.Controls.Add(this.anly);
             this.Controls.Add(this.btnShowRPT);
             this.Controls.Add(this.txtPartnerID);
-            this.Name = "partnerMovmentRPT";
+            this.Name = "partnerMovmentRPTDtl1";
             this.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.RightToLeftLayout = true;
-            this.Text = "partnerMovmentRPT";
+            this.Text = "partnerMovmentRPTDtl1";
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -318,6 +318,15 @@ namespace Water
                         viewForm.Close();
                     }
                 };
+                 dgv.KeyDown += (s, args) =>
+                {
+                    if (args.KeyCode == Keys.Enter && dgv.CurrentRow != null && dgv.CurrentRow.Index >= 0)
+                    {
+                        DataRow row = dt.Rows[dgv.CurrentRow.Index];
+                        LoadPartnerDataToGrid(row);
+                        viewForm.Close();
+                    }
+                };
 
                 viewForm.Controls.Add(dgv);
                 viewForm.ShowDialog();
@@ -547,9 +556,20 @@ namespace Water
                         viewForm.Close();
                     }
                 };
+                 dgv.KeyDown += (s, args) =>
+                {
+                    if (args.KeyCode == Keys.Enter && dgv.CurrentRow != null && dgv.CurrentRow.Index >= 0)
+                    {
+                        DataRow row = dt.Rows[dgv.CurrentRow.Index];
+                        isLoadingCustomerFromList = true; // تعطيل التحقق التلقائي
+                        LoadCustomerDataToBill(row);
+                        isLoadingCustomerFromList = false; // إعادة تفعيل التحقق
+                        viewForm.Close();
+                    }
+                };
 
                 // إضافة حدث النقر مرة واحدة (بدلاً من النقر المزدوج فقط)
-                dgv.CellClick += (s, args) =>
+               /*  dgv.CellClick += (s, args) =>
                 {
                     if (args.RowIndex >= 0)
                     {
@@ -559,7 +579,7 @@ namespace Water
                         isLoadingCustomerFromList = false; // إعادة تفعيل التحقق
                         viewForm.Close();
                     }
-                };
+                }; */
 
                 viewForm.Controls.Add(dgv);
                 viewForm.ShowDialog();
@@ -639,6 +659,15 @@ namespace Water
                     if (args.RowIndex >= 0)
                     {
                         DataRow row = dt.Rows[args.RowIndex];
+                        LoadPriceingDataToBill(row);
+                        viewForm.Close();
+                    }
+                };
+                 dgv.KeyDown += (s, args) =>
+                {
+                    if (args.KeyCode == Keys.Enter && dgv.CurrentRow != null && dgv.CurrentRow.Index >= 0)
+                    {
+                        DataRow row = dt.Rows[dgv.CurrentRow.Index];
                         LoadPriceingDataToBill(row);
                         viewForm.Close();
                     }
@@ -2888,7 +2917,31 @@ namespace Water
 
         private void btnExit_Click(object sender, EventArgs e)
         {
-            this.Close();
+           
+             if (btnSave.Enabled)
+            {
+                DialogResult result = MessageBox.Show($"هل تريد الرجوع وعدم حفظ البيانات ؟", "تأكيد الإلغاء", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    clear_SALES();
+                    isEditMode = false;
+                    
+                    SetNormalMode();
+                }
+                // إذا اختار "لا"، لا نفعل شيئاً ونبقى في الشاشة
+            }
+            else
+            {                
+                this.Close();
+            }
+        }
+          private void SetNormalMode()
+        {
+            btnSave.Enabled = false;
+            btnView.Enabled = true;
+            btnAdd.Enabled = true;
+            btnEdit.Enabled = false;
+            btnDelete.Enabled = false;
         }
 
         private void SetViewMode()
