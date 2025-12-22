@@ -104,6 +104,7 @@ namespace Water
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnView = new System.Windows.Forms.Button();
             this.btnExit = new System.Windows.Forms.Button();
+            this.chkManwalTime = new System.Windows.Forms.CheckBox();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tabPage1.SuspendLayout();
@@ -222,6 +223,7 @@ namespace Water
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.chkManwalTime);
             this.tabPage1.Controls.Add(this.chkBxCalc);
             this.tabPage1.Controls.Add(this.btnDstAmount);
             this.tabPage1.Controls.Add(this.label2);
@@ -642,6 +644,7 @@ namespace Water
             this.txtHours.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtHours.Location = new System.Drawing.Point(957, 180);
             this.txtHours.Name = "txtHours";
+            this.txtHours.ReadOnly = true;
             this.txtHours.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtHours.Size = new System.Drawing.Size(86, 26);
             this.txtHours.TabIndex = 77;
@@ -963,6 +966,17 @@ namespace Water
             this.btnExit.UseVisualStyleBackColor = false;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
+            // chkManwalTime
+            // 
+            this.chkManwalTime.AutoSize = true;
+            this.chkManwalTime.Location = new System.Drawing.Point(67, 42);
+            this.chkManwalTime.Name = "chkManwalTime";
+            this.chkManwalTime.Size = new System.Drawing.Size(125, 21);
+            this.chkManwalTime.TabIndex = 87;
+            this.chkManwalTime.Text = "ادخال الساعات يدوي";
+            this.chkManwalTime.UseVisualStyleBackColor = true;
+            this.chkManwalTime.CheckedChanged += new System.EventHandler(this.chkManwalTime_CheckedChanged);
+            // 
             // SalesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1077,6 +1091,7 @@ namespace Water
         private System.Windows.Forms.CheckBox chkBxCalc;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.Button btnExit;
+        private System.Windows.Forms.CheckBox chkManwalTime;
     }
 }
 

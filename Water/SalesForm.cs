@@ -2985,6 +2985,19 @@ namespace Water
             btnEdit.Enabled = false;
         }
 
+        private void chkManwalTime_CheckedChanged(object sender, EventArgs e)
+        {
+            if(chkManwalTime.Checked)
+            {
+                txtHours.ReadOnly = false;
+                txtMinutes.ReadOnly = false;
+            }
+            else
+            {
+                txtHours.ReadOnly = true;
+                txtMinutes.ReadOnly = true;
+            }
+        }
     }
 }
 

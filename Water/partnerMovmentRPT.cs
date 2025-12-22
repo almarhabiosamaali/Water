@@ -99,10 +99,7 @@ namespace Water
                 {
                     p = p + " and partner_no = '" + txtPartnerID.Text + "'";
                 }
-                if (!string.IsNullOrEmpty(txtPeriodId.Text) )
-                {
-                    p += " and m.period_id = '" + txtPeriodId.Text + "'";
-                }
+                
 
                 if (dtpFromDate.Value != null && dtpToDate.Value != null)
                 {
