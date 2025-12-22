@@ -204,6 +204,12 @@
       <DependentUpon>partnerMovements.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="RPT\partnerTotallHandM.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>partnerTotallHandM.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="RPT\reportCaller.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -337,6 +343,10 @@
     <EmbeddedResource Include="RPT\partnerMovements.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>partnerMovements.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RPT\partnerTotallHandM.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>partnerTotallHandM.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="RPT\reportCaller.resx">
       <DependentUpon>reportCaller.cs</DependentUpon>
