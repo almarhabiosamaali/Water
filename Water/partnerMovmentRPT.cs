@@ -40,7 +40,7 @@ namespace Water
                 DataTable dTt = new DataTable();
                 Clas.partnersReport pTp = new Clas.partnersReport();
                 dTt = pTp.PRINT_ALL_PARTNER_MOVEMENT(p_where().ToString());
-                RPT.partnerMovementDTL1 myRept = new RPT.partnerMovementDTL1();
+                RPT.partnerMovementDTL myRept = new RPT.partnerMovementDTL();
                 myRept.DataSourceConnections[0].IntegratedSecurity = false;
                 myRept.DataSourceConnections[0].SetConnection(Properties.Settings.Default.Server, Properties.Settings.Default.Database, Properties.Settings.Default.ID, Properties.Settings.Default.Password);
                 myRept.SetDataSource(dTt);
