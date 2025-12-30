@@ -10,12 +10,12 @@ namespace Water.Clas
 {
     class period
     {
-        public void ADD_PERIOD(string id, DateTime start_date, DateTime end_date, int? base_days, 
-            string downtime_hours, int? extended_days, int? total_hours)
+        public void ADD_PERIOD(string id,DateTime start_date, DateTime end_date, int? base_days, 
+            string downtime_hours, int? extended_days, int? total_hours, string statment)
         {
             Clas.DataAccessLayer DAL = new Clas.DataAccessLayer();
             DAL.Open();
-            SqlParameter[] param = new SqlParameter[7];
+            SqlParameter[] param = new SqlParameter[8];
             
             param[0] = new SqlParameter("@id", SqlDbType.VarChar, 50);
             param[0].Value = id;
@@ -37,6 +37,9 @@ namespace Water.Clas
 
             param[6] = new SqlParameter("@total_hours", SqlDbType.Int);
             param[6].Value = (object)total_hours ?? DBNull.Value;
+
+            param[7] = new SqlParameter("@statment", SqlDbType.VarChar, 50);
+            param[7].Value = statment;
 
             DAL.ExecuteCommand("period_insert", param);
             DAL.Close();
@@ -66,11 +69,11 @@ namespace Water.Clas
         }
 
         public void UPDATE_PERIOD(string id, DateTime start_date, DateTime end_date, int? base_days, 
-            string downtime_hours, int? extended_days, int? total_hours)
+            string downtime_hours, int? extended_days, int? total_hours, string statment)
         {
             Clas.DataAccessLayer DAL = new Clas.DataAccessLayer();
             DAL.Open();
-            SqlParameter[] param = new SqlParameter[7];
+            SqlParameter[] param = new SqlParameter[8];
             
             param[0] = new SqlParameter("@id", SqlDbType.VarChar, 50);
             param[0].Value = id;
@@ -92,6 +95,9 @@ namespace Water.Clas
 
             param[6] = new SqlParameter("@total_hours", SqlDbType.Int);
             param[6].Value = (object)total_hours ?? DBNull.Value;
+
+            param[7] = new SqlParameter("@statment", SqlDbType.VarChar, 50);
+            param[7].Value = statment;
 
             DAL.ExecuteCommand("period_update", param);
             DAL.Close();

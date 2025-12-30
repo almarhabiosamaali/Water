@@ -14,7 +14,7 @@ namespace Water
     {
         private bool isEditMode = false;
         Clas.customer cus = new Clas.customer();
-
+        Clas.GridBtnViewHelper gridBtnViewHelper = new Clas.GridBtnViewHelper();
         public CustomerForm()
         {
             InitializeComponent();
@@ -32,49 +32,12 @@ namespace Water
 
         private void btnView_Click(object sender, EventArgs e)
         {
-            try
+            DataTable dt = cus.GET_ALL_CUSTOMERS();
+            DataRow row = gridBtnViewHelper.Show(dt, "عرض العملاء");
+            if (row != null)
             {
-                DataTable dt = cus.GET_ALL_CUSTOMERS();
-                
-                if (dt.Rows.Count == 0)
-                {
-                    MessageBox.Show("لا توجد بيانات للعرض", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
-                }
-
-                Form viewForm = new Form();
-                viewForm.Text = "عرض العملاء";
-                viewForm.RightToLeft = RightToLeft.Yes;
-                viewForm.RightToLeftLayout = true;
-                viewForm.Size = new Size(900, 500);
-                viewForm.StartPosition = FormStartPosition.CenterScreen;
-
-                DataGridView dgv = new DataGridView();
-                dgv.Dock = DockStyle.Fill;
-                dgv.DataSource = dt;
-                dgv.ReadOnly = true;
-                dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-                dgv.MultiSelect = false;
-                dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-                dgv.RightToLeft = RightToLeft.Yes;
-
-                dgv.CellDoubleClick += (s, args) =>
-                {
-                    if (args.RowIndex >= 0)
-                    {
-                        DataRow row = dt.Rows[args.RowIndex];
-                        LoadCustomerData(row);
-                        viewForm.Close();
-                    }
-                };
-
-                viewForm.Controls.Add(dgv);
-                viewForm.ShowDialog();
+                LoadCustomerData(row);
                 SetViewMode();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("حدث خطأ أثناء عرض البيانات: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -84,11 +47,18 @@ namespace Water
             clear_CUSTOMER();
             try
             {
-                txtCustomerCode.Text = cus.GET_NEXT_CUSTOMER_CODE();
+                String id= cus.GET_NEXT_CUSTOMER_CODE();
+                if (id == "1")
+                {
+                    txtCustomerCode.Text = "20001";
+                }
+                else{
+                txtCustomerCode.Text = id;
+                }
             }
             catch
             {
-                txtCustomerCode.Text = "1";
+                MessageBox.Show("catch error");
             }
             SetAddMode();           
         }

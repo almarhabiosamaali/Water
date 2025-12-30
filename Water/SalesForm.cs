@@ -24,7 +24,7 @@ namespace Water
         Clas.pricing pricing = new Clas.pricing();
         Clas.period period = new Clas.period();
         private bool isLoadingPeriodFromList = false; // للتحكم في عدم فتح القائمة تلقائياً عند تحميل البيانات
-
+        Clas.GridBtnViewHelper gridBtnViewHelper = new Clas.GridBtnViewHelper();
         public SalesForm()
         {
             InitializeComponent();
@@ -352,7 +352,7 @@ namespace Water
                     e.Handled = true;
                 }
             }
-      
+
 
         private void LoadPartnerDataToGrid(DataRow partnerRow)
         {
@@ -802,146 +802,14 @@ namespace Water
 
 
         private void btnView_Click(object sender, EventArgs e)
-        {
-            try
+        {          
+
+            DataTable dt = sal.GET_ALL_SALES();
+            DataRow row = gridBtnViewHelper.Show(dt, "عرض المبيعات");
+            if (row != null)
             {
-            
-                DataTable dt = sal.GET_ALL_SALES();
-
-                if (dt.Rows.Count == 0)
-                {
-                    MessageBox.Show("لا توجد بيانات للعرض", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
-                }
-
-                Form viewForm = new Form();
-                viewForm.Text = "عرض المبيعات";
-                viewForm.RightToLeft = RightToLeft.Yes;
-                viewForm.RightToLeftLayout = true;
-                viewForm.Size = new Size(1400, 700);
-                viewForm.StartPosition = FormStartPosition.CenterScreen;
-
-                // إنشاء Panel للحاوية العلوية (البحث)
-                Panel searchPanel = new Panel();
-                searchPanel.Dock = DockStyle.Top;
-                searchPanel.Height = 50;
-                searchPanel.Padding = new Padding(10);
-
-                // Label للبحث
-                Label lblSearch = new Label();
-                lblSearch.Text = "بحث:";
-                lblSearch.AutoSize = true;
-                lblSearch.Location = new Point(10, 15);
-                lblSearch.RightToLeft = RightToLeft.Yes;
-
-                // TextBox للبحث
-                TextBox txtSearch = new TextBox();
-                txtSearch.Location = new Point(60, 12);
-                txtSearch.Width = 40;
-                txtSearch.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-                txtSearch.RightToLeft = RightToLeft.Yes;
-
-                // إضافة Label و TextBox إلى Panel
-                searchPanel.Controls.Add(lblSearch);
-                searchPanel.Controls.Add(txtSearch);
-
-                // إنشاء DataView للبحث
-                DataView dv = new DataView(dt);
-
-                // DataGridView
-                DataGridView dgv = new DataGridView();
-                dgv.Dock = DockStyle.Fill;
-                dgv.DataSource = dv;
-                dgv.ReadOnly = true;
-                dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-                dgv.MultiSelect = false;
-                dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-                dgv.RightToLeft = RightToLeft.Yes;
-
-                // حدث البحث عند الكتابة
-                txtSearch.TextChanged += (s, args) =>
-                {
-                    try
-                    {
-                        string searchText = txtSearch.Text.Trim();
-                        if (string.IsNullOrWhiteSpace(searchText))
-                        {
-                            dv.RowFilter = "";
-                            return;
-                        }
-
-                        // بناء فلتر البحث في جميع الأعمدة
-                        List<string> filters = new List<string>();
-                        string escapedSearchText = searchText.Replace("'", "''").Replace("[", "[[]").Replace("%", "[%]").Replace("*", "[*]");
-
-                        foreach (DataColumn column in dt.Columns)
-                        {
-                            try
-                            {
-                                if (column.DataType == typeof(string))
-                                {
-                                    filters.Add($"[{column.ColumnName}] LIKE '%{escapedSearchText}%'");
-                                }
-                                else if (column.DataType == typeof(DateTime))
-                                {
-                                    // البحث في التواريخ كنص
-                                    filters.Add($"CONVERT([{column.ColumnName}], System.String) LIKE '%{escapedSearchText}%'");
-                                }
-                                else if (column.DataType == typeof(int) || column.DataType == typeof(double) || 
-                                         column.DataType == typeof(float) || column.DataType == typeof(decimal))
-                                {
-                                    // البحث في الأرقام
-                                    if (double.TryParse(searchText, out double numValue))
-                                    {
-                                        filters.Add($"[{column.ColumnName}] = {numValue}");
-                                    }
-                                }
-                            }
-                            catch
-                            {
-                                // تجاهل الأعمدة التي تسبب مشاكل
-                                continue;
-                            }
-                        }
-                        
-                        if (filters.Count > 0)
-                        {
-                            dv.RowFilter = string.Join(" OR ", filters);
-                        }
-                        else
-                        {
-                            dv.RowFilter = "";
-                        }
-                    }
-                    catch
-                    {
-                        // في حالة خطأ في الفلتر، نعرض جميع البيانات
-                        dv.RowFilter = "";
-                    }
-                };
-
-                dgv.CellDoubleClick += (s, args) =>
-                {
-                    if (args.RowIndex >= 0 && args.RowIndex < dv.Count)
-                    {
-                        DataRowView rowView = dv[args.RowIndex];
-                        LoadSalesData(rowView.Row);
-                        viewForm.Close();
-                    }
-                };
-
-                // إضافة Panel و DataGridView إلى النموذج
-                viewForm.Controls.Add(dgv);
-                viewForm.Controls.Add(searchPanel);
-                viewForm.ShowDialog();
-                
+                LoadSalesData(row);
                 SetViewMode();
-               
-                
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("حدث خطأ أثناء عرض البيانات: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -958,9 +826,6 @@ namespace Water
                 txtSalesId.Text = "1";
             }          
             SetAddMode();
-            txtCustomerId.Enabled = true;
-            txtPeriodId.Enabled = true;
-            txtSalesId.Focus();
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
@@ -1012,6 +877,7 @@ namespace Water
                     sal.DELETE_SALES(txtSalesId.Text.Trim());
                     sal.DELETE_POST("delete", "1", txtSalesId.Text.Trim());
                     sal.DELETE_POST("delete", "4", txtSalesId.Text.Trim());
+                    DeletePartnersHoursFromDatabase(txtSalesId.Text.Trim());
                     MessageBox.Show("تم حذف الفاتورة بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     clear_SALES();
                     SetDeleteMode();
@@ -1441,6 +1307,15 @@ namespace Water
             {
                 txtCustomerName.Clear();
             }
+            if(chkBxCalc != null)
+            {
+                chkBxCalc.Checked = false;
+            }
+            if(chkManwalTime != null)
+            {
+                chkManwalTime.Checked = false;
+            }
+
             txtPeriodId.Clear();
             if (txtPeriodStartDate != null)
                 txtPeriodStartDate.Clear();
@@ -2942,6 +2817,14 @@ namespace Water
             btnAdd.Enabled = true;
             btnEdit.Enabled = false;
             btnDelete.Enabled = false;
+
+            txtCustomerId.ReadOnly = true;
+            txtPeriodId.ReadOnly = true;
+            txtPriceLevel.ReadOnly = true;
+            txtNote.ReadOnly = true;
+            txtPaidAmount.ReadOnly = true;
+            chkBxCalc.Enabled = false;
+            chkManwalTime.Enabled = false;
         }
 
         private void SetViewMode()
@@ -2951,6 +2834,14 @@ namespace Water
             btnEdit.Enabled = true;
             btnDelete.Enabled = true;
             btnSave.Enabled = false;
+
+            txtCustomerId.ReadOnly = true;
+            txtPeriodId.ReadOnly = true;
+            txtPriceLevel.ReadOnly = true;
+            txtNote.ReadOnly = true;
+            txtPaidAmount.ReadOnly = true;
+             chkBxCalc.Enabled = false;
+            chkManwalTime.Enabled = false;
         }
 
         private void SetAddMode()
@@ -2960,6 +2851,16 @@ namespace Water
             btnEdit.Enabled = false;
             btnDelete.Enabled = false;
             btnAdd.Enabled = false;
+
+            txtCustomerId.ReadOnly = false;
+            txtPeriodId.ReadOnly = false;
+            txtPriceLevel.ReadOnly = false;
+            txtNote.ReadOnly = false;
+            txtPaidAmount.ReadOnly = false;
+            txtSalesId.Focus();
+            cmbBillType.SelectedIndex = 0;
+             chkBxCalc.Enabled = true;
+            chkManwalTime.Enabled = true;
         }
 
         private void SetEditMode()
@@ -2969,20 +2870,23 @@ namespace Water
             btnView.Enabled = false;
             btnDelete.Enabled = false;
             btnEdit.Enabled = false;
+
+            txtCustomerId.ReadOnly = true;
+            txtPeriodId.ReadOnly = false;
+            txtPriceLevel.ReadOnly = false;
+            txtNote.ReadOnly = false;
+            txtPaidAmount.ReadOnly = false;
+             chkBxCalc.Enabled = true;
+            chkManwalTime.Enabled = true;
         }
 
         private void SetAfterSaveMode()
-        {
-            btnSave.Enabled = false;
-            btnView.Enabled = true;
-            btnAdd.Enabled = true;
-            btnDelete.Enabled = false;
-            btnEdit.Enabled = false;
+        {          
+            SetNormalMode();
         }
           private void SetDeleteMode()
-        {                                   
-            btnDelete.Enabled = false;
-            btnEdit.Enabled = false;
+        {    
+               SetNormalMode();
         }
 
         private void chkManwalTime_CheckedChanged(object sender, EventArgs e)

@@ -14,6 +14,7 @@ namespace Water
     {
         private bool isEditMode = false;
         Clas.partners partner = new Clas.partners();
+        Clas.GridBtnViewHelper gridBtnViewHelper = new Clas.GridBtnViewHelper();
 
         public PartnersForm()
         {
@@ -26,62 +27,16 @@ namespace Water
         }
 
         private void btnView_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                DataTable dt = partner.GET_ALL_PARTNERS();
-                
-                if (dt.Rows.Count == 0)
+        {  
+            DataTable dt = partner.GET_ALL_PARTNERS();
+
+                DataRow row = gridBtnViewHelper.Show(dt, "عرض الشركاء");
+
+                if (row != null)
                 {
-                    MessageBox.Show("لا توجد بيانات للعرض", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
+                    LoadPartnerData(row);
+                    SetViewMode();
                 }
-
-                Form viewForm = new Form();
-                viewForm.Text = "عرض الشركاء";
-                viewForm.RightToLeft = RightToLeft.Yes;
-                viewForm.RightToLeftLayout = true;
-                viewForm.Size = new Size(1200, 600);
-                viewForm.StartPosition = FormStartPosition.CenterScreen;
-
-                DataGridView dgv = new DataGridView();
-                dgv.Dock = DockStyle.Fill;
-                dgv.DataSource = dt;
-                dgv.ReadOnly = true;
-                dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-                dgv.MultiSelect = false;
-                dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-                dgv.RightToLeft = RightToLeft.Yes;
-
-                dgv.CellDoubleClick += (s, args) =>
-                {
-                    if (args.RowIndex >= 0)
-                    {
-                        DataRow row = dt.Rows[args.RowIndex];
-                        LoadPartnerData(row);
-                        viewForm.Close();
-                    }
-                };
-
-                viewForm.Controls.Add(dgv);
-                viewForm.ShowDialog();
-                SetViewMode();
-                /*txtPartnerName.Enabled = false;
-                txtAllocatedHours.Enabled = false;
-                txtMinutes.Enabled = false;
-                txtAvalibleHours.Enabled = false;
-                txtAvalibleMinutes.Enabled = false;
-                txtPhone.Enabled = false;
-                txtAddress.Enabled = false;
-                txtNotes.Enabled = false;
-                dtpDate.Enabled = false;
-                btnSave.Enabled = false;*/
-             
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("حدث خطأ أثناء عرض البيانات: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -90,11 +45,18 @@ namespace Water
             clear_PARTNER();
             try
             {
-                txtPartnerCode.Text = partner.GET_NEXT_PARTNER_CODE();
+                String id= partner.GET_NEXT_PARTNER_CODE();
+                if (id == "1")
+                {
+                    txtPartnerCode.Text = "10001";
+                }
+                else{
+                txtPartnerCode.Text = id;
+                }
             }
             catch
             {
-                txtPartnerCode.Text = "1";
+                MessageBox.Show("catch error");
             }
             SetAddMode();
         }
@@ -392,5 +354,6 @@ namespace Water
             btnEdit.Enabled = false;
         }
     }
+
 }
 

@@ -18,7 +18,7 @@ namespace Water
         Clas.partner_cost_dtl partner_Cost_dtl = new Clas.partner_cost_dtl();
         Clas.downtime downtime = new Clas.downtime();
         Clas.period period = new Clas.period();
-
+        Clas.GridBtnViewHelper gridBtnViewHelper = new Clas.GridBtnViewHelper();
         public PartnerCostForm()
         {
             InitializeComponent();
@@ -282,48 +282,12 @@ namespace Water
 
         private void btnView_Click(object sender, EventArgs e)
         {
-            try
+            DataTable dt = partner_Cost_mst.GET_ALL_PARTNER_COST_MST();
+            DataRow row = gridBtnViewHelper.Show(dt, "عرض توزيع التكاليف بين الشركاء");
+            if (row != null)
             {
-                DataTable dt = partner_Cost_mst.GET_ALL_PARTNER_COST_MST();
-
-                if (dt.Rows.Count == 0)
-                {
-                    MessageBox.Show("لا توجد بيانات للعرض", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
-                }
-
-                Form viewForm = new Form();
-                viewForm.Text = "عرض توزيع التكاليف بين الشركاء";
-                viewForm.RightToLeft = RightToLeft.Yes;
-                viewForm.RightToLeftLayout = true;
-                viewForm.Size = new Size(1400, 600);
-                viewForm.StartPosition = FormStartPosition.CenterScreen;
-
-                DataGridView dgv = new DataGridView();
-                dgv.Dock = DockStyle.Fill;
-                dgv.DataSource = dt;
-                dgv.ReadOnly = true;
-                dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-                dgv.MultiSelect = false;
-                dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-                dgv.RightToLeft = RightToLeft.Yes;
-
-                dgv.CellDoubleClick += (s, args) =>
-                {
-                    if (args.RowIndex >= 0)
-                    {
-                        DataRow row = dt.Rows[args.RowIndex];
-                        LoadPartnerCostData(row);
-                        viewForm.Close();
-                    }
-                };
-                viewForm.Controls.Add(dgv);
-                viewForm.ShowDialog();
+                LoadPartnerCostData(row);
                 SetViewMode();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("حدث خطأ أثناء عرض البيانات: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

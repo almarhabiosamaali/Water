@@ -15,7 +15,7 @@ namespace Water
         private bool isEditMode = false;
         Clas.downtime dwn = new Clas.downtime();
         Clas.period period = new Clas.period();
-
+        Clas.GridBtnViewHelper gridBtnViewHelper = new Clas.GridBtnViewHelper();
         public DowntimeForm()
         {
             InitializeComponent();
@@ -34,50 +34,13 @@ namespace Water
         }
 
         private void btnView_Click(object sender, EventArgs e)
-        {
-            try
+        {           
+            DataTable dt = dwn.GET_ALL_DOWNTIMES();
+            DataRow row = gridBtnViewHelper.Show(dt, "عرض التوقفات");
+            if (row != null)
             {
-                DataTable dt = dwn.GET_ALL_DOWNTIMES();
-                
-                if (dt.Rows.Count == 0)
-                {
-                    MessageBox.Show("لا توجد بيانات للعرض", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
-                }
-
-                Form viewForm = new Form();
-                viewForm.Text = "عرض التوقفات";
-                viewForm.RightToLeft = RightToLeft.Yes;
-                viewForm.RightToLeftLayout = true;
-                viewForm.Size = new Size(900, 500);
-                viewForm.StartPosition = FormStartPosition.CenterScreen;
-
-                DataGridView dgv = new DataGridView();
-                dgv.Dock = DockStyle.Fill;
-                dgv.DataSource = dt;
-                dgv.ReadOnly = true;
-                dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-                dgv.MultiSelect = false;
-                dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-                dgv.RightToLeft = RightToLeft.Yes;
-
-                dgv.CellDoubleClick += (s, args) =>
-                {
-                    if (args.RowIndex >= 0)
-                    {
-                        DataRow row = dt.Rows[args.RowIndex];
-                        LoadDowntimeData(row);
-                        viewForm.Close();
-                    }
-                };
-
-                viewForm.Controls.Add(dgv);
-                viewForm.ShowDialog();
+                LoadDowntimeData(row);
                 SetViewMode();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("حدث خطأ أثناء عرض البيانات: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

@@ -53,6 +53,8 @@ namespace Water
             this.label1 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.btnExit = new System.Windows.Forms.Button();
+            this.txtStatment = new System.Windows.Forms.TextBox();
+            this.lblStatment = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblPeriodCode
@@ -330,11 +332,31 @@ namespace Water
             this.btnExit.UseVisualStyleBackColor = false;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
+            // txtStatment
+            // 
+            this.txtStatment.Location = new System.Drawing.Point(132, 332);
+            this.txtStatment.Name = "txtStatment";
+            this.txtStatment.Size = new System.Drawing.Size(654, 24);
+            this.txtStatment.TabIndex = 24;
+            // 
+            // lblStatment
+            // 
+            this.lblStatment.AutoSize = true;
+            this.lblStatment.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblStatment.Location = new System.Drawing.Point(32, 332);
+            this.lblStatment.Name = "lblStatment";
+            this.lblStatment.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.lblStatment.Size = new System.Drawing.Size(38, 20);
+            this.lblStatment.TabIndex = 25;
+            this.lblStatment.Text = "البيان";
+            // 
             // PeriodForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(931, 377);
+            this.ClientSize = new System.Drawing.Size(931, 405);
+            this.Controls.Add(this.lblStatment);
+            this.Controls.Add(this.txtStatment);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label2);
@@ -397,6 +419,8 @@ namespace Water
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.Button btnExit;
+        private System.Windows.Forms.TextBox txtStatment;
+        private System.Windows.Forms.Label lblStatment;
     }
 }
 

@@ -15,7 +15,7 @@ namespace Water
     {
         private bool isEditMode = false;
         Clas.period per = new Clas.period();
-
+        Clas.GridBtnViewHelper gridBtnViewHelper = new Clas.GridBtnViewHelper();
         public PeriodForm()
         {
             InitializeComponent();
@@ -31,50 +31,13 @@ namespace Water
         }
 
         private void btnView_Click(object sender, EventArgs e)
-        {
-            try
+        {            
+            DataTable dt = per.GET_ALL_PERIODS();
+            DataRow row = gridBtnViewHelper.Show(dt, "عرض الفترات");
+            if (row != null)
             {
-                DataTable dt = per.GET_ALL_PERIODS();
-                
-                if (dt.Rows.Count == 0)
-                {
-                    MessageBox.Show("لا توجد بيانات للعرض", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
-                }
-
-                Form viewForm = new Form();
-                viewForm.Text = "عرض الفترات";
-                viewForm.RightToLeft = RightToLeft.Yes;
-                viewForm.RightToLeftLayout = true;
-                viewForm.Size = new Size(1200, 600);
-                viewForm.StartPosition = FormStartPosition.CenterScreen;
-
-                DataGridView dgv = new DataGridView();
-                dgv.Dock = DockStyle.Fill;
-                dgv.DataSource = dt;
-                dgv.ReadOnly = true;
-                dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-                dgv.MultiSelect = false;
-                dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-                dgv.RightToLeft = RightToLeft.Yes;
-
-                dgv.CellDoubleClick += (s, args) =>
-                {
-                    if (args.RowIndex >= 0)
-                    {
-                        DataRow row = dt.Rows[args.RowIndex];
-                        LoadPeriodData(row);
-                        viewForm.Close();
-                    }
-                };
-
-                viewForm.Controls.Add(dgv);
-                viewForm.ShowDialog();
+                LoadPeriodData(row);
                 SetViewMode();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("حدث خطأ أثناء عرض البيانات: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -204,10 +167,11 @@ namespace Water
                         txtPeriodCode.Text.Trim(),
                         dtpStartDate.Value,
                         dtpEndDate.Value,
-                      baseDays,
+                        baseDays,
                         txtDowntimeHours.Text.Trim(),
                         extendedDays,
-                        totalHours
+                        totalHours,
+                        txtStatment.Text.Trim()
                     );
 
                     MessageBox.Show("تم تحديث بيانات الفترة بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -222,7 +186,8 @@ namespace Water
                         baseDays,
                         txtDowntimeHours.Text.Trim(),
                         extendedDays,
-                        totalHours
+                        totalHours,
+                        txtStatment.Text.Trim()
                     );
 
                     MessageBox.Show("تم حفظ بيانات الفترة بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -290,6 +255,10 @@ namespace Water
             {
                 txtTotalHours.Text = row["total_hours"].ToString();
             }
+            if (row["statment"] != DBNull.Value)
+            {
+                txtStatment.Text = row["statment"].ToString();
+            }
             else
             {
                 txtTotalHours.Clear();
@@ -306,6 +275,7 @@ namespace Water
             txtDownDays.Clear();
             txtTotalHours.Clear();
             txtWorkingHours.Clear();
+            txtStatment.Clear();
         }
 
         /// <summary>
