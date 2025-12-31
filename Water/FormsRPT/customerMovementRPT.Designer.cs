@@ -97,6 +97,7 @@
             this.txtCustNo.Name = "txtCustNo";
             this.txtCustNo.Size = new System.Drawing.Size(200, 24);
             this.txtCustNo.TabIndex = 1;
+            this.txtCustNo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtCustNo_KeyDown);
             // 
             // label3
             // 
@@ -124,6 +125,7 @@
             this.txtPeriodId.Name = "txtPeriodId";
             this.txtPeriodId.Size = new System.Drawing.Size(200, 24);
             this.txtPeriodId.TabIndex = 2;
+            this.txtPeriodId.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPeriodId_KeyDown);
             // 
             // btnExit
             // 

@@ -13,6 +13,8 @@ namespace Water
     public partial class partnerMovmentRPT : Form
     {
         Clas.partners partners = new Clas.partners();
+        Clas.period period = new Clas.period();
+        Clas.GridBtnViewHelper gridBtnViewHelper = new Clas.GridBtnViewHelper();
         public partnerMovmentRPT()
         {
             InitializeComponent();
@@ -157,7 +159,7 @@ namespace Water
         }
           private void ShowPartnerList()
         {
-            try
+            /*try
             {
             
                 DataTable dt = partners.GET_ALL_PARTNERS();
@@ -210,6 +212,12 @@ namespace Water
             catch (Exception ex)
             {
                 MessageBox.Show("حدث خطأ أثناء عرض البيانات: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }*/
+            DataTable dt = partners.GET_ALL_PARTNERS();
+            DataRow row = gridBtnViewHelper.Show(dt, "عرض  بيانات الشركاء");
+            if (row != null)
+            {
+                LoadPartnerData(row);
             }
         }
      private void LoadPartnerData(DataRow row)
@@ -223,6 +231,28 @@ namespace Water
             {
                 txtPartnerID.Clear();
             }
+        }
+
+        private void txtPeriodId_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F2 || e.KeyCode == Keys.Enter)
+            {
+                e.Handled = true; // منع التنقل الافتراضي لـ Enter
+                ShowPeriodList();
+            }
+        }
+        private void ShowPeriodList()
+        {
+            DataTable dt = period.GET_ALL_PERIODS();
+            DataRow row = gridBtnViewHelper.Show(dt, "عرض  بيانات الفترات");
+            if (row != null)
+            {
+                txtPeriodId.Text = row["id"].ToString();
+            }
+        }
+        private void LoadPeriodData(DataRow row)
+        {
+            txtPeriodId.Text = row["id"].ToString();
         }
     }
 }

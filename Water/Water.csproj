@@ -52,10 +52,10 @@
     <Reference Include="System.Management" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="allMovementRPT.cs">
+    <Compile Include="FormsRPT\allMovementRPT.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="allMovementRPT.Designer.cs">
+    <Compile Include="FormsRPT\allMovementRPT.Designer.cs">
       <DependentUpon>allMovementRPT.cs</DependentUpon>
     </Compile>
     <Compile Include="AmountTextBox.cs">
@@ -85,10 +85,10 @@
     <Compile Include="Clas\HardwareInfo.cs" />
     <Compile Include="Clas\CryptoHelper.cs" />
     <Compile Include="Clas\LicenseManager.cs" />
-    <Compile Include="customerMovementRPT.cs">
+    <Compile Include="FormsRPT\customerMovementRPT.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="customerMovementRPT.Designer.cs">
+    <Compile Include="FormsRPT\customerMovementRPT.Designer.cs">
       <DependentUpon>customerMovementRPT.cs</DependentUpon>
     </Compile>
     <Compile Include="Cust_AccountPROC.cs">
@@ -133,16 +133,16 @@
     <Compile Include="LicenseForm.Designer.cs">
       <DependentUpon>LicenseForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="partnerMovmentRPTDtl1.cs">
+    <Compile Include="FormsRPT\partnerMovmentRPTDtl1.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="partnerMovmentRPTDtl1.Designer.cs">
+    <Compile Include="FormsRPT\partnerMovmentRPTDtl1.Designer.cs">
       <DependentUpon>partnerMovmentRPTDtl1.cs</DependentUpon>
     </Compile>
-    <Compile Include="partnerMovmentRPT.cs">
+    <Compile Include="FormsRPT\partnerMovmentRPT.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="partnerMovmentRPT.Designer.cs">
+    <Compile Include="FormsRPT\partnerMovmentRPT.Designer.cs">
       <DependentUpon>partnerMovmentRPT.cs</DependentUpon>
     </Compile>
     <Compile Include="PeriodForm.cs">
@@ -223,10 +223,10 @@
       <DependentUpon>salesBillDTL.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="salesBillDTLRPT.cs">
+    <Compile Include="FormsRPT\salesBillDTLRPT.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="salesBillDTLRPT.Designer.cs">
+    <Compile Include="FormsRPT\salesBillDTLRPT.Designer.cs">
       <DependentUpon>salesBillDTLRPT.cs</DependentUpon>
     </Compile>
     <Compile Include="SalesForm.cs">
@@ -272,13 +272,13 @@
     <Compile Include="testTab.Designer.cs">
       <DependentUpon>testTab.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="allMovementRPT.resx">
+    <EmbeddedResource Include="FormsRPT\allMovementRPT.resx">
       <DependentUpon>allMovementRPT.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AmountTextBox.resx">
       <DependentUpon>AmountTextBox.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="customerMovementRPT.resx">
+    <EmbeddedResource Include="FormsRPT\customerMovementRPT.resx">
       <DependentUpon>customerMovementRPT.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Cust_AccountPROC.rpt">
@@ -303,10 +303,10 @@
     <EmbeddedResource Include="LicenseForm.resx">
       <DependentUpon>LicenseForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="partnerMovmentRPTDtl1.resx">
+    <EmbeddedResource Include="FormsRPT\partnerMovmentRPTDtl1.resx">
       <DependentUpon>partnerMovmentRPTDtl1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="partnerMovmentRPT.resx">
+    <EmbeddedResource Include="FormsRPT\partnerMovmentRPT.resx">
       <DependentUpon>partnerMovmentRPT.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PeriodForm.resx">
@@ -356,7 +356,7 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>salesBillDTL.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="salesBillDTLRPT.resx">
+    <EmbeddedResource Include="FormsRPT\salesBillDTLRPT.resx">
       <DependentUpon>salesBillDTLRPT.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SalesForm.resx">

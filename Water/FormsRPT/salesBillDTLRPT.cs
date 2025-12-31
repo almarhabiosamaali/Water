@@ -12,6 +12,8 @@ namespace Water
 {
     public partial class salesBillDTLRPT : Form
     {
+        Clas.sales sales = new Clas.sales();
+        Clas.GridBtnViewHelper gridBtnViewHelper = new Clas.GridBtnViewHelper();
         public salesBillDTLRPT()
         {
             InitializeComponent();
@@ -32,19 +34,43 @@ namespace Water
             myFom.ShowDialog();
         }
 
-        string p_where()
+         string p_where()
         {
             string p = "";
-
-            p = p + txtBillNO.Text;
-
+            if (!string.IsNullOrEmpty(txtBillNO.Text))
+            {
+                p = p + " s.bill_no = '" + txtBillNO.Text + "'";
+            }
 
             return p;
-        }
+        } 
+
 
         private void btnExit_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void txtBillNO_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F2 || e.KeyCode == Keys.Enter)
+            {
+                e.Handled = true; // منع التنقل الافتراضي لـ Enter
+                ShowBillList();
+            }
+        }
+        private void ShowBillList()
+        {
+            DataTable dt = sales.GET_ALL_SALES();
+            DataRow row = gridBtnViewHelper.Show(dt, "عرض  بيانات فواتير المبيعات");
+            if (row != null)
+            {
+                LoadBillData(row);
+            }
+        }
+        private void LoadBillData(DataRow row)
+        {
+            txtBillNO.Text = row["bill_no"].ToString();
         }
     }
 }

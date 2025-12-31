@@ -12,6 +12,9 @@ namespace Water
 {
     public partial class allMovementRPT : Form
     {
+        Clas.customer customer = new Clas.customer();
+        Clas.period period = new Clas.period();
+        Clas.GridBtnViewHelper gridBtnViewHelper = new Clas.GridBtnViewHelper();
         public allMovementRPT()
         {
             InitializeComponent();
@@ -60,6 +63,49 @@ namespace Water
         private void btnExit_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void txtCustNo_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F2 || e.KeyCode == Keys.Enter)
+            {
+                e.Handled = true; // منع التنقل الافتراضي لـ Enter
+                ShowCustomerList();
+            }   
+        }
+        private void ShowCustomerList()
+        {
+            DataTable dt = customer.GET_ALL_CUSTOMERS();
+            DataRow row = gridBtnViewHelper.Show(dt, "عرض  بيانات العملاء");
+            if (row != null)
+            {
+                LoadCustomerData(row);
+            }
+        }
+        private void LoadCustomerData(DataRow row)
+        {
+            txtCustNo.Text = row["id"].ToString();
+        }
+        private void txtPeriodId_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F2 || e.KeyCode == Keys.Enter)
+            {
+                e.Handled = true; // منع التنقل الافتراضي لـ Enter
+                ShowPeriodList();
+            }
+        }
+        private void ShowPeriodList()
+        {
+            DataTable dt = period.GET_ALL_PERIODS();
+            DataRow row = gridBtnViewHelper.Show(dt, "عرض  بيانات الفترات");
+            if (row != null)
+            {
+                txtPeriodId.Text = row["id"].ToString();
+            }
+        }
+        private void LoadPeriodData(DataRow row)
+        {
+            txtPeriodId.Text = row["id"].ToString();
         }
     }
 }

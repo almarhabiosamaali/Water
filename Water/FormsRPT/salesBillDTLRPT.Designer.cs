@@ -42,6 +42,7 @@
             this.txtBillNO.Name = "txtBillNO";
             this.txtBillNO.Size = new System.Drawing.Size(170, 24);
             this.txtBillNO.TabIndex = 0;
+            this.txtBillNO.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtBillNO_KeyDown);
             // 
             // btnShow
             // 

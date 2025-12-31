@@ -20,11 +20,11 @@ namespace Water
 
         private void btnShowRPT_Click(object sender, EventArgs e)
         {
-            if (cmbType.SelectedIndex == -1)
+           /*  if (cmbType.SelectedIndex == -1 && !anly.Checked)
             {
                 MessageBox.Show("يرجى اختيار نوع التقرير ");
                 return;
-            }
+            } */
 
             if (string.IsNullOrEmpty(txtPeriodId.Text))
             {
@@ -34,12 +34,11 @@ namespace Water
 
             
             
-                
-            if (cmbType.SelectedIndex == 1)
+            if (anly.Checked)
             {
                 DataTable dTt = new DataTable();
                 Clas.partnersReport pTp = new Clas.partnersReport();
-                dTt = pTp.PRINT_ALL_PARTNER_MOVEMENT(p_where().ToString());
+                dTt = pTp.PRINT_ALL_PARTNER_MOVEMENT(p_where1().ToString());
                 RPT.partnerMovementDTL1 myRept = new RPT.partnerMovementDTL1();
                 myRept.DataSourceConnections[0].IntegratedSecurity = false;
                 myRept.DataSourceConnections[0].SetConnection(Properties.Settings.Default.Server, Properties.Settings.Default.Database, Properties.Settings.Default.ID, Properties.Settings.Default.Password);
@@ -49,8 +48,36 @@ namespace Water
                 myFom.crystalReportViewer1.ReportSource = myRept;
                 myFom.ShowDialog();
             }
-            else if (cmbType.SelectedIndex == 0)
+               else if (!anly.Checked)            
+            {
+                DataTable dTt = new DataTable();
+                Clas.partnersReport pTp = new Clas.partnersReport();
+                dTt = pTp.PRINT_PARTNER_MOVEMENT(p_where1().ToString());
+                RPT.partnerMovements myRept = new RPT.partnerMovements();
+                myRept.DataSourceConnections[0].IntegratedSecurity = false;
+                myRept.DataSourceConnections[0].SetConnection(Properties.Settings.Default.Server, Properties.Settings.Default.Database, Properties.Settings.Default.ID, Properties.Settings.Default.Password);
+                myRept.SetDataSource(dTt);
+                // myReport.SetParameterValue("@p_whr", p);
+                RPT.reportCaller myFom = new RPT.reportCaller();
+                myFom.crystalReportViewer1.ReportSource = myRept;
+                myFom.ShowDialog();
+            }
             
+            else if (cmbType.SelectedIndex == 1)
+            {
+                DataTable dTt = new DataTable();
+                Clas.partnersReport pTp = new Clas.partnersReport();
+                dTt = pTp.PRINT_ALL_PARTNER_MOVEMENT(p_where1().ToString());
+                RPT.partnerMovementDTL1 myRept = new RPT.partnerMovementDTL1();
+                myRept.DataSourceConnections[0].IntegratedSecurity = false;
+                myRept.DataSourceConnections[0].SetConnection(Properties.Settings.Default.Server, Properties.Settings.Default.Database, Properties.Settings.Default.ID, Properties.Settings.Default.Password);
+                myRept.SetDataSource(dTt);
+                // myReport.SetParameterValue("@p_whr", p);
+                RPT.reportCaller myFom = new RPT.reportCaller();
+                myFom.crystalReportViewer1.ReportSource = myRept;
+                myFom.ShowDialog();
+            }
+            else if (cmbType.SelectedIndex == 0)            
             {
                 DataTable dTt = new DataTable();
                 Clas.partnersReport pTp = new Clas.partnersReport();
@@ -81,11 +108,10 @@ namespace Water
             }
             
         }
-
-        string p_where ()
+        string p_where1()
         {
             string p = "";
-            if (cmbType.SelectedIndex == 1)
+            if (anly.Checked)
             {
                     p = p + " and movement_type not in ('CUSTOMER_MOVEMENT','FROM_OWN_BALANCE','RECEIVED_FROM_OTHERS')";
                     
@@ -99,14 +125,63 @@ namespace Water
                 {
                     p = p + " and partner_no = '" + txtPartnerID.Text + "'";
                 }
-                if (!string.IsNullOrEmpty(txtPeriodId.Text) && !anly.Checked)
+                if (dtpFromDate.Value != null && dtpToDate.Value != null)
+                {
+                    p += " and date between '"
+                        + dtpFromDate.Value.ToString("yyyy-MM-dd")
+                        + "' and '"
+                        + dtpToDate.Value.ToString("yyyy-MM-dd")
+                        + "'";
+                }
+                
+            }                            
+
+            else
+            {
+                
+                if (!string.IsNullOrEmpty(txtPeriodId.Text))
+                {
+                    p += " and period_id = '" + txtPeriodId.Text + "'";
+                }
+
+
+                if (!string.IsNullOrEmpty(txtPartnerID.Text))
+                {
+                    p = p + " and partner_no = '" + txtPartnerID.Text + "'";
+                }
+                
+
+                if (dtpFromDate.Value != null && dtpToDate.Value != null)
+                {
+                    p += " and date between '"
+                        + dtpFromDate.Value.ToString("yyyy-MM-dd")
+                        + "' and '"
+                        + dtpToDate.Value.ToString("yyyy-MM-dd")
+                        + "'";
+                }
+            }             
+            return p;
+        }
+
+        string p_where ()
+        {
+            string p = "";
+            if (cmbType.SelectedIndex == 1)
+            {
+                    p = p + " and movement_type not in ('CUSTOMER_MOVEMENT','FROM_OWN_BALANCE','RECEIVED_FROM_OTHERS')";
+                                     
+                if (!string.IsNullOrEmpty(txtPartnerID.Text))
+                {
+                    p = p + " and m.partner_no = '" + txtPartnerID.Text + "'";
+                }
+                if (!string.IsNullOrEmpty(txtPeriodId.Text))
                 {
                     p += " and m.period_id = '" + txtPeriodId.Text + "'";
                 }
 
                 if (dtpFromDate.Value != null && dtpToDate.Value != null)
                 {
-                    p += " and date between '"
+                    p += " and m.date between '"
                         + dtpFromDate.Value.ToString("yyyy-MM-dd")
                         + "' and '"
                         + dtpToDate.Value.ToString("yyyy-MM-dd")

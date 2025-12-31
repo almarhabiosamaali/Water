@@ -46,17 +46,17 @@
             // 
             // txtPartnerID
             // 
-            this.txtPartnerID.Location = new System.Drawing.Point(142, 83);
+            this.txtPartnerID.Location = new System.Drawing.Point(124, 83);
             this.txtPartnerID.Name = "txtPartnerID";
-            this.txtPartnerID.Size = new System.Drawing.Size(212, 22);
+            this.txtPartnerID.Size = new System.Drawing.Size(186, 24);
             this.txtPartnerID.TabIndex = 0;
             this.txtPartnerID.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPartnerID_KeyDown);
             // 
             // btnShowRPT
             // 
-            this.btnShowRPT.Location = new System.Drawing.Point(439, 4);
+            this.btnShowRPT.Location = new System.Drawing.Point(384, 4);
             this.btnShowRPT.Name = "btnShowRPT";
-            this.btnShowRPT.Size = new System.Drawing.Size(80, 40);
+            this.btnShowRPT.Size = new System.Drawing.Size(70, 40);
             this.btnShowRPT.TabIndex = 1;
             this.btnShowRPT.Text = "طباعة";
             this.toolTip1.SetToolTip(this.btnShowRPT, "طباعة");
@@ -65,67 +65,68 @@
             // 
             // txtPeriodId
             // 
-            this.txtPeriodId.Location = new System.Drawing.Point(630, 76);
+            this.txtPeriodId.Location = new System.Drawing.Point(551, 76);
             this.txtPeriodId.Name = "txtPeriodId";
-            this.txtPeriodId.Size = new System.Drawing.Size(198, 22);
+            this.txtPeriodId.Size = new System.Drawing.Size(174, 24);
             this.txtPeriodId.TabIndex = 3;
+            this.txtPeriodId.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPeriodId_KeyDown);
             // 
             // dtpFromDate
             // 
             this.dtpFromDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpFromDate.Location = new System.Drawing.Point(142, 139);
+            this.dtpFromDate.Location = new System.Drawing.Point(124, 139);
             this.dtpFromDate.Name = "dtpFromDate";
             this.dtpFromDate.RightToLeftLayout = true;
-            this.dtpFromDate.Size = new System.Drawing.Size(212, 22);
+            this.dtpFromDate.Size = new System.Drawing.Size(186, 24);
             this.dtpFromDate.TabIndex = 4;
             this.dtpFromDate.Value = new System.DateTime(2025, 1, 1, 3, 13, 0, 0);
             // 
             // dtpToDate
             // 
             this.dtpToDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpToDate.Location = new System.Drawing.Point(630, 132);
+            this.dtpToDate.Location = new System.Drawing.Point(551, 132);
             this.dtpToDate.Name = "dtpToDate";
             this.dtpToDate.RightToLeftLayout = true;
-            this.dtpToDate.Size = new System.Drawing.Size(198, 22);
+            this.dtpToDate.Size = new System.Drawing.Size(174, 24);
             this.dtpToDate.TabIndex = 5;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(25, 83);
+            this.label2.Location = new System.Drawing.Point(22, 83);
             this.label2.Name = "label2";
             this.label2.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.label2.Size = new System.Drawing.Size(68, 17);
+            this.label2.Size = new System.Drawing.Size(85, 17);
             this.label2.TabIndex = 7;
             this.label2.Text = "رقم الشريك :";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(47, 139);
+            this.label5.Location = new System.Drawing.Point(41, 139);
             this.label5.Name = "label5";
             this.label5.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.label5.Size = new System.Drawing.Size(56, 17);
+            this.label5.Size = new System.Drawing.Size(66, 17);
             this.label5.TabIndex = 10;
             this.label5.Text = "من تاريخ :";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(538, 137);
+            this.label6.Location = new System.Drawing.Point(471, 137);
             this.label6.Name = "label6";
             this.label6.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.label6.Size = new System.Drawing.Size(58, 17);
+            this.label6.Size = new System.Drawing.Size(69, 17);
             this.label6.TabIndex = 11;
             this.label6.Text = "الى تاريخ :";
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(534, 79);
+            this.label7.Location = new System.Drawing.Point(467, 79);
             this.label7.Name = "label7";
             this.label7.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.label7.Size = new System.Drawing.Size(60, 17);
+            this.label7.Size = new System.Drawing.Size(74, 17);
             this.label7.TabIndex = 12;
             this.label7.Text = "رقم الفترة :";
             // 
@@ -134,10 +135,10 @@
             this.btnExit.BackColor = System.Drawing.Color.White;
             this.btnExit.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnExit.Image = global::Water.Properties.Resources.icons8_exit_24;
-            this.btnExit.Location = new System.Drawing.Point(526, 3);
+            this.btnExit.Location = new System.Drawing.Point(460, 3);
             this.btnExit.Name = "btnExit";
             this.btnExit.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.btnExit.Size = new System.Drawing.Size(80, 40);
+            this.btnExit.Size = new System.Drawing.Size(70, 40);
             this.btnExit.TabIndex = 25;
             this.toolTip1.SetToolTip(this.btnExit, "خروج");
             this.btnExit.UseVisualStyleBackColor = false;
@@ -150,26 +151,26 @@
             "اجمالي",
             "تحليلي",
             "اجمالي ساعات و فلوس"});
-            this.cmbType.Location = new System.Drawing.Point(745, 21);
+            this.cmbType.Location = new System.Drawing.Point(652, 21);
             this.cmbType.Name = "cmbType";
-            this.cmbType.Size = new System.Drawing.Size(220, 24);
+            this.cmbType.Size = new System.Drawing.Size(193, 24);
             this.cmbType.TabIndex = 27;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(667, 28);
+            this.label1.Location = new System.Drawing.Point(584, 28);
             this.label1.Name = "label1";
             this.label1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.label1.Size = new System.Drawing.Size(59, 17);
+            this.label1.Size = new System.Drawing.Size(65, 17);
             this.label1.TabIndex = 28;
             this.label1.Text = "نوع التقرير";
             // 
             // partnerMovmentRPT
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1080, 342);
+            this.ClientSize = new System.Drawing.Size(945, 342);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cmbType);
             this.Controls.Add(this.btnExit);
