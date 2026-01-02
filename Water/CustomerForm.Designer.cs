@@ -43,14 +43,15 @@ namespace Water
             this.lblCreatedDate = new System.Windows.Forms.Label();
             this.dtpCreatedDate = new System.Windows.Forms.DateTimePicker();
             this.cmbType = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.btnSearch = new System.Windows.Forms.Button();
             this.btnExit = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnView = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // lblCustomerCode
@@ -91,6 +92,7 @@ namespace Water
             this.txtCustomerName.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtCustomerName.Location = new System.Drawing.Point(583, 188);
             this.txtCustomerName.Name = "txtCustomerName";
+            this.txtCustomerName.ReadOnly = true;
             this.txtCustomerName.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtCustomerName.Size = new System.Drawing.Size(263, 26);
             this.txtCustomerName.TabIndex = 3;
@@ -123,6 +125,7 @@ namespace Water
             this.txtPhone.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtPhone.Location = new System.Drawing.Point(155, 254);
             this.txtPhone.Name = "txtPhone";
+            this.txtPhone.ReadOnly = true;
             this.txtPhone.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtPhone.Size = new System.Drawing.Size(263, 26);
             this.txtPhone.TabIndex = 5;
@@ -143,6 +146,7 @@ namespace Water
             this.txtAddress.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtAddress.Location = new System.Drawing.Point(583, 254);
             this.txtAddress.Name = "txtAddress";
+            this.txtAddress.ReadOnly = true;
             this.txtAddress.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtAddress.Size = new System.Drawing.Size(263, 26);
             this.txtAddress.TabIndex = 7;
@@ -164,6 +168,7 @@ namespace Water
             this.txtNotes.Location = new System.Drawing.Point(155, 306);
             this.txtNotes.Multiline = true;
             this.txtNotes.Name = "txtNotes";
+            this.txtNotes.ReadOnly = true;
             this.txtNotes.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtNotes.Size = new System.Drawing.Size(263, 80);
             this.txtNotes.TabIndex = 9;
@@ -205,6 +210,28 @@ namespace Water
             this.cmbType.TabIndex = 5;
             this.cmbType.TabStop = false;
             this.cmbType.Visible = false;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(418, 9);
+            this.label1.Name = "label1";
+            this.label1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.label1.Size = new System.Drawing.Size(113, 25);
+            this.label1.TabIndex = 37;
+            this.label1.Text = "بيانات العملاء";
+            // 
+            // btnSearch
+            // 
+            this.btnSearch.BackColor = System.Drawing.Color.White;
+            this.btnSearch.Image = global::Water.Properties.Resources.icons8_search_24_8;
+            this.btnSearch.Location = new System.Drawing.Point(155, 48);
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Size = new System.Drawing.Size(70, 40);
+            this.btnSearch.TabIndex = 38;
+            this.toolTip1.SetToolTip(this.btnSearch, "بحث");
+            this.btnSearch.UseVisualStyleBackColor = false;
             // 
             // btnExit
             // 
@@ -270,7 +297,7 @@ namespace Water
             this.btnAdd.BackColor = System.Drawing.Color.White;
             this.btnAdd.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAdd.Image = global::Water.Properties.Resources.icons8_add_24;
-            this.btnAdd.Location = new System.Drawing.Point(309, 48);
+            this.btnAdd.Location = new System.Drawing.Point(312, 48);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnAdd.Size = new System.Drawing.Size(70, 40);
@@ -282,8 +309,8 @@ namespace Water
             // 
             this.btnView.BackColor = System.Drawing.Color.White;
             this.btnView.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnView.Image = global::Water.Properties.Resources.icons8_search_24_8;
-            this.btnView.Location = new System.Drawing.Point(233, 48);
+            this.btnView.Image = global::Water.Properties.Resources.icons8_view_24;
+            this.btnView.Location = new System.Drawing.Point(227, 48);
             this.btnView.Name = "btnView";
             this.btnView.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnView.Size = new System.Drawing.Size(70, 40);
@@ -292,22 +319,12 @@ namespace Water
             this.toolTip1.SetToolTip(this.btnView, "عرض");
             this.btnView.UseVisualStyleBackColor = false;
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(418, 9);
-            this.label1.Name = "label1";
-            this.label1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.label1.Size = new System.Drawing.Size(113, 25);
-            this.label1.TabIndex = 37;
-            this.label1.Text = "بيانات العملاء";
-            // 
             // CustomerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(934, 474);
+            this.Controls.Add(this.btnSearch);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.btnSave);
@@ -366,5 +383,6 @@ namespace Water
         private System.Windows.Forms.Button btnView;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.Button btnSearch;
     }
 }

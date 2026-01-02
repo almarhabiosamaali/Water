@@ -57,6 +57,7 @@ namespace Water
             this.label1 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.btnExit = new System.Windows.Forms.Button();
+            this.btnSearch = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblPartnerCode
@@ -97,6 +98,7 @@ namespace Water
             this.txtPartnerName.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtPartnerName.Location = new System.Drawing.Point(590, 105);
             this.txtPartnerName.Name = "txtPartnerName";
+            this.txtPartnerName.ReadOnly = true;
             this.txtPartnerName.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtPartnerName.Size = new System.Drawing.Size(263, 26);
             this.txtPartnerName.TabIndex = 1;
@@ -117,6 +119,7 @@ namespace Water
             this.txtAllocatedHours.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtAllocatedHours.Location = new System.Drawing.Point(162, 153);
             this.txtAllocatedHours.Name = "txtAllocatedHours";
+            this.txtAllocatedHours.ReadOnly = true;
             this.txtAllocatedHours.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtAllocatedHours.Size = new System.Drawing.Size(263, 26);
             this.txtAllocatedHours.TabIndex = 2;
@@ -140,6 +143,7 @@ namespace Water
             this.txtMinutes.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtMinutes.Location = new System.Drawing.Point(590, 153);
             this.txtMinutes.Name = "txtMinutes";
+            this.txtMinutes.ReadOnly = true;
             this.txtMinutes.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtMinutes.Size = new System.Drawing.Size(263, 26);
             this.txtMinutes.TabIndex = 3;
@@ -209,6 +213,7 @@ namespace Water
             this.txtPhone.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtPhone.Location = new System.Drawing.Point(162, 249);
             this.txtPhone.Name = "txtPhone";
+            this.txtPhone.ReadOnly = true;
             this.txtPhone.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtPhone.Size = new System.Drawing.Size(263, 26);
             this.txtPhone.TabIndex = 4;
@@ -229,6 +234,7 @@ namespace Water
             this.txtAddress.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtAddress.Location = new System.Drawing.Point(590, 249);
             this.txtAddress.Name = "txtAddress";
+            this.txtAddress.ReadOnly = true;
             this.txtAddress.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtAddress.Size = new System.Drawing.Size(263, 26);
             this.txtAddress.TabIndex = 5;
@@ -250,6 +256,7 @@ namespace Water
             this.txtNotes.Location = new System.Drawing.Point(162, 297);
             this.txtNotes.Multiline = true;
             this.txtNotes.Name = "txtNotes";
+            this.txtNotes.ReadOnly = true;
             this.txtNotes.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtNotes.Size = new System.Drawing.Size(691, 80);
             this.txtNotes.TabIndex = 6;
@@ -280,7 +287,7 @@ namespace Water
             // 
             this.btnView.BackColor = System.Drawing.Color.White;
             this.btnView.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnView.Image = global::Water.Properties.Resources.icons8_search_24_8;
+            this.btnView.Image = global::Water.Properties.Resources.icons8_view_24;
             this.btnView.Location = new System.Drawing.Point(338, 42);
             this.btnView.Name = "btnView";
             this.btnView.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
@@ -372,11 +379,24 @@ namespace Water
             this.btnExit.UseVisualStyleBackColor = false;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
+            // btnSearch
+            // 
+            this.btnSearch.BackColor = System.Drawing.Color.White;
+            this.btnSearch.Image = global::Water.Properties.Resources.icons8_search_24_8;
+            this.btnSearch.Location = new System.Drawing.Point(262, 42);
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Size = new System.Drawing.Size(70, 40);
+            this.btnSearch.TabIndex = 39;
+            this.toolTip1.SetToolTip(this.btnSearch, "بحث");
+            this.btnSearch.UseVisualStyleBackColor = false;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
+            // 
             // PartnersForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(965, 423);
+            this.Controls.Add(this.btnSearch);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.dtpDate);
@@ -447,6 +467,7 @@ namespace Water
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.Button btnExit;
+        private System.Windows.Forms.Button btnSearch;
     }
 }
 

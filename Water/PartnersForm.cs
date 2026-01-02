@@ -13,6 +13,9 @@ namespace Water
     public partial class PartnersForm : Form
     {
         private bool isEditMode = false;
+        private bool isSearchMode = false; 
+        private DateTime lastClickTime = DateTime.MinValue; // آخر وقت للنقر
+        private const int DOUBLE_CLICK_INTERVAL = 500; 
         Clas.partners partner = new Clas.partners();
         Clas.GridBtnViewHelper gridBtnViewHelper = new Clas.GridBtnViewHelper();
 
@@ -275,13 +278,118 @@ namespace Water
         }
 
         private void txtAvalibleMinutes_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            // يسمح بالأرقام فقط + Backspace
-            if (!char.IsDigit(e.KeyChar) && e.KeyChar != (char)Keys.Back)
             {
-                e.Handled = true;
+                // يسمح بالأرقام فقط + Backspace
+                if (!char.IsDigit(e.KeyChar) && e.KeyChar != (char)Keys.Back)
+                {
+                    e.Handled = true;
+                }
+            }        
+
+        private void SearchPartner()
+        {
+            try
+            {
+                // الحصول على جميع العملاء
+                DataTable allPartners = partner.GET_ALL_PARTNERS();
+
+                if (allPartners == null || allPartners.Rows.Count == 0)
+                {
+                    MessageBox.Show("لا توجد بيانات شركاء", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                // البحث بناءً على الحقول المدخلة
+                string searchCode = txtPartnerCode.Text.Trim();
+                string searchName = txtPartnerName.Text.Trim();
+                string searchPhone = txtPhone.Text.Trim();
+
+                DataRow foundRow = null;
+
+                // البحث في البيانات
+                foreach (DataRow row in allPartners.Rows)
+                {
+                    bool matches = true;
+
+                    // البحث برقم الشريك
+                    if (!string.IsNullOrWhiteSpace(searchCode))
+                    {
+                        string customerId = row["id"] != DBNull.Value ? row["id"].ToString().Trim().ToUpper() : "";
+                        if (customerId.IndexOf(searchCode.Trim().ToUpper()) < 0)
+                        {
+                            matches = false;
+                        }
+                    }
+
+                    // البحث باسم الشريك
+                    if (matches && !string.IsNullOrWhiteSpace(searchName))
+                    {
+                        string partnerName = row["name"] != DBNull.Value ? row["name"].ToString().Trim().ToUpper() : "";
+                        if (partnerName.IndexOf(searchName.Trim().ToUpper()) < 0)
+                        {
+                            matches = false;
+                        }
+                    }
+
+                    // البحث برقم الهاتف
+                    if (matches && !string.IsNullOrWhiteSpace(searchPhone))
+                    {
+                        string partnerPhone = row["phone"] != DBNull.Value ? row["phone"].ToString().Trim().ToUpper() : "";
+                        if (partnerPhone.IndexOf(searchPhone.Trim().ToUpper()) < 0)
+                        {
+                            matches = false;
+                        }
+                    }
+
+                    // إذا تطابقت جميع الشروط
+                    if (matches)
+                    {
+                        foundRow = row;
+                        break;
+                    }
+                }
+
+                if (foundRow != null)
+                {
+                    LoadPartnerData(foundRow);
+                    SetViewMode();
+                    isSearchMode = false;
+                    
+                }
+                else
+                {
+                    MessageBox.Show("لم يتم العثور على شريك يطابق معايير البحث", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("حدث خطأ أثناء البحث: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void LoadFirstPartner()
+        {
+            try
+            {
+                DataTable allPartners = partner.GET_ALL_PARTNERS();
+
+                if (allPartners == null || allPartners.Rows.Count == 0)
+                {
+                    MessageBox.Show("لا توجد بيانات شركاء", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                // تحميل بيانات أول شريك
+                LoadPartnerData(allPartners.Rows[0]);
+                SetViewMode();
+                isSearchMode = false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("حدث خطأ أثناء تحميل البيانات: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }      
+
 
         private void btnExit_Click(object sender, EventArgs e)
         {            
@@ -291,11 +399,17 @@ namespace Water
                 if (result == DialogResult.Yes)
                 {
                     clear_PARTNER();
-                    isEditMode = false;
-                    
+                    isEditMode = false;                    
                     SetNormalMode();
                 }
                 // إذا اختار "لا"، لا نفعل شيئاً ونبقى في الشاشة
+            }
+            else if (isSearchMode)
+            {
+                clear_PARTNER();
+                isEditMode = false;
+                isSearchMode = false;
+                SetNormalMode();
             }
             else
             {                
@@ -309,6 +423,17 @@ namespace Water
             btnAdd.Enabled = true;
             btnEdit.Enabled = false;
             btnDelete.Enabled = false;
+            btnSearch.Enabled = true;
+
+            txtPartnerCode.ReadOnly = true;
+            txtPartnerCode.Enabled = true;
+            txtPartnerName.ReadOnly = true;
+            txtAllocatedHours.ReadOnly = true;
+            txtMinutes.ReadOnly = true;
+            txtPhone.ReadOnly = true;
+            txtAddress.ReadOnly = true;
+            txtNotes.ReadOnly = true;
+
         }
 
         private void SetViewMode()
@@ -318,6 +443,16 @@ namespace Water
             btnEdit.Enabled = true;
             btnDelete.Enabled = true;
             btnSave.Enabled = false;
+            btnSearch.Enabled = true;
+
+            txtPartnerCode.ReadOnly = true;
+            txtPartnerCode.Enabled = true;
+            txtPartnerName.ReadOnly = true;
+            txtAllocatedHours.ReadOnly = true;
+            txtMinutes.ReadOnly = true;
+            txtPhone.ReadOnly = true;
+            txtAddress.ReadOnly = true;
+            txtNotes.ReadOnly = true;
         }
 
         private void SetAddMode()
@@ -329,6 +464,15 @@ namespace Water
             btnAdd.Enabled = false;
             txtAllocatedHours.Text = "0";
             txtMinutes.Text = "0";
+            btnSearch.Enabled = false;
+
+            txtPartnerCode.ReadOnly = true;
+            txtPartnerName.ReadOnly = false;
+            txtAllocatedHours.ReadOnly = false;
+            txtMinutes.ReadOnly = false;
+            txtPhone.ReadOnly = false;
+            txtAddress.ReadOnly = false;
+            txtNotes.ReadOnly = false;
         }
 
         private void SetEditMode()
@@ -338,11 +482,21 @@ namespace Water
             btnView.Enabled = false;
             btnDelete.Enabled = false;
             btnEdit.Enabled = false;
+            btnSearch.Enabled = false;
+
+            txtPartnerCode.ReadOnly = true;
+            txtPartnerName.ReadOnly = false;
+            txtAllocatedHours.ReadOnly = false;
+            txtMinutes.ReadOnly = false;
+            txtPhone.ReadOnly = false;
+            txtAddress.ReadOnly = false;
+            txtNotes.ReadOnly = false;
         }
         private void SetDeleteMode()
         {                                   
             btnDelete.Enabled = false;
             btnEdit.Enabled = false;
+            //btnSearch.Enabled = true;
         }
 
         private void SetAfterSaveMode()
@@ -352,6 +506,64 @@ namespace Water
             btnAdd.Enabled = true;
             btnDelete.Enabled = false;
             btnEdit.Enabled = false;
+            btnSearch.Enabled = true;
+
+            txtPartnerCode.ReadOnly = true;
+            txtPartnerName.ReadOnly = true;
+            txtAllocatedHours.ReadOnly = true;
+            txtMinutes.ReadOnly = true;
+            txtPhone.ReadOnly = true;
+            txtAddress.ReadOnly = true;
+            txtNotes.ReadOnly = true;
+        }       
+        private void SetSearchMode()
+        {
+            btnSearch.Enabled = true;
+            btnView.Enabled = false;
+            btnAdd.Enabled = false;
+            btnEdit.Enabled = false;
+            btnDelete.Enabled = false;
+            btnSave.Enabled = false;
+
+            clear_PARTNER();
+
+            txtPartnerCode.ReadOnly = false;
+            txtPartnerCode.Enabled = true;
+            txtPartnerName.ReadOnly = false;
+            txtPhone.ReadOnly = false;
+            txtAddress.ReadOnly = false;
+            //txtNotes.ReadOnly = false;
+
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            DateTime currentClickTime = DateTime.Now;
+            TimeSpan timeSinceLastClick = currentClickTime - lastClickTime;
+
+            // التحقق من النقر المزدوج (مرتين متتابعتين)
+            if (timeSinceLastClick.TotalMilliseconds < DOUBLE_CLICK_INTERVAL)
+            {
+                // النقر المزدوج: إرجاع بيانات أول عميل
+                LoadFirstPartner();
+                lastClickTime = DateTime.MinValue; // إعادة تعيين
+                return;
+            }
+
+            lastClickTime = currentClickTime;
+
+            // إذا لم تكن في وضع البحث، تفعيل الحقول
+            if (!isSearchMode)
+            {
+                //EnableSearchFields();
+                SetSearchMode();
+                isSearchMode = true;
+            }
+            else
+            {
+                // البحث بناءً على الحقول المدخلة
+                SearchPartner();
+            }
         }
     }
 

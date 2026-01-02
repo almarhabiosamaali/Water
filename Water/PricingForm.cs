@@ -15,6 +15,9 @@ namespace Water
         private bool isEditMode = false;
         Clas.pricing pricing = new Clas.pricing();
         Clas.GridBtnViewHelper gridBtnViewHelper = new Clas.GridBtnViewHelper();
+        private bool isSearchMode = false; 
+        private DateTime lastClickTime = DateTime.MinValue; // آخر وقت للنقر
+        private const int DOUBLE_CLICK_INTERVAL = 500; 
         public PricingForm()
         {
             InitializeComponent();
@@ -44,6 +47,7 @@ namespace Water
         private void btnAdd_Click(object sender, EventArgs e)
         {
             isEditMode = false;
+            isSearchMode = false;
             clear_PRICING();
             try
             {
@@ -170,8 +174,7 @@ namespace Water
 
                     MessageBox.Show("تم حفظ بيانات مستوى السعر بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-
-                clear_PRICING();
+                isSearchMode = false;
                 isEditMode = false;                
                 SetAfterSaveMode();
             }
@@ -315,10 +318,17 @@ namespace Water
                 {
                     clear_PRICING();
                     isEditMode = false;
-                    
+                    isSearchMode = false;
                     SetNormalMode();
                 }
                 // إذا اختار "لا"، لا نفعل شيئاً ونبقى في الشاشة
+            }
+            else if (isSearchMode)
+            {
+                clear_PRICING();
+                isEditMode = false;
+                isSearchMode = false;
+                SetNormalMode();
             }
             else
             {                
@@ -332,6 +342,14 @@ namespace Water
             btnAdd.Enabled = true;
             btnEdit.Enabled = false;
             btnDelete.Enabled = false;
+            btnSearch.Enabled = true;
+
+            txtPriceLevelId.ReadOnly = true;
+            txtLevelName.ReadOnly = true;            
+            txtDieselHourPrice.ReadOnly = true;            
+            txtDieselUsedHour.ReadOnly = true;            
+            txtWaterHourPrice.ReadOnly = true;            
+            txtNotes.ReadOnly = true;
         }
          private void SetViewMode()
         {
@@ -340,6 +358,14 @@ namespace Water
             btnEdit.Enabled = true;
             btnDelete.Enabled = true;
             btnSave.Enabled = false;
+            btnSearch.Enabled = true;
+            
+            txtPriceLevelId.ReadOnly = true;
+            txtLevelName.ReadOnly = true;            
+            txtDieselHourPrice.ReadOnly = true;            
+            txtDieselUsedHour.ReadOnly = true;            
+            txtWaterHourPrice.ReadOnly = true;            
+            txtNotes.ReadOnly = true;
         }
 
         private void SetAddMode()
@@ -349,6 +375,15 @@ namespace Water
             btnEdit.Enabled = false;
             btnDelete.Enabled = false;
             btnAdd.Enabled = false;
+            btnSearch.Enabled = false;
+            
+            txtPriceLevelId.ReadOnly = false;
+            txtLevelName.ReadOnly = false;  
+            dtpPricingDate.Enabled = true;
+            txtDieselHourPrice.ReadOnly = false;            
+            txtDieselUsedHour.ReadOnly = false;            
+            txtWaterHourPrice.ReadOnly = false;            
+            txtNotes.ReadOnly = false;
         }
 
         private void SetEditMode()
@@ -358,6 +393,15 @@ namespace Water
             btnView.Enabled = false;
             btnDelete.Enabled = false;
             btnEdit.Enabled = false;
+            btnSearch.Enabled = false;
+
+            txtPriceLevelId.ReadOnly = true;
+            dtpPricingDate.Enabled = true;
+            txtLevelName.ReadOnly = false;            
+            txtDieselHourPrice.ReadOnly = false;            
+            txtDieselUsedHour.ReadOnly = false;            
+            txtWaterHourPrice.ReadOnly = false;            
+            txtNotes.ReadOnly = false;
         }
         private void SetDeleteMode()
         {                                   
@@ -367,12 +411,138 @@ namespace Water
 
         private void SetAfterSaveMode()
         {
-            btnSave.Enabled = false;
-            btnView.Enabled = true;
-            btnAdd.Enabled = true;
-            btnDelete.Enabled = false;
-            btnEdit.Enabled = false;
+            SetNormalMode();
         }
+        private void SetSearchMode()
+        {
+            btnSearch.Enabled = true;
+            btnView.Enabled = false;
+            btnAdd.Enabled = false;
+            btnEdit.Enabled = false;
+            btnDelete.Enabled = false;
+            btnSave.Enabled = false;
+
+            clear_PRICING();
+
+            txtPriceLevelId.ReadOnly = false;
+            txtLevelName.ReadOnly = false;
+
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            DateTime currentClickTime = DateTime.Now;
+            TimeSpan timeSinceLastClick = currentClickTime - lastClickTime;
+
+            // نقرتين متتاليتين → أول فاتورة
+            if (timeSinceLastClick.TotalMilliseconds < DOUBLE_CLICK_INTERVAL)
+            {
+                LoadFirstPricing();
+                lastClickTime = DateTime.MinValue;               
+                return;
+            }
+            lastClickTime = currentClickTime;
+            // أول نقرة → تفعيل وضع البحث
+            if (!isSearchMode)
+            {
+                SetSearchMode();
+                isSearchMode = true;
+                return;
+            }
+            // النقرة الثانية → البحث (بدون تحقق من customerId)
+            SearchPricing();
+
+        }       
+        private void SearchPricing()
+        {
+            try
+            {
+                // الحصول على جميع القيود
+                DataTable allPricings = pricing.GET_ALL_PRICINGS();
+
+                if (allPricings == null || allPricings.Rows.Count == 0)
+                {
+                    MessageBox.Show("لا توجد بيانات مستويات الأسعار", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                // البحث بناءً على الحقول المدخلة
+                string searchPricingLvlId = txtPriceLevelId.Text.Trim();
+                string searchLevelName = txtLevelName.Text.Trim();                          
+
+                DataRow foundRow = null;
+
+                // البحث في البيانات
+                foreach (DataRow row in allPricings.Rows)
+                {
+                    bool matches = true;
+
+                    // البحث برقم مستوى الأسعار
+                    if (!string.IsNullOrWhiteSpace(searchPricingLvlId))
+                    {
+                        string pricingLvlId = row["PriceLevleId"] != DBNull.Value ? row["PriceLevleId"].ToString().Trim().ToUpper() : "";
+                        if (pricingLvlId.IndexOf(searchPricingLvlId.Trim().ToUpper()) < 0)
+                        {
+                            matches = false;
+                        }
+                    }
+                    // البحث باسم المستوى
+                    if (matches && !string.IsNullOrWhiteSpace(searchLevelName))
+                    {
+                        string levelName = row["LevelName"] != DBNull.Value ? row["LevelName"].ToString().Trim().ToUpper() : "";
+                        if (levelName.IndexOf(searchLevelName.Trim().ToUpper()) < 0)
+                        {
+                            matches = false;
+                        }
+                    }
+                    // إذا تطابقت جميع الشروط
+                    if (matches)
+                    {
+                        foundRow = row;
+                        break;
+                    }
+                }
+
+                if (foundRow != null)
+                {
+                    LoadPricingData(foundRow);
+                    SetViewMode();
+                    isSearchMode = false;
+                    
+                }
+                else
+                {
+                    MessageBox.Show("لم يتم العثور على قيد يطابق معايير البحث", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("حدث خطأ أثناء البحث: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void LoadFirstPricing()
+        {
+            try
+            {
+                DataTable allPricings = pricing.GET_ALL_PRICINGS();
+
+                if (allPricings == null || allPricings.Rows.Count == 0)
+                {
+                    MessageBox.Show("لا توجد بيانات مستويات الأسعار", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                // تحميل بيانات أول مستوى أسعار
+                LoadPricingData(allPricings.Rows[0]);
+                SetViewMode();
+                isSearchMode = false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("حدث خطأ أثناء تحميل البيانات: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        } 
     }
 }
 

@@ -12,7 +12,9 @@ namespace Water
 {
     public partial class allMovementRPT : Form
     {
-        Clas.customer customer = new Clas.customer();
+        Clas.customer customer = new Clas.customer();        
+        Clas.partners partners = new Clas.partners();
+        Clas.account account = new Clas.account();
         Clas.period period = new Clas.period();
         Clas.GridBtnViewHelper gridBtnViewHelper = new Clas.GridBtnViewHelper();
         public allMovementRPT()
@@ -75,14 +77,76 @@ namespace Water
         }
         private void ShowCustomerList()
         {
-            DataTable dt = customer.GET_ALL_CUSTOMERS();
-            DataRow row = gridBtnViewHelper.Show(dt, "عرض  بيانات العملاء");
-            if (row != null)
+            try
             {
-                LoadCustomerData(row);
+                // التحقق من نوع الحساب المحدد
+                if (cmbAccountType.SelectedIndex == -1)
+                {
+                    MessageBox.Show("الرجاء اختيار نوع الحساب أولاً", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                string accountType = cmbAccountType.SelectedItem.ToString();
+                DataTable dt = null;
+                string formTitle = "";
+
+                // تحديد نوع البيانات بناءً على اختيار نوع الحساب
+                if (accountType == "عميل")
+                {
+                    dt = customer.GET_ALL_CUSTOMERS();
+                    //formTitle = "عرض بيانات العملاء";
+                    DataRow row = gridBtnViewHelper.Show(dt, "عرض  بيانات العملاء");
+                    if (row != null)
+                    {
+                        LoadCustomerData(row);
+                    }
+                }
+                else if (accountType == "شريك")
+                {
+                    dt = partners.GET_ALL_PARTNERS();
+                    //formTitle = "عرض بيانات الشركاء";
+                    DataRow row = gridBtnViewHelper.Show(dt, "عرض  بيانات الشركاء");
+                    if (row != null)
+                    {
+                        LoadPartnerData(row);
+                    }
+                }
+                else if (accountType == "حساب")
+                {
+                    dt = account.GET_ALL_ACCOUNTS();
+                    //formTitle = "عرض بيانات الحسابات";
+                    DataRow row = gridBtnViewHelper.Show(dt, "عرض  بيانات الحسابات");
+                    if (row != null)
+                    {
+                        LoadAccountData(row);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("نوع الحساب غير معروف", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                if (dt == null || dt.Rows.Count == 0)
+                {
+                    MessageBox.Show("لا توجد بيانات للعرض", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }               
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("حدث خطأ أثناء عرض البيانات: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         private void LoadCustomerData(DataRow row)
+        {
+            txtCustNo.Text = row["id"].ToString();
+        }
+        private void LoadPartnerData(DataRow row)
+        {
+            txtCustNo.Text = row["id"].ToString();
+        }
+        private void LoadAccountData(DataRow row)
         {
             txtCustNo.Text = row["id"].ToString();
         }

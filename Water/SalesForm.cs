@@ -15,6 +15,9 @@ namespace Water
     public partial class SalesForm : Form
     {
         private bool isEditMode = false;
+        private bool isSearchMode = false; 
+        private DateTime lastClickTime = DateTime.MinValue; // آخر وقت للنقر
+        private const int DOUBLE_CLICK_INTERVAL = 500;
         private bool isLoadingCustomerFromList = false; // للتحكم في عدم فتح القائمة تلقائياً عند تحميل البيانات
         private bool isLoadingPriceLevel = false; // للتحكم في عدم استدعاء الحدث تلقائياً عند تحميل بيانات التسعيرة
         Clas.sales sal = new Clas.sales();
@@ -58,7 +61,7 @@ namespace Water
             txtPriceLevel.Leave += txtPriceLevel_Leave;
 
             // تهيئة ComboBox نوع العميل
-            if (cmbCustomerType != null)
+            if (cmbCustomerType == null)
             {
                 cmbCustomerType.SelectedIndex = 0; 
             }
@@ -337,7 +340,7 @@ namespace Water
             }
         }
 
-            private void txtDecimal_KeyPress(object sender, KeyPressEventArgs e)
+        private void txtDecimal_KeyPress(object sender, KeyPressEventArgs e)
             {
                 // يسمح بالأرقام والنقطة والـ Backspace فقط
                 if (!char.IsDigit(e.KeyChar) && e.KeyChar != '.' && e.KeyChar != (char)Keys.Back)
@@ -442,6 +445,11 @@ namespace Water
 
         private void txtCustomerId_Leave(object sender, EventArgs e)
         {
+            
+            if(isSearchMode)
+            {
+                return;            
+            }
             // إذا كان يتم تحميل البيانات من القائمة، لا نتحقق مرة أخرى
             if (isLoadingCustomerFromList)
                 return;
@@ -481,7 +489,7 @@ namespace Water
                 MessageBox.Show("حدث خطأ أثناء التحقق من رقم العميل: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 txtCustomerId.Focus();
             }
-        }
+        } 
         private void ShowCustomersList()
         {
             try
@@ -566,21 +574,7 @@ namespace Water
                         isLoadingCustomerFromList = false; // إعادة تفعيل التحقق
                         viewForm.Close();
                     }
-                };
-
-                // إضافة حدث النقر مرة واحدة (بدلاً من النقر المزدوج فقط)
-               /*  dgv.CellClick += (s, args) =>
-                {
-                    if (args.RowIndex >= 0)
-                    {
-                        DataRow row = dt.Rows[args.RowIndex];
-                        isLoadingCustomerFromList = true; // تعطيل التحقق التلقائي
-                        LoadCustomerDataToBill(row);
-                        isLoadingCustomerFromList = false; // إعادة تفعيل التحقق
-                        viewForm.Close();
-                    }
-                }; */
-
+                };               
                 viewForm.Controls.Add(dgv);
                 viewForm.ShowDialog();
             }
@@ -796,11 +790,6 @@ namespace Water
                 MessageBox.Show("حدث خطأ أثناء التحقق من مستوى التسعيرة: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
-
-
-
-
         private void btnView_Click(object sender, EventArgs e)
         {          
 
@@ -914,12 +903,12 @@ namespace Water
                 }
 
                 // التحقق من أن وقت النهاية بعد وقت البداية
-                 if (dtpEndTime.Value < dtpStartTime.Value)
+                if (dtpEndTime.Value < dtpStartTime.Value)
                 {
                     MessageBox.Show("وقت النهاية يجب أن يكون بعد وقت البداية", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-                
+
                 // التحقق من بيانات الشركاء قبل حفظ الفاتورة
                 ValidatePartnersHoursData();
 
@@ -981,15 +970,15 @@ namespace Water
                 else
                 {
                     // إضافة فاتورة جديدة
-                    sal.ADD_SALES(
+                sal.ADD_SALES(
                         txtSalesId.Text.Trim(),
                         "1", // doc_type = 1
-                        txtPeriodId.Text.Trim(),
-                        txtCustomerId.Text.Trim(),
+                    txtPeriodId.Text.Trim(),
+                    txtCustomerId.Text.Trim(),
                         txtCustomerName != null ? txtCustomerName.Text.Trim() : "", // cus_part_name
                         cusPartType, // cus_part_type
-                        dtpStartTime.Value,
-                        dtpEndTime.Value,
+                    dtpStartTime.Value,
+                    dtpEndTime.Value,
                         string.IsNullOrWhiteSpace(txtHours.Text) ? 0 : Convert.ToDouble(txtHours.Text),
                         string.IsNullOrWhiteSpace(txtMinutes.Text) ? 0 : Convert.ToDouble(txtMinutes.Text),
                         string.IsNullOrWhiteSpace(txtWaterHourPrice.Text) ? 0 : Convert.ToDouble(txtWaterHourPrice.Text),
@@ -1015,7 +1004,7 @@ namespace Water
                     SavePartnersHoursFromGrid();
                 }
 
-                clear_SALES();
+                //clear_SALES();
                 isEditMode = false;
                 SetAfterSaveMode();              
                 tabControl1.SelectedIndex = 0;               
@@ -1129,7 +1118,7 @@ namespace Water
             }
             else
             {
-                txtPeriodId.Clear();
+            txtPeriodId.Clear();
                 if (txtPeriodStartDate != null)
                     txtPeriodStartDate.Clear();
                 if (txtPeriodEndDate != null)
@@ -1297,10 +1286,10 @@ namespace Water
         private void clear_SALES()
         {
             txtSalesId.Clear();
-            cmbBillType.SelectedIndex = -1;
+            cmbBillType.SelectedIndex = -1;                       
             if (cmbCustomerType != null)
             {
-                cmbCustomerType.SelectedIndex = 0;
+                cmbCustomerType.SelectedIndex = -1;
             }
             txtCustomerId.Clear();
             if (txtCustomerName != null)
@@ -1339,6 +1328,10 @@ namespace Water
             if (chkBxCalc != null)
             {
                 chkBxCalc.Checked = false;
+            }
+            if(chkManwalTime != null)
+            {
+                chkManwalTime.Checked = false;
             }
             txtTotalHoursFromGrid.Clear();
             txtTotalMinutesFromGrid.Clear();
@@ -1913,7 +1906,6 @@ namespace Water
                 throw;
             }
         }
-
         private void UpdatePartnersHoursFromGrid()
         {
             try
@@ -2106,7 +2098,6 @@ namespace Water
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private void DateTimePicker_ValueChanged(object sender, EventArgs e)
         {
             // حساب الفرق بين وقت البداية ووقت النهاية 
@@ -2127,8 +2118,6 @@ namespace Water
                     // إعادة حساب الإجماليات (إذا عندك منطق آخر)
                     CalculateTotals_TextChanged(null, null);
         }
-
-
         public bool CalculateCustomWorkTime(DateTime start, DateTime end,
                                             out int hours, out int minutes)
             {
@@ -2153,11 +2142,6 @@ namespace Water
 
                 return true;
             }
-
-
-
-        
-
 
         private double GetDieselUsedInHour()
         {
@@ -2273,7 +2257,6 @@ namespace Water
                 return 0;
             }
         }
-
         // حساب إجمالي الديزل
         private double CalculateDieselTotal()
         {
@@ -2757,8 +2740,6 @@ namespace Water
             
             
         }
-
-
         private void calculat_Distribution (double total_water)
         {
             double hours = string.IsNullOrWhiteSpace(txtHours.Text) ? 0 : Convert.ToDouble(txtHours.Text);
@@ -2771,7 +2752,6 @@ namespace Water
             txtWaterMinutesPrice.Text = m_price.ToString();
 
         }
-
         private void chkBxCalc_CheckedChanged(object sender, EventArgs e)
         {
             if (!chkBxCalc.Checked)
@@ -2789,7 +2769,6 @@ namespace Water
            // btnDstAmount.Visible = chkBxCalc.Checked;
             //txtPriceLevel.Clear();
         }
-
         private void btnExit_Click(object sender, EventArgs e)
         {
            
@@ -2805,18 +2784,26 @@ namespace Water
                 }
                 // إذا اختار "لا"، لا نفعل شيئاً ونبقى في الشاشة
             }
+            else if (isSearchMode)
+            {
+                clear_SALES();
+                isEditMode = false;
+                isSearchMode = false;
+                SetNormalMode();
+            }
             else
             {                
                 this.Close();
             }
         }
-          private void SetNormalMode()
+        private void SetNormalMode()
         {
             btnSave.Enabled = false;
             btnView.Enabled = true;
             btnAdd.Enabled = true;
             btnEdit.Enabled = false;
             btnDelete.Enabled = false;
+            btnSearch.Enabled = true;
 
             txtCustomerId.ReadOnly = true;
             txtPeriodId.ReadOnly = true;
@@ -2826,7 +2813,6 @@ namespace Water
             chkBxCalc.Enabled = false;
             chkManwalTime.Enabled = false;
         }
-
         private void SetViewMode()
         {
             btnView.Enabled = true;
@@ -2834,6 +2820,7 @@ namespace Water
             btnEdit.Enabled = true;
             btnDelete.Enabled = true;
             btnSave.Enabled = false;
+            btnSearch.Enabled = true;
 
             txtCustomerId.ReadOnly = true;
             txtPeriodId.ReadOnly = true;
@@ -2843,7 +2830,6 @@ namespace Water
              chkBxCalc.Enabled = false;
             chkManwalTime.Enabled = false;
         }
-
         private void SetAddMode()
         {
             btnSave.Enabled = true;
@@ -2851,6 +2837,7 @@ namespace Water
             btnEdit.Enabled = false;
             btnDelete.Enabled = false;
             btnAdd.Enabled = false;
+            btnSearch.Enabled = false;
 
             txtCustomerId.ReadOnly = false;
             txtPeriodId.ReadOnly = false;
@@ -2862,7 +2849,6 @@ namespace Water
              chkBxCalc.Enabled = true;
             chkManwalTime.Enabled = true;
         }
-
         private void SetEditMode()
         {
             btnAdd.Enabled = false;
@@ -2870,7 +2856,8 @@ namespace Water
             btnView.Enabled = false;
             btnDelete.Enabled = false;
             btnEdit.Enabled = false;
-
+            btnSearch.Enabled = false;
+            
             txtCustomerId.ReadOnly = true;
             txtPeriodId.ReadOnly = false;
             txtPriceLevel.ReadOnly = false;
@@ -2878,17 +2865,36 @@ namespace Water
             txtPaidAmount.ReadOnly = false;
              chkBxCalc.Enabled = true;
             chkManwalTime.Enabled = true;
-        }
+        }       
+        private void SetSearchMode()
+        {
+            btnSearch.Enabled = true;
+            btnView.Enabled = false;
+            btnAdd.Enabled = false;
+            btnEdit.Enabled = false;
+            btnDelete.Enabled = false;
+            btnSave.Enabled = false;
 
+            clear_SALES();
+
+            txtCustomerId.ReadOnly = false;
+            txtPeriodId.ReadOnly = false;
+            txtPriceLevel.ReadOnly = false;
+            txtNote.ReadOnly = false;
+            txtPaidAmount.ReadOnly = false;
+            txtSalesId.ReadOnly = false;            
+            txtCustomerName.ReadOnly = false;
+            chkBxCalc.Enabled = true;
+            chkManwalTime.Enabled = true;
+        }
         private void SetAfterSaveMode()
         {          
             SetNormalMode();
         }
-          private void SetDeleteMode()
+        private void SetDeleteMode()
         {    
                SetNormalMode();
         }
-
         private void chkManwalTime_CheckedChanged(object sender, EventArgs e)
         {
             if(chkManwalTime.Checked)
@@ -2902,6 +2908,134 @@ namespace Water
                 txtMinutes.ReadOnly = true;
             }
         }
+        private void btnSearch_Click(object sender, EventArgs e)
+        {           
+            DateTime currentClickTime = DateTime.Now;
+            TimeSpan timeSinceLastClick = currentClickTime - lastClickTime;
+
+            // نقرتين متتاليتين → أول فاتورة
+            if (timeSinceLastClick.TotalMilliseconds < DOUBLE_CLICK_INTERVAL)
+            {
+                LoadFirstSales();
+                lastClickTime = DateTime.MinValue;               
+                return;
+            }
+
+            lastClickTime = currentClickTime;
+            // أول نقرة → تفعيل وضع البحث
+            if (!isSearchMode)
+            {
+                SetSearchMode();
+                isSearchMode = true;
+                return;
+            }
+            // النقرة الثانية → البحث (بدون تحقق من customerId)
+            SearchSales();
+        }
+
+        private void SearchSales()
+        {
+            try
+            {
+                // الحصول على جميع الفواتير
+                DataTable allSales = sal.GET_ALL_SALES();
+
+                if (allSales == null || allSales.Rows.Count == 0)
+                {
+                    MessageBox.Show("لا توجد فواتير المبيعات", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                // البحث بناءً على الحقول المدخلة
+                string searchSalesId = txtSalesId.Text.Trim();
+                string searchCustomerId = txtCustomerId.Text.Trim();
+                string searchCustomerName = txtCustomerName.Text.Trim();
+
+                DataRow foundRow = null;
+
+                // البحث في البيانات
+                foreach (DataRow row in allSales.Rows)
+                {
+                    bool matches = true;
+
+                    // البحث برقم الفاتورة
+                    if (!string.IsNullOrWhiteSpace(searchSalesId))
+                    {
+                        string salesId = row["bill_no"] != DBNull.Value ? row["bill_no"].ToString().Trim().ToUpper() : "";
+                        if (salesId.IndexOf(searchSalesId.Trim().ToUpper()) < 0)
+                        {
+                            matches = false;
+                        }
+                    }
+
+                    // البحث برقم العميل
+                    if (matches && !string.IsNullOrWhiteSpace(searchCustomerId))
+                    {
+                        string customerId = row["cus_part_no"] != DBNull.Value ? row["cus_part_no"].ToString().Trim().ToUpper() : "";
+                        if (customerId.IndexOf(searchCustomerId.Trim().ToUpper()) < 0)
+                        {
+                            matches = false;
+                        }
+                    }
+
+                    // البحث باسم العميل
+                    if (matches && !string.IsNullOrWhiteSpace(searchCustomerName))
+                    {
+                        string customerName = row["cus_part_name"] != DBNull.Value ? row["cus_part_name"].ToString().Trim().ToUpper() : "";
+                        if (customerName.IndexOf(searchCustomerName.Trim().ToUpper()) < 0)
+                        {
+                            matches = false;
+                        }
+                    }
+
+                    // إذا تطابقت جميع الشروط
+                    if (matches)
+                    {
+                        foundRow = row;
+                        break;
+                    }
+                }
+
+                if (foundRow != null)
+                {
+                    LoadSalesData(foundRow);
+                    SetViewMode();
+                    isSearchMode = false;
+                    
+                }
+                else
+                {
+                    MessageBox.Show("لم يتم العثور على فاتورة يطابق معايير البحث", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("حدث خطأ أثناء البحث: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void LoadFirstSales()
+        {
+            try
+            {
+                DataTable allSales = sal.GET_ALL_SALES();
+
+                if (allSales == null || allSales.Rows.Count == 0)
+                {
+                    MessageBox.Show("لا توجد فواتير المبيعات", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                // تحميل بيانات أول فاتورة
+                LoadSalesData(allSales.Rows[0]);
+                SetViewMode();
+                isSearchMode = false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("حدث خطأ أثناء تحميل البيانات: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        } 
     }
 }
 

@@ -30,8 +30,8 @@ namespace Water
         public Form1()
         {
             InitializeComponent();
-            //InitializeMainTree();
-            //this.Load += Form1_MdiChildActivate;
+           // InitializeMainTree();
+           // this.Load += Form1_MdiChildActivate;
             this.Load += Form1_Load;
         }
 
@@ -97,6 +97,8 @@ namespace Water
         private void InitializeMainTree()
         {
             treeViewMain.Nodes.Clear();
+            treeViewMain.HideSelection = false;
+            treeViewMain.Focus();
             
             // عقدة التهيئة
             TreeNode initNode = new TreeNode("التهيئة");
@@ -326,7 +328,7 @@ namespace Water
         }
 
         // حدث اختيار عقدة في الشجرة الرئيسية
-        private void treeViewMain_AfterSelect(object sender, TreeViewEventArgs e)
+      /*  private void treeViewMain_AfterSelect(object sender, TreeViewEventArgs e)
         {
             if (e.Node.Tag == null)
                 return;
@@ -395,7 +397,8 @@ namespace Water
                 OpenFormAsMDI(formToOpen, null);
             }
         }
-
+        */
+       
         // أحداث إضافية للوصول السريع من KPI Cards
         private void pnlPartnersCard_Click(object sender, EventArgs e)
         {
@@ -409,7 +412,7 @@ namespace Water
                         if (childNode.Tag != null && childNode.Tag.ToString() == "PARTNERS")
                         {
                             treeViewMain.SelectedNode = childNode;
-                            treeViewMain_AfterSelect(treeViewMain, new TreeViewEventArgs(childNode));
+                           // treeViewMain_AfterSelect(treeViewMain, new TreeViewEventArgs(childNode));
                             break;
                         }
                     }
@@ -430,7 +433,7 @@ namespace Water
                         if (childNode.Tag != null && childNode.Tag.ToString() == "CUSTOMERS")
                         {
                             treeViewMain.SelectedNode = childNode;
-                            treeViewMain_AfterSelect(treeViewMain, new TreeViewEventArgs(childNode));
+                            //treeViewMain_AfterSelect(treeViewMain, new TreeViewEventArgs(childNode));
                             break;
                         }
                     }
@@ -451,7 +454,7 @@ namespace Water
                         if (childNode.Tag != null && childNode.Tag.ToString() == "SALES_INVOICE")
                         {
                             treeViewMain.SelectedNode = childNode;
-                            treeViewMain_AfterSelect(treeViewMain, new TreeViewEventArgs(childNode));
+                            //treeViewMain_AfterSelect(treeViewMain, new TreeViewEventArgs(childNode));
                             break;
                         }
                     }
@@ -463,6 +466,86 @@ namespace Water
         private void btnExit_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void treeViewMain_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                ExecuteSelectedNode();
+                e.Handled = true;
+            }
+        }
+
+        private void ExecuteSelectedNode()
+        {
+            if (treeViewMain.SelectedNode == null)
+                return;
+
+            string tag = treeViewMain.SelectedNode.Tag?.ToString();
+            
+            Form formToOpen = null;
+            switch (tag)
+            {
+                // التهيئة
+                case "PERIOD":
+                    formToOpen = new PeriodForm();
+                    break;
+                case "PRICING":
+                    formToOpen = new PricingForm();
+                    break;
+                case "PARTNERS":
+                    formToOpen = new PartnersForm();
+                    break;
+                case "CUSTOMERS":
+                    formToOpen = new CustomerForm();
+                    break;
+                case "ACCOUNTS":
+                    formToOpen = new AccountForm();
+                    break;
+                
+                // العمليات
+                case "SALES_INVOICE":
+                    formToOpen = new SalesForm();
+                    break;
+                case "VOUCHER":
+                    formToOpen = new ExpenseForm();
+                    break;
+                case "DOWNTIME":
+                    formToOpen = new DowntimeForm();
+                    break;
+                case "COST_ALLOCATION":
+                    formToOpen = new PartnerCostForm();
+                    break;
+                
+                // التقارير
+                case "PARTNER_REPORT":
+                    formToOpen = new partnerMovmentRPT();
+                    break;
+                case "PARTNER_REPORT1":
+                    formToOpen = new partnerMovmentRPTDtl1();
+                    break;
+                case "CUSTOMER_REPORT":
+                    formToOpen = new customerMovementRPT();
+                    break;
+                case "MOVEMENT_REPORT":
+                    formToOpen = new allMovementRPT();
+                    break;
+                case "SALES_REPORT":
+                    formToOpen = new salesBillDTLRPT();
+                    break;
+            }
+
+            if (formToOpen != null)
+            {
+                OpenFormAsMDI(formToOpen, null);
+            }  
+        }
+
+        private void treeViewMain_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            treeViewMain.SelectedNode = e.Node;
+            ExecuteSelectedNode();
         }
     }
 }

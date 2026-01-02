@@ -38,11 +38,13 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.btnExit = new System.Windows.Forms.Button();
+            this.cmbAccountType = new System.Windows.Forms.ComboBox();
+            this.lblAccountType = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txtCustNo
             // 
-            this.txtCustNo.Location = new System.Drawing.Point(159, 93);
+            this.txtCustNo.Location = new System.Drawing.Point(159, 125);
             this.txtCustNo.Name = "txtCustNo";
             this.txtCustNo.Size = new System.Drawing.Size(142, 24);
             this.txtCustNo.TabIndex = 1;
@@ -60,7 +62,7 @@
             // 
             // txtPeriodId
             // 
-            this.txtPeriodId.Location = new System.Drawing.Point(425, 100);
+            this.txtPeriodId.Location = new System.Drawing.Point(425, 132);
             this.txtPeriodId.Name = "txtPeriodId";
             this.txtPeriodId.Size = new System.Drawing.Size(142, 24);
             this.txtPeriodId.TabIndex = 2;
@@ -69,7 +71,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 96);
+            this.label1.Location = new System.Drawing.Point(12, 128);
             this.label1.Name = "label1";
             this.label1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.label1.Size = new System.Drawing.Size(132, 17);
@@ -79,7 +81,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(345, 100);
+            this.label2.Location = new System.Drawing.Point(345, 132);
             this.label2.Name = "label2";
             this.label2.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.label2.Size = new System.Drawing.Size(74, 17);
@@ -89,7 +91,7 @@
             // dtpFromDate
             // 
             this.dtpFromDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpFromDate.Location = new System.Drawing.Point(159, 163);
+            this.dtpFromDate.Location = new System.Drawing.Point(159, 195);
             this.dtpFromDate.Name = "dtpFromDate";
             this.dtpFromDate.RightToLeftLayout = true;
             this.dtpFromDate.Size = new System.Drawing.Size(142, 24);
@@ -99,7 +101,7 @@
             // dtpToDate
             // 
             this.dtpToDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpToDate.Location = new System.Drawing.Point(425, 157);
+            this.dtpToDate.Location = new System.Drawing.Point(425, 189);
             this.dtpToDate.Name = "dtpToDate";
             this.dtpToDate.RightToLeftLayout = true;
             this.dtpToDate.Size = new System.Drawing.Size(142, 24);
@@ -108,7 +110,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(381, 163);
+            this.label3.Location = new System.Drawing.Point(381, 195);
             this.label3.Name = "label3";
             this.label3.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.label3.Size = new System.Drawing.Size(38, 17);
@@ -118,7 +120,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(70, 169);
+            this.label4.Location = new System.Drawing.Point(70, 201);
             this.label4.Name = "label4";
             this.label4.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.label4.Size = new System.Drawing.Size(74, 17);
@@ -138,11 +140,39 @@
             this.btnExit.UseVisualStyleBackColor = false;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
+            // cmbAccountType
+            // 
+            this.cmbAccountType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbAccountType.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbAccountType.FormattingEnabled = true;
+            this.cmbAccountType.Items.AddRange(new object[] {
+            "عميل",
+            "شريك",
+            "حساب"});
+            this.cmbAccountType.Location = new System.Drawing.Point(159, 76);
+            this.cmbAccountType.Name = "cmbAccountType";
+            this.cmbAccountType.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.cmbAccountType.Size = new System.Drawing.Size(147, 28);
+            this.cmbAccountType.TabIndex = 26;
+            // 
+            // lblAccountType
+            // 
+            this.lblAccountType.AutoSize = true;
+            this.lblAccountType.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAccountType.Location = new System.Drawing.Point(51, 79);
+            this.lblAccountType.Name = "lblAccountType";
+            this.lblAccountType.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.lblAccountType.Size = new System.Drawing.Size(81, 20);
+            this.lblAccountType.TabIndex = 27;
+            this.lblAccountType.Text = "نوع الحساب:";
+            // 
             // allMovementRPT
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(807, 422);
+            this.Controls.Add(this.cmbAccountType);
+            this.Controls.Add(this.lblAccountType);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label4);
@@ -175,5 +205,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button btnExit;
+        private System.Windows.Forms.ComboBox cmbAccountType;
+        private System.Windows.Forms.Label lblAccountType;
     }
 }

@@ -55,13 +55,14 @@ namespace Water
             this.btnExit = new System.Windows.Forms.Button();
             this.txtStatment = new System.Windows.Forms.TextBox();
             this.lblStatment = new System.Windows.Forms.Label();
+            this.btnSearch = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblPeriodCode
             // 
             this.lblPeriodCode.AutoSize = true;
             this.lblPeriodCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPeriodCode.Location = new System.Drawing.Point(32, 109);
+            this.lblPeriodCode.Location = new System.Drawing.Point(45, 106);
             this.lblPeriodCode.Name = "lblPeriodCode";
             this.lblPeriodCode.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblPeriodCode.Size = new System.Drawing.Size(67, 20);
@@ -84,7 +85,7 @@ namespace Water
             // 
             this.lblStartDate.AutoSize = true;
             this.lblStartDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblStartDate.Location = new System.Drawing.Point(32, 149);
+            this.lblStartDate.Location = new System.Drawing.Point(32, 173);
             this.lblStartDate.Name = "lblStartDate";
             this.lblStartDate.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblStartDate.Size = new System.Drawing.Size(80, 20);
@@ -93,9 +94,10 @@ namespace Water
             // 
             // dtpStartDate
             // 
+            this.dtpStartDate.Enabled = false;
             this.dtpStartDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dtpStartDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpStartDate.Location = new System.Drawing.Point(137, 146);
+            this.dtpStartDate.Location = new System.Drawing.Point(137, 170);
             this.dtpStartDate.Name = "dtpStartDate";
             this.dtpStartDate.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.dtpStartDate.RightToLeftLayout = true;
@@ -106,7 +108,7 @@ namespace Water
             // 
             this.lblEndDate.AutoSize = true;
             this.lblEndDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblEndDate.Location = new System.Drawing.Point(418, 148);
+            this.lblEndDate.Location = new System.Drawing.Point(418, 172);
             this.lblEndDate.Name = "lblEndDate";
             this.lblEndDate.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblEndDate.Size = new System.Drawing.Size(81, 20);
@@ -115,9 +117,11 @@ namespace Water
             // 
             // dtpEndDate
             // 
+            this.dtpEndDate.CustomFormat = "";
+            this.dtpEndDate.Enabled = false;
             this.dtpEndDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dtpEndDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpEndDate.Location = new System.Drawing.Point(523, 145);
+            this.dtpEndDate.Location = new System.Drawing.Point(523, 169);
             this.dtpEndDate.Name = "dtpEndDate";
             this.dtpEndDate.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.dtpEndDate.RightToLeftLayout = true;
@@ -128,7 +132,7 @@ namespace Water
             // 
             this.lblBaseDays.AutoSize = true;
             this.lblBaseDays.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblBaseDays.Location = new System.Drawing.Point(28, 199);
+            this.lblBaseDays.Location = new System.Drawing.Point(21, 220);
             this.lblBaseDays.Name = "lblBaseDays";
             this.lblBaseDays.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblBaseDays.Size = new System.Drawing.Size(91, 20);
@@ -139,7 +143,7 @@ namespace Water
             // 
             this.lblDowntimeHours.AutoSize = true;
             this.lblDowntimeHours.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDowntimeHours.Location = new System.Drawing.Point(27, 243);
+            this.lblDowntimeHours.Location = new System.Drawing.Point(18, 264);
             this.lblDowntimeHours.Name = "lblDowntimeHours";
             this.lblDowntimeHours.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblDowntimeHours.Size = new System.Drawing.Size(94, 20);
@@ -149,8 +153,9 @@ namespace Water
             // txtDowntimeHours
             // 
             this.txtDowntimeHours.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtDowntimeHours.Location = new System.Drawing.Point(132, 240);
+            this.txtDowntimeHours.Location = new System.Drawing.Point(132, 264);
             this.txtDowntimeHours.Name = "txtDowntimeHours";
+            this.txtDowntimeHours.ReadOnly = true;
             this.txtDowntimeHours.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtDowntimeHours.Size = new System.Drawing.Size(263, 26);
             this.txtDowntimeHours.TabIndex = 9;
@@ -161,18 +166,18 @@ namespace Water
             // 
             this.lblExtendedDays.AutoSize = true;
             this.lblExtendedDays.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblExtendedDays.Location = new System.Drawing.Point(27, 284);
+            this.lblExtendedDays.Location = new System.Drawing.Point(33, 305);
             this.lblExtendedDays.Name = "lblExtendedDays";
             this.lblExtendedDays.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.lblExtendedDays.Size = new System.Drawing.Size(69, 20);
+            this.lblExtendedDays.Size = new System.Drawing.Size(79, 20);
             this.lblExtendedDays.TabIndex = 10;
-            this.lblExtendedDays.Text = "أيام التوقف";
+            this.lblExtendedDays.Text = "أيام التوقف :";
             // 
             // lblTotalHours
             // 
             this.lblTotalHours.AutoSize = true;
             this.lblTotalHours.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTotalHours.Location = new System.Drawing.Point(418, 196);
+            this.lblTotalHours.Location = new System.Drawing.Point(418, 220);
             this.lblTotalHours.Name = "lblTotalHours";
             this.lblTotalHours.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblTotalHours.Size = new System.Drawing.Size(103, 20);
@@ -183,7 +188,7 @@ namespace Water
             // 
             this.btnView.BackColor = System.Drawing.Color.White;
             this.btnView.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnView.Image = global::Water.Properties.Resources.icons8_search_24_8;
+            this.btnView.Image = global::Water.Properties.Resources.icons8_view_24;
             this.btnView.Location = new System.Drawing.Point(244, 51);
             this.btnView.Name = "btnView";
             this.btnView.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
@@ -253,8 +258,9 @@ namespace Water
             // txtBaseDays
             // 
             this.txtBaseDays.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBaseDays.Location = new System.Drawing.Point(133, 193);
+            this.txtBaseDays.Location = new System.Drawing.Point(133, 217);
             this.txtBaseDays.Name = "txtBaseDays";
+            this.txtBaseDays.ReadOnly = true;
             this.txtBaseDays.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtBaseDays.Size = new System.Drawing.Size(262, 26);
             this.txtBaseDays.TabIndex = 7;
@@ -264,8 +270,9 @@ namespace Water
             // txtDownDays
             // 
             this.txtDownDays.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtDownDays.Location = new System.Drawing.Point(132, 281);
+            this.txtDownDays.Location = new System.Drawing.Point(132, 305);
             this.txtDownDays.Name = "txtDownDays";
+            this.txtDownDays.ReadOnly = true;
             this.txtDownDays.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtDownDays.Size = new System.Drawing.Size(262, 26);
             this.txtDownDays.TabIndex = 11;
@@ -276,8 +283,9 @@ namespace Water
             // txtTotalHours
             // 
             this.txtTotalHours.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtTotalHours.Location = new System.Drawing.Point(523, 193);
+            this.txtTotalHours.Location = new System.Drawing.Point(523, 217);
             this.txtTotalHours.Name = "txtTotalHours";
+            this.txtTotalHours.ReadOnly = true;
             this.txtTotalHours.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtTotalHours.Size = new System.Drawing.Size(262, 26);
             this.txtTotalHours.TabIndex = 13;
@@ -287,7 +295,7 @@ namespace Water
             // txtWorkingHours
             // 
             this.txtWorkingHours.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtWorkingHours.Location = new System.Drawing.Point(563, 281);
+            this.txtWorkingHours.Location = new System.Drawing.Point(563, 305);
             this.txtWorkingHours.Name = "txtWorkingHours";
             this.txtWorkingHours.ReadOnly = true;
             this.txtWorkingHours.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
@@ -300,7 +308,7 @@ namespace Water
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(419, 284);
+            this.label2.Location = new System.Drawing.Point(419, 308);
             this.label2.Name = "label2";
             this.label2.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.label2.Size = new System.Drawing.Size(126, 20);
@@ -334,8 +342,9 @@ namespace Water
             // 
             // txtStatment
             // 
-            this.txtStatment.Location = new System.Drawing.Point(132, 332);
+            this.txtStatment.Location = new System.Drawing.Point(137, 140);
             this.txtStatment.Name = "txtStatment";
+            this.txtStatment.ReadOnly = true;
             this.txtStatment.Size = new System.Drawing.Size(654, 24);
             this.txtStatment.TabIndex = 24;
             // 
@@ -343,18 +352,31 @@ namespace Water
             // 
             this.lblStatment.AutoSize = true;
             this.lblStatment.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblStatment.Location = new System.Drawing.Point(32, 332);
+            this.lblStatment.Location = new System.Drawing.Point(64, 140);
             this.lblStatment.Name = "lblStatment";
             this.lblStatment.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.lblStatment.Size = new System.Drawing.Size(38, 20);
+            this.lblStatment.Size = new System.Drawing.Size(48, 20);
             this.lblStatment.TabIndex = 25;
-            this.lblStatment.Text = "البيان";
+            this.lblStatment.Text = "البيان :";
+            // 
+            // btnSearch
+            // 
+            this.btnSearch.BackColor = System.Drawing.Color.White;
+            this.btnSearch.Image = global::Water.Properties.Resources.icons8_search_24_8;
+            this.btnSearch.Location = new System.Drawing.Point(168, 51);
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Size = new System.Drawing.Size(70, 40);
+            this.btnSearch.TabIndex = 93;
+            this.toolTip1.SetToolTip(this.btnSearch, "بحث");
+            this.btnSearch.UseVisualStyleBackColor = false;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
             // PeriodForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(931, 405);
+            this.Controls.Add(this.btnSearch);
             this.Controls.Add(this.lblStatment);
             this.Controls.Add(this.txtStatment);
             this.Controls.Add(this.btnExit);
@@ -421,6 +443,7 @@ namespace Water
         private System.Windows.Forms.Button btnExit;
         private System.Windows.Forms.TextBox txtStatment;
         private System.Windows.Forms.Label lblStatment;
+        private System.Windows.Forms.Button btnSearch;
     }
 }
 

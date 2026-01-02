@@ -43,6 +43,7 @@ namespace Water
             this.label1 = new System.Windows.Forms.Label();
             this.btnExit = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.btnSearch = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblAccountCode
@@ -58,10 +59,10 @@ namespace Water
             // 
             // txtAccountCode
             // 
-            this.txtAccountCode.Enabled = false;
             this.txtAccountCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtAccountCode.Location = new System.Drawing.Point(176, 100);
             this.txtAccountCode.Name = "txtAccountCode";
+            this.txtAccountCode.ReadOnly = true;
             this.txtAccountCode.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtAccountCode.Size = new System.Drawing.Size(263, 26);
             this.txtAccountCode.TabIndex = 1;
@@ -84,6 +85,7 @@ namespace Water
             this.txtAccountName.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtAccountName.Location = new System.Drawing.Point(176, 140);
             this.txtAccountName.Name = "txtAccountName";
+            this.txtAccountName.ReadOnly = true;
             this.txtAccountName.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtAccountName.Size = new System.Drawing.Size(263, 26);
             this.txtAccountName.TabIndex = 3;
@@ -105,6 +107,7 @@ namespace Water
             this.txtNotes.Location = new System.Drawing.Point(176, 180);
             this.txtNotes.Multiline = true;
             this.txtNotes.Name = "txtNotes";
+            this.txtNotes.ReadOnly = true;
             this.txtNotes.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtNotes.Size = new System.Drawing.Size(529, 120);
             this.txtNotes.TabIndex = 5;
@@ -113,7 +116,7 @@ namespace Water
             // 
             this.btnView.BackColor = System.Drawing.Color.White;
             this.btnView.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnView.Image = global::Water.Properties.Resources.icons8_search_24_8;
+            this.btnView.Image = global::Water.Properties.Resources.icons8_view_24;
             this.btnView.Location = new System.Drawing.Point(210, 37);
             this.btnView.Name = "btnView";
             this.btnView.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
@@ -205,11 +208,24 @@ namespace Water
             this.btnExit.UseVisualStyleBackColor = false;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
+            // btnSearch
+            // 
+            this.btnSearch.BackColor = System.Drawing.Color.White;
+            this.btnSearch.Image = global::Water.Properties.Resources.icons8_search_24_8;
+            this.btnSearch.Location = new System.Drawing.Point(135, 37);
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Size = new System.Drawing.Size(70, 40);
+            this.btnSearch.TabIndex = 39;
+            this.toolTip1.SetToolTip(this.btnSearch, "بحث");
+            this.btnSearch.UseVisualStyleBackColor = false;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
+            // 
             // AccountForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(803, 364);
+            this.Controls.Add(this.btnSearch);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnSave);
@@ -252,6 +268,7 @@ namespace Water
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnExit;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.Button btnSearch;
     }
 }
 

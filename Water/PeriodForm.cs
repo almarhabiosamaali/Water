@@ -14,6 +14,13 @@ namespace Water
     public partial class PeriodForm : Form
     {
         private bool isEditMode = false;
+        private bool isSearchMode = false; 
+        private DateTime lastClickTime = DateTime.MinValue; // آخر وقت للنقر
+        private const int DOUBLE_CLICK_INTERVAL = 500;
+        private bool startDateEntered = false; // لتتبع ما إذا تم إدخال قيمة في تاريخ البداية
+        private bool endDateEntered = false; // لتتبع ما إذا تم إدخال قيمة في تاريخ النهاية
+        private DateTime initialStartDate; // تاريخ البداية الافتراضي عند تفعيل البحث
+        private DateTime initialEndDate; // تاريخ النهاية الافتراضي عند تفعيل البحث
         Clas.period per = new Clas.period();
         Clas.GridBtnViewHelper gridBtnViewHelper = new Clas.GridBtnViewHelper();
         public PeriodForm()
@@ -37,6 +44,10 @@ namespace Water
             if (row != null)
             {
                 LoadPeriodData(row);
+                isSearchMode = false;
+                // إزالة الأحداث إذا كانت موجودة
+                dtpStartDate.ValueChanged -= dtpStartDate_SearchValueChanged;
+                dtpEndDate.ValueChanged -= dtpEndDate_SearchValueChanged;
                 SetViewMode();
             }
         }
@@ -122,9 +133,6 @@ namespace Water
             {
                 // التحقق من أن جميع الحقول مملوءة
                 if (string.IsNullOrWhiteSpace(txtPeriodCode.Text) ||
-                   // string.IsNullOrWhiteSpace(txtBa.Text) ||
-                  //  string.IsNullOrWhiteSpace(txtDowntimeHours.Text) ||
-                    //string.IsNullOrWhiteSpace(txtDownDays.Text) ||
                     string.IsNullOrWhiteSpace(txtTotalHours.Text))
                 {
                     MessageBox.Show("الرجاء إكمال جميع البيانات المطلوبة", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -133,18 +141,6 @@ namespace Water
 
                 // التحقق من صحة الأرقام المدخلة
                 int baseDays, extendedDays, totalHours;
-                /*if (!int.TryParse(txtBaseDays.Text.Trim(), out baseDays) || baseDays <= 0)
-                {
-                    MessageBox.Show("الرجاء إدخال قيمة صحيحة للأيام الأساسية", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-
-                if (!int.TryParse(txtDownDays.Text.Trim(), out extendedDays) || extendedDays <= 0)
-                {
-                    MessageBox.Show("الرجاء إدخال قيمة صحيحة لأيام التوقف", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }*/
-
                 if (!int.TryParse(txtTotalHours.Text.Trim(), out totalHours) || totalHours <= 0)
                 {
                     MessageBox.Show("الرجاء إدخال قيمة صحيحة لإجمالي الساعات", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -191,9 +187,8 @@ namespace Water
                     );
 
                     MessageBox.Show("تم حفظ بيانات الفترة بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-
-                clear_PERIOD();
+                }                
+                isSearchMode = false;
                 isEditMode = false;
                 SetAfterSaveMode();
             }
@@ -323,10 +318,23 @@ namespace Water
                 {
                     clear_PERIOD();
                     isEditMode = false;
-                    
+                    isSearchMode = false;
+                    // إزالة الأحداث إذا كانت موجودة
+                    dtpStartDate.ValueChanged -= dtpStartDate_SearchValueChanged;
+                    dtpEndDate.ValueChanged -= dtpEndDate_SearchValueChanged;
                     SetNormalMode();
                 }
                 // إذا اختار "لا"، لا نفعل شيئاً ونبقى في الشاشة
+            }
+            else if (isSearchMode)
+            {
+                clear_PERIOD();
+                isEditMode = false;
+                isSearchMode = false;
+                // إزالة الأحداث إذا كانت موجودة
+                dtpStartDate.ValueChanged -= dtpStartDate_SearchValueChanged;
+                dtpEndDate.ValueChanged -= dtpEndDate_SearchValueChanged;
+                SetNormalMode();
             }
             else
             {                
@@ -340,6 +348,15 @@ namespace Water
             btnAdd.Enabled = true;
             btnEdit.Enabled = false;
             btnDelete.Enabled = false;
+            btnSearch.Enabled = true;
+
+            txtPeriodCode.ReadOnly = true;
+            txtStatment.ReadOnly = true;
+            dtpStartDate.Enabled = false;
+            dtpEndDate.Enabled = false;
+            
+            // إعادة تنسيق التواريخ إلى الوضع الطبيعي
+            ResetDatePickersFormat();
         }
         private void SetViewMode()
         {
@@ -348,6 +365,15 @@ namespace Water
             btnEdit.Enabled = true;
             btnDelete.Enabled = true;
             btnSave.Enabled = false;
+            btnSearch.Enabled = true;
+
+            txtPeriodCode.ReadOnly = true;
+            txtStatment.ReadOnly = true;
+            dtpStartDate.Enabled = false;
+            dtpEndDate.Enabled = false;
+            
+            // إعادة تنسيق التواريخ إلى الوضع الطبيعي
+            ResetDatePickersFormat();
         }
 
         private void SetAddMode()
@@ -357,6 +383,16 @@ namespace Water
             btnEdit.Enabled = false;
             btnDelete.Enabled = false;
             btnAdd.Enabled = false;
+            btnSearch.Enabled = false;
+
+            txtPeriodCode.ReadOnly = true;
+            txtStatment.ReadOnly = false;
+            dtpStartDate.Enabled = true;
+            dtpEndDate.Enabled = true;
+            // إعادة تنسيق التواريخ إلى الوضع الطبيعي
+            ResetDatePickersFormat();
+
+            dtpEndDate.Value = dtpStartDate.Value.AddDays(30);
         }
 
         private void SetEditMode()
@@ -366,21 +402,247 @@ namespace Water
             btnView.Enabled = false;
             btnDelete.Enabled = false;
             btnEdit.Enabled = false;
+            btnSearch.Enabled = false;
+
+            txtPeriodCode.ReadOnly = true;
+            txtStatment.ReadOnly = false;
+            dtpStartDate.Enabled = true;
+            dtpEndDate.Enabled = true;
+            // إعادة تنسيق التواريخ إلى الوضع الطبيعي
+            ResetDatePickersFormat();
+        }
+        
+        /// <summary>
+        /// إعادة تنسيق DateTimePicker إلى الوضع الطبيعي (إزالة CustomFormat)
+        /// </summary>
+        private void ResetDatePickersFormat()
+        {
+            // إزالة الأحداث إذا كانت موجودة
+            dtpStartDate.ValueChanged -= dtpStartDate_SearchValueChanged;
+            dtpEndDate.ValueChanged -= dtpEndDate_SearchValueChanged;
+            
+            // إعادة التنسيق إلى الوضع الطبيعي
+            dtpStartDate.Format = DateTimePickerFormat.Short;
+            dtpEndDate.Format = DateTimePickerFormat.Short;
         }
         private void SetDeleteMode()
         {                                   
             btnDelete.Enabled = false;
             btnEdit.Enabled = false;
+            
+            // إعادة تنسيق التواريخ إلى الوضع الطبيعي
+            ResetDatePickersFormat();
         }
 
         private void SetAfterSaveMode()
         {
-            btnSave.Enabled = false;
-            btnView.Enabled = true;
-            btnAdd.Enabled = true;
-            btnDelete.Enabled = false;
-            btnEdit.Enabled = false;
+           SetNormalMode();
         }
+        private void SetSearchMode()
+        {
+            btnSearch.Enabled = true;
+            btnView.Enabled = false;
+            btnAdd.Enabled = false;
+            btnEdit.Enabled = false;
+            btnDelete.Enabled = false;
+            btnSave.Enabled = false;
+
+            clear_PERIOD();
+
+            txtPeriodCode.ReadOnly = false;
+            txtStatment.ReadOnly = false;
+            dtpStartDate.Enabled = true;
+            dtpEndDate.Enabled = true;
+            
+            // تهيئة التواريخ لتكون فارغة (تبدو فارغة)
+            dtpStartDate.Format = DateTimePickerFormat.Custom;
+            dtpStartDate.CustomFormat = " ";
+            dtpEndDate.Format = DateTimePickerFormat.Custom;
+            dtpEndDate.CustomFormat = " ";
+            
+            // حفظ التواريخ الافتراضية لتحديد ما إذا تم تغييرها
+            initialStartDate = dtpStartDate.Value;
+            initialEndDate = dtpEndDate.Value;
+            startDateEntered = false;
+            endDateEntered = false;
+            
+            // إضافة أحداث لتتبع تغيير التواريخ
+            dtpStartDate.ValueChanged += dtpStartDate_SearchValueChanged;
+            dtpEndDate.ValueChanged += dtpEndDate_SearchValueChanged;
+        }
+        
+        private void dtpStartDate_SearchValueChanged(object sender, EventArgs e)
+        {
+            // إذا تم تغيير التاريخ عن القيمة الافتراضية، نعتبره تم إدخاله
+            if (isSearchMode && dtpStartDate.Value != initialStartDate)
+            {
+                startDateEntered = true;
+                // تغيير التنسيق لإظهار التاريخ
+                dtpStartDate.Format = DateTimePickerFormat.Short;
+            }
+        }
+        
+        private void dtpEndDate_SearchValueChanged(object sender, EventArgs e)
+        {
+            // إذا تم تغيير التاريخ عن القيمة الافتراضية، نعتبره تم إدخاله
+            if (isSearchMode && dtpEndDate.Value != initialEndDate)
+            {
+                endDateEntered = true;
+                // تغيير التنسيق لإظهار التاريخ
+                dtpEndDate.Format = DateTimePickerFormat.Short;
+            }
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            DateTime currentClickTime = DateTime.Now;
+            TimeSpan timeSinceLastClick = currentClickTime - lastClickTime;
+
+            // نقرتين متتاليتين → أول فترة
+            if (timeSinceLastClick.TotalMilliseconds < DOUBLE_CLICK_INTERVAL)
+            {
+                LoadFirstPeriod();
+                lastClickTime = DateTime.MinValue;               
+                return;
+            }
+            lastClickTime = currentClickTime;
+            // أول نقرة → تفعيل وضع البحث
+            if (!isSearchMode)
+            {
+                SetSearchMode();
+                isSearchMode = true;
+                return;
+            }
+            // النقرة الثانية → البحث 
+            SearchPeriod();
+        }
+
+        private void SearchPeriod()
+        {
+            try
+            {
+                //الحصول على جميع الفترات
+                DataTable allPeriods = per.GET_ALL_PERIODS();
+
+                if (allPeriods == null || allPeriods.Rows.Count == 0)
+                {
+                    MessageBox.Show("لا توجد بيانات الفترات", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                // البحث بناءً على الحقول المدخلة
+                string searchPeriodCode = txtPeriodCode.Text.Trim();
+                string searchPeriodStatment = txtStatment.Text.Trim();
+                
+                // استخدام التواريخ فقط إذا تم إدخالها
+                string searchStartDate = "";
+                string searchEndDate = "";
+                if (startDateEntered)
+                {
+                    searchStartDate = dtpStartDate.Value.ToString("yyyy-MM-dd");
+                }
+                if (endDateEntered)
+                {
+                    searchEndDate = dtpEndDate.Value.ToString("yyyy-MM-dd");
+                }
+
+                DataRow foundRow = null;
+
+                // البحث في البيانات
+                foreach (DataRow row in allPeriods.Rows)
+                {
+                    bool matches = true;
+
+                    // البحث برقم الفترة
+                    if (!string.IsNullOrWhiteSpace(searchPeriodCode))
+                    {
+                        string periodCode = row["id"] != DBNull.Value ? row["id"].ToString().Trim().ToUpper() : "";
+                        if (periodCode.IndexOf(searchPeriodCode.Trim().ToUpper()) < 0)
+                        {
+                            matches = false;
+                        }
+                    }
+                    // البحث بالبيان
+                    if (matches && !string.IsNullOrWhiteSpace(searchPeriodStatment))
+                    {
+                        string periodStatment = row["statment"] != DBNull.Value ? row["statment"].ToString().Trim().ToUpper() : "";
+                        if (periodStatment.IndexOf(searchPeriodStatment.Trim().ToUpper()) < 0)
+                        {
+                            matches = false;
+                        }
+                    }
+                    // البحث بتاريخ البداية (فقط إذا تم إدخاله)
+                    if (matches && !string.IsNullOrWhiteSpace(searchStartDate))
+                    {
+                        string startDate = row["start_date"] != DBNull.Value ? row["start_date"].ToString().Trim().ToUpper() : "";
+                        if (startDate.IndexOf(searchStartDate.Trim().ToUpper()) < 0)
+                        {
+                            matches = false;
+                        }
+                    }
+                    // البحث بتاريخ النهاية (فقط إذا تم إدخاله)
+                    if (matches && !string.IsNullOrWhiteSpace(searchEndDate))
+                    {
+                        string endDate = row["end_date"] != DBNull.Value ? row["end_date"].ToString().Trim().ToUpper() : "";
+                        if (endDate.IndexOf(searchEndDate.Trim().ToUpper()) < 0)
+                        {
+                            matches = false;
+                        }
+                    }
+                    // إذا تطابقت جميع الشروط
+                    if (matches)
+                    {
+                        foundRow = row;
+                        break;
+                    }
+                }
+
+                if (foundRow != null)
+                {
+                    LoadPeriodData(foundRow);
+                    SetViewMode();
+                    isSearchMode = false;
+                    
+                    // إزالة الأحداث عند الخروج من وضع البحث
+                    dtpStartDate.ValueChanged -= dtpStartDate_SearchValueChanged;
+                    dtpEndDate.ValueChanged -= dtpEndDate_SearchValueChanged;
+                }
+                else
+                {
+                    MessageBox.Show("لم يتم العثور على فترة يطابق معايير البحث", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("حدث خطأ أثناء البحث: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void LoadFirstPeriod()
+        {
+            try
+            {
+                DataTable allPeriods = per.GET_ALL_PERIODS();
+
+                if (allPeriods == null || allPeriods.Rows.Count == 0)
+                {
+                    MessageBox.Show("لا توجد بيانات الفترات", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                // تحميل بيانات أول فترة
+                LoadPeriodData(allPeriods.Rows[0]);
+                isSearchMode = false;
+                // إزالة الأحداث إذا كانت موجودة
+                dtpStartDate.ValueChanged -= dtpStartDate_SearchValueChanged;
+                dtpEndDate.ValueChanged -= dtpEndDate_SearchValueChanged;
+                SetViewMode();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("حدث خطأ أثناء تحميل البيانات: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        } 
     }
 }
 

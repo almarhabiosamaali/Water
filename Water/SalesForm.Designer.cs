@@ -105,6 +105,7 @@ namespace Water
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnView = new System.Windows.Forms.Button();
             this.btnExit = new System.Windows.Forms.Button();
+            this.btnSearch = new System.Windows.Forms.Button();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tabPage1.SuspendLayout();
@@ -901,7 +902,7 @@ namespace Water
             this.btnSave.Enabled = false;
             this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSave.Image = global::Water.Properties.Resources.icons8_save_24_9;
-            this.btnSave.Location = new System.Drawing.Point(309, 4);
+            this.btnSave.Location = new System.Drawing.Point(372, 5);
             this.btnSave.Name = "btnSave";
             this.btnSave.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnSave.Size = new System.Drawing.Size(60, 40);
@@ -915,7 +916,7 @@ namespace Water
             this.btnDelete.Enabled = false;
             this.btnDelete.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDelete.Image = global::Water.Properties.Resources.icons8_delete_24;
-            this.btnDelete.Location = new System.Drawing.Point(244, 4);
+            this.btnDelete.Location = new System.Drawing.Point(307, 5);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnDelete.Size = new System.Drawing.Size(60, 40);
@@ -929,7 +930,7 @@ namespace Water
             this.btnAdd.BackColor = System.Drawing.Color.White;
             this.btnAdd.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAdd.Image = global::Water.Properties.Resources.icons8_add_241;
-            this.btnAdd.Location = new System.Drawing.Point(116, 4);
+            this.btnAdd.Location = new System.Drawing.Point(179, 5);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnAdd.Size = new System.Drawing.Size(60, 40);
@@ -943,7 +944,7 @@ namespace Water
             this.btnEdit.Enabled = false;
             this.btnEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnEdit.Image = global::Water.Properties.Resources.icons8_edit_24_5;
-            this.btnEdit.Location = new System.Drawing.Point(179, 4);
+            this.btnEdit.Location = new System.Drawing.Point(242, 5);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnEdit.Size = new System.Drawing.Size(60, 40);
@@ -957,8 +958,8 @@ namespace Water
             this.btnView.AccessibleDescription = "";
             this.btnView.BackColor = System.Drawing.Color.White;
             this.btnView.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnView.Image = global::Water.Properties.Resources.icons8_search_24_8;
-            this.btnView.Location = new System.Drawing.Point(53, 4);
+            this.btnView.Image = global::Water.Properties.Resources.icons8_view_24;
+            this.btnView.Location = new System.Drawing.Point(116, 5);
             this.btnView.Name = "btnView";
             this.btnView.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnView.Size = new System.Drawing.Size(60, 40);
@@ -973,7 +974,7 @@ namespace Water
             // 
             this.btnExit.BackColor = System.Drawing.Color.White;
             this.btnExit.Image = global::Water.Properties.Resources.icons8_exit_24;
-            this.btnExit.Location = new System.Drawing.Point(378, 5);
+            this.btnExit.Location = new System.Drawing.Point(441, 6);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(70, 40);
             this.btnExit.TabIndex = 89;
@@ -982,11 +983,24 @@ namespace Water
             this.btnExit.UseVisualStyleBackColor = false;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
+            // btnSearch
+            // 
+            this.btnSearch.BackColor = System.Drawing.Color.White;
+            this.btnSearch.Image = global::Water.Properties.Resources.icons8_search_24_8;
+            this.btnSearch.Location = new System.Drawing.Point(41, 5);
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Size = new System.Drawing.Size(70, 40);
+            this.btnSearch.TabIndex = 90;
+            this.toolTip1.SetToolTip(this.btnSearch, "بحث");
+            this.btnSearch.UseVisualStyleBackColor = false;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
+            // 
             // SalesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1324, 575);
+            this.Controls.Add(this.btnSearch);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.txtPeriodEndDate);
@@ -1097,6 +1111,7 @@ namespace Water
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.Button btnExit;
         private System.Windows.Forms.CheckBox chkManwalTime;
+        private System.Windows.Forms.Button btnSearch;
     }
 }
 

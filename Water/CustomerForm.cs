@@ -13,6 +13,9 @@ namespace Water
     public partial class CustomerForm : Form
     {
         private bool isEditMode = false;
+        private bool isSearchMode = false; // حالة البحث
+        private DateTime lastClickTime = DateTime.MinValue; // آخر وقت للنقر
+        private const int DOUBLE_CLICK_INTERVAL = 500; // الفترة الزمنية للنقر المزدوج (بالميلي ثانية)
         Clas.customer cus = new Clas.customer();
         Clas.GridBtnViewHelper gridBtnViewHelper = new Clas.GridBtnViewHelper();
         public CustomerForm()
@@ -23,6 +26,7 @@ namespace Water
             btnEdit.Click += btnEdit_Click;
             btnDelete.Click += btnDelete_Click;
             btnSave.Click += btnSave_Click;
+            btnSearch.Click += btnSearch_Click;
             cmbType.SelectedIndex=0;
             /*if (cmbType == null)
             {
@@ -38,12 +42,14 @@ namespace Water
             {
                 LoadCustomerData(row);
                 SetViewMode();
+                isSearchMode = false;                
             }
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
             isEditMode = false;
+            isSearchMode = false;
             clear_CUSTOMER();
             try
             {
@@ -83,7 +89,7 @@ namespace Water
 
                 LoadCustomerData(dt.Rows[0]);
                 isEditMode = true;
-                txtCustomerCode.Enabled = false;
+                isSearchMode = false;                
                 SetEditMode();              
             }
             catch (Exception ex)
@@ -169,7 +175,7 @@ namespace Water
 
                 clear_CUSTOMER();
                 isEditMode = false;
-                txtCustomerCode.Enabled = true;
+                isSearchMode = false;
                 SetAfterSaveMode();
             }
             catch (Exception ee)
@@ -224,10 +230,18 @@ namespace Water
                 {
                     clear_CUSTOMER();
                     isEditMode = false;
+                    isSearchMode = false;
                     
                     SetNormalMode();
                 }
                 // إذا اختار "لا"، لا نفعل شيئاً ونبقى في الشاشة
+            }
+             if (isSearchMode)
+            {              
+                    clear_CUSTOMER();
+                    isEditMode = false;
+                    isSearchMode = false;                    
+                    SetNormalMode();                           
             }
             else
             {                
@@ -241,6 +255,13 @@ namespace Water
             btnAdd.Enabled = true;
             btnEdit.Enabled = false;
             btnDelete.Enabled = false;
+            btnSearch.Enabled = true;
+            // في الوضع الافتراضي، الحقول معطلة
+            txtCustomerCode.ReadOnly = true;            
+            txtCustomerName.ReadOnly = true;
+            txtPhone.ReadOnly = true;
+            txtAddress.ReadOnly = true;
+            txtNotes.ReadOnly = true;
         }
 
          private void SetViewMode()
@@ -250,6 +271,33 @@ namespace Water
             btnEdit.Enabled = true;
             btnDelete.Enabled = true;
             btnSave.Enabled = false;
+            btnSearch.Enabled = true;
+
+            txtCustomerCode.ReadOnly = true;              
+            txtCustomerName.ReadOnly = true;
+            txtPhone.ReadOnly = true;
+            txtAddress.ReadOnly = true;
+            txtNotes.ReadOnly = true;
+            //dtpCreatedDate.ReadOnly = true;
+        }
+        private void SetSearchMode()
+        {
+            btnSearch.Enabled = true;
+            btnView.Enabled = false;
+            btnAdd.Enabled = false;
+            btnEdit.Enabled = false;
+            btnDelete.Enabled = false;
+            btnSave.Enabled = false;
+
+            clear_CUSTOMER();
+
+            txtCustomerCode.ReadOnly = false;              
+            txtCustomerName.ReadOnly = false;
+            txtPhone.ReadOnly = false;
+            txtAddress.ReadOnly = false;
+            txtNotes.ReadOnly = false;
+           // dtpCreatedDate.ReadOnly = false;
+
         }
 
         private void SetAddMode()
@@ -259,6 +307,13 @@ namespace Water
             btnEdit.Enabled = false;
             btnDelete.Enabled = false;
             btnAdd.Enabled = false;
+            btnSearch.Enabled = false;
+
+            txtCustomerCode.ReadOnly = true;              
+            txtCustomerName.ReadOnly = false;
+            txtPhone.ReadOnly = false;
+            txtAddress.ReadOnly = false;
+            txtNotes.ReadOnly = false;
         }
 
         private void SetEditMode()
@@ -268,6 +323,13 @@ namespace Water
             btnView.Enabled = false;
             btnDelete.Enabled = false;
             btnEdit.Enabled = false;
+            btnSearch.Enabled = false;
+
+            txtCustomerCode.ReadOnly = true;              
+            txtCustomerName.ReadOnly = false;
+            txtPhone.ReadOnly = false;
+            txtAddress.ReadOnly = false;
+            txtNotes.ReadOnly = false;
         }
         private void SetDeleteMode()
         {                                   
@@ -282,6 +344,148 @@ namespace Water
             btnAdd.Enabled = true;
             btnDelete.Enabled = false;
             btnEdit.Enabled = false;
+            btnSearch.Enabled = true;
+           
+            txtCustomerCode.ReadOnly = true;              
+            txtCustomerName.ReadOnly = true;
+            txtPhone.ReadOnly = true;
+            txtAddress.ReadOnly = true;
+            txtNotes.ReadOnly = true;
+           // dtpCreatedDate.ReadOnly = true;
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            DateTime currentClickTime = DateTime.Now;
+            TimeSpan timeSinceLastClick = currentClickTime - lastClickTime;
+
+            // التحقق من النقر المزدوج (مرتين متتابعتين)
+            if (timeSinceLastClick.TotalMilliseconds < DOUBLE_CLICK_INTERVAL)
+            {
+                // النقر المزدوج: إرجاع بيانات أول عميل
+                LoadFirstCustomer();
+                lastClickTime = DateTime.MinValue; // إعادة تعيين
+                return;
+            }
+
+            lastClickTime = currentClickTime;
+
+            // إذا لم تكن في وضع البحث، تفعيل الحقول
+            if (!isSearchMode)
+            {
+                //EnableSearchFields();
+                SetSearchMode();
+                isSearchMode = true;
+            }
+            else
+            {
+                // البحث بناءً على الحقول المدخلة
+                SearchCustomer();
+            }
+        }
+
+        private void SearchCustomer()
+        {
+            try
+            {
+                // الحصول على جميع العملاء
+                DataTable allCustomers = cus.GET_ALL_CUSTOMERS();
+
+                if (allCustomers == null || allCustomers.Rows.Count == 0)
+                {
+                    MessageBox.Show("لا توجد بيانات عملاء", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                // البحث بناءً على الحقول المدخلة
+                string searchCode = txtCustomerCode.Text.Trim();
+                string searchName = txtCustomerName.Text.Trim();
+                string searchPhone = txtPhone.Text.Trim();
+
+                DataRow foundRow = null;
+
+                // البحث في البيانات
+                foreach (DataRow row in allCustomers.Rows)
+                {
+                    bool matches = true;
+
+                    // البحث برقم العميل
+                    if (!string.IsNullOrWhiteSpace(searchCode))
+                    {
+                        string customerId = row["id"] != DBNull.Value ? row["id"].ToString().Trim().ToUpper() : "";
+                        if (customerId.IndexOf(searchCode.Trim().ToUpper()) < 0)
+                        {
+                            matches = false;
+                        }
+                    }
+
+                    // البحث باسم العميل
+                    if (matches && !string.IsNullOrWhiteSpace(searchName))
+                    {
+                        string customerName = row["name"] != DBNull.Value ? row["name"].ToString().Trim().ToUpper() : "";
+                        if (customerName.IndexOf(searchName.Trim().ToUpper()) < 0)
+                        {
+                            matches = false;
+                        }
+                    }
+
+                    // البحث برقم الهاتف
+                    if (matches && !string.IsNullOrWhiteSpace(searchPhone))
+                    {
+                        string customerPhone = row["phone"] != DBNull.Value ? row["phone"].ToString().Trim().ToUpper() : "";
+                        if (customerPhone.IndexOf(searchPhone.Trim().ToUpper()) < 0)
+                        {
+                            matches = false;
+                        }
+                    }
+
+                    // إذا تطابقت جميع الشروط
+                    if (matches)
+                    {
+                        foundRow = row;
+                        break;
+                    }
+                }
+
+                if (foundRow != null)
+                {
+                    LoadCustomerData(foundRow);
+                    SetViewMode();
+                    isSearchMode = false;
+                    
+                }
+                else
+                {
+                    MessageBox.Show("لم يتم العثور على عميل يطابق معايير البحث", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("حدث خطأ أثناء البحث: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void LoadFirstCustomer()
+        {
+            try
+            {
+                DataTable allCustomers = cus.GET_ALL_CUSTOMERS();
+
+                if (allCustomers == null || allCustomers.Rows.Count == 0)
+                {
+                    MessageBox.Show("لا توجد بيانات عملاء", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                // تحميل بيانات أول عميل
+                LoadCustomerData(allCustomers.Rows[0]);
+                SetViewMode();
+                isSearchMode = false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("حدث خطأ أثناء تحميل البيانات: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

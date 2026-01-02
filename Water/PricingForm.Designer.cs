@@ -57,6 +57,7 @@ namespace Water
             this.btnView = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.btnSearch = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblPriceLevelId
@@ -98,6 +99,7 @@ namespace Water
             this.txtLevelName.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtLevelName.Location = new System.Drawing.Point(155, 138);
             this.txtLevelName.Name = "txtLevelName";
+            this.txtLevelName.ReadOnly = true;
             this.txtLevelName.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtLevelName.Size = new System.Drawing.Size(222, 26);
             this.txtLevelName.TabIndex = 2;
@@ -115,6 +117,7 @@ namespace Water
             // 
             // dtpPricingDate
             // 
+            this.dtpPricingDate.Enabled = false;
             this.dtpPricingDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dtpPricingDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtpPricingDate.Location = new System.Drawing.Point(659, 103);
@@ -141,6 +144,7 @@ namespace Water
             this.txtDieselHourPrice.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtDieselHourPrice.Location = new System.Drawing.Point(572, 173);
             this.txtDieselHourPrice.Name = "txtDieselHourPrice";
+            this.txtDieselHourPrice.ReadOnly = true;
             this.txtDieselHourPrice.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtDieselHourPrice.Size = new System.Drawing.Size(166, 26);
             this.txtDieselHourPrice.TabIndex = 4;
@@ -185,6 +189,7 @@ namespace Water
             this.txtDieselUsedHour.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtDieselUsedHour.Location = new System.Drawing.Point(155, 204);
             this.txtDieselUsedHour.Name = "txtDieselUsedHour";
+            this.txtDieselUsedHour.ReadOnly = true;
             this.txtDieselUsedHour.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtDieselUsedHour.Size = new System.Drawing.Size(171, 26);
             this.txtDieselUsedHour.TabIndex = 5;
@@ -229,6 +234,7 @@ namespace Water
             this.txtWaterHourPrice.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtWaterHourPrice.Location = new System.Drawing.Point(155, 170);
             this.txtWaterHourPrice.Name = "txtWaterHourPrice";
+            this.txtWaterHourPrice.ReadOnly = true;
             this.txtWaterHourPrice.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtWaterHourPrice.Size = new System.Drawing.Size(171, 26);
             this.txtWaterHourPrice.TabIndex = 3;
@@ -274,6 +280,7 @@ namespace Water
             this.txtNotes.Location = new System.Drawing.Point(155, 256);
             this.txtNotes.Multiline = true;
             this.txtNotes.Name = "txtNotes";
+            this.txtNotes.ReadOnly = true;
             this.txtNotes.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtNotes.Size = new System.Drawing.Size(767, 60);
             this.txtNotes.TabIndex = 6;
@@ -353,7 +360,7 @@ namespace Water
             // 
             this.btnView.BackColor = System.Drawing.Color.White;
             this.btnView.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnView.Image = global::Water.Properties.Resources.icons8_search_24_8;
+            this.btnView.Image = global::Water.Properties.Resources.icons8_view_24;
             this.btnView.Location = new System.Drawing.Point(257, 40);
             this.btnView.Name = "btnView";
             this.btnView.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
@@ -374,11 +381,24 @@ namespace Water
             this.label1.TabIndex = 31;
             this.label1.Text = "شاشة التسعيرة";
             // 
+            // btnSearch
+            // 
+            this.btnSearch.BackColor = System.Drawing.Color.White;
+            this.btnSearch.Image = global::Water.Properties.Resources.icons8_search_24_8;
+            this.btnSearch.Location = new System.Drawing.Point(185, 40);
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Size = new System.Drawing.Size(70, 40);
+            this.btnSearch.TabIndex = 92;
+            this.toolTip1.SetToolTip(this.btnSearch, "بحث");
+            this.btnSearch.UseVisualStyleBackColor = false;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
+            // 
             // PricingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(934, 422);
+            this.Controls.Add(this.btnSearch);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.btnSave);
@@ -449,6 +469,7 @@ namespace Water
         private System.Windows.Forms.Button btnView;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.Button btnSearch;
     }
 }
 

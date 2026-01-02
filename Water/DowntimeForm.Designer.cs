@@ -66,6 +66,7 @@ namespace Water
             this.label2 = new System.Windows.Forms.Label();
             this.btnExit = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.btnSearch = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblDowntimeCode
@@ -107,6 +108,7 @@ namespace Water
             this.txtPeriodId.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtPeriodId.Location = new System.Drawing.Point(379, 123);
             this.txtPeriodId.Name = "txtPeriodId";
+            this.txtPeriodId.ReadOnly = true;
             this.txtPeriodId.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtPeriodId.Size = new System.Drawing.Size(72, 26);
             this.txtPeriodId.TabIndex = 1;
@@ -126,6 +128,7 @@ namespace Water
             // 
             // dtpDate
             // 
+            this.dtpDate.Enabled = false;
             this.dtpDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dtpDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtpDate.Location = new System.Drawing.Point(558, 120);
@@ -219,6 +222,7 @@ namespace Water
             this.txtNote.MaxLength = 255;
             this.txtNote.Multiline = true;
             this.txtNote.Name = "txtNote";
+            this.txtNote.ReadOnly = true;
             this.txtNote.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtNote.Size = new System.Drawing.Size(683, 29);
             this.txtNote.TabIndex = 7;
@@ -227,7 +231,7 @@ namespace Water
             // 
             this.btnView.BackColor = System.Drawing.Color.White;
             this.btnView.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnView.Image = global::Water.Properties.Resources.icons8_search_24_8;
+            this.btnView.Image = global::Water.Properties.Resources.icons8_view_24;
             this.btnView.Location = new System.Drawing.Point(273, 42);
             this.btnView.Name = "btnView";
             this.btnView.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
@@ -298,6 +302,7 @@ namespace Water
             // dtpStartTime
             // 
             this.dtpStartTime.CustomFormat = "dd/MM/yyyy hh:mm tt";
+            this.dtpStartTime.Enabled = false;
             this.dtpStartTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtpStartTime.Location = new System.Drawing.Point(112, 190);
             this.dtpStartTime.Name = "dtpStartTime";
@@ -308,6 +313,7 @@ namespace Water
             // dtpEndTime
             // 
             this.dtpEndTime.CustomFormat = "dd/MM/yyyy hh:mm tt";
+            this.dtpEndTime.Enabled = false;
             this.dtpEndTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtpEndTime.Location = new System.Drawing.Point(474, 189);
             this.dtpEndTime.Name = "dtpEndTime";
@@ -355,6 +361,7 @@ namespace Water
             // 
             this.txtAmount.Location = new System.Drawing.Point(112, 349);
             this.txtAmount.Name = "txtAmount";
+            this.txtAmount.ReadOnly = true;
             this.txtAmount.Size = new System.Drawing.Size(184, 24);
             this.txtAmount.TabIndex = 5;
             // 
@@ -411,7 +418,6 @@ namespace Water
             this.txtDescription.MaxLength = 255;
             this.txtDescription.Multiline = true;
             this.txtDescription.Name = "txtDescription";
-            this.txtDescription.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtDescription.Size = new System.Drawing.Size(683, 84);
             this.txtDescription.TabIndex = 8;
             // 
@@ -489,11 +495,24 @@ namespace Water
             this.btnExit.UseVisualStyleBackColor = false;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
+            // btnSearch
+            // 
+            this.btnSearch.BackColor = System.Drawing.Color.White;
+            this.btnSearch.Image = global::Water.Properties.Resources.icons8_search_24_8;
+            this.btnSearch.Location = new System.Drawing.Point(197, 42);
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Size = new System.Drawing.Size(70, 40);
+            this.btnSearch.TabIndex = 42;
+            this.toolTip1.SetToolTip(this.btnSearch, "بحث");
+            this.btnSearch.UseVisualStyleBackColor = false;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
+            // 
             // DowntimeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(945, 553);
+            this.Controls.Add(this.btnSearch);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -582,6 +601,7 @@ namespace Water
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnExit;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.Button btnSearch;
     }
 }
 

@@ -155,7 +155,8 @@
             this.treeViewMain.RightToLeftLayout = true;
             this.treeViewMain.Size = new System.Drawing.Size(250, 746);
             this.treeViewMain.TabIndex = 0;
-            this.treeViewMain.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewMain_AfterSelect);
+            this.treeViewMain.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeViewMain_NodeMouseDoubleClick);
+            this.treeViewMain.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeViewMain_KeyDown);
             // 
             // pnlMainContent
             // 

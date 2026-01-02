@@ -13,6 +13,11 @@ namespace Water
     public partial class DowntimeForm : Form
     {
         private bool isEditMode = false;
+        private bool isSearchMode = false;
+        private DateTime lastClickTime = DateTime.MinValue; // آخر وقت للنقر
+        private const int DOUBLE_CLICK_INTERVAL = 500;
+        private bool dateEntered = false; // لتتبع ما إذا تم إدخال قيمة في تاريخ البداية
+        private DateTime initialDate; // تاريخ البداية الافتراضي عند تفعيل البحث
         Clas.downtime dwn = new Clas.downtime();
         Clas.period period = new Clas.period();
         Clas.GridBtnViewHelper gridBtnViewHelper = new Clas.GridBtnViewHelper();
@@ -24,17 +29,17 @@ namespace Water
             btnEdit.Click += btnEdit_Click;
             btnDelete.Click += btnDelete_Click;
             btnSave.Click += btnSave_Click;
-            
+
             // ربط أحداث F2 و Enter على حقل رقم الفترة لعرض قائمة الفترات            
             txtPeriodId.Leave += txtPeriodId_Leave;
-            
+
             // ربط أحداث حساب الأيام والساعات تلقائياً
             dtpStartTime.ValueChanged += CalculateDaysAndHours;
             dtpEndTime.ValueChanged += CalculateDaysAndHours;
         }
 
         private void btnView_Click(object sender, EventArgs e)
-        {           
+        {
             DataTable dt = dwn.GET_ALL_DOWNTIMES();
             DataRow row = gridBtnViewHelper.Show(dt, "عرض التوقفات");
             if (row != null)
@@ -56,7 +61,6 @@ namespace Water
             {
                 txtDowntimeCode.Text = "1";
             }
-           // btnSave.Text = "";
             SetAddMode();
         }
 
@@ -71,7 +75,7 @@ namespace Water
             try
             {
                 DataTable dt = dwn.VIEW_DOWNTIME(txtDowntimeCode.Text.Trim());
-                
+
                 if (dt.Rows.Count == 0)
                 {
                     MessageBox.Show("التوقف غير موجود", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -80,8 +84,7 @@ namespace Water
 
                 LoadDowntimeData(dt.Rows[0]);
                 isEditMode = true;
-                txtDowntimeCode.Enabled = false;
-                //btnSave.Text = "";
+                //txtDowntimeCode.Enabled = false;                
                 SetEditMode();
                 MessageBox.Show("يمكنك الآن تعديل بيانات التوقف", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -111,40 +114,40 @@ namespace Water
                 {
                     // قراءة بيانات التوقف قبل الحذف لإلغاء التعديلات من الفترة
                     string downtimeId = txtDowntimeCode.Text.Trim();
-                    
+
                     // قراءة بيانات التوقف من قاعدة البيانات
                     DataTable dt = dwn.VIEW_DOWNTIME(downtimeId);
-                    
+
                     if (dt.Rows.Count > 0)
                     {
                         DataRow row = dt.Rows[0];
                         string periodId = row["period_id"] != DBNull.Value ? row["period_id"].ToString() : null;
-                        
+
                         // إذا كان هناك period_id، نقرأ الأيام/الساعات/الدقائق ونلغي التعديلات
                         if (!string.IsNullOrWhiteSpace(periodId))
                         {
                             int days = 0;
                             int hrs = 0;
                             int mins = 0;
-                            
+
                             // قراءة الأيام
                             if (row["dayesCount"] != DBNull.Value && !string.IsNullOrWhiteSpace(row["dayesCount"].ToString()))
                             {
                                 int.TryParse(row["dayesCount"].ToString(), out days);
                             }
-                            
+
                             // قراءة الساعات
                             if (row["hours"] != DBNull.Value && !string.IsNullOrWhiteSpace(row["hours"].ToString()))
                             {
                                 int.TryParse(row["hours"].ToString(), out hrs);
                             }
-                            
+
                             // قراءة الدقائق
                             if (row["minutes"] != DBNull.Value && !string.IsNullOrWhiteSpace(row["minutes"].ToString()))
                             {
                                 int.TryParse(row["minutes"].ToString(), out mins);
                             }
-                            
+
                             // إلغاء التعديلات من الفترة فقط إذا كان هناك قيمة فعلية
                             if (days > 0 || hrs > 0 || mins > 0)
                             {
@@ -171,7 +174,7 @@ namespace Water
                             }
                         }
                     }
-                    
+
                     // حذف التوقف
                     dwn.DELETE_DOWNTIME(downtimeId);
                     MessageBox.Show("تم حذف التوقف بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -198,9 +201,9 @@ namespace Water
 
                 // تحضير القيم الاختيارية
                 // int? dayesCount = txtDayesCount.Value > 0 ? (int?)txtDayesCount.Value : null;
-               string dayesCount=!string.IsNullOrWhiteSpace (txtDayesCount.Text)?txtDayesCount.Text : null;
-                string hours = !string.IsNullOrWhiteSpace( txtHours.Text)? txtHours.Text : null;
-                string minutes = !string.IsNullOrWhiteSpace(txtMinutes.Text)?txtMinutes.Text : null;
+                string dayesCount = !string.IsNullOrWhiteSpace(txtDayesCount.Text) ? txtDayesCount.Text : null;
+                string hours = !string.IsNullOrWhiteSpace(txtHours.Text) ? txtHours.Text : null;
+                string minutes = !string.IsNullOrWhiteSpace(txtMinutes.Text) ? txtMinutes.Text : null;
                 DateTime? startTime = dtpStartTime.Checked ? (DateTime?)dtpStartTime.Value : null;
                 DateTime? endTime = dtpEndTime.Checked ? (DateTime?)dtpEndTime.Value : null;
                 double? amount = double.TryParse(txtAmount.Text, out double val) ? val : (double?)null;
@@ -208,7 +211,7 @@ namespace Water
                 string note = !string.IsNullOrWhiteSpace(txtNote.Text) ? txtNote.Text.Trim() : null;
                 string periodId = !string.IsNullOrWhiteSpace(txtPeriodId.Text) ? txtPeriodId.Text.Trim() : null;
                 string description = !string.IsNullOrWhiteSpace(txtDescription.Text) ? txtDescription.Text.Trim() : null;
-                
+
                 // القيمة الافتراضية عند الإضافة = 0، وعند التحديث نستخدم القيمة الحالية
                 int? isProcessed;
                 if (isEditMode)
@@ -263,6 +266,7 @@ namespace Water
                 }
 
                 // تطبيق التوقف على الفترة إذا كان هناك period_id وأيام/ساعات/دقائق
+                /*
                 if (!string.IsNullOrWhiteSpace(periodId))
                 {
                     int days = int.TryParse(dayesCount, out int d) ? d : 0;
@@ -294,11 +298,9 @@ namespace Water
                         }
                     }
                 }
-
-                clear_DOWNTIME();
+                */
                 isEditMode = false;
                 txtDowntimeCode.Enabled = true;
-                //btnSave.Text = "";
                 SetAfterSaveMode();
             }
             catch (Exception ee)
@@ -310,13 +312,13 @@ namespace Water
         private void LoadDowntimeData(DataRow row)
         {
             txtDowntimeCode.Text = row["id"].ToString();
-            
-           
-               if (row["period_id"] != DBNull.Value)
+
+
+            if (row["period_id"] != DBNull.Value)
             {
                 string periodId = row["period_id"].ToString();
                 txtPeriodId.Text = periodId;
-                
+
                 // تحميل بيانات الفترة وعرضها
                 try
                 {
@@ -339,7 +341,7 @@ namespace Water
                 if (txtPeriodEndDate != null)
                     txtPeriodEndDate.Clear();
             }
-            
+
             if (row["date"] != DBNull.Value)
             {
                 dtpDate.Value = Convert.ToDateTime(row["date"]);
@@ -365,7 +367,7 @@ namespace Water
 
             if (row["minutes"] != DBNull.Value)
             {
-                txtMinutes.Text =row["minutes"].ToString();
+                txtMinutes.Text = row["minutes"].ToString();
             }
             else
             {
@@ -455,8 +457,8 @@ namespace Water
             if (e.KeyCode == Keys.F2 || e.KeyCode == Keys.Enter)
             {
                 e.Handled = true; // منع التنقل الافتراضي لـ Enter
-                // استخدام الكلاس المساعد الموحد (لا توجد حقول بداية ونهاية الفترة في هذه الشاشة)
-              //  Clas.PeriodHelper.ShowPeriodsList(txtPeriodId, null, null);
+                                  // استخدام الكلاس المساعد الموحد (لا توجد حقول بداية ونهاية الفترة في هذه الشاشة)
+                                  //  Clas.PeriodHelper.ShowPeriodsList(txtPeriodId, null, null);
                 Clas.PeriodHelper.ShowPeriodsList(txtPeriodId, txtPeriodStartDate, txtPeriodEndDate);
             }
         }
@@ -525,7 +527,7 @@ namespace Water
                 int totalHours = (int)difference.TotalHours;
                 int daysf = difference.Days;
                 // حساب عدد أيام العمل: قسمة إجمالي الساعات على 20 (يوم العمل = 20 ساعة)
-                int days = (totalHours -(daysf *4)) / 20;
+                int days = (totalHours - (daysf * 4)) / 20;
 
                 // حساب الساعات المتبقية بعد أيام العمل الكاملة
                 int hours = (totalHours % 20) - (days * 4);
@@ -533,13 +535,13 @@ namespace Water
 
                 if (hours < 0)
                 {
-                     hours = 0;
+                    hours = 0;
                     minutes = 0;
                 }
-                  
+
 
                 // حساب الدقائق
-                
+
 
                 // حساب ساعات العمل الفعلية: عدد أيام العمل × 20 ساعة
                 int workingHours = days * 20;
@@ -559,25 +561,25 @@ namespace Water
 
         private void btnExit_Click(object sender, EventArgs e)
         {
-           
-             if (btnSave.Enabled)
+
+            if (btnSave.Enabled)
             {
                 DialogResult result = MessageBox.Show($"هل تريد الرجوع وعدم حفظ البيانات ؟", "تأكيد الإلغاء", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
                 {
                     clear_DOWNTIME();
                     isEditMode = false;
-                    
+
                     SetNormalMode();
                 }
                 // إذا اختار "لا"، لا نفعل شيئاً ونبقى في الشاشة
             }
             else
-            {                
+            {
                 this.Close();
             }
         }
-          private void SetNormalMode()
+        private void SetNormalMode()
         {
             btnSave.Enabled = false;
             btnView.Enabled = true;
@@ -586,7 +588,7 @@ namespace Water
             btnDelete.Enabled = false;
         }
 
-         private void SetViewMode()
+        private void SetViewMode()
         {
             btnView.Enabled = true;
             btnAdd.Enabled = true;
@@ -602,6 +604,18 @@ namespace Water
             btnEdit.Enabled = false;
             btnDelete.Enabled = false;
             btnAdd.Enabled = false;
+            btnSearch.Enabled = false;
+
+          //  clear_DOWNTIME();
+
+            txtDowntimeCode.ReadOnly = true;
+            txtPeriodId.ReadOnly = false;
+            dtpDate.Enabled = true;   
+            dtpStartTime.Enabled = true;
+            dtpEndTime.Enabled = true;         
+            txtAmount.ReadOnly = false;
+            txtNote.ReadOnly = false;
+            txtDescription.ReadOnly = false;
         }
 
         private void SetEditMode()
@@ -613,7 +627,7 @@ namespace Water
             btnEdit.Enabled = false;
         }
         private void SetDeleteMode()
-        {                                   
+        {
             btnDelete.Enabled = false;
             btnEdit.Enabled = false;
         }
@@ -625,6 +639,44 @@ namespace Water
             btnAdd.Enabled = true;
             btnDelete.Enabled = false;
             btnEdit.Enabled = false;
+        }
+        private void SetSearchMode()
+        {
+            btnSearch.Enabled = true;
+            btnView.Enabled = false;
+            btnAdd.Enabled = false;
+            btnEdit.Enabled = false;
+            btnDelete.Enabled = false;
+            btnSave.Enabled = false;
+
+            clear_DOWNTIME();
+
+            txtDowntimeCode.ReadOnly = false;
+            txtPeriodId.ReadOnly = false;
+            dtpDate.Enabled = true;
+            chkIsProcessed.Enabled = true;
+            txtAmount.ReadOnly = false;
+            txtNote.ReadOnly = false;
+            // تهيئة التواريخ لتكون فارغة (تبدو فارغة)
+            dtpDate.Format = DateTimePickerFormat.Custom;
+            dtpDate.CustomFormat = " ";
+
+            // حفظ التواريخ الافتراضية لتحديد ما إذا تم تغييرها
+            initialDate = dtpDate.Value;
+            dateEntered = false;
+
+            // إضافة أحداث لتتبع تغيير التواريخ
+            dtpDate.ValueChanged += dtpDate_SearchValueChanged;
+        }
+        private void dtpDate_SearchValueChanged(object sender, EventArgs e)
+        {
+            // إذا تم تغيير التاريخ عن القيمة الافتراضية، نعتبره تم إدخاله
+            if (isSearchMode && dtpDate.Value != initialDate)
+            {
+                dateEntered = true;
+                // تغيير التنسيق لإظهار التاريخ
+                dtpDate.Format = DateTimePickerFormat.Short;
+            }
         }
 
         private void txtPeriodId_Leave(object sender, EventArgs e)
@@ -667,8 +719,170 @@ namespace Water
                 txtPeriodId.Focus();
             }
         }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            DateTime currentClickTime = DateTime.Now;
+            TimeSpan timeSinceLastClick = currentClickTime - lastClickTime;
+
+            // نقرتين متتاليتين → أول فترة
+            if (timeSinceLastClick.TotalMilliseconds < DOUBLE_CLICK_INTERVAL)
+            {
+                LoadFirstDowntime();
+                lastClickTime = DateTime.MinValue;
+                return;
+            }
+            lastClickTime = currentClickTime;
+            // أول نقرة → تفعيل وضع البحث
+            if (!isSearchMode)
+            {
+                SetSearchMode();
+                isSearchMode = true;
+                return;
+            }
+            // النقرة الثانية → البحث 
+            SearchDowntime();
+        }
+
+        private void SearchDowntime()
+        {
+            try
+            {
+                //الحصول على جميع الفترات
+                DataTable allDowntimes = dwn.GET_ALL_DOWNTIMES();
+
+                if (allDowntimes == null || allDowntimes.Rows.Count == 0)
+                {
+                    MessageBox.Show("لا توجد بيانات توقفات", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                // البحث بناءً على الحقول المدخلة
+                string searchDowntimeCode = txtDowntimeCode.Text.Trim();
+                string searchPeriodId = txtPeriodId.Text.Trim();
+                string searchDate = "";
+                string searchIsProcessed = chkIsProcessed.Checked ? "1" : "0";
+                string searchAmount = txtAmount.Text.Trim();
+                string searchNote = txtNote.Text.Trim();
+
+                if (dateEntered)
+                {
+                    searchDate = dtpDate.Value.ToString("yyyy-MM-dd");
+                }
+
+                DataRow foundRow = null;
+
+                // البحث في البيانات
+                foreach (DataRow row in allDowntimes.Rows)
+                {
+                    bool matches = true;
+
+                    // البحث برقم التوقف
+                    if (!string.IsNullOrWhiteSpace(searchDowntimeCode))
+                    {
+                        string downtimeCode = row["id"] != DBNull.Value ? row["id"].ToString().Trim().ToUpper() : "";
+                        if (downtimeCode.IndexOf(searchDowntimeCode.Trim().ToUpper()) < 0)
+                        {
+                            matches = false;
+                        }
+                    }
+                    // البحث برقم الفترة
+                    if (matches && !string.IsNullOrWhiteSpace(searchPeriodId))
+                    {
+                        string periodId = row["period_id"] != DBNull.Value ? row["period_id"].ToString().Trim().ToUpper() : "";
+                        if (periodId.IndexOf(searchPeriodId.Trim().ToUpper()) < 0)
+                        {
+                            matches = false;
+                        }
+                    }
+                    // البحث بتاريخ التوقف
+                    if (matches && !string.IsNullOrWhiteSpace(searchDate))
+                    {
+                        string date = row["date"] != DBNull.Value ? row["date"].ToString().Trim().ToUpper() : "";
+                        if (date.IndexOf(searchDate.Trim().ToUpper()) < 0)
+                        {
+                            matches = false;
+                        }
+                    }
+                    // البحث بالتوقف المعالج
+                    if (matches && !string.IsNullOrWhiteSpace(searchIsProcessed))
+                    {
+                        string isProcessed = row["isProcessed"] != DBNull.Value ? row["isProcessed"].ToString().Trim().ToUpper() : "";
+                        if (isProcessed.IndexOf(searchIsProcessed.Trim().ToUpper()) < 0)
+                        {
+                            matches = false;
+                        }
+                    }
+                    // البحث بالمبلغ
+                    if (matches && !string.IsNullOrWhiteSpace(searchAmount))
+                    {
+                        string amount = row["amount"] != DBNull.Value ? row["amount"].ToString().Trim().ToUpper() : "";
+                        if (amount.IndexOf(searchAmount.Trim().ToUpper()) < 0)
+                        {
+                            matches = false;
+                        }
+                    }
+                    // البحث بالملاحظات
+                    if (matches && !string.IsNullOrWhiteSpace(searchNote))
+                    {
+                        string note = row["note"] != DBNull.Value ? row["note"].ToString().Trim().ToUpper() : "";
+                        if (note.IndexOf(searchNote.Trim().ToUpper()) < 0)
+                        {
+                            matches = false;
+                        }
+                    }
+                    // إذا تطابقت جميع الشروط
+                    if (matches)
+                    {
+                        foundRow = row;
+                        break;
+                    }
+                }
+
+                if (foundRow != null)
+                {
+                    LoadDowntimeData(foundRow);
+                    SetViewMode();
+                    isSearchMode = false;
+
+                    // إزالة الأحداث عند الخروج من وضع البحث
+                    dtpDate.ValueChanged -= dtpDate_SearchValueChanged;
+                }
+                else
+                {
+                    MessageBox.Show("لم يتم العثور على توقف يطابق معايير البحث", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("حدث خطأ أثناء البحث: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void LoadFirstDowntime()
+        {
+            try
+            {
+                DataTable allDowntimes = dwn.GET_ALL_DOWNTIMES();
+
+                if (allDowntimes == null || allDowntimes.Rows.Count == 0)
+                {
+                    MessageBox.Show("لا توجد بيانات توقفات", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                // تحميل بيانات أول توقف
+                LoadDowntimeData(allDowntimes.Rows[0]);
+                isSearchMode = false;
+                // إزالة الأحداث إذا كانت موجودة
+                dtpDate.ValueChanged -= dtpDate_SearchValueChanged;
+                SetViewMode();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("حدث خطأ أثناء تحميل البيانات: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
-
-
 }
 

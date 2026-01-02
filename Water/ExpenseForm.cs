@@ -14,6 +14,9 @@ namespace Water
     public partial class ExpenseForm : Form
     {
         private bool isEditMode = false;
+        private bool isSearchMode = false; 
+        private DateTime lastClickTime = DateTime.MinValue; // آخر وقت للنقر
+        private const int DOUBLE_CLICK_INTERVAL = 500; 
         Clas.expense exp = new Clas.expense();
         Clas.customer customer = new Clas.customer();
         Clas.partners partners = new Clas.partners();
@@ -28,7 +31,7 @@ namespace Water
             btnEdit.Click += btnEdit_Click;
             btnDelete.Click += btnDelete_Click;
             btnSave.Click += btnSave_Click;
-            
+           // btnSearch.Click += btnSearch_Click;
             // ربط أحداث F2 و Enter على حقل رقم الفترة لعرض قائمة الفترات
             //txtPeriodId.KeyDown += txtPeriodId_KeyDown;
             txtPeriodId.Leave += txtPeriodId_Leave;
@@ -45,25 +48,33 @@ namespace Water
             if (row != null)
             {
                 LoadExpenseData(row);
+                isSearchMode = false;
                 SetViewMode();
             }
         }
+       
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
             isEditMode = false;
-            clear_EXPENSE();
+            isSearchMode = false;
+            
+            // الحصول على رقم القيد التالي أولاً
+            string nextExpenseCode = "";
             try
             {
-                txtExpenseCode.Text = exp.GET_NEXT_EXPENSE_CODE();
+                nextExpenseCode = exp.GET_NEXT_EXPENSE_CODE();
             }
             catch
             {
-                txtExpenseCode.Text = "1";
+                nextExpenseCode = "1";
             }
+            
+            // تعيين وضع الإضافة (سيقوم بمسح الحقول)
             SetAddMode();
             
-            txtExpenseCode.Enabled = false;
+            // إعادة تعيين رقم القيد بعد مسح الحقول
+            txtExpenseCode.Text = nextExpenseCode;
          //   MessageBox.Show("يمكنك الآن إدخال بيانات قيد جديد", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
@@ -87,7 +98,7 @@ namespace Water
 
                 LoadExpenseData(dt.Rows[0]);
                 isEditMode = true;
-                txtExpenseCode.Enabled = false;
+                isSearchMode = false;
                 SetEditMode();
                 
                // MessageBox.Show("يمكنك الآن تعديل بيانات القيد", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -272,7 +283,7 @@ namespace Water
 
                 clear_EXPENSE();
                 isEditMode = false;
-                txtExpenseCode.Enabled = true;
+                isSearchMode = false;                
                 SetAfterSaveMode();
             }
             
@@ -392,7 +403,7 @@ namespace Water
         {
             if (double.TryParse(txtAmount.Text, out double value))
             {
-                txtAmount.Text = value.ToString("N2");  // مثل 1,250.00
+                txtAmount.Text = value.ToString("");  // مثل 1,250.00
             }
         }
 
@@ -427,7 +438,6 @@ namespace Water
                     MessageBox.Show("الرجاء اختيار نوع الحساب أولاً", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-
                 string accountType = cmbAccountType.SelectedItem.ToString();
                 DataTable dt = null;
                 string formTitle = "";
@@ -453,7 +463,6 @@ namespace Water
                     MessageBox.Show("نوع الحساب غير معروف", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-
                 if (dt == null || dt.Rows.Count == 0)
                 {
                     MessageBox.Show("لا توجد بيانات للعرض", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -494,7 +503,6 @@ namespace Water
                         viewForm.Close();
                     }
                 };
-
                 viewForm.Controls.Add(dgv);
                 viewForm.ShowDialog();
             }
@@ -536,10 +544,17 @@ namespace Water
                 {
                     clear_EXPENSE();
                     isEditMode = false;
-                    
+                    isSearchMode = false;
                     SetNormalMode();
                 }
                 // إذا اختار "لا"، لا نفعل شيئاً ونبقى في الشاشة
+            }
+            else if (isSearchMode)
+            {
+                clear_EXPENSE();
+                isEditMode = false;
+                isSearchMode = false;
+                SetNormalMode();
             }
             else
             {                
@@ -627,6 +642,10 @@ namespace Water
 
         private void txtAccountId_Leave(object sender, EventArgs e)
         {
+            if(isSearchMode)
+            {
+                return;
+            }
             // التحقق من وجود رقم الحساب/العميل/الشريك عند الانتقال من الحقل
             if (txtAccountId == null || string.IsNullOrWhiteSpace(txtAccountId.Text))
             {
@@ -640,7 +659,7 @@ namespace Water
             if (cmbAccountType == null || cmbAccountType.SelectedIndex == -1)
             {
                 MessageBox.Show("الرجاء اختيار نوع الحساب أولاً", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtAccountId.Focus();
+                cmbAccountType.Focus();
                 return;
             }
 
@@ -674,7 +693,7 @@ namespace Water
                 if (dt == null || dt.Rows.Count == 0)
                 {
                     MessageBox.Show($"رقم {accountType} غير موجود", "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    txtAccountId.Focus();
+                    cmbAccountType.Focus();
                     // مسح اسم الحساب
                     if (txtAccountName != null)
                         txtAccountName.Clear();
@@ -697,6 +716,17 @@ namespace Water
             btnAdd.Enabled = true;
             btnEdit.Enabled = false;
             btnDelete.Enabled = false;
+            btnSearch.Enabled = true;
+
+            txtExpenseCode.ReadOnly = true;
+            cmbType.SelectedIndex = -1;
+            cmbAccountType.SelectedIndex = -1;
+            txtAccountId.ReadOnly = true;
+            txtAccountName.ReadOnly = true;
+            txtAmount.ReadOnly = true;
+            txtPeriodId.ReadOnly = true;
+            txtDescription.ReadOnly = true;
+            txtNotes.ReadOnly = true;
         }
 
         private void SetViewMode()
@@ -706,6 +736,15 @@ namespace Water
             btnEdit.Enabled = true;
             btnDelete.Enabled = true;
             btnSave.Enabled = false;
+            btnSearch.Enabled = true;
+
+            txtExpenseCode.ReadOnly = true;
+            txtAccountId.ReadOnly = true;
+            txtAccountName.ReadOnly = true;
+            txtAmount.ReadOnly = true;
+            txtPeriodId.ReadOnly = true;
+            txtDescription.ReadOnly = true;
+            txtNotes.ReadOnly = true;
         }
 
         private void SetAddMode()
@@ -715,6 +754,17 @@ namespace Water
             btnEdit.Enabled = false;
             btnDelete.Enabled = false;
             btnAdd.Enabled = false;
+            btnSearch.Enabled = false;
+
+            clear_EXPENSE();
+
+            txtExpenseCode.ReadOnly = true;                        
+            txtAccountId.ReadOnly = false;
+            txtAccountName.ReadOnly = false;
+            txtAmount.ReadOnly = false;
+            txtPeriodId.ReadOnly = false;
+            txtDescription.ReadOnly = false;
+            txtNotes.ReadOnly = false;
         }
 
         private void SetEditMode()
@@ -724,6 +774,15 @@ namespace Water
             btnView.Enabled = false;
             btnDelete.Enabled = false;
             btnEdit.Enabled = false;
+            btnSearch.Enabled = false;
+
+            txtExpenseCode.ReadOnly = true;
+            txtAccountId.ReadOnly = true;
+            txtAccountName.ReadOnly = true;
+            txtAmount.ReadOnly = false;
+            txtPeriodId.ReadOnly = false;
+            txtDescription.ReadOnly = false;
+            txtNotes.ReadOnly = false;
         }
         private void SetDeleteMode()
         {                                   
@@ -733,12 +792,198 @@ namespace Water
 
         private void SetAfterSaveMode()
         {
-            btnSave.Enabled = false;
-            btnView.Enabled = true;
-            btnAdd.Enabled = true;
-            btnDelete.Enabled = false;
-            btnEdit.Enabled = false;
+           SetNormalMode();
         }
+         private void SetSearchMode()
+        {
+            btnSearch.Enabled = true;
+            btnView.Enabled = false;
+            btnAdd.Enabled = false;
+            btnEdit.Enabled = false;
+            btnDelete.Enabled = false;
+            btnSave.Enabled = false;
+
+            clear_EXPENSE();
+
+            txtExpenseCode.ReadOnly = false;
+            cmbType.SelectedIndex = -1;
+            cmbAccountType.SelectedIndex = -1;
+            txtAccountId.ReadOnly = false;
+            txtAccountName.ReadOnly = false;
+            txtAmount.ReadOnly = false;
+            txtPeriodId.ReadOnly = false;
+
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {                     
+            DateTime currentClickTime = DateTime.Now;
+            TimeSpan timeSinceLastClick = currentClickTime - lastClickTime;
+
+            // نقرتين متتاليتين → أول فاتورة
+            if (timeSinceLastClick.TotalMilliseconds < DOUBLE_CLICK_INTERVAL)
+            {
+                LoadFirstExpense();
+                lastClickTime = DateTime.MinValue;               
+                return;
+            }
+            lastClickTime = currentClickTime;
+            // أول نقرة → تفعيل وضع البحث
+            if (!isSearchMode)
+            {
+                SetSearchMode();
+                isSearchMode = true;
+                return;
+            }
+            // النقرة الثانية → البحث (بدون تحقق من customerId)
+            SearchExpense();
+        }
+
+         private void SearchExpense()
+        {
+            try
+            {
+                // الحصول على جميع القيود
+                DataTable allExpenses = exp.GET_ALL_EXPENSES();
+
+                if (allExpenses == null || allExpenses.Rows.Count == 0)
+                {
+                    MessageBox.Show("لا توجد بيانات قيود", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                // البحث بناءً على الحقول المدخلة
+                string searchExpenseCode = txtExpenseCode.Text.Trim();
+                string searchExpenseType = cmbType.SelectedIndex >= 0 ? cmbType.SelectedItem.ToString().Trim() : "";
+                string searchAccountType = cmbAccountType.SelectedIndex >= 0 ? cmbAccountType.SelectedItem.ToString().Trim() : "";
+                string searchAccountId = txtAccountId.Text.Trim();
+                string searchAccountName = txtAccountName.Text.Trim(); 
+                string searchAmount = txtAmount.Text.Trim();               
+
+                DataRow foundRow = null;
+
+                // البحث في البيانات
+                foreach (DataRow row in allExpenses.Rows)
+                {
+                    bool matches = true;
+
+                    // البحث برقم القيد
+                    if (!string.IsNullOrWhiteSpace(searchExpenseCode))
+                    {
+                        string expenseId = row["id"] != DBNull.Value ? row["id"].ToString().Trim().ToUpper() : "";
+                        if (expenseId.IndexOf(searchExpenseCode.Trim().ToUpper()) < 0)
+                        {
+                            matches = false;
+                        }
+                    }
+                     // البحث بنوع القيد
+                    if (matches && !string.IsNullOrWhiteSpace(searchExpenseType))
+                    {
+                        string expenseType = row["type"] != DBNull.Value ? row["type"].ToString().Trim().ToUpper() : "";
+                        if (expenseType.IndexOf(searchExpenseType.Trim().ToUpper()) < 0)
+                        {
+                            matches = false;
+                        }
+                    }
+                     // البحث بنوع الحساب
+                    if (matches && !string.IsNullOrWhiteSpace(searchAccountType))
+                    {
+                        string accountType = row["Account_Type"] != DBNull.Value ? row["Account_Type"].ToString().Trim().ToUpper() : "";
+                        if (accountType.IndexOf(searchAccountType.Trim().ToUpper()) < 0)
+                        {
+                            matches = false;
+                        }
+                    }
+                     // البحث برقم الحساب
+                    if (matches && !string.IsNullOrWhiteSpace(searchAccountId))
+                    {
+                        string accountId = row["account_id"] != DBNull.Value ? row["account_id"].ToString().Trim().ToUpper() : "";
+                        if (accountId.IndexOf(searchAccountId.Trim().ToUpper()) < 0)
+                        {
+                            matches = false;
+                        }
+                    }
+                    // البحث باسم الحساب/العميل/الشريك
+                    if (matches && !string.IsNullOrWhiteSpace(searchAccountName))
+                    {
+                        string accountName = row["Account_name"] != DBNull.Value ? row["Account_name"].ToString().Trim().ToUpper() : "";
+                        if (accountName.IndexOf(searchAccountName.Trim().ToUpper()) < 0)
+                        {
+                            matches = false;
+                        }
+                    }
+                    // البحث بالمبلغ
+                    if (matches && !string.IsNullOrWhiteSpace(searchAmount))
+                    {
+                        try
+                        {
+                            double searchAmountValue = Convert.ToDouble(searchAmount);
+                            if (row["amount"] != DBNull.Value)
+                            {
+                                double amountValue = Convert.ToDouble(row["amount"]);
+                                if (Math.Abs(searchAmountValue - amountValue) > 0.01) // مقارنة مع تحمل صغير للأخطاء العشرية
+                                {
+                                    matches = false;
+                                }
+                            }
+                            else
+                            {
+                                matches = false;
+                            }
+                        }
+                        catch
+                        {
+                            // إذا كان المبلغ غير صحيح، تجاهل هذا الشرط
+                        }
+                    }
+                    // إذا تطابقت جميع الشروط
+                    if (matches)
+                    {
+                        foundRow = row;
+                        break;
+                    }
+                }
+
+                if (foundRow != null)
+                {
+                    LoadExpenseData(foundRow);
+                    SetViewMode();
+                    isSearchMode = false;
+                    
+                }
+                else
+                {
+                    MessageBox.Show("لم يتم العثور على قيد يطابق معايير البحث", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("حدث خطأ أثناء البحث: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void LoadFirstExpense()
+        {
+            try
+            {
+                DataTable allExpenses = exp.GET_ALL_EXPENSES();
+
+                if (allExpenses == null || allExpenses.Rows.Count == 0)
+                {
+                    MessageBox.Show("لا توجد بيانات السندات", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                // تحميل بيانات أول سند
+                LoadExpenseData(allExpenses.Rows[0]);
+                SetViewMode();
+                isSearchMode = false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("حدث خطأ أثناء تحميل البيانات: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        } 
     }
 }
 
