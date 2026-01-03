@@ -1190,6 +1190,7 @@ namespace Water
         private void clear_SALES()
         {
             txtSalesId.Clear();
+            txtPeriodNote.Clear();
             cmbBillType.SelectedIndex = -1;                       
             if (cmbCustomerType != null)
             {
