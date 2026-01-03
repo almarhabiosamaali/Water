@@ -20,6 +20,7 @@ namespace Water
         private const int DOUBLE_CLICK_INTERVAL = 500;
         private bool isLoadingCustomerFromList = false; // للتحكم في عدم فتح القائمة تلقائياً عند تحميل البيانات
         private bool isLoadingPriceLevel = false; // للتحكم في عدم استدعاء الحدث تلقائياً عند تحميل بيانات التسعيرة
+        private bool isallocateHours = false;
         Clas.sales sal = new Clas.sales();
         Clas.salePartnersHours partnersHours = new Clas.salePartnersHours();
         Clas.customer customer = new Clas.customer();
@@ -870,6 +871,7 @@ namespace Water
                     MessageBox.Show("تم حذف الفاتورة بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     clear_SALES();
                     SetDeleteMode();
+                    isallocateHours = false;
                 }
                 catch (Exception ex)
                 {
@@ -1365,6 +1367,10 @@ namespace Water
                 // الحصول على بيانات الشركاء من قاعدة البيانات
                 DataTable dt = partnersHours.GET_ALL_SALE_PARTNER_HOURS(billNo);
 
+               // MessageBox.Show(dt.Rows[0][9].ToString());
+
+                isallocateHours =bool.Parse( dt.Rows[0][9].ToString()) ;
+
                 if (this.dataGridView1 != null)
                 {
                     // مسح البيانات الحالية
@@ -1836,7 +1842,8 @@ namespace Water
                                 minutesCountInt,
                                 hoursAvalibleInt,
                                 minutesAvalibleInt,
-                                totalHoursInt
+                                totalHoursInt,
+                                isallocateHours
                             );
 
                             // إضافة POST للشريك
@@ -1897,6 +1904,7 @@ namespace Water
                   //  MessageBox.Show($"تم حفظ بيانات {idCounter - 1} شريك بنجاح", "نجاح",
                   MessageBox.Show("تم حفظ بيانات الفاتورة بنجاح", "نجاح",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    isallocateHours = false;
                 }
             }
             catch (Exception ex)
@@ -2061,7 +2069,8 @@ namespace Water
                             minutesCountInt,
                             hoursAvalibleInt,
                             minutesAvalibleInt,
-                            totalHoursInt
+                            totalHoursInt,
+                            isallocateHours
                         );
                         updatedCount++;
                     }
@@ -2076,6 +2085,7 @@ namespace Water
                 {
                     MessageBox.Show($"تم تحديث بيانات {updatedCount} شريك بنجاح", "نجاح",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    isallocateHours = false;
                 }
             }
             catch (Exception ex)
@@ -3035,7 +3045,119 @@ namespace Water
             {
                 MessageBox.Show("حدث خطأ أثناء تحميل البيانات: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        } 
+        }
+
+        private void btnAllocateHoursToPartners_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DataTable dt = sal.AllocateHoursToPartners(int.Parse(txtSalesId.Text), int.Parse(txtHours.Text), int.Parse(txtMinutes.Text));
+                
+                if (dt == null || dt.Rows.Count == 0)
+                {
+                    MessageBox.Show("لا توجد بيانات للعرض", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                // تعطيل إنشاء الأعمدة تلقائياً لتجنب التكرار
+                //dataGridView1.AutoGenerateColumns = false;
+
+                //// ربط الأعمدة الموجودة مع أعمدة DataTable
+                //// بناءً على البيانات: bill_no, partner_id, partner_name, hours, minutes, available_hours, available_minutes
+                //if (dt.Columns.Count >= 7)
+                //{
+                //    // ربط كل عمود في DataGridView مع العمود المقابل في DataTable حسب الترتيب
+                //    if (dataGridView1.Columns["bill_no"] != null)
+                //        dataGridView1.Columns["bill_no"].DataPropertyName = dt.Columns[0].ColumnName;
+
+                //    if (dataGridView1.Columns["PartenerId"] != null)
+                //        dataGridView1.Columns["PartenerId"].DataPropertyName = dt.Columns[1].ColumnName;
+
+                //    if (dataGridView1.Columns["PartenerName"] != null)
+                //        dataGridView1.Columns["PartenerName"].DataPropertyName = dt.Columns[2].ColumnName;
+
+                //    if (dataGridView1.Columns["HoursUesed"] != null)
+                //        dataGridView1.Columns["HoursUesed"].DataPropertyName = dt.Columns[3].ColumnName;
+
+                //    if (dataGridView1.Columns["MinutesCount"] != null)
+                //        dataGridView1.Columns["MinutesCount"].DataPropertyName = dt.Columns[4].ColumnName;
+
+                //    if (dataGridView1.Columns["HoursAvalible"] != null)
+                //        dataGridView1.Columns["HoursAvalible"].DataPropertyName = dt.Columns[5].ColumnName;
+
+                //    if (dataGridView1.Columns["MinutesAvalible"] != null)
+                //        dataGridView1.Columns["MinutesAvalible"].DataPropertyName = dt.Columns[6].ColumnName;
+                //}
+
+                //// تعيين DataSource
+                //dataGridView1.DataSource = dt;
+
+
+
+
+                if (this.dataGridView1 != null)
+                {
+                    // مسح البيانات الحالية
+                    this.dataGridView1.Rows.Clear();
+
+                    // إضافة البيانات إلى DataGridView
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        int rowIndex = this.dataGridView1.Rows.Add();
+                        DataGridViewRow dgvRow = this.dataGridView1.Rows[rowIndex];
+
+                      
+                        
+
+                        // ملء البيانات في الصف
+                        if (dgvRow.Cells["bill_no"] != null)
+                        {
+                            dgvRow.Cells["bill_no"].Value = row["BillNo"] != DBNull.Value ? row["BillNo"].ToString() : "";
+                        }
+
+                        if (dgvRow.Cells["PartenerId"] != null)
+                        {
+                            dgvRow.Cells["PartenerId"].Value = row["PartnerNumber"] != DBNull.Value ? row["PartnerNumber"].ToString() : "";
+                        }
+
+                        if (dgvRow.Cells["PartenerName"] != null)
+                        {
+                            dgvRow.Cells["PartenerName"].Value = row["PartnerName"] != DBNull.Value ? row["PartnerName"].ToString() : "";
+                        }
+
+                        if (dgvRow.Cells["HoursUesed"] != null)
+                        {
+                            dgvRow.Cells["HoursUesed"].Value = row["HoursCount"] != DBNull.Value ? row["HoursCount"].ToString() : "";
+                        }
+
+                        if (dgvRow.Cells["MinutesCount"] != null)
+                        {
+                            dgvRow.Cells["MinutesCount"].Value = row["MinutesCount"] != DBNull.Value ? row["MinutesCount"].ToString() : "";
+                        }
+
+                        if (dgvRow.Cells["HoursAvalible"] != null)
+                        {
+                            dgvRow.Cells["HoursAvalible"].Value = row["HoursAvalible"] != DBNull.Value ? row["HoursAvalible"].ToString() : "";
+                        }
+
+                        if (dgvRow.Cells["MinutesAvalible"] != null)
+                        {
+                            dgvRow.Cells["MinutesAvalible"].Value = row["MinutesAvalible"] != DBNull.Value ? row["MinutesAvalible"].ToString() : "";
+                        }
+                    }
+                }
+
+                    isallocateHours = true;
+                CalculateTotals_TextChanged(null, null);
+
+                // حساب إجمالي الساعات والدقائق من DataGridView
+                CalculateTotalHoursAndMinutesFromGrid();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("حدث خطأ أثناء تحميل البيانات: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }
 

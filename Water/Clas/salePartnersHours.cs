@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,11 +11,11 @@ namespace Water.Clas
     public class salePartnersHours
     {
         public void ADD_SALE_PARTNER_HOURS(string billNo, int id, string partnerNumber, string partnerName, 
-            int? hoursCount, int? minutesCount, int? hoursAvalible, int? minutesAvalible, int? totalHours)
+            int? hoursCount, int? minutesCount, int? hoursAvalible, int? minutesAvalible, int? totalHours , bool allocateHours)
         {
             Clas.DataAccessLayer DAL = new Clas.DataAccessLayer();
             DAL.Open();
-            SqlParameter[] param = new SqlParameter[9];
+            SqlParameter[] param = new SqlParameter[10];
             
             param[0] = new SqlParameter("@BillNo", SqlDbType.VarChar, 50);
             param[0].Value = billNo;
@@ -43,6 +43,9 @@ namespace Water.Clas
 
             param[8] = new SqlParameter("@TotalHours", SqlDbType.Int);
             param[8].Value = (object)totalHours ?? DBNull.Value;
+
+            param[9] = new SqlParameter("@AllocateHours", SqlDbType.Bit); // ✅
+            param[9].Value = allocateHours;
 
             DAL.ExecuteCommand("salePartnersHours_insert", param);
             DAL.Close();
@@ -80,11 +83,11 @@ namespace Water.Clas
         }
 
         public void UPDATE_SALE_PARTNER_HOURS(string billNo, int id, string partnerNumber, string partnerName, 
-            int? hoursCount, int? minutesCount, int? hoursAvalible, int? minutesAvalible, int? totalHours)
+            int? hoursCount, int? minutesCount, int? hoursAvalible, int? minutesAvalible, int? totalHours , bool allocateHours)
         {
             Clas.DataAccessLayer DAL = new Clas.DataAccessLayer();
             DAL.Open();
-            SqlParameter[] param = new SqlParameter[9];
+            SqlParameter[] param = new SqlParameter[10];
             
             param[0] = new SqlParameter("@BillNo", SqlDbType.VarChar, 50);
             param[0].Value = billNo;
@@ -112,17 +115,20 @@ namespace Water.Clas
 
             param[8] = new SqlParameter("@TotalHours", SqlDbType.Int);
             param[8].Value = (object)totalHours ?? DBNull.Value;
+
+            param[9] = new SqlParameter("@AllocateHours", SqlDbType.Bit); // ✅
+            param[9].Value = allocateHours;
 
             DAL.ExecuteCommand("salePartnersHours_update", param);
             DAL.Close();
         }
 
         public void UPDATE_SALE_PARTNER_HOURS_BY_BILLNO(string billNo, int id, string partnerNumber, string partnerName, 
-            int? hoursCount, int? minutesCount, int? hoursAvalible, int? minutesAvalible, int? totalHours)
+            int? hoursCount, int? minutesCount, int? hoursAvalible, int? minutesAvalible, int? totalHours , bool allocateHours)
         {
             Clas.DataAccessLayer DAL = new Clas.DataAccessLayer();
             DAL.Open();
-            SqlParameter[] param = new SqlParameter[9];
+            SqlParameter[] param = new SqlParameter[10];
             
             param[0] = new SqlParameter("@BillNo", SqlDbType.VarChar, 50);
             param[0].Value = billNo;
@@ -150,6 +156,9 @@ namespace Water.Clas
 
             param[8] = new SqlParameter("@TotalHours", SqlDbType.Int);
             param[8].Value = (object)totalHours ?? DBNull.Value;
+
+            param[9] = new SqlParameter("@AllocateHours", SqlDbType.Bit); // ✅
+            param[9].Value = allocateHours;
 
             DAL.ExecuteCommand("salePartnersHours_Update", param);
             DAL.Close();

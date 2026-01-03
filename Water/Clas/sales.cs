@@ -350,6 +350,27 @@ namespace Water.Clas
             DAL.ExecuteCommand("sp_post_crud", param);
             DAL.Close();
         }
+
+
+        public DataTable AllocateHoursToPartners(int billNo, int allHours, int allMinutes)
+        {
+            Clas.DataAccessLayer DAL = new Clas.DataAccessLayer();
+            DAL.Open();
+            SqlParameter[] param = new SqlParameter[3];
+
+            param[0] = new SqlParameter("@billNO", SqlDbType.Int);
+            param[0].Value = (object)billNo ?? DBNull.Value; ;
+
+            param[1] = new SqlParameter("@allHours", SqlDbType.Int);
+            param[1].Value = (object)allHours ?? DBNull.Value; ;
+
+            param[2] = new SqlParameter("@allMinutes", SqlDbType.Int);
+            param[2].Value = (object)allMinutes ?? DBNull.Value; ;
+
+            DataTable dt = DAL.SelectData("AllocateHoursToPartners", param);
+            DAL.Close();
+            return dt;
+        }
     }
 
 }
