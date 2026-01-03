@@ -28,6 +28,7 @@ namespace Water
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.lblExpenseCode = new System.Windows.Forms.Label();
             this.txtExpenseCode = new System.Windows.Forms.TextBox();
             this.lblDate = new System.Windows.Forms.Label();
@@ -41,9 +42,12 @@ namespace Water
             this.lblAccountName = new System.Windows.Forms.Label();
             this.txtAccountName = new System.Windows.Forms.TextBox();
             this.lblAmount = new System.Windows.Forms.Label();
-            this.numAmount = new System.Windows.Forms.NumericUpDown();
             this.lblPeriodId = new System.Windows.Forms.Label();
             this.txtPeriodId = new System.Windows.Forms.TextBox();
+            this.lblPeriodStartDate = new System.Windows.Forms.Label();
+            this.txtPeriodStartDate = new System.Windows.Forms.TextBox();
+            this.lblPeriodEndDate = new System.Windows.Forms.Label();
+            this.txtPeriodEndDate = new System.Windows.Forms.TextBox();
             this.lblDescription = new System.Windows.Forms.Label();
             this.txtDescription = new System.Windows.Forms.TextBox();
             this.lblNotes = new System.Windows.Forms.Label();
@@ -53,61 +57,68 @@ namespace Water
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.numAmount)).BeginInit();
+            this.txtAmount = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.btnExit = new System.Windows.Forms.Button();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.btnSearch = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblExpenseCode
             // 
             this.lblExpenseCode.AutoSize = true;
             this.lblExpenseCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblExpenseCode.Location = new System.Drawing.Point(30, 30);
+            this.lblExpenseCode.Location = new System.Drawing.Point(13, 124);
             this.lblExpenseCode.Name = "lblExpenseCode";
-            this.lblExpenseCode.Size = new System.Drawing.Size(100, 20);
-            this.lblExpenseCode.TabIndex = 0;
-            this.lblExpenseCode.Text = "كود القيد:";
             this.lblExpenseCode.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.lblExpenseCode.Size = new System.Drawing.Size(70, 20);
+            this.lblExpenseCode.TabIndex = 0;
+            this.lblExpenseCode.Text = "رقم السند :";
             // 
             // txtExpenseCode
             // 
             this.txtExpenseCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtExpenseCode.Location = new System.Drawing.Point(150, 27);
+            this.txtExpenseCode.Location = new System.Drawing.Point(118, 121);
             this.txtExpenseCode.Name = "txtExpenseCode";
-            this.txtExpenseCode.Size = new System.Drawing.Size(300, 26);
-            this.txtExpenseCode.TabIndex = 1;
+            this.txtExpenseCode.ReadOnly = true;
             this.txtExpenseCode.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.txtExpenseCode.Size = new System.Drawing.Size(263, 26);
+            this.txtExpenseCode.TabIndex = 1;
+            this.txtExpenseCode.TabStop = false;
+            this.txtExpenseCode.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // lblDate
             // 
             this.lblDate.AutoSize = true;
             this.lblDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDate.Location = new System.Drawing.Point(30, 70);
+            this.lblDate.Location = new System.Drawing.Point(438, 172);
             this.lblDate.Name = "lblDate";
-            this.lblDate.Size = new System.Drawing.Size(100, 20);
+            this.lblDate.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.lblDate.Size = new System.Drawing.Size(51, 20);
             this.lblDate.TabIndex = 2;
             this.lblDate.Text = "التاريخ:";
-            this.lblDate.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             // 
             // dtpDate
             // 
             this.dtpDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dtpDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpDate.Location = new System.Drawing.Point(150, 67);
+            this.dtpDate.Location = new System.Drawing.Point(543, 169);
             this.dtpDate.Name = "dtpDate";
-            this.dtpDate.Size = new System.Drawing.Size(300, 26);
-            this.dtpDate.TabIndex = 3;
             this.dtpDate.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.dtpDate.RightToLeftLayout = true;
+            this.dtpDate.Size = new System.Drawing.Size(173, 26);
+            this.dtpDate.TabIndex = 4;
             // 
             // lblType
             // 
             this.lblType.AutoSize = true;
             this.lblType.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblType.Location = new System.Drawing.Point(30, 110);
+            this.lblType.Location = new System.Drawing.Point(12, 169);
             this.lblType.Name = "lblType";
-            this.lblType.Size = new System.Drawing.Size(100, 20);
+            this.lblType.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.lblType.Size = new System.Drawing.Size(42, 20);
             this.lblType.TabIndex = 4;
             this.lblType.Text = "النوع:";
-            this.lblType.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             // 
             // cmbType
             // 
@@ -117,22 +128,22 @@ namespace Water
             this.cmbType.Items.AddRange(new object[] {
             "قبض",
             "صرف"});
-            this.cmbType.Location = new System.Drawing.Point(150, 107);
+            this.cmbType.Location = new System.Drawing.Point(117, 166);
             this.cmbType.Name = "cmbType";
-            this.cmbType.Size = new System.Drawing.Size(300, 28);
-            this.cmbType.TabIndex = 5;
             this.cmbType.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.cmbType.Size = new System.Drawing.Size(263, 28);
+            this.cmbType.TabIndex = 3;
             // 
             // lblAccountType
             // 
             this.lblAccountType.AutoSize = true;
             this.lblAccountType.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAccountType.Location = new System.Drawing.Point(30, 150);
+            this.lblAccountType.Location = new System.Drawing.Point(12, 214);
             this.lblAccountType.Name = "lblAccountType";
-            this.lblAccountType.Size = new System.Drawing.Size(100, 20);
+            this.lblAccountType.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.lblAccountType.Size = new System.Drawing.Size(81, 20);
             this.lblAccountType.TabIndex = 6;
             this.lblAccountType.Text = "نوع الحساب:";
-            this.lblAccountType.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             // 
             // cmbAccountType
             // 
@@ -140,207 +151,312 @@ namespace Water
             this.cmbAccountType.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbAccountType.FormattingEnabled = true;
             this.cmbAccountType.Items.AddRange(new object[] {
-            "حساب",
-            "عميل"});
-            this.cmbAccountType.Location = new System.Drawing.Point(150, 147);
+            "عميل",
+            "شريك",
+            "حساب"});
+            this.cmbAccountType.Location = new System.Drawing.Point(117, 211);
             this.cmbAccountType.Name = "cmbAccountType";
-            this.cmbAccountType.Size = new System.Drawing.Size(300, 28);
-            this.cmbAccountType.TabIndex = 7;
             this.cmbAccountType.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.cmbAccountType.Size = new System.Drawing.Size(263, 28);
+            this.cmbAccountType.TabIndex = 5;
             // 
             // lblAccountId
             // 
             this.lblAccountId.AutoSize = true;
             this.lblAccountId.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAccountId.Location = new System.Drawing.Point(30, 190);
+            this.lblAccountId.Location = new System.Drawing.Point(12, 258);
             this.lblAccountId.Name = "lblAccountId";
-            this.lblAccountId.Size = new System.Drawing.Size(100, 20);
-            this.lblAccountId.TabIndex = 8;
-            this.lblAccountId.Text = "كود الحساب:";
             this.lblAccountId.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.lblAccountId.Size = new System.Drawing.Size(80, 20);
+            this.lblAccountId.TabIndex = 8;
+            this.lblAccountId.Text = "رقم الحساب:";
             // 
             // txtAccountId
             // 
             this.txtAccountId.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtAccountId.Location = new System.Drawing.Point(150, 187);
+            this.txtAccountId.Location = new System.Drawing.Point(117, 255);
             this.txtAccountId.Name = "txtAccountId";
-            this.txtAccountId.Size = new System.Drawing.Size(300, 26);
-            this.txtAccountId.TabIndex = 9;
+            this.txtAccountId.ReadOnly = true;
             this.txtAccountId.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.txtAccountId.Size = new System.Drawing.Size(263, 26);
+            this.txtAccountId.TabIndex = 6;
+            this.txtAccountId.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtAccountId_KeyDown);
             // 
             // lblAccountName
             // 
             this.lblAccountName.AutoSize = true;
             this.lblAccountName.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAccountName.Location = new System.Drawing.Point(30, 230);
+            this.lblAccountName.Location = new System.Drawing.Point(438, 258);
             this.lblAccountName.Name = "lblAccountName";
-            this.lblAccountName.Size = new System.Drawing.Size(100, 20);
+            this.lblAccountName.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.lblAccountName.Size = new System.Drawing.Size(80, 20);
             this.lblAccountName.TabIndex = 10;
             this.lblAccountName.Text = "اسم الحساب:";
-            this.lblAccountName.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             // 
             // txtAccountName
             // 
             this.txtAccountName.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtAccountName.Location = new System.Drawing.Point(150, 227);
+            this.txtAccountName.Location = new System.Drawing.Point(543, 255);
             this.txtAccountName.Name = "txtAccountName";
-            this.txtAccountName.Size = new System.Drawing.Size(300, 26);
-            this.txtAccountName.TabIndex = 11;
+            this.txtAccountName.ReadOnly = true;
             this.txtAccountName.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.txtAccountName.Size = new System.Drawing.Size(263, 26);
+            this.txtAccountName.TabIndex = 11;
+            this.txtAccountName.TabStop = false;
             // 
             // lblAmount
             // 
             this.lblAmount.AutoSize = true;
             this.lblAmount.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAmount.Location = new System.Drawing.Point(30, 270);
+            this.lblAmount.Location = new System.Drawing.Point(9, 315);
             this.lblAmount.Name = "lblAmount";
-            this.lblAmount.Size = new System.Drawing.Size(100, 20);
+            this.lblAmount.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.lblAmount.Size = new System.Drawing.Size(45, 20);
             this.lblAmount.TabIndex = 12;
             this.lblAmount.Text = "المبلغ:";
-            this.lblAmount.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            // 
-            // numAmount
-            // 
-            this.numAmount.DecimalPlaces = 2;
-            this.numAmount.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numAmount.Location = new System.Drawing.Point(150, 267);
-            this.numAmount.Maximum = new decimal(new int[] {
-            10000000,
-            0,
-            0,
-            0});
-            this.numAmount.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            -2147483648});
-            this.numAmount.Name = "numAmount";
-            this.numAmount.Size = new System.Drawing.Size(300, 26);
-            this.numAmount.TabIndex = 13;
-            this.numAmount.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblPeriodId
             // 
             this.lblPeriodId.AutoSize = true;
             this.lblPeriodId.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPeriodId.Location = new System.Drawing.Point(30, 310);
+            this.lblPeriodId.Location = new System.Drawing.Point(438, 124);
             this.lblPeriodId.Name = "lblPeriodId";
-            this.lblPeriodId.Size = new System.Drawing.Size(100, 20);
-            this.lblPeriodId.TabIndex = 14;
-            this.lblPeriodId.Text = "كود الفترة:";
             this.lblPeriodId.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.lblPeriodId.Size = new System.Drawing.Size(67, 20);
+            this.lblPeriodId.TabIndex = 14;
+            this.lblPeriodId.Text = "رقم الفترة:";
             // 
             // txtPeriodId
             // 
             this.txtPeriodId.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPeriodId.Location = new System.Drawing.Point(150, 307);
+            this.txtPeriodId.Location = new System.Drawing.Point(543, 121);
             this.txtPeriodId.Name = "txtPeriodId";
-            this.txtPeriodId.Size = new System.Drawing.Size(300, 26);
-            this.txtPeriodId.TabIndex = 15;
+            this.txtPeriodId.ReadOnly = true;
             this.txtPeriodId.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.txtPeriodId.Size = new System.Drawing.Size(74, 26);
+            this.txtPeriodId.TabIndex = 2;
+            this.txtPeriodId.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPeriodId_KeyDown);
+            this.txtPeriodId.Leave += new System.EventHandler(this.txtPeriodId_Leave);
+            // 
+            // lblPeriodStartDate
+            // 
+            this.lblPeriodStartDate.AutoSize = true;
+            this.lblPeriodStartDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPeriodStartDate.Location = new System.Drawing.Point(681, 121);
+            this.lblPeriodStartDate.Name = "lblPeriodStartDate";
+            this.lblPeriodStartDate.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.lblPeriodStartDate.Size = new System.Drawing.Size(35, 20);
+            this.lblPeriodStartDate.TabIndex = 26;
+            this.lblPeriodStartDate.Text = "من :";
+            // 
+            // txtPeriodStartDate
+            // 
+            this.txtPeriodStartDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPeriodStartDate.Location = new System.Drawing.Point(734, 121);
+            this.txtPeriodStartDate.Name = "txtPeriodStartDate";
+            this.txtPeriodStartDate.ReadOnly = true;
+            this.txtPeriodStartDate.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.txtPeriodStartDate.Size = new System.Drawing.Size(120, 26);
+            this.txtPeriodStartDate.TabIndex = 27;
+            this.txtPeriodStartDate.TabStop = false;
+            this.txtPeriodStartDate.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // lblPeriodEndDate
+            // 
+            this.lblPeriodEndDate.AutoSize = true;
+            this.lblPeriodEndDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPeriodEndDate.Location = new System.Drawing.Point(860, 121);
+            this.lblPeriodEndDate.Name = "lblPeriodEndDate";
+            this.lblPeriodEndDate.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.lblPeriodEndDate.Size = new System.Drawing.Size(37, 20);
+            this.lblPeriodEndDate.TabIndex = 28;
+            this.lblPeriodEndDate.Text = "الى :";
+            // 
+            // txtPeriodEndDate
+            // 
+            this.txtPeriodEndDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPeriodEndDate.Location = new System.Drawing.Point(903, 121);
+            this.txtPeriodEndDate.Name = "txtPeriodEndDate";
+            this.txtPeriodEndDate.ReadOnly = true;
+            this.txtPeriodEndDate.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.txtPeriodEndDate.Size = new System.Drawing.Size(156, 26);
+            this.txtPeriodEndDate.TabIndex = 29;
+            this.txtPeriodEndDate.TabStop = false;
+            this.txtPeriodEndDate.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // lblDescription
             // 
             this.lblDescription.AutoSize = true;
             this.lblDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDescription.Location = new System.Drawing.Point(30, 350);
+            this.lblDescription.Location = new System.Drawing.Point(13, 444);
             this.lblDescription.Name = "lblDescription";
-            this.lblDescription.Size = new System.Drawing.Size(100, 20);
-            this.lblDescription.TabIndex = 16;
-            this.lblDescription.Text = "الوصف:";
             this.lblDescription.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.lblDescription.Size = new System.Drawing.Size(61, 20);
+            this.lblDescription.TabIndex = 16;
+            this.lblDescription.Text = "ملاحظة :";
             // 
             // txtDescription
             // 
             this.txtDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtDescription.Location = new System.Drawing.Point(150, 347);
+            this.txtDescription.Location = new System.Drawing.Point(118, 441);
             this.txtDescription.Multiline = true;
             this.txtDescription.Name = "txtDescription";
-            this.txtDescription.Size = new System.Drawing.Size(300, 60);
-            this.txtDescription.TabIndex = 17;
+            this.txtDescription.ReadOnly = true;
             this.txtDescription.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.txtDescription.Size = new System.Drawing.Size(688, 35);
+            this.txtDescription.TabIndex = 10;
             // 
             // lblNotes
             // 
             this.lblNotes.AutoSize = true;
             this.lblNotes.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNotes.Location = new System.Drawing.Point(30, 430);
+            this.lblNotes.Location = new System.Drawing.Point(13, 354);
             this.lblNotes.Name = "lblNotes";
-            this.lblNotes.Size = new System.Drawing.Size(100, 20);
-            this.lblNotes.TabIndex = 18;
-            this.lblNotes.Text = "ملاحظات:";
             this.lblNotes.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.lblNotes.Size = new System.Drawing.Size(52, 20);
+            this.lblNotes.TabIndex = 18;
+            this.lblNotes.Text = "البيـان :";
             // 
             // txtNotes
             // 
             this.txtNotes.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtNotes.Location = new System.Drawing.Point(150, 427);
+            this.txtNotes.Location = new System.Drawing.Point(118, 351);
             this.txtNotes.Multiline = true;
             this.txtNotes.Name = "txtNotes";
-            this.txtNotes.Size = new System.Drawing.Size(300, 60);
-            this.txtNotes.TabIndex = 19;
+            this.txtNotes.ReadOnly = true;
             this.txtNotes.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.txtNotes.Size = new System.Drawing.Size(689, 60);
+            this.txtNotes.TabIndex = 8;
             // 
             // btnView
             // 
+            this.btnView.BackColor = System.Drawing.Color.White;
             this.btnView.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnView.Location = new System.Drawing.Point(30, 510);
+            this.btnView.Image = global::Water.Properties.Resources.icons8_view_24;
+            this.btnView.Location = new System.Drawing.Point(375, 35);
             this.btnView.Name = "btnView";
-            this.btnView.Size = new System.Drawing.Size(85, 40);
-            this.btnView.TabIndex = 20;
-            this.btnView.Text = "عرض";
-            this.btnView.UseVisualStyleBackColor = true;
             this.btnView.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.btnView.Size = new System.Drawing.Size(70, 40);
+            this.btnView.TabIndex = 20;
+            this.btnView.TabStop = false;
+            this.toolTip1.SetToolTip(this.btnView, "عرض");
+            this.btnView.UseVisualStyleBackColor = false;
             // 
             // btnAdd
             // 
+            this.btnAdd.BackColor = System.Drawing.Color.White;
             this.btnAdd.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAdd.Location = new System.Drawing.Point(125, 510);
+            this.btnAdd.Image = global::Water.Properties.Resources.icons8_add_24;
+            this.btnAdd.Location = new System.Drawing.Point(445, 35);
             this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(85, 40);
-            this.btnAdd.TabIndex = 21;
-            this.btnAdd.Text = "إضافة";
-            this.btnAdd.UseVisualStyleBackColor = true;
             this.btnAdd.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.btnAdd.Size = new System.Drawing.Size(70, 40);
+            this.btnAdd.TabIndex = 1;
+            this.toolTip1.SetToolTip(this.btnAdd, "إضافة");
+            this.btnAdd.UseVisualStyleBackColor = false;
             // 
             // btnEdit
             // 
+            this.btnEdit.BackColor = System.Drawing.Color.White;
+            this.btnEdit.Enabled = false;
             this.btnEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEdit.Location = new System.Drawing.Point(220, 510);
+            this.btnEdit.Image = global::Water.Properties.Resources.icons8_edit_24_5;
+            this.btnEdit.Location = new System.Drawing.Point(514, 35);
             this.btnEdit.Name = "btnEdit";
-            this.btnEdit.Size = new System.Drawing.Size(85, 40);
-            this.btnEdit.TabIndex = 22;
-            this.btnEdit.Text = "تعديل";
-            this.btnEdit.UseVisualStyleBackColor = true;
             this.btnEdit.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.btnEdit.Size = new System.Drawing.Size(70, 40);
+            this.btnEdit.TabIndex = 22;
+            this.btnEdit.TabStop = false;
+            this.toolTip1.SetToolTip(this.btnEdit, "تعديل");
+            this.btnEdit.UseVisualStyleBackColor = false;
             // 
             // btnDelete
             // 
+            this.btnDelete.BackColor = System.Drawing.Color.White;
+            this.btnDelete.Enabled = false;
             this.btnDelete.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDelete.Location = new System.Drawing.Point(315, 510);
+            this.btnDelete.Image = global::Water.Properties.Resources.icons8_delete_24;
+            this.btnDelete.Location = new System.Drawing.Point(586, 35);
             this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(85, 40);
-            this.btnDelete.TabIndex = 23;
-            this.btnDelete.Text = "حذف";
-            this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.btnDelete.Size = new System.Drawing.Size(70, 40);
+            this.btnDelete.TabIndex = 23;
+            this.btnDelete.TabStop = false;
+            this.btnDelete.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            this.toolTip1.SetToolTip(this.btnDelete, "حذف");
+            this.btnDelete.UseVisualStyleBackColor = false;
             // 
             // btnSave
             // 
+            this.btnSave.BackColor = System.Drawing.Color.White;
+            this.btnSave.Enabled = false;
             this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSave.Location = new System.Drawing.Point(410, 510);
+            this.btnSave.Image = global::Water.Properties.Resources.icons8_save_24_9;
+            this.btnSave.Location = new System.Drawing.Point(658, 35);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(85, 40);
-            this.btnSave.TabIndex = 24;
-            this.btnSave.Text = "حفظ";
-            this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.btnSave.Size = new System.Drawing.Size(70, 40);
+            this.btnSave.TabIndex = 12;
+            this.toolTip1.SetToolTip(this.btnSave, "حفظ");
+            this.btnSave.UseVisualStyleBackColor = false;
+            // 
+            // txtAmount
+            // 
+            this.txtAmount.Location = new System.Drawing.Point(117, 318);
+            this.txtAmount.Name = "txtAmount";
+            this.txtAmount.ReadOnly = true;
+            this.txtAmount.Size = new System.Drawing.Size(263, 24);
+            this.txtAmount.TabIndex = 7;
+            this.txtAmount.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtAmount_KeyPress);
+            this.txtAmount.Leave += new System.EventHandler(this.txtAmount_Leave);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(484, 7);
+            this.label1.Name = "label1";
+            this.label1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.label1.Size = new System.Drawing.Size(172, 24);
+            this.label1.TabIndex = 30;
+            this.label1.Text = "سندات القبض والصرف";
+            // 
+            // btnExit
+            // 
+            this.btnExit.BackColor = System.Drawing.Color.White;
+            this.btnExit.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnExit.Image = global::Water.Properties.Resources.icons8_exit_24;
+            this.btnExit.Location = new System.Drawing.Point(728, 35);
+            this.btnExit.Name = "btnExit";
+            this.btnExit.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.btnExit.Size = new System.Drawing.Size(70, 40);
+            this.btnExit.TabIndex = 37;
+            this.btnExit.TabStop = false;
+            this.toolTip1.SetToolTip(this.btnExit, "خروج");
+            this.btnExit.UseVisualStyleBackColor = false;
+            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
+            // 
+            // btnSearch
+            // 
+            this.btnSearch.BackColor = System.Drawing.Color.White;
+            this.btnSearch.Image = global::Water.Properties.Resources.icons8_search_24_8;
+            this.btnSearch.Location = new System.Drawing.Point(299, 35);
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Size = new System.Drawing.Size(70, 40);
+            this.btnSearch.TabIndex = 91;
+            this.toolTip1.SetToolTip(this.btnSearch, "بحث");
+            this.btnSearch.UseVisualStyleBackColor = false;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
             // ExpenseForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(520, 570);
+            this.ClientSize = new System.Drawing.Size(1084, 536);
+            this.Controls.Add(this.btnSearch);
+            this.Controls.Add(this.btnExit);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.txtAmount);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnEdit);
@@ -350,9 +466,12 @@ namespace Water
             this.Controls.Add(this.lblNotes);
             this.Controls.Add(this.txtDescription);
             this.Controls.Add(this.lblDescription);
+            this.Controls.Add(this.txtPeriodEndDate);
+            this.Controls.Add(this.lblPeriodEndDate);
+            this.Controls.Add(this.txtPeriodStartDate);
+            this.Controls.Add(this.lblPeriodStartDate);
             this.Controls.Add(this.txtPeriodId);
             this.Controls.Add(this.lblPeriodId);
-            this.Controls.Add(this.numAmount);
             this.Controls.Add(this.lblAmount);
             this.Controls.Add(this.txtAccountName);
             this.Controls.Add(this.lblAccountName);
@@ -373,15 +492,14 @@ namespace Water
             this.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.RightToLeftLayout = true;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "القيود اليومية";
-            ((System.ComponentModel.ISupportInitialize)(this.numAmount)).EndInit();
+            this.Text = "السندات ";
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
+     
         private System.Windows.Forms.Label lblExpenseCode;
         private System.Windows.Forms.TextBox txtExpenseCode;
         private System.Windows.Forms.Label lblDate;
@@ -395,9 +513,12 @@ namespace Water
         private System.Windows.Forms.Label lblAccountName;
         private System.Windows.Forms.TextBox txtAccountName;
         private System.Windows.Forms.Label lblAmount;
-        private System.Windows.Forms.NumericUpDown numAmount;
         private System.Windows.Forms.Label lblPeriodId;
         private System.Windows.Forms.TextBox txtPeriodId;
+        private System.Windows.Forms.Label lblPeriodStartDate;
+        private System.Windows.Forms.TextBox txtPeriodStartDate;
+        private System.Windows.Forms.Label lblPeriodEndDate;
+        private System.Windows.Forms.TextBox txtPeriodEndDate;
         private System.Windows.Forms.Label lblDescription;
         private System.Windows.Forms.TextBox txtDescription;
         private System.Windows.Forms.Label lblNotes;
@@ -407,6 +528,12 @@ namespace Water
         private System.Windows.Forms.Button btnEdit;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.TextBox txtAmount;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnExit;
+        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.Button btnSearch;
+        //private AmountTextBox amountTextBox;
     }
 }
 
