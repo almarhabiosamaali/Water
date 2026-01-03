@@ -437,11 +437,11 @@ namespace Water
             txtDowntimeCode.Clear();
             txtPeriodId.Clear();
             dtpDate.Value = DateTime.Now;
+            dtpStartTime.Value=DateTime.Now;
+            dtpEndTime.Value=DateTime.Now;
             txtDayesCount.Clear();
             txtHours.Clear();
-            txtMinutes.Clear();
-            dtpStartTime.Checked = false;
-            dtpEndTime.Checked = false;
+            txtMinutes.Clear();            
             txtAmount.Clear();
             txtNote.Clear();
             txtDescription.Clear();
@@ -574,6 +574,13 @@ namespace Water
                 }
                 // إذا اختار "لا"، لا نفعل شيئاً ونبقى في الشاشة
             }
+            else if (isSearchMode)
+            {
+                clear_DOWNTIME();
+                isEditMode = false;
+                isSearchMode = false;
+                SetNormalMode();
+            }
             else
             {
                 this.Close();
@@ -586,6 +593,17 @@ namespace Water
             btnAdd.Enabled = true;
             btnEdit.Enabled = false;
             btnDelete.Enabled = false;
+            btnSearch.Enabled = true;
+
+            txtDowntimeCode.ReadOnly = true;
+            txtPeriodId.ReadOnly = true;
+            dtpDate.Enabled = false;
+            dtpStartTime.Enabled = false;
+            dtpEndTime.Enabled = false;         
+            txtAmount.ReadOnly = true;
+            txtNote.ReadOnly = true;
+            txtDescription.ReadOnly = true;
+            chkIsProcessed.Enabled = false;
         }
 
         private void SetViewMode()
@@ -595,6 +613,17 @@ namespace Water
             btnEdit.Enabled = true;
             btnDelete.Enabled = true;
             btnSave.Enabled = false;
+            btnSearch.Enabled = true;
+
+            txtDowntimeCode.ReadOnly = true;
+            txtPeriodId.ReadOnly = true;
+            dtpDate.Enabled = false;
+            dtpStartTime.Enabled = false;
+            dtpEndTime.Enabled = false;         
+            txtAmount.ReadOnly = true;
+            txtNote.ReadOnly = true;
+            txtDescription.ReadOnly = true;
+            chkIsProcessed.Enabled = false;
         }
 
         private void SetAddMode()
@@ -605,8 +634,7 @@ namespace Water
             btnDelete.Enabled = false;
             btnAdd.Enabled = false;
             btnSearch.Enabled = false;
-
-          //  clear_DOWNTIME();
+          
 
             txtDowntimeCode.ReadOnly = true;
             txtPeriodId.ReadOnly = false;
@@ -616,6 +644,7 @@ namespace Water
             txtAmount.ReadOnly = false;
             txtNote.ReadOnly = false;
             txtDescription.ReadOnly = false;
+            chkIsProcessed.Enabled = false;
         }
 
         private void SetEditMode()
@@ -625,6 +654,17 @@ namespace Water
             btnView.Enabled = false;
             btnDelete.Enabled = false;
             btnEdit.Enabled = false;
+            btnSearch.Enabled = false;
+
+            txtDowntimeCode.ReadOnly = true;
+            txtPeriodId.ReadOnly = false;
+            dtpDate.Enabled = true;
+            dtpStartTime.Enabled = true;
+            dtpEndTime.Enabled = true;         
+            txtAmount.ReadOnly = false;
+            txtNote.ReadOnly = false;
+            txtDescription.ReadOnly = false;
+            chkIsProcessed.Enabled = false;
         }
         private void SetDeleteMode()
         {
@@ -634,11 +674,7 @@ namespace Water
 
         private void SetAfterSaveMode()
         {
-            btnSave.Enabled = false;
-            btnView.Enabled = true;
-            btnAdd.Enabled = true;
-            btnDelete.Enabled = false;
-            btnEdit.Enabled = false;
+           SetNormalMode();
         }
         private void SetSearchMode()
         {
@@ -760,14 +796,14 @@ namespace Water
                 // البحث بناءً على الحقول المدخلة
                 string searchDowntimeCode = txtDowntimeCode.Text.Trim();
                 string searchPeriodId = txtPeriodId.Text.Trim();
-                string searchDate = "";
+                DateTime? searchDate = null;
                 string searchIsProcessed = chkIsProcessed.Checked ? "1" : "0";
                 string searchAmount = txtAmount.Text.Trim();
                 string searchNote = txtNote.Text.Trim();
 
                 if (dateEntered)
-                {
-                    searchDate = dtpDate.Value.ToString("yyyy-MM-dd");
+                {  
+                    searchDate = dtpDate.Value.Date;
                 }
 
                 DataRow foundRow = null;
@@ -795,11 +831,10 @@ namespace Water
                             matches = false;
                         }
                     }
-                    // البحث بتاريخ التوقف
-                    if (matches && !string.IsNullOrWhiteSpace(searchDate))
+                    if (matches && searchDate.HasValue)
                     {
-                        string date = row["date"] != DBNull.Value ? row["date"].ToString().Trim().ToUpper() : "";
-                        if (date.IndexOf(searchDate.Trim().ToUpper()) < 0)
+                        DateTime rowdate = Convert.ToDateTime(row["date"]).Date;// != DBNull.Value ? row["date"].ToString().Trim().ToUpper() : "";
+                        if (rowdate !=searchDate.Value)
                         {
                             matches = false;
                         }

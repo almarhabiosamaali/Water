@@ -535,15 +535,15 @@ namespace Water
                 string searchPeriodStatment = txtStatment.Text.Trim();
                 
                 // استخدام التواريخ فقط إذا تم إدخالها
-                string searchStartDate = "";
-                string searchEndDate = "";
+                DateTime? searchStartDate = null;
+                DateTime? searchEndDate = null;
                 if (startDateEntered)
                 {
-                    searchStartDate = dtpStartDate.Value.ToString("yyyy-MM-dd");
+                    searchStartDate = dtpStartDate.Value.Date;
                 }
                 if (endDateEntered)
                 {
-                    searchEndDate = dtpEndDate.Value.ToString("yyyy-MM-dd");
+                    searchEndDate = dtpEndDate.Value.Date;
                 }
 
                 DataRow foundRow = null;
@@ -572,19 +572,19 @@ namespace Water
                         }
                     }
                     // البحث بتاريخ البداية (فقط إذا تم إدخاله)
-                    if (matches && !string.IsNullOrWhiteSpace(searchStartDate))
+                    if (matches && searchStartDate.HasValue)
                     {
-                        string startDate = row["start_date"] != DBNull.Value ? row["start_date"].ToString().Trim().ToUpper() : "";
-                        if (startDate.IndexOf(searchStartDate.Trim().ToUpper()) < 0)
+                        DateTime rowdate = Convert.ToDateTime(row["start_date"]).Date;
+                        if (rowdate !=searchStartDate.Value)
                         {
                             matches = false;
                         }
                     }
                     // البحث بتاريخ النهاية (فقط إذا تم إدخاله)
-                    if (matches && !string.IsNullOrWhiteSpace(searchEndDate))
+                    if (matches && searchEndDate.HasValue)
                     {
-                        string endDate = row["end_date"] != DBNull.Value ? row["end_date"].ToString().Trim().ToUpper() : "";
-                        if (endDate.IndexOf(searchEndDate.Trim().ToUpper()) < 0)
+                        DateTime rowdate = Convert.ToDateTime(row["end_date"]).Date;
+                        if (rowdate !=searchEndDate.Value)
                         {
                             matches = false;
                         }
