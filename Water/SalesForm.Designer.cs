@@ -425,15 +425,7 @@ namespace Water
             this.label1.Text = "التاريخ :";
             // 
             // saleDate
-            // 
-            this.dateTimePicker1.CustomFormat = "dd/MM/yyyy  hh:mm tt";
-            this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateTimePicker1.Location = new System.Drawing.Point(733, 48);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.dateTimePicker1.RightToLeftLayout = true;
-            this.dateTimePicker1.Size = new System.Drawing.Size(228, 22);
-            this.dateTimePicker1.TabIndex = 8;
+            //
             this.saleDate.CustomFormat = "dd/MM/yyyy  hh:mm tt";
             this.saleDate.Enabled = false;
             this.saleDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
