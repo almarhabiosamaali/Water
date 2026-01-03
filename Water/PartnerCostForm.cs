@@ -14,6 +14,12 @@ namespace Water
     public partial class PartnerCostForm : Form
     {
         private bool isEditMode = false;
+        private bool isSearchMode = false;
+        private bool isAddMode = false;
+        private DateTime lastClickTime = DateTime.MinValue; // آخر وقت للنقر
+        private const int DOUBLE_CLICK_INTERVAL = 500;
+        private bool dateEntered = false; // لتتبع ما إذا تم إدخال قيمة في تاريخ البداية
+        private DateTime initialDate; // تاريخ البداية الافتراضي عند تفعيل البحث
         Clas.partner_cost_mst partner_Cost_mst = new Clas.partner_cost_mst();
         Clas.partner_cost_dtl partner_Cost_dtl = new Clas.partner_cost_dtl();
         Clas.downtime downtime = new Clas.downtime();
@@ -56,6 +62,10 @@ namespace Water
 
         private void txtDownTimeId_Leave(object sender, EventArgs e)
         {
+            if(isEditMode)
+            {
+                return;
+            }
             if (!string.IsNullOrWhiteSpace(txtDownTimeId.Text))
             {
                 try
@@ -294,6 +304,8 @@ namespace Water
         private void btnAdd_Click(object sender, EventArgs e)
         {
             isEditMode = false;
+            isAddMode = true;
+            isSearchMode = false;
             clear_PARTNER_COST();
             try
             {
@@ -303,20 +315,11 @@ namespace Water
             {
                 txtCostId.Text = "1";
             }
-            txtDownTimeId.Enabled = true;
-            cmpDocType.Enabled = true;
-           // btnDistributeAmount.Enabled = true;
             SetAddMode();
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtCostId.Text))
-            {
-                MessageBox.Show("الرجاء إدخال رقم التكلفة أو اختيار تكلفة من قائمة العرض", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
             try
             {
                 string costId = txtCostId.Text.Trim();
@@ -330,9 +333,8 @@ namespace Water
 
                 LoadPartnerCostData(dt.Rows[0]);
                 isEditMode = true;                
-                btnDistributeAmount.Enabled = true;
-                txtDownTimeId.Enabled = true;
-                cmpDocType.Enabled = true;
+                isSearchMode = false;
+                isAddMode = false;
                 SetEditMode();
             }
             catch (Exception ex)
@@ -379,7 +381,7 @@ namespace Water
                         partner_Cost_mst.UPDATE_DOWNTIME(downTimeId, 0);
                     }
                     
-                    MessageBox.Show("تم حذف التكلفة بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("تم حذف توزيع التكاليف بين الشركاء بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     clear_PARTNER_COST();
                     SetDeleteMode();
                 }
@@ -510,8 +512,7 @@ namespace Water
                     partner_Cost_mst.UPDATE_DOWNTIME(downTimeId, 1);
                     MessageBox.Show("تم حفظ بيانات التكلفة بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-
-                clear_PARTNER_COST();
+                
                 isEditMode = false;
                 txtCostId.Enabled = true;
                 SetAfterSaveMode();
@@ -1041,19 +1042,27 @@ namespace Water
                 }
                 // إذا اختار "لا"، لا نفعل شيئاً ونبقى في الشاشة
             }
+            else if (isAddMode)
+            {
+                clear_PARTNER_COST();
+                isEditMode = false;
+                isAddMode = false;
+                SetNormalMode();
+            }
+            else if (isSearchMode)
+            {
+                clear_PARTNER_COST();
+                isEditMode = false;
+                isSearchMode = false;
+                isAddMode = false;
+                SetNormalMode();
+            }
             else
             {                
                 this.Close();
             }
         }
-          private void SetNormalMode()
-        {
-            btnSave.Enabled = false;
-            btnView.Enabled = true;
-            btnAdd.Enabled = true;
-            btnEdit.Enabled = false;
-            btnDelete.Enabled = false;
-        }
+        
 
         private void txtPeriodId_Leave(object sender, EventArgs e)
         {
@@ -1095,7 +1104,25 @@ namespace Water
                 txtPeriodId.Focus();
             }
         }
-    
+        private void SetNormalMode()
+        {
+            btnSave.Enabled = false;
+            btnView.Enabled = true;
+            btnAdd.Enabled = true;
+            btnEdit.Enabled = false;
+            btnDelete.Enabled = false;
+            btnSearch.Enabled = true;
+            btnDistributeAmount.Enabled = false;
+
+            txtCostId.ReadOnly = true;
+            cmpDocType.Enabled = false;
+            dtpDate.Enabled = false;
+            txtPeriodId.ReadOnly = true;
+            txtDownTimeId.ReadOnly = true;
+            txtDownTimeNote.ReadOnly = true;
+            txtNote.ReadOnly = true;
+            dgvPartners.ReadOnly = true;
+        }
          private void SetViewMode()
         {
             btnView.Enabled = true;
@@ -1103,6 +1130,17 @@ namespace Water
             btnEdit.Enabled = true;
             btnDelete.Enabled = true;
             btnSave.Enabled = false;
+            btnSearch.Enabled = true;
+            btnDistributeAmount.Enabled = false;
+
+            txtCostId.ReadOnly = true;
+            cmpDocType.Enabled = false;
+            dtpDate.Enabled = false;
+            txtPeriodId.ReadOnly = true;
+            txtDownTimeId.ReadOnly = true;
+            txtDownTimeNote.ReadOnly = true;
+            txtNote.ReadOnly = true;
+            dgvPartners.ReadOnly = true;
         }
 
         private void SetAddMode()
@@ -1112,6 +1150,17 @@ namespace Water
             btnEdit.Enabled = false;
             btnDelete.Enabled = false;
             btnAdd.Enabled = false;
+            btnSearch.Enabled = false;
+            btnDistributeAmount.Enabled = true;
+
+            txtCostId.ReadOnly = true;
+            cmpDocType.Enabled = true;
+            dtpDate.Enabled = true;
+            txtPeriodId.ReadOnly = true;
+            txtDownTimeId.ReadOnly = false;
+            txtDownTimeNote.ReadOnly = true;
+            txtNote.ReadOnly = false;
+            dgvPartners.ReadOnly = false;
         }
 
         private void SetEditMode()
@@ -1121,6 +1170,19 @@ namespace Water
             btnView.Enabled = false;
             btnDelete.Enabled = false;
             btnEdit.Enabled = false;
+            btnSearch.Enabled = false;
+            btnDistributeAmount.Enabled = false;
+
+            txtCostId.ReadOnly = true;
+            cmpDocType.Enabled = false;
+            dtpDate.Enabled = true;
+            txtPeriodId.ReadOnly = true;
+            txtDownTimeId.ReadOnly = true;
+            txtDownTimeNote.ReadOnly = true;
+            txtNote.ReadOnly = false;
+            dgvPartners.ReadOnly = false;
+
+
         }
         private void SetDeleteMode()
         {                                   
@@ -1130,12 +1192,217 @@ namespace Water
 
         private void SetAfterSaveMode()
         {
-            btnSave.Enabled = false;
-            btnView.Enabled = true;
-            btnAdd.Enabled = true;
-            btnDelete.Enabled = false;
-            btnEdit.Enabled = false;
+
+            SetNormalMode();
         }
+         private void SetSearchMode()
+        {
+            btnSearch.Enabled = true;
+            btnView.Enabled = false;
+            btnAdd.Enabled = false;
+            btnEdit.Enabled = false;
+            btnDelete.Enabled = false;
+            btnSave.Enabled = false;
+            btnDistributeAmount.Enabled = false;
+
+            clear_PARTNER_COST();
+
+            txtCostId.ReadOnly = false;
+            cmpDocType.Enabled = true;
+            dtpDate.Enabled = true;
+            txtPeriodId.ReadOnly = false;
+            txtDownTimeId.ReadOnly = false;
+            txtDownTimeNote.ReadOnly = false; 
+            dgvPartners.ReadOnly = false;                                              
+            txtNote.ReadOnly = false;
+            
+            // تهيئة التواريخ لتكون فارغة (تبدو فارغة)
+            dtpDate.Format = DateTimePickerFormat.Custom;
+            dtpDate.CustomFormat = " ";
+            
+            // حفظ التواريخ الافتراضية لتحديد ما إذا تم تغييرها
+            initialDate = dtpDate.Value.Date;
+            dateEntered = false;
+            
+            // إضافة أحداث لتتبع تغيير التواريخ
+            dtpDate.ValueChanged += dtpDate_SearchValueChanged;
+        }
+
+        private void dtpDate_SearchValueChanged(object sender, EventArgs e)
+        {
+            // إذا تم تغيير التاريخ عن القيمة الافتراضية، نعتبره تم إدخاله
+            if (isSearchMode && dtpDate.Value != initialDate)
+            {
+                dateEntered = true;
+                // تغيير التنسيق لإظهار التاريخ
+                dtpDate.Format = DateTimePickerFormat.Short;
+            }
+        }
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            DateTime currentClickTime = DateTime.Now;
+            TimeSpan timeSinceLastClick = currentClickTime - lastClickTime;
+
+            // نقرتين متتاليتين → أول توزيع للتكاليف
+            if (timeSinceLastClick.TotalMilliseconds < DOUBLE_CLICK_INTERVAL)
+            {
+                LoadFirstPartnerCost();
+                lastClickTime = DateTime.MinValue;               
+                return;
+            }
+            lastClickTime = currentClickTime;
+            // أول نقرة → تفعيل وضع البحث
+            if (!isSearchMode)
+            {
+                SetSearchMode();
+                isSearchMode = true;
+                return;
+            }
+            // النقرة الثانية → البحث 
+            SearchPartnerCost();
+
+        }
+
+        private void SearchPartnerCost()
+        {
+            try
+            {
+                //الحصول على جميع التكلفات
+                DataTable allPartnerCosts = partner_Cost_mst.GET_ALL_PARTNER_COST_MST();
+
+                if (allPartnerCosts == null || allPartnerCosts.Rows.Count == 0)
+                {
+                    MessageBox.Show("لا توجد بيانات توزيع للتكاليف", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                // البحث بناءً على الحقول المدخلة
+                string searchCostId = txtCostId.Text.Trim();
+                string searchCmpDocType = cmpDocType.SelectedIndex >= 0 ? cmpDocType.SelectedItem.ToString().Trim() : "";
+                string searchPeriodId = txtPeriodId.Text.Trim();
+                string searchDownTimeId = txtDownTimeId.Text.Trim();
+                string searchDownTimeNote = txtDownTimeNote.Text.Trim();
+                DateTime? searchDate = null;
+                
+                // استخدام التواريخ فقط إذا تم إدخالها
+                if (dateEntered)
+                {
+                    searchDate = dtpDate.Value.Date;
+                }
+
+                DataRow foundRow = null;
+
+                // البحث في البيانات
+                foreach (DataRow row in allPartnerCosts.Rows)
+                {
+                    bool matches = true;
+
+                    // البحث برقم التكلفة
+                    if (matches && !string.IsNullOrWhiteSpace(searchCostId))
+                    {
+                        string costId = row["cost_id"] != DBNull.Value ? row["cost_id"].ToString().Trim().ToUpper() : "";
+                        if (costId.IndexOf(searchCostId.Trim().ToUpper()) < 0)
+                        {
+                            matches = false;
+                        }
+                    }
+                    // البحث بنوع المستند
+                    if (matches && !string.IsNullOrWhiteSpace(searchCmpDocType))
+                    {
+                        string cmpDocType = row["doc_type"] != DBNull.Value ? row["doc_type"].ToString().Trim().ToUpper() : "";
+                        if (cmpDocType.IndexOf(searchCmpDocType.Trim().ToUpper()) < 0)
+                        {
+                            matches = false;
+                        }
+                    }
+                    // البحث برقم الفترة
+                    if (matches && !string.IsNullOrWhiteSpace(searchPeriodId))
+                    {
+                        string periodId = row["period_id"] != DBNull.Value ? row["period_id"].ToString().Trim().ToUpper() : "";
+                        if (periodId.IndexOf(searchPeriodId.Trim().ToUpper()) < 0)
+                        {
+                            matches = false;
+                        }
+                    }
+                    // البحث برقم التوقف
+                    if (matches && !string.IsNullOrWhiteSpace(searchDownTimeId))
+                    {
+                        string downTimeId = row["down_timeId"] != DBNull.Value ? row["down_timeId"].ToString().Trim().ToUpper() : "";
+                        if (downTimeId.IndexOf(searchDownTimeId.Trim().ToUpper()) < 0)
+                        {
+                            matches = false;
+                        }
+                    }
+                    // البحث بملاحظة التوقف
+                    if (matches && !string.IsNullOrWhiteSpace(searchDownTimeNote))
+                    {
+                        string downTimeNote = row["down_timeNote"] != DBNull.Value ? row["down_timeNote"].ToString().Trim().ToUpper() : "";
+                        if (downTimeNote.IndexOf(searchDownTimeNote.Trim().ToUpper()) < 0)
+                        {
+                            matches = false;
+                        }
+                    }
+                    // البحث بتاريخ البداية (فقط إذا تم إدخاله)
+                    if (matches && searchDate.HasValue)
+                    {
+                        DateTime rowdate = Convert.ToDateTime(row["date"]).Date;
+                        if (rowdate !=searchDate.Value)
+                        {
+                            matches = false;
+                        }
+                    }
+                    // إذا تطابقت جميع الشروط
+                    if (matches)
+                    {
+                        foundRow = row;
+                        break;
+                    }
+                }
+
+                if (foundRow != null)
+                {
+                    LoadPartnerCostData(foundRow);
+                    SetViewMode();
+                    isSearchMode = false;
+                    
+                    // إزالة الأحداث عند الخروج من وضع البحث
+                    dtpDate.ValueChanged -= dtpDate_SearchValueChanged;
+                }
+                else
+                {
+                    MessageBox.Show("لم يتم العثور على توزيع للتكاليف يطابق معايير البحث", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("حدث خطأ أثناء البحث: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void LoadFirstPartnerCost()
+        {
+            try
+            {
+                DataTable allPartnerCosts = partner_Cost_mst.GET_ALL_PARTNER_COST_MST();
+
+                if (allPartnerCosts == null || allPartnerCosts.Rows.Count == 0)
+                {
+                    MessageBox.Show("لا توجد بيانات توزيع للتكاليف", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                // تحميل بيانات أول فترة
+                LoadPartnerCostData(allPartnerCosts.Rows[0]);
+                isSearchMode = false;
+                // إزالة الأحداث إذا كانت موجودة
+                dtpDate.ValueChanged -= dtpDate_SearchValueChanged;
+                SetViewMode();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("حدث خطأ أثناء تحميل البيانات: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        } 
     }
 }
 

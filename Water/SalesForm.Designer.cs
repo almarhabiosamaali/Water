@@ -55,7 +55,7 @@ namespace Water
             this.txtPriceLevel = new System.Windows.Forms.TextBox();
             this.lblPriceLevl = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.saleDate = new System.Windows.Forms.DateTimePicker();
             this.lblCustName = new System.Windows.Forms.Label();
             this.txtNote = new System.Windows.Forms.TextBox();
             this.lblNote = new System.Windows.Forms.Label();
@@ -107,6 +107,7 @@ namespace Water
             this.btnExit = new System.Windows.Forms.Button();
             this.btnSearch = new System.Windows.Forms.Button();
             this.btnAllocateHoursToPartners = new System.Windows.Forms.Button();
+            this.txtPeriodNote = new System.Windows.Forms.TextBox();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tabPage1.SuspendLayout();
@@ -180,6 +181,7 @@ namespace Water
             this.MinutesAvalible});
             this.dataGridView1.Location = new System.Drawing.Point(183, 3);
             this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowTemplate.Height = 26;
             this.dataGridView1.Size = new System.Drawing.Size(1206, 448);
             this.dataGridView1.TabIndex = 19;
@@ -226,6 +228,7 @@ namespace Water
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.txtPeriodNote);
             this.tabPage1.Controls.Add(this.chkManwalTime);
             this.tabPage1.Controls.Add(this.chkBxCalc);
             this.tabPage1.Controls.Add(this.btnDstAmount);
@@ -238,7 +241,7 @@ namespace Water
             this.tabPage1.Controls.Add(this.txtPriceLevel);
             this.tabPage1.Controls.Add(this.lblPriceLevl);
             this.tabPage1.Controls.Add(this.label1);
-            this.tabPage1.Controls.Add(this.dateTimePicker1);
+            this.tabPage1.Controls.Add(this.saleDate);
             this.tabPage1.Controls.Add(this.lblCustName);
             this.tabPage1.Controls.Add(this.txtNote);
             this.tabPage1.Controls.Add(this.lblNote);
@@ -288,6 +291,7 @@ namespace Water
             this.chkManwalTime.AutoSize = true;
             this.chkManwalTime.Enabled = false;
             this.chkManwalTime.Location = new System.Drawing.Point(67, 42);
+            this.chkManwalTime.Location = new System.Drawing.Point(88, 84);
             this.chkManwalTime.Name = "chkManwalTime";
             this.chkManwalTime.Size = new System.Drawing.Size(125, 21);
             this.chkManwalTime.TabIndex = 87;
@@ -300,6 +304,7 @@ namespace Water
             this.chkBxCalc.AutoSize = true;
             this.chkBxCalc.Enabled = false;
             this.chkBxCalc.Location = new System.Drawing.Point(9, 15);
+            this.chkBxCalc.Location = new System.Drawing.Point(8, 57);
             this.chkBxCalc.Name = "chkBxCalc";
             this.chkBxCalc.Size = new System.Drawing.Size(183, 21);
             this.chkBxCalc.TabIndex = 86;
@@ -365,6 +370,7 @@ namespace Water
             // dtpEndTime
             // 
             this.dtpEndTime.CustomFormat = "dd/MM/yyyy  hh:mm tt";
+            this.dtpEndTime.Enabled = false;
             this.dtpEndTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtpEndTime.Location = new System.Drawing.Point(1050, 182);
             this.dtpEndTime.Name = "dtpEndTime";
@@ -376,6 +382,7 @@ namespace Water
             // dtpStartTime
             // 
             this.dtpStartTime.CustomFormat = "dd/MM/yyyy  hh:mm tt";
+            this.dtpStartTime.Enabled = false;
             this.dtpStartTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtpStartTime.Location = new System.Drawing.Point(1269, 182);
             this.dtpStartTime.Name = "dtpStartTime";
@@ -417,7 +424,7 @@ namespace Water
             this.label1.TabIndex = 68;
             this.label1.Text = "التاريخ :";
             // 
-            // dateTimePicker1
+            // saleDate
             // 
             this.dateTimePicker1.CustomFormat = "dd/MM/yyyy  hh:mm tt";
             this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Short;
@@ -427,6 +434,15 @@ namespace Water
             this.dateTimePicker1.RightToLeftLayout = true;
             this.dateTimePicker1.Size = new System.Drawing.Size(228, 22);
             this.dateTimePicker1.TabIndex = 8;
+            this.saleDate.CustomFormat = "dd/MM/yyyy  hh:mm tt";
+            this.saleDate.Enabled = false;
+            this.saleDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.saleDate.Location = new System.Drawing.Point(708, 48);
+            this.saleDate.Name = "saleDate";
+            this.saleDate.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.saleDate.RightToLeftLayout = true;
+            this.saleDate.Size = new System.Drawing.Size(133, 24);
+            this.saleDate.TabIndex = 8;
             // 
             // lblCustName
             // 
@@ -706,10 +722,12 @@ namespace Water
             // 
             this.txtPeriodId.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtPeriodId.Location = new System.Drawing.Point(410, 14);
+            this.txtPeriodId.Location = new System.Drawing.Point(564, 10);
             this.txtPeriodId.Name = "txtPeriodId";
             this.txtPeriodId.ReadOnly = true;
             this.txtPeriodId.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtPeriodId.Size = new System.Drawing.Size(154, 26);
+            this.txtPeriodId.Size = new System.Drawing.Size(49, 26);
             this.txtPeriodId.TabIndex = 5;
             this.txtPeriodId.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPeriodId_KeyDown);
             this.txtPeriodId.Leave += new System.EventHandler(this.txtPeriodId_Leave);
@@ -814,6 +832,7 @@ namespace Water
             this.lblPeriodId.AutoSize = true;
             this.lblPeriodId.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPeriodId.Location = new System.Drawing.Point(571, 16);
+            this.lblPeriodId.Location = new System.Drawing.Point(619, 12);
             this.lblPeriodId.Name = "lblPeriodId";
             this.lblPeriodId.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblPeriodId.Size = new System.Drawing.Size(67, 20);
@@ -1006,6 +1025,16 @@ namespace Water
             this.btnAllocateHoursToPartners.UseVisualStyleBackColor = true;
             this.btnAllocateHoursToPartners.Click += new System.EventHandler(this.btnAllocateHoursToPartners_Click);
             // 
+            // txtPeriodNote
+            // 
+            this.txtPeriodNote.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPeriodNote.Location = new System.Drawing.Point(8, 10);
+            this.txtPeriodNote.Name = "txtPeriodNote";
+            this.txtPeriodNote.ReadOnly = true;
+            this.txtPeriodNote.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.txtPeriodNote.Size = new System.Drawing.Size(550, 26);
+            this.txtPeriodNote.TabIndex = 88;
+            // 
             // SalesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1081,7 +1110,7 @@ namespace Water
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.Label lblCustName;
         private System.Windows.Forms.TextBox txtCustomerName;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.DateTimePicker saleDate;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtHours;
         private System.Windows.Forms.TextBox txtMinutes;
@@ -1124,6 +1153,7 @@ namespace Water
         private System.Windows.Forms.CheckBox chkManwalTime;
         private System.Windows.Forms.Button btnSearch;
         private System.Windows.Forms.Button btnAllocateHoursToPartners;
+        private System.Windows.Forms.TextBox txtPeriodNote;
     }
 }
 

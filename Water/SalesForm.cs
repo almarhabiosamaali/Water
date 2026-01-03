@@ -297,43 +297,11 @@ namespace Water
                     return;
                 }
 
-                Form viewForm = new Form();
-                viewForm.Text = "عرض الشركاء";
-                viewForm.RightToLeft = RightToLeft.Yes;
-                viewForm.RightToLeftLayout = true;
-                viewForm.Size = new Size(1200, 600);
-                viewForm.StartPosition = FormStartPosition.CenterScreen;
-
-                DataGridView dgv = new DataGridView();
-                dgv.Dock = DockStyle.Fill;
-                dgv.DataSource = dt;
-                dgv.ReadOnly = true;
-                dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-                dgv.MultiSelect = false;
-                dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-                dgv.RightToLeft = RightToLeft.Yes;
-
-                dgv.CellDoubleClick += (s, args) =>
-                {
-                    if (args.RowIndex >= 0)
+                 DataRow row2 = gridBtnViewHelper.Show(dt, "عرض الشركاء");
+                if (row2 != null)
                     {
-                        DataRow row = dt.Rows[args.RowIndex];
-                        LoadPartnerDataToGrid(row);
-                        viewForm.Close();
+                        LoadPartnerDataToGrid(row2);
                     }
-                };
-                 dgv.KeyDown += (s, args) =>
-                {
-                    if (args.KeyCode == Keys.Enter && dgv.CurrentRow != null && dgv.CurrentRow.Index >= 0)
-                    {
-                        DataRow row = dt.Rows[dgv.CurrentRow.Index];
-                        LoadPartnerDataToGrid(row);
-                        viewForm.Close();
-                    }
-                };
-
-                viewForm.Controls.Add(dgv);
-                viewForm.ShowDialog();
             }
             catch (Exception ex)
             {
@@ -538,46 +506,13 @@ namespace Water
                     return;
                 }
 
-                Form viewForm = new Form();
-                viewForm.Text = formTitle;
-                viewForm.RightToLeft = RightToLeft.Yes;
-                viewForm.RightToLeftLayout = true;
-                viewForm.Size = new Size(1200, 600);
-                viewForm.StartPosition = FormStartPosition.CenterScreen;
-
-                DataGridView dgv = new DataGridView();
-                dgv.Dock = DockStyle.Fill;
-                dgv.DataSource = dt;
-                dgv.ReadOnly = true;
-                dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-                dgv.MultiSelect = false;
-                dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-                dgv.RightToLeft = RightToLeft.Yes;
-
-                dgv.CellDoubleClick += (s, args) =>
-                {
-                    if (args.RowIndex >= 0)
+                DataRow row2 = gridBtnViewHelper.Show(dt, formTitle);
+                if (row2 != null)
                     {
-                        DataRow row = dt.Rows[args.RowIndex];
-                        isLoadingCustomerFromList = true; // تعطيل التحقق التلقائي
-                        LoadCustomerDataToBill(row);
-                        isLoadingCustomerFromList = false; // إعادة تفعيل التحقق
-                        viewForm.Close();
+                        LoadCustomerDataToBill(row2);
                     }
-                };
-                 dgv.KeyDown += (s, args) =>
-                {
-                    if (args.KeyCode == Keys.Enter && dgv.CurrentRow != null && dgv.CurrentRow.Index >= 0)
-                    {
-                        DataRow row = dt.Rows[dgv.CurrentRow.Index];
-                        isLoadingCustomerFromList = true; // تعطيل التحقق التلقائي
-                        LoadCustomerDataToBill(row);
-                        isLoadingCustomerFromList = false; // إعادة تفعيل التحقق
-                        viewForm.Close();
-                    }
-                };               
-                viewForm.Controls.Add(dgv);
-                viewForm.ShowDialog();
+
+              
             }
             catch (Exception ex)
             {
@@ -632,44 +567,11 @@ namespace Water
                     MessageBox.Show("لا توجد بيانات للعرض", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
-
-                Form viewForm = new Form();
-                viewForm.Text = "عرض مستويات التسعيرة";
-                viewForm.RightToLeft = RightToLeft.Yes;
-                viewForm.RightToLeftLayout = true;
-                viewForm.Size = new Size(1200, 600);
-                viewForm.StartPosition = FormStartPosition.CenterScreen;
-
-                DataGridView dgv = new DataGridView();
-                dgv.Dock = DockStyle.Fill;
-                dgv.DataSource = dt;
-                dgv.ReadOnly = true;
-                dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-                dgv.MultiSelect = false;
-                dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-                dgv.RightToLeft = RightToLeft.Yes;
-
-                dgv.CellDoubleClick += (s, args) =>
-                {
-                    if (args.RowIndex >= 0)
+                DataRow row2 = gridBtnViewHelper.Show(dt, "عرض مستويات التسعيرة");
+                if (row2 != null)
                     {
-                        DataRow row = dt.Rows[args.RowIndex];
-                        LoadPriceingDataToBill(row);
-                        viewForm.Close();
-                    }
-                };
-                 dgv.KeyDown += (s, args) =>
-                {
-                    if (args.KeyCode == Keys.Enter && dgv.CurrentRow != null && dgv.CurrentRow.Index >= 0)
-                    {
-                        DataRow row = dt.Rows[dgv.CurrentRow.Index];
-                        LoadPriceingDataToBill(row);
-                        viewForm.Close();
-                    }
-                };
-
-                viewForm.Controls.Add(dgv);
-                viewForm.ShowDialog();
+                        LoadPriceingDataToBill(row2);
+                    }                
             }
             catch (Exception ex)
             {
@@ -2598,7 +2500,7 @@ namespace Water
                 string.IsNullOrWhiteSpace(txtPaidAmount.Text)
                         ? 0
                         : Convert.ToDouble(RemoveFormatting(txtPaidAmount.Text)),                                             // cr_amt (أو بدّل بينهم حسب طبيعة القيد)
-                    dateTimePicker1.Value.Date,                       // date
+                    saleDate.Value.Date,                       // date
                     dtpStartTime.Value,                            // start_time (DateTime)
                     dtpEndTime.Value,                              // end_time   (DateTime)
                     string.IsNullOrWhiteSpace(txtHours.Text)
@@ -2710,6 +2612,9 @@ namespace Water
                     if (row["start_date"] != DBNull.Value)
                     {
                         txtPeriodStartDate.Text = Convert.ToDateTime(row["start_date"]).ToString("dd/MM/yyyy");
+                        saleDate.Value = Convert.ToDateTime(row["start_date"]);
+                        dtpStartTime.Value = Convert.ToDateTime(row["start_date"]);
+                        dtpEndTime.Value = Convert.ToDateTime(row["start_date"]);
                     }
                     else
                     {
@@ -2728,6 +2633,14 @@ namespace Water
                     {
                         txtPeriodEndDate.Clear();
                     }
+                }
+                if(row["statment"] != DBNull.Value)
+                {
+                    txtPeriodNote.Text = row["statment"].ToString();
+                }
+                else
+                {
+                    txtPeriodNote.Clear();
                 }
             }
             catch (Exception ex)
@@ -2815,13 +2728,19 @@ namespace Water
             btnDelete.Enabled = false;
             btnSearch.Enabled = true;
 
-            txtCustomerId.ReadOnly = true;
+            txtSalesId.ReadOnly = true;
             txtPeriodId.ReadOnly = true;
+            txtCustomerId.ReadOnly = true;
+            txtCustomerName.ReadOnly = true;  
+            saleDate.Enabled = false;
+            dtpStartTime.Enabled = false;
+            dtpEndTime.Enabled = false;
             txtPriceLevel.ReadOnly = true;
             txtNote.ReadOnly = true;
             txtPaidAmount.ReadOnly = true;
             chkBxCalc.Enabled = false;
             chkManwalTime.Enabled = false;
+            dataGridView1.ReadOnly = true;
         }
         private void SetViewMode()
         {
@@ -2832,13 +2751,19 @@ namespace Water
             btnSave.Enabled = false;
             btnSearch.Enabled = true;
 
-            txtCustomerId.ReadOnly = true;
+            txtSalesId.ReadOnly = true;
+            txtCustomerId.ReadOnly = true;            
+            txtCustomerName.ReadOnly = true;            
+            saleDate.Enabled = false;
+            dtpStartTime.Enabled = false;
+            dtpEndTime.Enabled = false;
             txtPeriodId.ReadOnly = true;
             txtPriceLevel.ReadOnly = true;
             txtNote.ReadOnly = true;
             txtPaidAmount.ReadOnly = true;
-             chkBxCalc.Enabled = false;
+            chkBxCalc.Enabled = false;
             chkManwalTime.Enabled = false;
+            dataGridView1.ReadOnly = true;
         }
         private void SetAddMode()
         {
@@ -2849,15 +2774,21 @@ namespace Water
             btnAdd.Enabled = false;
             btnSearch.Enabled = false;
 
+            txtSalesId.ReadOnly = false;
             txtCustomerId.ReadOnly = false;
+            txtCustomerName.ReadOnly = true;            
+            saleDate.Enabled = true;
+            dtpStartTime.Enabled = true;
+            dtpEndTime.Enabled = true;
             txtPeriodId.ReadOnly = false;
             txtPriceLevel.ReadOnly = false;
             txtNote.ReadOnly = false;
             txtPaidAmount.ReadOnly = false;
             txtSalesId.Focus();
             cmbBillType.SelectedIndex = 0;
-             chkBxCalc.Enabled = true;
+            chkBxCalc.Enabled = true;
             chkManwalTime.Enabled = true;
+            dataGridView1.ReadOnly = false;
         }
         private void SetEditMode()
         {
@@ -2868,13 +2799,19 @@ namespace Water
             btnEdit.Enabled = false;
             btnSearch.Enabled = false;
             
+            txtSalesId.ReadOnly = true;
             txtCustomerId.ReadOnly = true;
+            txtCustomerName.ReadOnly = true;            
+            saleDate.Enabled = true;
+            dtpStartTime.Enabled = true;
+            dtpEndTime.Enabled = true;
             txtPeriodId.ReadOnly = false;
             txtPriceLevel.ReadOnly = false;
             txtNote.ReadOnly = false;
             txtPaidAmount.ReadOnly = false;
-             chkBxCalc.Enabled = true;
+            chkBxCalc.Enabled = true;
             chkManwalTime.Enabled = true;
+            dataGridView1.ReadOnly = false;
         }       
         private void SetSearchMode()
         {
@@ -2887,15 +2824,16 @@ namespace Water
 
             clear_SALES();
 
+            txtSalesId.ReadOnly = false;
             txtCustomerId.ReadOnly = false;
-            txtPeriodId.ReadOnly = false;
-            txtPriceLevel.ReadOnly = false;
-            txtNote.ReadOnly = false;
-            txtPaidAmount.ReadOnly = false;
-            txtSalesId.ReadOnly = false;            
+            //txtPeriodId.ReadOnly = false;
+           // txtPriceLevel.ReadOnly = false;
+            //txtNote.ReadOnly = false;
+           // txtPaidAmount.ReadOnly = false;          
             txtCustomerName.ReadOnly = false;
-            chkBxCalc.Enabled = true;
-            chkManwalTime.Enabled = true;
+           // chkBxCalc.Enabled = true;
+           // chkManwalTime.Enabled = true;
+            dataGridView1.ReadOnly = true;
         }
         private void SetAfterSaveMode()
         {          

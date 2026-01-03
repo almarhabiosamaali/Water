@@ -431,5 +431,8 @@
   <ItemGroup>
     <Folder Include="Resources\assets\icons\" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\icons8-view-24.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

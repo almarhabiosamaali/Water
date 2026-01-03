@@ -73,7 +73,7 @@ namespace Water
             // 
             this.lblDowntimeCode.AutoSize = true;
             this.lblDowntimeCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDowntimeCode.Location = new System.Drawing.Point(13, 126);
+            this.lblDowntimeCode.Location = new System.Drawing.Point(40, 126);
             this.lblDowntimeCode.Name = "lblDowntimeCode";
             this.lblDowntimeCode.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblDowntimeCode.Size = new System.Drawing.Size(43, 20);
@@ -142,7 +142,7 @@ namespace Water
             // 
             this.lblHours.AutoSize = true;
             this.lblHours.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHours.Location = new System.Drawing.Point(7, 261);
+            this.lblHours.Location = new System.Drawing.Point(23, 265);
             this.lblHours.Name = "lblHours";
             this.lblHours.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblHours.Size = new System.Drawing.Size(60, 20);
@@ -153,7 +153,7 @@ namespace Water
             // 
             this.lblDayesCount.AutoSize = true;
             this.lblDayesCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDayesCount.Location = new System.Drawing.Point(6, 231);
+            this.lblDayesCount.Location = new System.Drawing.Point(16, 231);
             this.lblDayesCount.Name = "lblDayesCount";
             this.lblDayesCount.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblDayesCount.Size = new System.Drawing.Size(67, 20);
@@ -164,7 +164,7 @@ namespace Water
             // 
             this.lblMinutes.AutoSize = true;
             this.lblMinutes.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMinutes.Location = new System.Drawing.Point(6, 306);
+            this.lblMinutes.Location = new System.Drawing.Point(32, 308);
             this.lblMinutes.Name = "lblMinutes";
             this.lblMinutes.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblMinutes.Size = new System.Drawing.Size(51, 20);
@@ -197,7 +197,7 @@ namespace Water
             // 
             this.lblAmount.AutoSize = true;
             this.lblAmount.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAmount.Location = new System.Drawing.Point(10, 349);
+            this.lblAmount.Location = new System.Drawing.Point(38, 353);
             this.lblAmount.Name = "lblAmount";
             this.lblAmount.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblAmount.Size = new System.Drawing.Size(45, 20);
@@ -208,7 +208,7 @@ namespace Water
             // 
             this.lblNote.AutoSize = true;
             this.lblNote.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNote.Location = new System.Drawing.Point(8, 388);
+            this.lblNote.Location = new System.Drawing.Point(35, 388);
             this.lblNote.Name = "lblNote";
             this.lblNote.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblNote.Size = new System.Drawing.Size(48, 20);
@@ -425,7 +425,7 @@ namespace Water
             // 
             this.lblDesc.AutoSize = true;
             this.lblDesc.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDesc.Location = new System.Drawing.Point(7, 447);
+            this.lblDesc.Location = new System.Drawing.Point(17, 441);
             this.lblDesc.Name = "lblDesc";
             this.lblDesc.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblDesc.Size = new System.Drawing.Size(66, 20);
