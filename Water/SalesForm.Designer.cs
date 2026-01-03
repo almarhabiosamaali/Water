@@ -30,6 +30,7 @@ namespace Water
         {
             this.components = new System.ComponentModel.Container();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.btnAllocateHoursToPartners = new System.Windows.Forms.Button();
             this.txtTotalMinutesFromGrid = new System.Windows.Forms.TextBox();
             this.lblTotalMinutesFromGrid = new System.Windows.Forms.Label();
             this.txtTotalHoursFromGrid = new System.Windows.Forms.TextBox();
@@ -43,6 +44,7 @@ namespace Water
             this.HoursAvalible = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MinutesAvalible = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.txtPeriodNote = new System.Windows.Forms.TextBox();
             this.chkManwalTime = new System.Windows.Forms.CheckBox();
             this.chkBxCalc = new System.Windows.Forms.CheckBox();
             this.btnDstAmount = new System.Windows.Forms.Button();
@@ -106,8 +108,6 @@ namespace Water
             this.btnView = new System.Windows.Forms.Button();
             this.btnExit = new System.Windows.Forms.Button();
             this.btnSearch = new System.Windows.Forms.Button();
-            this.btnAllocateHoursToPartners = new System.Windows.Forms.Button();
-            this.txtPeriodNote = new System.Windows.Forms.TextBox();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tabPage1.SuspendLayout();
@@ -129,6 +129,16 @@ namespace Water
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "حساب الساعات من الشركاء";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // btnAllocateHoursToPartners
+            // 
+            this.btnAllocateHoursToPartners.Location = new System.Drawing.Point(9, 386);
+            this.btnAllocateHoursToPartners.Name = "btnAllocateHoursToPartners";
+            this.btnAllocateHoursToPartners.Size = new System.Drawing.Size(135, 54);
+            this.btnAllocateHoursToPartners.TabIndex = 20;
+            this.btnAllocateHoursToPartners.Text = "تقسيم الوقت لجميع الشركاء";
+            this.btnAllocateHoursToPartners.UseVisualStyleBackColor = true;
+            this.btnAllocateHoursToPartners.Click += new System.EventHandler(this.btnAllocateHoursToPartners_Click);
             // 
             // txtTotalMinutesFromGrid
             // 
@@ -196,6 +206,7 @@ namespace Water
             // 
             this.PartenerId.HeaderText = "رقم الشريك";
             this.PartenerId.Name = "PartenerId";
+            this.PartenerId.ReadOnly = true;
             // 
             // PartenerName
             // 
@@ -208,11 +219,13 @@ namespace Water
             // 
             this.HoursUesed.HeaderText = "عدد الساعات";
             this.HoursUesed.Name = "HoursUesed";
+            this.HoursUesed.ReadOnly = true;
             // 
             // MinutesCount
             // 
             this.MinutesCount.HeaderText = "عدد الدقائق";
             this.MinutesCount.Name = "MinutesCount";
+            this.MinutesCount.ReadOnly = true;
             // 
             // HoursAvalible
             // 
@@ -286,11 +299,20 @@ namespace Water
             this.tabPage1.Text = "فاتورة المبيعات";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // txtPeriodNote
+            // 
+            this.txtPeriodNote.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPeriodNote.Location = new System.Drawing.Point(8, 10);
+            this.txtPeriodNote.Name = "txtPeriodNote";
+            this.txtPeriodNote.ReadOnly = true;
+            this.txtPeriodNote.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.txtPeriodNote.Size = new System.Drawing.Size(550, 26);
+            this.txtPeriodNote.TabIndex = 88;
+            // 
             // chkManwalTime
             // 
             this.chkManwalTime.AutoSize = true;
             this.chkManwalTime.Enabled = false;
-            this.chkManwalTime.Location = new System.Drawing.Point(67, 42);
             this.chkManwalTime.Location = new System.Drawing.Point(88, 84);
             this.chkManwalTime.Name = "chkManwalTime";
             this.chkManwalTime.Size = new System.Drawing.Size(125, 21);
@@ -303,7 +325,6 @@ namespace Water
             // 
             this.chkBxCalc.AutoSize = true;
             this.chkBxCalc.Enabled = false;
-            this.chkBxCalc.Location = new System.Drawing.Point(9, 15);
             this.chkBxCalc.Location = new System.Drawing.Point(8, 57);
             this.chkBxCalc.Name = "chkBxCalc";
             this.chkBxCalc.Size = new System.Drawing.Size(183, 21);
@@ -425,7 +446,7 @@ namespace Water
             this.label1.Text = "التاريخ :";
             // 
             // saleDate
-            //
+            // 
             this.saleDate.CustomFormat = "dd/MM/yyyy  hh:mm tt";
             this.saleDate.Enabled = false;
             this.saleDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
@@ -433,7 +454,7 @@ namespace Water
             this.saleDate.Name = "saleDate";
             this.saleDate.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.saleDate.RightToLeftLayout = true;
-            this.saleDate.Size = new System.Drawing.Size(133, 24);
+            this.saleDate.Size = new System.Drawing.Size(133, 22);
             this.saleDate.TabIndex = 8;
             // 
             // lblCustName
@@ -713,12 +734,10 @@ namespace Water
             // txtPeriodId
             // 
             this.txtPeriodId.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPeriodId.Location = new System.Drawing.Point(410, 14);
             this.txtPeriodId.Location = new System.Drawing.Point(564, 10);
             this.txtPeriodId.Name = "txtPeriodId";
             this.txtPeriodId.ReadOnly = true;
             this.txtPeriodId.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.txtPeriodId.Size = new System.Drawing.Size(154, 26);
             this.txtPeriodId.Size = new System.Drawing.Size(49, 26);
             this.txtPeriodId.TabIndex = 5;
             this.txtPeriodId.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPeriodId_KeyDown);
@@ -823,7 +842,6 @@ namespace Water
             // 
             this.lblPeriodId.AutoSize = true;
             this.lblPeriodId.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPeriodId.Location = new System.Drawing.Point(571, 16);
             this.lblPeriodId.Location = new System.Drawing.Point(619, 12);
             this.lblPeriodId.Name = "lblPeriodId";
             this.lblPeriodId.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
@@ -971,6 +989,7 @@ namespace Water
             this.btnView.AccessibleDescription = "";
             this.btnView.BackColor = System.Drawing.Color.White;
             this.btnView.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnView.Image = global::Water.Properties.Resources.icons8_view_24;
             this.btnView.Location = new System.Drawing.Point(133, 5);
             this.btnView.Name = "btnView";
             this.btnView.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
@@ -1006,26 +1025,6 @@ namespace Water
             this.toolTip1.SetToolTip(this.btnSearch, "بحث");
             this.btnSearch.UseVisualStyleBackColor = false;
             this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
-            // 
-            // btnAllocateHoursToPartners
-            // 
-            this.btnAllocateHoursToPartners.Location = new System.Drawing.Point(9, 386);
-            this.btnAllocateHoursToPartners.Name = "btnAllocateHoursToPartners";
-            this.btnAllocateHoursToPartners.Size = new System.Drawing.Size(135, 54);
-            this.btnAllocateHoursToPartners.TabIndex = 20;
-            this.btnAllocateHoursToPartners.Text = "تقسيم الوقت لجميع الشركاء";
-            this.btnAllocateHoursToPartners.UseVisualStyleBackColor = true;
-            this.btnAllocateHoursToPartners.Click += new System.EventHandler(this.btnAllocateHoursToPartners_Click);
-            // 
-            // txtPeriodNote
-            // 
-            this.txtPeriodNote.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPeriodNote.Location = new System.Drawing.Point(8, 10);
-            this.txtPeriodNote.Name = "txtPeriodNote";
-            this.txtPeriodNote.ReadOnly = true;
-            this.txtPeriodNote.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.txtPeriodNote.Size = new System.Drawing.Size(550, 26);
-            this.txtPeriodNote.TabIndex = 88;
             // 
             // SalesForm
             // 
