@@ -352,11 +352,11 @@ namespace Water.Clas
         }
 
 
-        public DataTable AllocateHoursToPartners(int billNo, int allHours, int allMinutes)
+        public DataTable AllocateHoursToPartners(int billNo, int allHours, int allMinutes , string period_id)
         {
             Clas.DataAccessLayer DAL = new Clas.DataAccessLayer();
             DAL.Open();
-            SqlParameter[] param = new SqlParameter[3];
+            SqlParameter[] param = new SqlParameter[4];
 
             param[0] = new SqlParameter("@billNO", SqlDbType.Int);
             param[0].Value = (object)billNo ?? DBNull.Value; ;
@@ -366,6 +366,9 @@ namespace Water.Clas
 
             param[2] = new SqlParameter("@allMinutes", SqlDbType.Int);
             param[2].Value = (object)allMinutes ?? DBNull.Value; ;
+
+            param[3] = new SqlParameter("@period_id", SqlDbType.VarChar, 50);
+            param[3].Value = period_id;
 
             DataTable dt = DAL.SelectData("AllocateHoursToPartners", param);
             DAL.Close();

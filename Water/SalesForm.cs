@@ -2990,7 +2990,7 @@ namespace Water
         {
             try
             {
-                DataTable dt = sal.AllocateHoursToPartners(int.Parse(txtSalesId.Text), int.Parse(txtHours.Text), int.Parse(txtMinutes.Text));
+                DataTable dt = sal.AllocateHoursToPartners(int.Parse(txtSalesId.Text), int.Parse(txtHours.Text), int.Parse(txtMinutes.Text) , txtPeriodId.Text);
                 
                 if (dt == null || dt.Rows.Count == 0)
                 {
