@@ -858,7 +858,7 @@ namespace Water
                         cmbBillType.SelectedItem != null ? cmbBillType.SelectedItem.ToString() : "",
                         txtPriceLevel.Text.Trim(),
                       //  string.IsNullOrWhiteSpace(txtPriceLevel.Text) ? "" : txtPriceLevel.Text.Trim(),
-                        DateTime.Now,
+                        saleDate.Value.Date,
                         txtNote != null ? txtNote.Text.Trim() : "", // note
                         chkBxCalc != null && chkBxCalc.Checked ? 1 : 0 // isCalcFrmPayidAmt
                     );
@@ -869,7 +869,6 @@ namespace Water
                     // تحديث بيانات الشركاء من DataGridView
                     DeletePartnersHoursFromDatabase(txtSalesId.Text.Trim());
                     SavePartnersHoursFromGrid();
-                    //UpdatePartnersHoursFromGrid();
                 }
                 else
                 {
@@ -900,17 +899,17 @@ namespace Water
                         cmbBillType.SelectedItem != null ? cmbBillType.SelectedItem.ToString() : "",
                         txtPriceLevel.Text.Trim(),
                         //string.IsNullOrWhiteSpace(txtPriceLevel.Text) ? "" : txtPriceLevel.Text.Trim(),
-                        DateTime.Now,
+                        saleDate.Value.Date,
                         txtNote != null ? txtNote.Text.Trim() : "", // note
                         chkBxCalc != null && chkBxCalc.Checked ? 1 : 0 // isCalcFrmPayidAmt
                     );
                     AddPostFormSales();
                     SavePartnersHoursFromGrid();
                 }
-
-                //clear_SALES();
                 isEditMode = false;
-                SetAfterSaveMode();              
+                isallocateHours = false;                
+                SetAfterSaveMode();     
+                btnEdit.Enabled=true;         
                 tabControl1.SelectedIndex = 0;               
 
             }
@@ -936,8 +935,7 @@ namespace Water
                     // رسالة واضحة للتحقق من البيانات
                     tabControl1.SelectedIndex = 1;
                    dataGridView1.CurrentCell = dataGridView1.Rows[0].Cells[1];
-                    MessageBox.Show("يجب إدخال تفاصيل الساعات للشركاء", "تنبيه", 
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);                    
+                    MessageBox.Show("يجب إدخال تفاصيل الساعات للشركاء", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);                    
                 }
                 else
                 {
@@ -1027,6 +1025,10 @@ namespace Water
                     txtPeriodStartDate.Clear();
                 if (txtPeriodEndDate != null)
                     txtPeriodEndDate.Clear();
+            }
+            if(row["created_date"] != DBNull.Value)
+            {
+                saleDate.Value = Convert.ToDateTime(row["created_date"]);
             }
 
             if (row["start_time"] != DBNull.Value)
@@ -1445,10 +1447,15 @@ namespace Water
                     throw new Exception(errorMsg);
                 }
             }
-            
+
             // التحقق من أن الساعات والدقائق المدخلة لا تتجاوز المتاحة
+            if (!isallocateHours) { 
             foreach (DataGridViewRow row in dgv.Rows)
             {
+                if (isallocateHours)
+                {
+                    return;
+                }
                 if (row.IsNewRow)
                     continue;
                 
@@ -1536,6 +1543,7 @@ namespace Water
                     throw new Exception(errorMsg);
                 }
             }
+            }
             
             // حساب إجمالي الساعات والدقائق من DataGridView
             double totalHoursFromGrid = 0;
@@ -1595,11 +1603,22 @@ namespace Water
                 double.TryParse(txtMinutes.Text, out totalMinutesFromInvoice);
             }
             // التحقق من المطابقة
+            if(!isallocateHours)
+            {
             if (Math.Abs(totalHoursFromGrid - totalHoursFromInvoice) > 0.01 || 
                 Math.Abs(totalMinutesFromGrid - totalMinutesFromInvoice) > 0.01)
             {
                 string errorMsg = $"إجمالي الساعات والدقائق من الشركاء لاتساوي عدد الساعات والدقائق في الفاتورة.\n\n";
                 throw new Exception(errorMsg);
+            }
+            }
+            if (isallocateHours) { 
+            if (Math.Abs(totalHoursFromGrid - totalHoursFromInvoice) > 0.01 || 
+                Math.Abs(totalMinutesFromGrid - totalMinutesFromInvoice) > 60)
+            {
+                string errorMsg = $"إجمالي الساعات والدقائق من الشركاء لاتساوي عدد الساعات والدقائق في الفاتورة.\n\n";
+                throw new Exception(errorMsg);
+            }
             }
         }
 
@@ -1646,22 +1665,22 @@ namespace Water
 
                     if (row.Cells["HoursUesed"] != null && row.Cells["HoursUesed"].Value != null)
                     {
-                        hoursCount = row.Cells["HoursUesed"].Value.ToString().Trim();
+                        hoursCount = row.Cells["HoursUesed"].Value.ToString().Trim();                       
                     }
 
                     if (row.Cells["MinutesCount"] != null && row.Cells["MinutesCount"].Value != null)
                     {
-                        minutesCount = row.Cells["MinutesCount"].Value.ToString().Trim();
+                        minutesCount = row.Cells["MinutesCount"].Value.ToString().Trim();                       
                     }
 
                     if (row.Cells["HoursAvalible"] != null && row.Cells["HoursAvalible"].Value != null)
                     {
-                        hoursAvalible = row.Cells["HoursAvalible"].Value.ToString().Trim();
+                        hoursAvalible = row.Cells["HoursAvalible"].Value.ToString().Trim();                       
                     }
 
                     if (row.Cells["MinutesAvalible"] != null && row.Cells["MinutesAvalible"].Value != null)
                     {
-                        minutesAvalible = row.Cells["MinutesAvalible"].Value.ToString().Trim();
+                        minutesAvalible = row.Cells["MinutesAvalible"].Value.ToString().Trim();                        
                     }
 
                     // حساب TotalHours: يمكن أن يكون مجموع HoursUesed و HoursAvalible
@@ -1686,7 +1705,7 @@ namespace Water
                     }
                     else
                     {
-                        totalHours = hoursCount ?? "";
+                        totalHours = hoursCount ?? "0";
                     }
 
                     // التحقق من أن البيانات الأساسية موجودة
@@ -1741,10 +1760,10 @@ namespace Water
                                 idCounter,
                                 partnerNumber ?? "",
                                 partnerName ?? "",
-                                hoursCountInt,
-                                minutesCountInt,
-                                hoursAvalibleInt,
-                                minutesAvalibleInt,
+                                hoursCountInt??0,
+                                minutesCountInt??0,
+                                hoursAvalibleInt??0,
+                                minutesAvalibleInt??0,
                                 totalHoursInt,
                                 isallocateHours
                             );
@@ -1968,10 +1987,10 @@ namespace Water
                             partnerId,
                             partnerNumber ?? "",
                             partnerName ?? "",
-                            hoursCountInt,
-                            minutesCountInt,
-                            hoursAvalibleInt,
-                            minutesAvalibleInt,
+                            hoursCountInt??0,
+                            minutesCountInt??0,
+                            hoursAvalibleInt??0,
+                            minutesAvalibleInt??0,
                             totalHoursInt,
                             isallocateHours
                         );
@@ -2026,7 +2045,7 @@ namespace Water
 
                     // إذا لا يوجد خطأ → اعرض القيم
                     txtHours.Text = hours.ToString();
-                    txtMinutes.Text = minutes.ToString("00");
+                    txtMinutes.Text = minutes.ToString("0");
 
                     // إعادة حساب الإجماليات (إذا عندك منطق آخر)
                     CalculateTotals_TextChanged(null, null);
@@ -2303,6 +2322,7 @@ namespace Water
                 // إعادة حساب الإجماليات مع تطبيق الخصومات من جميع الصفوف
                 // (لأنه قد يكون هناك عدة صفوف للشريك نفسه)
                 CalculateTotals_TextChanged(null, null);
+                CalculateRemainingAmount_TextChanged(null, null);
                 
                 // حساب إجمالي الساعات والدقائق من DataGridView
                 CalculateTotalHoursAndMinutesFromGrid();
@@ -2463,17 +2483,6 @@ namespace Water
 
             return totalDiscounts;
         }
-
-       /* private void txtPeriodId_KeyDown(object sender, KeyEventArgs e)
-        {
-               if (e.KeyCode == Keys.F2 || e.KeyCode == Keys.Enter)
-            {
-                e.Handled = true; // منع التنقل الافتراضي لـ Enter
-                // استخدام الكلاس المساعد الموحد
-                Clas.PeriodHelper.ShowPeriodsList(txtPeriodId, txtPeriodStartDate, txtPeriodEndDate);
-            }
-        }*/
-
        
         public void AddPostFormSales()
         {
@@ -2551,7 +2560,15 @@ namespace Water
                 e.Handled = true;
                 e.SuppressKeyPress = true;
                 isLoadingPeriodFromList = true;
-                Clas.PeriodHelper.ShowPeriodsList(txtPeriodId, txtPeriodStartDate, txtPeriodEndDate);
+
+                //Clas.PeriodHelper.ShowPeriodsList(txtPeriodId, txtPeriodStartDate, txtPeriodEndDate);
+                 DataTable dt = period.GET_ALL_PERIODS();
+                 DataRow row = gridBtnViewHelper.Show(dt, "عرض الفترات");
+                if (row != null)
+                    {
+                        LoadPeriodDataToBill(row);
+                    }
+                    
                 isLoadingPeriodFromList = false;
             }
         }
@@ -2607,6 +2624,9 @@ namespace Water
         {
             try
             {
+                if(txtPeriodId != null && row["id"] != DBNull.Value)
+                    txtPeriodId.Text = row["id"]!= DBNull.Value ? row["id"].ToString() : "";
+
                 // عرض بداية الفترة
                 if (txtPeriodStartDate != null)
                 {
@@ -2703,7 +2723,7 @@ namespace Water
                 {
                     clear_SALES();
                     isEditMode = false;
-                    
+                    isallocateHours=false;
                     SetNormalMode();
                 }
                 // إذا اختار "لا"، لا نفعل شيئاً ونبقى في الشاشة
@@ -2713,6 +2733,7 @@ namespace Water
                 clear_SALES();
                 isEditMode = false;
                 isSearchMode = false;
+                isallocateHours=false;
                 SetNormalMode();
             }
             else
@@ -2728,6 +2749,8 @@ namespace Water
             btnEdit.Enabled = false;
             btnDelete.Enabled = false;
             btnSearch.Enabled = true;
+            btnClearGrv.Enabled=false;
+            btnAllocateHoursToPartners.Enabled=false;
 
             txtSalesId.ReadOnly = true;
             txtPeriodId.ReadOnly = true;
@@ -2751,6 +2774,8 @@ namespace Water
             btnDelete.Enabled = true;
             btnSave.Enabled = false;
             btnSearch.Enabled = true;
+            btnClearGrv.Enabled=false;
+            btnAllocateHoursToPartners.Enabled=false;
 
             txtSalesId.ReadOnly = true;
             txtCustomerId.ReadOnly = true;            
@@ -2773,7 +2798,8 @@ namespace Water
             btnEdit.Enabled = false;
             btnDelete.Enabled = false;
             btnAdd.Enabled = false;
-            btnSearch.Enabled = false;
+            btnSearch.Enabled = false;            
+            btnAllocateHoursToPartners.Enabled=true;
 
             txtSalesId.ReadOnly = false;
             txtCustomerId.ReadOnly = false;
@@ -2798,7 +2824,8 @@ namespace Water
             btnView.Enabled = false;
             btnDelete.Enabled = false;
             btnEdit.Enabled = false;
-            btnSearch.Enabled = false;
+            btnSearch.Enabled = false;            
+            btnAllocateHoursToPartners.Enabled=true;
             
             txtSalesId.ReadOnly = true;
             txtCustomerId.ReadOnly = true;
@@ -2822,6 +2849,8 @@ namespace Water
             btnEdit.Enabled = false;
             btnDelete.Enabled = false;
             btnSave.Enabled = false;
+            btnClearGrv.Enabled=false;
+            btnAllocateHoursToPartners.Enabled=false;
 
             clear_SALES();
 
@@ -3031,9 +3060,6 @@ namespace Water
                 //// تعيين DataSource
                 //dataGridView1.DataSource = dt;
 
-
-
-
                 if (this.dataGridView1 != null)
                 {
                     // مسح البيانات الحالية
@@ -3043,10 +3069,7 @@ namespace Water
                     foreach (DataRow row in dt.Rows)
                     {
                         int rowIndex = this.dataGridView1.Rows.Add();
-                        DataGridViewRow dgvRow = this.dataGridView1.Rows[rowIndex];
-
-                      
-                        
+                        DataGridViewRow dgvRow = this.dataGridView1.Rows[rowIndex];                      
 
                         // ملء البيانات في الصف
                         if (dgvRow.Cells["bill_no"] != null)
@@ -3087,6 +3110,7 @@ namespace Water
                 }
 
                     isallocateHours = true;
+                btnClearGrv.Enabled = true;
                 CalculateTotals_TextChanged(null, null);
 
                 // حساب إجمالي الساعات والدقائق من DataGridView
@@ -3096,6 +3120,13 @@ namespace Water
             {
                 MessageBox.Show("حدث خطأ أثناء تحميل البيانات: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void btvClearGrv_Click(object sender, EventArgs e)
+        {
+            dataGridView1.Rows.Clear();
+            isallocateHours = false;
+            btnClearGrv.Enabled = false;
         }
     }
 }

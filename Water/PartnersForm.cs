@@ -171,9 +171,10 @@ namespace Water
                     MessageBox.Show("تم حفظ بيانات الشريك بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
 
-                clear_PARTNER();
+               // clear_PARTNER();
                 isEditMode = false;
                 SetAfterSaveMode();
+                btnEdit.Enabled=true;
             }
             catch (Exception ee)
             {
@@ -496,7 +497,7 @@ namespace Water
         {                                   
             btnDelete.Enabled = false;
             btnEdit.Enabled = false;
-            //btnSearch.Enabled = true;
+                        
         }
 
         private void SetAfterSaveMode()
