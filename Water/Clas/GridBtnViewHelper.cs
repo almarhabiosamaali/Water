@@ -48,6 +48,10 @@ namespace Water.Clas
             txtSearch.Width = 250;
             txtSearch.RightToLeft = RightToLeft.Yes;
             txtSearch.Margin = new Padding(5, 7, 5, 0);
+            viewForm.Shown += (s, e) =>
+                {
+                    txtSearch.Focus();
+                };
 
             searchPanel.Controls.Add(lblSearch);
             searchPanel.Controls.Add(txtSearch);
@@ -61,7 +65,7 @@ namespace Water.Clas
             dgv.ReadOnly = true;
             dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgv.MultiSelect = false;
-            dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             dgv.RightToLeft = RightToLeft.Yes;
 
             // البحث
