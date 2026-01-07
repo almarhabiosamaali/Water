@@ -239,7 +239,7 @@ namespace Water
                 }
 
                 // البحث عن الشريك في قاعدة البيانات
-                DataTable dt = partners.VIEW_PARTNER(partnerId);
+                DataTable dt = partners.VIEW_PARTNER(partnerId ,txtPeriodId.Text);
 
                 if (dt != null && dt.Rows.Count > 0)
                 {
@@ -289,7 +289,7 @@ namespace Water
         {
             try
             {
-                DataTable dt = partners.GET_ALL_PARTNERS();
+                DataTable dt = partners.GET_ALL_PARTNERS(txtPeriodId.Text);
 
                 if (dt.Rows.Count == 0)
                 {
@@ -435,7 +435,7 @@ namespace Water
                 // تحديد نوع البيانات بناءً على اختيار نوع العميل
                 if (cmbCustomerType != null && cmbCustomerType.SelectedIndex == 1) // شريك
                 {
-                    dt = partners.VIEW_PARTNER(customerId);
+                    dt = partners.VIEW_PARTNER(customerId,"1");
                 }
                 else // عميل (افتراضي)
                 {
@@ -469,7 +469,7 @@ namespace Water
                 // تحديد نوع البيانات بناءً على اختيار نوع العميل
                 if (cmbCustomerType != null && cmbCustomerType.SelectedIndex == 1) // شريك
                 {
-                    dt = partners.GET_ALL_PARTNERS();
+                    dt = partners.GET_ALL_PARTNERS("1");
                     formTitle = "عرض بيانات الشركاء";
                 }
                 else // عميل (افتراضي)

@@ -52,7 +52,7 @@ namespace Water
             {
                 DataTable dTt = new DataTable();
                 Clas.partnersReport pTp = new Clas.partnersReport();
-                dTt = pTp.PRINT_PARTNER_MOVEMENT(p_where1().ToString());
+                dTt = pTp.PRINT_PARTNER_MOVEMENT(p_where1().ToString() , txtPeriodId.Text);
                 RPT.partnerMovements myRept = new RPT.partnerMovements();
                 myRept.DataSourceConnections[0].IntegratedSecurity = false;
                 myRept.DataSourceConnections[0].SetConnection(Properties.Settings.Default.Server, Properties.Settings.Default.Database, Properties.Settings.Default.ID, Properties.Settings.Default.Password);
@@ -81,7 +81,7 @@ namespace Water
             {
                 DataTable dTt = new DataTable();
                 Clas.partnersReport pTp = new Clas.partnersReport();
-                dTt = pTp.PRINT_PARTNER_MOVEMENT(p_where().ToString());
+                dTt = pTp.PRINT_PARTNER_MOVEMENT(p_where().ToString() , txtPeriodId.Text);
                 RPT.partnerMovements myRept = new RPT.partnerMovements();
                 myRept.DataSourceConnections[0].IntegratedSecurity = false;
                 myRept.DataSourceConnections[0].SetConnection(Properties.Settings.Default.Server, Properties.Settings.Default.Database, Properties.Settings.Default.ID, Properties.Settings.Default.Password);
@@ -96,7 +96,7 @@ namespace Water
             {
                 DataTable dTt = new DataTable();
                 Clas.partnersReport pTp = new Clas.partnersReport();
-                dTt = pTp.PRINT_PARTNER_MOVEMENT(p_where().ToString());
+                dTt = pTp.PRINT_PARTNER_MOVEMENT(p_where().ToString(), txtPeriodId.Text);
                 RPT.partnerTotallHandM myRept = new RPT.partnerTotallHandM();
                 myRept.DataSourceConnections[0].IntegratedSecurity = false;
                 myRept.DataSourceConnections[0].SetConnection(Properties.Settings.Default.Server, Properties.Settings.Default.Database, Properties.Settings.Default.ID, Properties.Settings.Default.Password);
@@ -238,7 +238,7 @@ namespace Water
             try
             {
             
-                DataTable dt = partners.GET_ALL_PARTNERS();
+                DataTable dt = partners.GET_ALL_PARTNERS("1");
                 String formTitle = "عرض بيانات الشركاء";
 
                 if (dt == null || dt.Rows.Count == 0)

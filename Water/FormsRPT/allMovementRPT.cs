@@ -103,7 +103,7 @@ namespace Water
                 }
                 else if (accountType == "شريك")
                 {
-                    dt = partners.GET_ALL_PARTNERS();
+                    dt = partners.GET_ALL_PARTNERS("1");
                     //formTitle = "عرض بيانات الشركاء";
                     DataRow row = gridBtnViewHelper.Show(dt, "عرض  بيانات الشركاء");
                     if (row != null)

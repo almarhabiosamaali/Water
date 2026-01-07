@@ -44,25 +44,33 @@ namespace Water.Clas
             DAL.Close();
         }
 
-        public DataTable VIEW_PARTNER(string id)
+        public DataTable VIEW_PARTNER(string id , string period_id)
         {
             Clas.DataAccessLayer DAL = new Clas.DataAccessLayer();
             DAL.Open();
-            SqlParameter[] param = new SqlParameter[1];
+            SqlParameter[] param = new SqlParameter[2];
             
             param[0] = new SqlParameter("@id", SqlDbType.VarChar, 50);
             param[0].Value = id;
+
+            param[1] = new SqlParameter("@period_id", SqlDbType.VarChar, 50);
+            param[1].Value = period_id;
 
             DataTable dt = DAL.SelectData("partner_getById", param);
             DAL.Close();
             return dt;
         }
 
-        public DataTable GET_ALL_PARTNERS()
+        public DataTable GET_ALL_PARTNERS(string period_id)
         {
             Clas.DataAccessLayer DAL = new Clas.DataAccessLayer();
             DAL.Open();
-            DataTable dt = DAL.SelectData("partner_getAll", null);
+            SqlParameter[] param = new SqlParameter[1];
+
+            param[0] = new SqlParameter("@period_id", SqlDbType.VarChar, 50);
+            param[0].Value = period_id;
+
+            DataTable dt = DAL.SelectData("partner_getAll", param);
             DAL.Close();
             return dt;
         }

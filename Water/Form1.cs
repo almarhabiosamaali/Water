@@ -181,7 +181,7 @@ namespace Water
             try
             {
                 // تحميل عدد الشركاء
-                DataTable partnersDt = partners.GET_ALL_PARTNERS();
+                DataTable partnersDt = partners.GET_ALL_PARTNERS("1");
                 int partnersCount = partnersDt != null ? partnersDt.Rows.Count : 0;
                 lblPartnersCount.Text = partnersCount.ToString();
 

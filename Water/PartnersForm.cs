@@ -31,7 +31,7 @@ namespace Water
 
         private void btnView_Click(object sender, EventArgs e)
         {  
-            DataTable dt = partner.GET_ALL_PARTNERS();
+            DataTable dt = partner.GET_ALL_PARTNERS("1");
 
                 DataRow row = gridBtnViewHelper.Show(dt, "عرض الشركاء");
 
@@ -74,7 +74,7 @@ namespace Water
 
             try
             {
-                DataTable dt = partner.VIEW_PARTNER(txtPartnerCode.Text.Trim());
+                DataTable dt = partner.VIEW_PARTNER(txtPartnerCode.Text.Trim(),"1");
                 
                 if (dt.Rows.Count == 0)
                 {
@@ -291,7 +291,7 @@ namespace Water
             try
             {
                 // الحصول على جميع العملاء
-                DataTable allPartners = partner.GET_ALL_PARTNERS();
+                DataTable allPartners = partner.GET_ALL_PARTNERS("1");
 
                 if (allPartners == null || allPartners.Rows.Count == 0)
                 {
@@ -371,7 +371,7 @@ namespace Water
         {
             try
             {
-                DataTable allPartners = partner.GET_ALL_PARTNERS();
+                DataTable allPartners = partner.GET_ALL_PARTNERS("1");
 
                 if (allPartners == null || allPartners.Rows.Count == 0)
                 {

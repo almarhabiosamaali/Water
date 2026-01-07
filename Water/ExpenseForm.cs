@@ -450,7 +450,7 @@ namespace Water
                 }
                 else if (accountType == "شريك")
                 {
-                    dt = partners.GET_ALL_PARTNERS();
+                    dt = partners.GET_ALL_PARTNERS("1");
                     formTitle = "عرض بيانات الشركاء";
                 }
                 else if (accountType == "حساب")
@@ -676,7 +676,7 @@ namespace Water
                 }
                 else if (accountType == "شريك")
                 {
-                    dt = partners.VIEW_PARTNER(accountId);
+                    dt = partners.VIEW_PARTNER(accountId ,"1");
                 }
                 else if (accountType == "حساب")
                 {

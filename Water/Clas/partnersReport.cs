@@ -11,14 +11,17 @@ namespace Water.Clas
     class partnersReport
     {
 
-        public DataTable PRINT_PARTNER_MOVEMENT(string p_where)
+        public DataTable PRINT_PARTNER_MOVEMENT(string p_where , string period_id)
         {
 
             Clas.DataAccessLayer DBL = new Clas.DataAccessLayer();
             DBL.Open();
-            SqlParameter[] param = new SqlParameter[1];
+            SqlParameter[] param = new SqlParameter[2];
             param[0] = new SqlParameter("@p_where", SqlDbType.VarChar,500);
             param[0].Value = p_where;
+
+            param[1] = new SqlParameter("@period_id", SqlDbType.VarChar, 500);
+            param[1].Value = period_id;
 
 
 
