@@ -15,9 +15,17 @@ namespace Water
         Clas.customer customer = new Clas.customer();
         Clas.period period = new Clas.period();
         Clas.GridBtnViewHelper gridBtnViewHelper = new Clas.GridBtnViewHelper();
+        bool fromDateEntered = false;
+        bool toDateEntered = false;
         public customerMovementRPT()
         {
             InitializeComponent();
+            dtpFromDate.Format = DateTimePickerFormat.Custom;
+            dtpFromDate.CustomFormat = " ";
+            dtpToDate.Format = DateTimePickerFormat.Custom;
+            dtpToDate.CustomFormat = " ";
+            dtpFromDate.ValueChanged += dtpFromDate_ValueChanged;
+            dtpToDate.ValueChanged += dtpToDate_ValueChanged;   
         }
 
         private void btnShow_Click(object sender, EventArgs e)
@@ -38,7 +46,16 @@ namespace Water
         string p_where()
         {
             string p = "";
-
+            DateTime? fromDate=null;
+            DateTime? toDate=null;
+            if (fromDateEntered)
+            {
+                fromDate = dtpFromDate.Value.Date;
+            }
+            if (toDateEntered)
+            {
+                toDate = dtpToDate.Value.Date;
+            }
             if (!string.IsNullOrEmpty(txtCustNo.Text))
             {
                 p += " and cus_part_no = '" + txtCustNo.Text + "'";
@@ -48,12 +65,12 @@ namespace Water
                 p += " and period_id = '" + txtPeriodId.Text + "'";
             }
 
-            if (dtpFromDate.Value != null && dtpToDate.Value != null)
+            if (fromDate != null && toDate != null)
             {
                 p += " and date between '"
-                    + dtpFromDate.Value.ToString("yyyy-MM-dd")
+                    + fromDate.Value.ToString("yyyy-MM-dd")
                     + "' and '"
-                    + dtpToDate.Value.ToString("yyyy-MM-dd")
+                    + toDate.Value.ToString("yyyy-MM-dd")
                     + "'";
             }
 
@@ -106,6 +123,16 @@ namespace Water
         private void LoadPeriodData(DataRow row)
         {
             txtPeriodId.Text = row["id"].ToString();
+        }
+        private void dtpFromDate_ValueChanged(object sender, EventArgs e)
+        {
+            fromDateEntered = true;
+            dtpFromDate.Format = DateTimePickerFormat.Short;
+        }
+        private void dtpToDate_ValueChanged(object sender, EventArgs e)
+        {
+            toDateEntered = true;
+            dtpToDate.Format = DateTimePickerFormat.Short;
         }
     }
 }

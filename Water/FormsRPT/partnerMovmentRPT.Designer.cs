@@ -49,7 +49,7 @@
             this.txtPartnerID.Location = new System.Drawing.Point(124, 83);
             this.txtPartnerID.Name = "txtPartnerID";
             this.txtPartnerID.Size = new System.Drawing.Size(186, 24);
-            this.txtPartnerID.TabIndex = 0;
+            this.txtPartnerID.TabIndex = 1;
             this.txtPartnerID.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPartnerID_KeyDown);
             // 
             // btnShowRPT
@@ -154,12 +154,12 @@
             this.cmbType.Location = new System.Drawing.Point(652, 21);
             this.cmbType.Name = "cmbType";
             this.cmbType.Size = new System.Drawing.Size(193, 24);
-            this.cmbType.TabIndex = 27;
+            this.cmbType.TabIndex = 0;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(584, 28);
+            this.label1.Location = new System.Drawing.Point(581, 24);
             this.label1.Name = "label1";
             this.label1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.label1.Size = new System.Drawing.Size(65, 17);

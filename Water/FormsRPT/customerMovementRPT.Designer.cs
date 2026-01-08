@@ -60,7 +60,7 @@
             this.dtpFromDate.RightToLeftLayout = true;
             this.dtpFromDate.Size = new System.Drawing.Size(200, 24);
             this.dtpFromDate.TabIndex = 3;
-            this.dtpFromDate.Value = new System.DateTime(2025, 1, 1, 0, 0, 0, 0);
+            this.dtpFromDate.Value = new System.DateTime(2026, 1, 8, 0, 0, 0, 0);
             // 
             // dtpToDate
             // 

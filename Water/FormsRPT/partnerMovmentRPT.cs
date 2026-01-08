@@ -15,9 +15,17 @@ namespace Water
         Clas.partners partners = new Clas.partners();
         Clas.period period = new Clas.period();
         Clas.GridBtnViewHelper gridBtnViewHelper = new Clas.GridBtnViewHelper();
+        bool fromDateEntered = false;
+        bool toDateEntered = false;
         public partnerMovmentRPT()
         {
             InitializeComponent();
+            dtpFromDate.Format = DateTimePickerFormat.Custom;
+            dtpFromDate.CustomFormat = " ";
+            dtpToDate.Format = DateTimePickerFormat.Custom;
+            dtpToDate.CustomFormat = " ";
+            dtpFromDate.ValueChanged += dtpFromDate_ValueChanged;
+            dtpToDate.ValueChanged += dtpToDate_ValueChanged;   
         }
 
         private void btnShowRPT_Click(object sender, EventArgs e)
@@ -87,6 +95,17 @@ namespace Water
         string p_where()
         {
             string p = "";
+            DateTime? fromDate=null;
+            DateTime? toDate=null;
+             if (fromDateEntered)
+                {
+                    fromDate = dtpFromDate.Value.Date;
+                }
+
+                if (toDateEntered)
+                {
+                    toDate = dtpToDate.Value.Date;
+                }
             if (cmbType.SelectedIndex == 1)
             {
                 p = p + " and movement_type not in ('CUSTOMER_MOVEMENT','FROM_OWN_BALANCE','RECEIVED_FROM_OTHERS')";
@@ -101,19 +120,20 @@ namespace Water
                 {
                     p = p + " and partner_no = '" + txtPartnerID.Text + "'";
                 }
-                
 
-                if (dtpFromDate.Value != null && dtpToDate.Value != null)
+               
+
+                if (fromDate != null && toDate != null)
                 {
                     p += " and date between '"
-                        + dtpFromDate.Value.ToString("yyyy-MM-dd")
+                        + fromDate.Value.ToString("yyyy-MM-dd")
                         + "' and '"
-                        + dtpToDate.Value.ToString("yyyy-MM-dd")
+                        + toDate.Value.ToString("yyyy-MM-dd")
                         + "'";
                 }
             }
 
-            else
+         else
             {
 
                 if (!string.IsNullOrEmpty(txtPeriodId.Text))
@@ -128,12 +148,12 @@ namespace Water
                 }
 
 
-                if (dtpFromDate.Value != null && dtpToDate.Value != null)
+                if (fromDate != null && toDate != null)
                 {
                     p += " and m.date between '"
-                        + dtpFromDate.Value.ToString("yyyy-MM-dd")
+                        + fromDate.Value.ToString("yyyy-MM-dd")
                         + "' and '"
-                        + dtpToDate.Value.ToString("yyyy-MM-dd")
+                        + toDate.Value.ToString("yyyy-MM-dd")
                         + "'";
                 }
             }
@@ -158,61 +178,7 @@ namespace Water
 
         }
           private void ShowPartnerList()
-        {
-            /*try
-            {
-            
-                DataTable dt = partners.GET_ALL_PARTNERS();
-                String formTitle = "عرض بيانات الشركاء";
-
-                if (dt == null || dt.Rows.Count == 0)
-                {
-                    MessageBox.Show("لا توجد بيانات للعرض", "معلومة", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
-                }
-
-                Form viewForm = new Form();
-                viewForm.Text = formTitle;
-                viewForm.RightToLeft = RightToLeft.Yes;
-                viewForm.RightToLeftLayout = true;
-                viewForm.Size = new Size(1200, 600);
-                viewForm.StartPosition = FormStartPosition.CenterScreen;
-
-                DataGridView dgv = new DataGridView();
-                dgv.Dock = DockStyle.Fill;
-                dgv.DataSource = dt;
-                dgv.ReadOnly = true;
-                dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-                dgv.MultiSelect = false;
-                dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-                dgv.RightToLeft = RightToLeft.Yes;
-
-                dgv.CellDoubleClick += (s, args) =>
-                {
-                    if (args.RowIndex >= 0)
-                    {
-                        DataRow row = dt.Rows[args.RowIndex];
-                        LoadPartnerData(row);
-                        viewForm.Close();
-                    }
-                };
-                dgv.KeyDown += (s, args) =>
-                {
-                    if (args.KeyCode == Keys.Enter && dgv.CurrentRow != null && dgv.CurrentRow.Index >= 0)
-                    {
-                        DataRow row = dt.Rows[dgv.CurrentRow.Index];
-                        LoadPartnerData(row);
-                        viewForm.Close();
-                    }
-                };
-
-                viewForm.Controls.Add(dgv);
-                viewForm.ShowDialog();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("حدث خطأ أثناء عرض البيانات: " + ex.Message, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }*/
+        {            
             DataTable dt = partners.GET_ALL_PARTNERS("1");
             DataRow row = gridBtnViewHelper.Show(dt, "عرض  بيانات الشركاء");
             if (row != null)
@@ -248,11 +214,19 @@ namespace Water
             if (row != null)
             {
                 txtPeriodId.Text = row["id"].ToString();
+                dtpFromDate.Value = Convert.ToDateTime(row["start_date"]);
+                dtpToDate.Value = Convert.ToDateTime(row["end_date"]);
             }
-        }
-        private void LoadPeriodData(DataRow row)
+        }       
+        private void dtpFromDate_ValueChanged(object sender, EventArgs e)
         {
-            txtPeriodId.Text = row["id"].ToString();
+            fromDateEntered = true;
+            dtpFromDate.Format = DateTimePickerFormat.Short;
+        }
+        private void dtpToDate_ValueChanged(object sender, EventArgs e)
+        {
+            toDateEntered = true;
+            dtpToDate.Format = DateTimePickerFormat.Short;
         }
     }
 }
