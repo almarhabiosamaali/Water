@@ -152,9 +152,9 @@ namespace Water
             partnerReportNode.Tag = "PARTNER_REPORT";
             reportsNode.Nodes.Add(partnerReportNode);
 
-            TreeNode partnerReportNode1 = new TreeNode("تقارير الشركاء2");
+           /* TreeNode partnerReportNode1 = new TreeNode("تقارير الشركاء2");
             partnerReportNode1.Tag = "PARTNER_REPORT1";
-            reportsNode.Nodes.Add(partnerReportNode1);
+            reportsNode.Nodes.Add(partnerReportNode1);*/
 
             TreeNode customerReportNode = new TreeNode("تقارير العملاء");
             customerReportNode.Tag = "CUSTOMER_REPORT";

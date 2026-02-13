@@ -149,7 +149,7 @@ namespace Water
                             }
 
                             // إلغاء التعديلات من الفترة فقط إذا كان هناك قيمة فعلية
-                            if (days > 0 || hrs > 0 || mins > 0)
+                            /*if (days > 0 || hrs > 0 || mins > 0)
                             {
                                 try
                                 {
@@ -171,7 +171,7 @@ namespace Water
                                         MessageBoxIcon.Warning
                                     );
                                 }
-                            }
+                            }*/
                         }
                     }
 
